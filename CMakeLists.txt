@@ -11,6 +11,7 @@ qt_add_executable(CuteDevToolBox
     src/mainwindow.cpp
     src/mainwindow.h
     src/mainwindow.ui
+    src/widgets/jsonformatterwidget.h src/widgets/jsonformatterwidget.cpp src/widgets/jsonformatterwidget.ui
 )
 
 target_link_libraries(CuteDevToolBox

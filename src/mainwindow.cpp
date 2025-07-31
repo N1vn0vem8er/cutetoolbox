@@ -6,13 +6,16 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->listWidget, &QListWidget::doubleClicked, this, &MainWindow::showWidget);
-    for(const auto& i : std::as_const(listOption))
-    {
-        QListWidgetItem* item = new QListWidgetItem(i.first, ui->listWidget);
-        item->setIcon(QIcon(i.second));
-        ui->listWidget->addItem(item);
-    }
+    connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
+
+    ui->splitter->setStretchFactor(1, 1);
+    addMenuItem(tr("Formatters"), QIcon(), false);
+    addMenuItem(tr("JSON"), QIcon());
+    addMenuItem(tr("SQL"), QIcon());
+    addMenuItem(tr("XML"), QIcon());
+    addMenuItem(tr("HTML"), QIcon());
+    addMenuItem(tr("Generators"), QIcon(), false);
+    addMenuItem(tr("Hash"), QIcon());
 }
 
 MainWindow::~MainWindow()
@@ -22,8 +25,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::showWidget(const QModelIndex& index)
 {
-    if(ui->stackedWidget->count() > index.row())
+    const QString text = index.data().toString();
+    if(menuIndexMap.contains(text))
     {
-        ui->stackedWidget->setCurrentIndex(index.row());
+        ui->stackedWidget->setCurrentIndex(menuIndexMap.value(text));
     }
+}
+
+void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enabled)
+{
+    static int index = 0;
+    QListWidgetItem* item = new QListWidgetItem(text, ui->listWidget);
+    item->setIcon(icon);
+    if(!enabled)
+        item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+    else
+        menuIndexMap[text] = index++;
+    ui->listWidget->addItem(item);
 }

@@ -19,9 +19,10 @@ public:
 
 private slots:
     void showWidget(const QModelIndex &index);
+    void addMenuItem(const QString& text, const QIcon& icon, bool enabled = true);
 
 private:
     Ui::MainWindow *ui;
-    QList<QPair<QString, QString>> listOption {{tr("JSON"), ""}, {tr("SQL"), ""}, {tr("XML"), ""}, {tr("HTML"), ""}, {tr("CSS"), ""}};
+    QMap<QString, int> menuIndexMap;
 };
 #endif // MAINWINDOW_H
