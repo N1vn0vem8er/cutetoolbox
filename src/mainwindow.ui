@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Cute DevToolBox</string>
+   <string>Cute Dev ToolBox</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -31,6 +31,7 @@
       <widget class="QStackedWidget" name="stackedWidget">
        <widget class="JsonFormatterWidget" name="jsonFormatter"/>
        <widget class="SQLFormatterWidget" name="sqlFormatter"/>
+       <widget class="XMLFormatterWidget" name="xmlFormatter"/>
       </widget>
      </widget>
     </item>
@@ -59,6 +60,12 @@
    <class>SQLFormatterWidget</class>
    <extends>QWidget</extends>
    <header>sqlformatterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMLFormatterWidget</class>
+   <extends>QWidget</extends>
+   <header>xmlformatterwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
