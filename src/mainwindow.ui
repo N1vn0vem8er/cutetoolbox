@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Cute DevToolBox</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -29,8 +29,8 @@
        </property>
       </widget>
       <widget class="QStackedWidget" name="stackedWidget">
-       <widget class="QWidget" name="page"/>
-       <widget class="QWidget" name="page_2"/>
+       <widget class="JsonFormatterWidget" name="jsonFormatter"/>
+       <widget class="SQLFormatterWidget" name="sqlFormatter"/>
       </widget>
      </widget>
     </item>
@@ -48,6 +48,20 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>JsonFormatterWidget</class>
+   <extends>QWidget</extends>
+   <header>jsonformatterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SQLFormatterWidget</class>
+   <extends>QWidget</extends>
+   <header>sqlformatterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

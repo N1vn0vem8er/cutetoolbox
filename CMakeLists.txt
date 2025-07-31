@@ -12,7 +12,10 @@ qt_add_executable(CuteDevToolBox
     src/mainwindow.h
     src/mainwindow.ui
     src/widgets/jsonformatterwidget.h src/widgets/jsonformatterwidget.cpp src/widgets/jsonformatterwidget.ui
+    src/widgets/sqlformatterwidget.h src/widgets/sqlformatterwidget.cpp src/widgets/sqlformatterwidget.ui
 )
+
+include_directories(src/widgets)
 
 target_link_libraries(CuteDevToolBox
     PRIVATE

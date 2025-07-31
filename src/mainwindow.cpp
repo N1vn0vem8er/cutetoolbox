@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
 
     ui->splitter->setStretchFactor(1, 1);
+    ui->listWidget->setFrameShape(QFrame::NoFrame);
     addMenuItem(tr("Formatters"), QIcon(), false);
     addMenuItem(tr("JSON"), QIcon());
     addMenuItem(tr("SQL"), QIcon());
@@ -16,6 +17,14 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("HTML"), QIcon());
     addMenuItem(tr("Generators"), QIcon(), false);
     addMenuItem(tr("Hash"), QIcon());
+    addMenuItem(tr("Lorem ipsum"), QIcon());
+    addMenuItem(tr("UUID"), QIcon());
+    addMenuItem(tr("Random text"), QIcon());
+    addMenuItem(tr("Qr code"), QIcon());
+    addMenuItem(tr("Text"), QIcon(), false);
+    addMenuItem(tr("Regex"), QIcon());
+    addMenuItem(tr("Text diff"), QIcon());
+    addMenuItem(tr("Markdown"), QIcon());
 }
 
 MainWindow::~MainWindow()
