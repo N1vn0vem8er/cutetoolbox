@@ -39,6 +39,7 @@
        <widget class="RandomTextGeneratorWidget" name="randomTextGenerator"/>
        <widget class="QrCodeGenerator" name="qrCodeGenerator"/>
        <widget class="RegexWidget" name="regexWidget"/>
+       <widget class="TextDiffWidget" name="textDiff"/>
       </widget>
      </widget>
     </item>
@@ -115,6 +116,12 @@
    <class>RegexWidget</class>
    <extends>QWidget</extends>
    <header>regexwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TextDiffWidget</class>
+   <extends>QWidget</extends>
+   <header>textdiffwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
