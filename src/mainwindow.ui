@@ -36,6 +36,7 @@
        <widget class="HashWidget" name="hashChecker"/>
        <widget class="LoremIpsumGenerator" name="loremIpsumGenerator"/>
        <widget class="UUIDGeneratorWidget" name="uuidGenerator"/>
+       <widget class="RandomTextGeneratorWidget" name="randomTextGenerator"/>
       </widget>
      </widget>
     </item>
@@ -94,6 +95,12 @@
    <class>UUIDGeneratorWidget</class>
    <extends>QWidget</extends>
    <header>uuidgeneratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RandomTextGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>randomtextgeneratorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
