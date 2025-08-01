@@ -22,6 +22,7 @@ qt_add_executable(CuteDevToolBox
     src/widgets/qrcodegenerator.h src/widgets/qrcodegenerator.cpp src/widgets/qrcodegenerator.ui
     src/widgets/regexwidget.h src/widgets/regexwidget.cpp src/widgets/regexwidget.ui
     src/widgets/textdiffwidget.h src/widgets/textdiffwidget.cpp src/widgets/textdiffwidget.ui
+    src/widgets/markdownwidget.h src/widgets/markdownwidget.cpp src/widgets/markdownwidget.ui
 )
 
 include_directories(src/widgets)

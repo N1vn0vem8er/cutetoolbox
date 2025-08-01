@@ -40,6 +40,7 @@
        <widget class="QrCodeGenerator" name="qrCodeGenerator"/>
        <widget class="RegexWidget" name="regexWidget"/>
        <widget class="TextDiffWidget" name="textDiff"/>
+       <widget class="MarkdownWidget" name="markdownWidget"/>
       </widget>
      </widget>
     </item>
@@ -122,6 +123,12 @@
    <class>TextDiffWidget</class>
    <extends>QWidget</extends>
    <header>textdiffwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MarkdownWidget</class>
+   <extends>QWidget</extends>
+   <header>markdownwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
