@@ -16,6 +16,7 @@ qt_add_executable(CuteDevToolBox
     src/widgets/xmlformatterwidget.h src/widgets/xmlformatterwidget.cpp src/widgets/xmlformatterwidget.ui
     src/widgets/htmlformatterwidget.h src/widgets/htmlformatterwidget.cpp src/widgets/htmlformatterwidget.ui
     src/widgets/hashwidget.h src/widgets/hashwidget.cpp src/widgets/hashwidget.ui
+    src/widgets/loremipsumgenerator.h src/widgets/loremipsumgenerator.cpp src/widgets/loremipsumgenerator.ui
 )
 
 include_directories(src/widgets)

@@ -34,6 +34,7 @@
        <widget class="XMLFormatterWidget" name="xmlFormatter"/>
        <widget class="HTMLFormatterWidget" name="htmlFormatter"/>
        <widget class="HashWidget" name="hashChecker"/>
+       <widget class="LoremIpsumGenerator" name="loremIpsumGenerator"/>
       </widget>
      </widget>
     </item>
@@ -80,6 +81,12 @@
    <class>HashWidget</class>
    <extends>QWidget</extends>
    <header>hashwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LoremIpsumGenerator</class>
+   <extends>QWidget</extends>
+   <header>loremipsumgenerator.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
