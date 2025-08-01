@@ -33,6 +33,7 @@
        <widget class="SQLFormatterWidget" name="sqlFormatter"/>
        <widget class="XMLFormatterWidget" name="xmlFormatter"/>
        <widget class="HTMLFormatterWidget" name="htmlFormatter"/>
+       <widget class="HashWidget" name="hashChecker"/>
       </widget>
      </widget>
     </item>
@@ -73,6 +74,12 @@
    <class>HTMLFormatterWidget</class>
    <extends>QWidget</extends>
    <header>htmlformatterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HashWidget</class>
+   <extends>QWidget</extends>
+   <header>hashwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
