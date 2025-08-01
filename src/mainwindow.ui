@@ -37,6 +37,7 @@
        <widget class="LoremIpsumGenerator" name="loremIpsumGenerator"/>
        <widget class="UUIDGeneratorWidget" name="uuidGenerator"/>
        <widget class="RandomTextGeneratorWidget" name="randomTextGenerator"/>
+       <widget class="QrCodeGenerator" name="qrCodeGenerator"/>
       </widget>
      </widget>
     </item>
@@ -101,6 +102,12 @@
    <class>RandomTextGeneratorWidget</class>
    <extends>QWidget</extends>
    <header>randomtextgeneratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QrCodeGenerator</class>
+   <extends>QWidget</extends>
+   <header>qrcodegenerator.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

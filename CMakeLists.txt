@@ -19,6 +19,7 @@ qt_add_executable(CuteDevToolBox
     src/widgets/loremipsumgenerator.h src/widgets/loremipsumgenerator.cpp src/widgets/loremipsumgenerator.ui
     src/widgets/uuidgeneratorwidget.h src/widgets/uuidgeneratorwidget.cpp src/widgets/uuidgeneratorwidget.ui
     src/widgets/randomtextgeneratorwidget.h src/widgets/randomtextgeneratorwidget.cpp src/widgets/randomtextgeneratorwidget.ui
+    src/widgets/qrcodegenerator.h src/widgets/qrcodegenerator.cpp src/widgets/qrcodegenerator.ui
 )
 
 include_directories(src/widgets)
