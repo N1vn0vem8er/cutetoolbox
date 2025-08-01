@@ -32,6 +32,7 @@
        <widget class="JsonFormatterWidget" name="jsonFormatter"/>
        <widget class="SQLFormatterWidget" name="sqlFormatter"/>
        <widget class="XMLFormatterWidget" name="xmlFormatter"/>
+       <widget class="HTMLFormatterWidget" name="htmlFormatter"/>
       </widget>
      </widget>
     </item>
@@ -66,6 +67,12 @@
    <class>XMLFormatterWidget</class>
    <extends>QWidget</extends>
    <header>xmlformatterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HTMLFormatterWidget</class>
+   <extends>QWidget</extends>
+   <header>htmlformatterwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
