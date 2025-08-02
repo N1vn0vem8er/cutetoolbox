@@ -24,6 +24,7 @@ qt_add_executable(CuteDevToolBox
     src/widgets/textdiffwidget.h src/widgets/textdiffwidget.cpp src/widgets/textdiffwidget.ui
     src/widgets/markdownwidget.h src/widgets/markdownwidget.cpp src/widgets/markdownwidget.ui
     src/widgets/xmlschemevalidatorwidget.h src/widgets/xmlschemevalidatorwidget.cpp src/widgets/xmlschemevalidatorwidget.ui
+    src/widgets/jsonschemavalidatorwidget.h src/widgets/jsonschemavalidatorwidget.cpp src/widgets/jsonschemavalidatorwidget.ui
 )
 
 include_directories(src/widgets)

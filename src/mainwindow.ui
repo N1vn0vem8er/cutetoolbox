@@ -42,6 +42,7 @@
        <widget class="TextDiffWidget" name="textDiff"/>
        <widget class="MarkdownWidget" name="markdownWidget"/>
        <widget class="XMLSchemeValidatorWidget" name="xmlSchemeValidator"/>
+       <widget class="JSONSchemaValidatorWidget" name="jsonSchemaValidator"/>
       </widget>
      </widget>
     </item>
@@ -136,6 +137,12 @@
    <class>XMLSchemeValidatorWidget</class>
    <extends>QWidget</extends>
    <header>xmlschemevalidatorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>JSONSchemaValidatorWidget</class>
+   <extends>QWidget</extends>
+   <header>jsonschemavalidatorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
