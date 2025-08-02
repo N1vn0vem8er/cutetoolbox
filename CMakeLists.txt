@@ -30,9 +30,14 @@ qt_add_executable(CuteDevToolBox
     src/widgets/urlcoderdecoderwidget.h src/widgets/urlcoderdecoderwidget.cpp src/widgets/urlcoderdecoderwidget.ui
     src/widgets/gzipwidget.h src/widgets/gzipwidget.cpp src/widgets/gzipwidget.ui
     src/widgets/jsonyamlconverter.h src/widgets/jsonyamlconverter.cpp src/widgets/jsonyamlconverter.ui
+    src/utils/editor/codeeditor.cpp src/utils/editor/codeeditor.h src/utils/editor/linenumberarea.cpp src/utils/editor/linenumberarea.h
 )
 
-include_directories(src/widgets)
+include_directories(
+    src/widgets
+    src
+    src/utils
+)
 
 target_link_libraries(CuteDevToolBox
     PRIVATE
