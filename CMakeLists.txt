@@ -25,6 +25,7 @@ qt_add_executable(CuteDevToolBox
     src/widgets/markdownwidget.h src/widgets/markdownwidget.cpp src/widgets/markdownwidget.ui
     src/widgets/xmlschemevalidatorwidget.h src/widgets/xmlschemevalidatorwidget.cpp src/widgets/xmlschemevalidatorwidget.ui
     src/widgets/jsonschemavalidatorwidget.h src/widgets/jsonschemavalidatorwidget.cpp src/widgets/jsonschemavalidatorwidget.ui
+    src/widgets/htmlcoderdecoderwidget.h src/widgets/htmlcoderdecoderwidget.cpp src/widgets/htmlcoderdecoderwidget.ui
 )
 
 include_directories(src/widgets)
