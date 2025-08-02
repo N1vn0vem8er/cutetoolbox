@@ -31,6 +31,7 @@
       <widget class="QStackedWidget" name="stackedWidget">
        <widget class="HTMLCoderDecoderWidget" name="htmlCoderDecoder"/>
        <widget class="Base64CoderDecoderWidget" name="Base64CoderDecoder"/>
+       <widget class="UrlCoderDecoderWidget" name="urlCoderDecoder"/>
        <widget class="JsonFormatterWidget" name="jsonFormatter"/>
        <widget class="SQLFormatterWidget" name="sqlFormatter"/>
        <widget class="XMLFormatterWidget" name="xmlFormatter"/>
@@ -157,6 +158,12 @@
    <class>Base64CoderDecoderWidget</class>
    <extends>QWidget</extends>
    <header>base64coderdecoderwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UrlCoderDecoderWidget</class>
+   <extends>QWidget</extends>
+   <header>urlcoderdecoderwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
