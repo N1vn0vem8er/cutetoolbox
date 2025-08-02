@@ -28,6 +28,7 @@ qt_add_executable(CuteDevToolBox
     src/widgets/htmlcoderdecoderwidget.h src/widgets/htmlcoderdecoderwidget.cpp src/widgets/htmlcoderdecoderwidget.ui
     src/widgets/base64coderdecoderwidget.h src/widgets/base64coderdecoderwidget.cpp src/widgets/base64coderdecoderwidget.ui
     src/widgets/urlcoderdecoderwidget.h src/widgets/urlcoderdecoderwidget.cpp src/widgets/urlcoderdecoderwidget.ui
+    src/widgets/gzipwidget.h src/widgets/gzipwidget.cpp src/widgets/gzipwidget.ui
 )
 
 include_directories(src/widgets)

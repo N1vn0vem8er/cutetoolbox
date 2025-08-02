@@ -11,11 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
     addMenuItem(tr("Coders and decoders"), QIcon(), false);
-    addMenuItem(tr("HTML"), QIcon());
+    addMenuItem(tr("HTML Coder"), QIcon());
     addMenuItem(tr("Base64"), QIcon());
     addMenuItem(tr("Url"), QIcon());
     addMenuItem(tr("GZip"), QIcon());
-    addMenuItem(tr("JWT"), QIcon());
     addMenuItem(tr("Formatters"), QIcon(), false);
     addMenuItem(tr("JSON"), QIcon());
     addMenuItem(tr("SQL"), QIcon());
