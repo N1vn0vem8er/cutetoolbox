@@ -32,6 +32,11 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Markdown"), QIcon());
     addMenuItem(tr("XML Scheme Validator"), QIcon());
     addMenuItem(tr("JSON Schema Validator"), QIcon());
+    addMenuItem(tr("Converters"), QIcon(), false);
+    addMenuItem(tr("JSON - YAML"), QIcon());
+    addMenuItem(tr("Timestamp"), QIcon());
+    addMenuItem(tr("Number Bases"), QIcon());
+    addMenuItem(tr("QDateTime"), QIcon());
 }
 
 MainWindow::~MainWindow()
