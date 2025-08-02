@@ -41,6 +41,7 @@
        <widget class="RegexWidget" name="regexWidget"/>
        <widget class="TextDiffWidget" name="textDiff"/>
        <widget class="MarkdownWidget" name="markdownWidget"/>
+       <widget class="XMLSchemeValidatorWidget" name="xmlSchemeValidator"/>
       </widget>
      </widget>
     </item>
@@ -129,6 +130,12 @@
    <class>MarkdownWidget</class>
    <extends>QWidget</extends>
    <header>markdownwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>XMLSchemeValidatorWidget</class>
+   <extends>QWidget</extends>
+   <header>xmlschemevalidatorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

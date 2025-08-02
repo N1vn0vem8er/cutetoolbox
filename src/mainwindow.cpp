@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Regex"), QIcon());
     addMenuItem(tr("Text diff"), QIcon());
     addMenuItem(tr("Markdown"), QIcon());
+    addMenuItem(tr("XML Scheme Validator"), QIcon());
+    addMenuItem(tr("JSON Schema Validator"), QIcon());
 }
 
 MainWindow::~MainWindow()
