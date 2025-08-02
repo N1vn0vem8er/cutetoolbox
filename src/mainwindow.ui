@@ -30,6 +30,7 @@
       </widget>
       <widget class="QStackedWidget" name="stackedWidget">
        <widget class="HTMLCoderDecoderWidget" name="htmlCoderDecoder"/>
+       <widget class="Base64CoderDecoderWidget" name="Base64CoderDecoder"/>
        <widget class="JsonFormatterWidget" name="jsonFormatter"/>
        <widget class="SQLFormatterWidget" name="sqlFormatter"/>
        <widget class="XMLFormatterWidget" name="xmlFormatter"/>
@@ -150,6 +151,12 @@
    <class>HTMLCoderDecoderWidget</class>
    <extends>QWidget</extends>
    <header>htmlcoderdecoderwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Base64CoderDecoderWidget</class>
+   <extends>QWidget</extends>
+   <header>base64coderdecoderwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
