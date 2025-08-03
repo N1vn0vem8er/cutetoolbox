@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::HTMLFormatterWidget *ui;
+
+private slots:
+    void format();
+    void open();
 };
 
 #endif // HTMLFORMATTERWIDGET_H
