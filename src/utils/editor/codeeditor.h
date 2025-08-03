@@ -32,6 +32,9 @@ public:
     void decreaseFontSize();
     void setFontSize(int size);
 
+public slots:
+    void copyAll();
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;

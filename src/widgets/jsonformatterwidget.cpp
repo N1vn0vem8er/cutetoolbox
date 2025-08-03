@@ -12,7 +12,7 @@ JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
     ui->setupUi(this);
     connect(ui->formatButton, &QPushButton::clicked, this, &JsonFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
-    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);
+    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->openButton, &QPushButton::clicked, this, &JsonFormatterWidget::open);
 }

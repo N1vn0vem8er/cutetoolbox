@@ -227,6 +227,12 @@ void CodeEditor::setFontSize(int size)
     emit fontSizeChanged(font.pointSize());
 }
 
+void CodeEditor::copyAll()
+{
+    selectAll();
+    copy();
+}
+
 void CodeEditor::keyPressEvent(QKeyEvent *event)
 {
     if(completer->popup()->isVisible())
