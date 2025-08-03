@@ -92,7 +92,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit">
+    <widget class="CodeEditor" name="codeEditor">
      <property name="placeholderText">
       <string>Put XML code here</string>
      </property>
@@ -100,6 +100,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>editor/codeeditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

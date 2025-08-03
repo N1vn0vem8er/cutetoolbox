@@ -15,6 +15,10 @@ public:
     explicit XMLFormatterWidget(QWidget *parent = nullptr);
     ~XMLFormatterWidget();
 
+private slots:
+    void open();
+    void format();
+
 private:
     Ui::XMLFormatterWidget *ui;
 };
