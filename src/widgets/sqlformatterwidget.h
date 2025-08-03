@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::SQLFormatterWidget *ui;
+
+private slots:
+    void format();
+    void open();
 };
 
 #endif // SQLFORMATTERWIDGET_H
