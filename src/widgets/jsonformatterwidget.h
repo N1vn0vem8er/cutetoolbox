@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::JsonFormatterWidget *ui;
+
+private slots:
+    void format();
+    void open();
 };
 
 #endif // JSONFORMATTERWIDGET_H
