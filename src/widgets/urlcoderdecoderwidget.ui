@@ -20,30 +20,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <item>
-        <widget class="QRadioButton" name="codeButton">
-         <property name="text">
-          <string>Code</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup_2</string>
-         </attribute>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="decodeButton">
-         <property name="text">
-          <string>Decode</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup_2</string>
-         </attribute>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
         <widget class="QRadioButton" name="spacePlusButton">
@@ -94,7 +70,7 @@
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Input</string>
+            <string>Decoded</string>
            </property>
           </widget>
          </item>
@@ -112,7 +88,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="openHtmlButton">
+          <widget class="QPushButton" name="openDecodedButton">
            <property name="toolTip">
             <string>Open</string>
            </property>
@@ -125,7 +101,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="copyHtmlButton">
+          <widget class="QPushButton" name="copyDecodedButton">
            <property name="toolTip">
             <string>Copy</string>
            </property>
@@ -138,7 +114,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pasteHtmlButton">
+          <widget class="QPushButton" name="pasteDecodedButton">
            <property name="toolTip">
             <string>Paste</string>
            </property>
@@ -151,7 +127,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="clearHtmlButton">
+          <widget class="QPushButton" name="clearDecodedButton">
            <property name="toolTip">
             <string>Clear</string>
            </property>
@@ -166,7 +142,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        <widget class="QPlainTextEdit" name="decoded"/>
        </item>
       </layout>
      </widget>
@@ -177,7 +153,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Output</string>
+            <string>Encoded</string>
            </property>
           </widget>
          </item>
@@ -195,7 +171,20 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="copyCodedButton">
+          <widget class="QPushButton" name="openEncodedButton">
+           <property name="toolTip">
+            <string>Open</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="copyEncodedButton">
            <property name="toolTip">
             <string>Copy</string>
            </property>
@@ -207,10 +196,36 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="pasteEncodedButton">
+           <property name="toolTip">
+            <string>Paste</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearEncodedButton">
+           <property name="toolTip">
+            <string>Clear</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditClear"/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+        <widget class="QPlainTextEdit" name="encoded"/>
        </item>
       </layout>
      </widget>
@@ -222,6 +237,5 @@
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

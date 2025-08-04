@@ -1,6 +1,5 @@
 #include "base64coderdecoderwidget.h"
 #include "src/widgets/ui_base64coderdecoderwidget.h"
-
 #include <QFileDialog>
 
 Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)

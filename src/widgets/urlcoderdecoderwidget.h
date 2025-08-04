@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::UrlCoderDecoderWidget *ui;
+    bool coding {false};
+
+private slots:
+    void encode();
+    void decode();
 };
 
 #endif // URLCODERDECODERWIDGET_H
