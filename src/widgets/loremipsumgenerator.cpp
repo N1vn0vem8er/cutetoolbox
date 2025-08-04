@@ -12,6 +12,7 @@ LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &LoremIpsumGenerator::generate);
     connect(ui->beginWithLICheckBox, &QCheckBox::clicked, this, &LoremIpsumGenerator::generate);
     connect(ui->regenerateButton, &QPushButton::clicked, this, &LoremIpsumGenerator::generate);
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->plainTextEdit->selectAll(); ui->plainTextEdit->copy();});
     generate();
 }
 
