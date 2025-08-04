@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(CuteDevToolBox LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent)
 
 qt_standard_project_setup()
 
@@ -44,6 +44,7 @@ target_link_libraries(CuteDevToolBox
         Qt::Core
         Qt::Widgets
         Qt::Xml
+        Qt::Concurrent
 )
 
 include(GNUInstallDirs)

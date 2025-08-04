@@ -1,6 +1,5 @@
 #include "uuidgeneratorwidget.h"
 #include "src/widgets/ui_uuidgeneratorwidget.h"
-
 #include <QUuid>
 
 UUIDGeneratorWidget::UUIDGeneratorWidget(QWidget *parent)
