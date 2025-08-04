@@ -20,7 +20,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="urlSafeCheckBox">
        <property name="text">
         <string>Url safe</string>
        </property>
@@ -40,7 +40,7 @@
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Input</string>
+            <string>Text</string>
            </property>
           </widget>
          </item>
@@ -112,7 +112,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        <widget class="QPlainTextEdit" name="text"/>
        </item>
       </layout>
      </widget>
@@ -195,7 +195,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+        <widget class="QPlainTextEdit" name="base64"/>
        </item>
       </layout>
      </widget>

@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::Base64CoderDecoderWidget *ui;
+    bool coding {false};
+
+private slots:
+    void encode();
+    void decode();
 };
 
 #endif // BASE64CODERDECODERWIDGET_H
