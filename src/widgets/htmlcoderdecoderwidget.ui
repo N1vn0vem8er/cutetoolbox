@@ -101,7 +101,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        <widget class="QPlainTextEdit" name="html"/>
        </item>
       </layout>
      </widget>
@@ -112,7 +112,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Coded</string>
+            <string>Encoded</string>
            </property>
           </widget>
          </item>
@@ -184,7 +184,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+        <widget class="QPlainTextEdit" name="encoded"/>
        </item>
       </layout>
      </widget>

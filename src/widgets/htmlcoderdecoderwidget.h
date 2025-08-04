@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::HTMLCoderDecoderWidget *ui;
+    bool coding {false};
+
+private slots:
+    void encode();
+    void decode();
 };
 
 #endif // HTMLCODERDECODERWIDGET_H
