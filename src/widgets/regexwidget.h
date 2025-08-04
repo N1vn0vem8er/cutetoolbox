@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::RegexWidget *ui;
+
+private slots:
+    void regex();
 };
 
 #endif // REGEXWIDGET_H

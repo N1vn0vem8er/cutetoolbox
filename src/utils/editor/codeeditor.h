@@ -34,6 +34,7 @@ public:
 
 public slots:
     void copyAll();
+    void highlightTextSequence(const QString &text, bool caseSensitive);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

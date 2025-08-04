@@ -90,6 +90,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="errorLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="openTextButton">
        <property name="toolTip">
         <string>Open</string>
@@ -144,7 +151,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit">
+    <widget class="CodeEditor" name="plainTextEdit">
      <property name="placeholderText">
       <string>Put text here</string>
      </property>
@@ -152,6 +159,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>editor/codeeditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
