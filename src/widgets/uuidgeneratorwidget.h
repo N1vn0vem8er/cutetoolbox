@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::UUIDGeneratorWidget *ui;
+
+private slots:
+    void generate();
 };
 
 #endif // UUIDGENERATORWIDGET_H
