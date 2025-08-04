@@ -30,10 +30,26 @@
       <widget class="QSpinBox" name="spinBox"/>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox"/>
+      <widget class="QComboBox" name="comboBox">
+       <item>
+        <property name="text">
+         <string>Words</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Sentences</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Paragraphs</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="beginWithLICheckBox">
        <property name="text">
         <string>Begin with &quot;Lorem ipsum dolor sit amet&quot;</string>
        </property>
@@ -62,6 +78,19 @@
        </property>
        <property name="icon">
         <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="regenerateButton">
+       <property name="toolTip">
+        <string>Generate</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="QIcon::ThemeIcon::ViewRefresh"/>
        </property>
       </widget>
      </item>
