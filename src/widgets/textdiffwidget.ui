@@ -101,7 +101,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        <widget class="CodeEditor" name="oldText"/>
        </item>
       </layout>
      </widget>
@@ -184,7 +184,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+        <widget class="CodeEditor" name="newText"/>
        </item>
       </layout>
      </widget>
@@ -213,7 +213,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="copyDiffButton">
            <property name="toolTip">
             <string>Copy</string>
            </property>
@@ -228,7 +228,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_3"/>
+        <widget class="QPlainTextEdit" name="diff"/>
        </item>
       </layout>
      </widget>
@@ -236,6 +236,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>editor/codeeditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

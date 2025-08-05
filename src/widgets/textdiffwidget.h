@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::TextDiffWidget *ui;
+
+private slots:
+    void showDiff();
 };
 
 #endif // TEXTDIFFWIDGET_H
