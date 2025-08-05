@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(CuteDevToolBox LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore)
 
 qt_standard_project_setup()
 
@@ -31,6 +31,8 @@ qt_add_executable(CuteDevToolBox
     src/widgets/gzipwidget.h src/widgets/gzipwidget.cpp src/widgets/gzipwidget.ui
     src/widgets/jsonyamlconverter.h src/widgets/jsonyamlconverter.cpp src/widgets/jsonyamlconverter.ui
     src/utils/editor/codeeditor.cpp src/utils/editor/codeeditor.h src/utils/editor/linenumberarea.cpp src/utils/editor/linenumberarea.h
+    src/utils/document.h src/utils/document.cpp
+    src/utils/previewpage.h src/utils/previewpage.cpp
 )
 
 include_directories(
@@ -45,6 +47,7 @@ target_link_libraries(CuteDevToolBox
         Qt::Widgets
         Qt::Xml
         Qt::Concurrent
+        Qt::WebEngineCore
 )
 
 include(GNUInstallDirs)

@@ -12,3 +12,8 @@ MarkdownWidget::~MarkdownWidget()
 {
     delete ui;
 }
+
+void MarkdownWidget::displayDocument()
+{
+
+}

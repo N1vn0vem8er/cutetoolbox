@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::MarkdownWidget *ui;
+
+private slots:
+    void displayDocument();
 };
 
 #endif // MARKDOWNWIDGET_H
