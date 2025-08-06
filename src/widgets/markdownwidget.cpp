@@ -2,7 +2,10 @@
 #include "previewpage.h"
 #include "src/widgets/ui_markdownwidget.h"
 
+#include <QPrintDialog>
+#include <QPrinter>
 #include <QWebChannel>
+#include <qdir.h>
 
 MarkdownWidget::MarkdownWidget(QWidget *parent)
     : QWidget(parent)

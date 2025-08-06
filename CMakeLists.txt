@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.19)
 project(CuteDevToolBox LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport)
 
 qt_standard_project_setup()
 
+set(CMAKE_AUTORCC ON)
+
 qt_add_executable(CuteDevToolBox
     WIN32 MACOSX_BUNDLE
+    resources/resources.qrc
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
@@ -33,7 +36,6 @@ qt_add_executable(CuteDevToolBox
     src/utils/editor/codeeditor.cpp src/utils/editor/codeeditor.h src/utils/editor/linenumberarea.cpp src/utils/editor/linenumberarea.h
     src/utils/document.h src/utils/document.cpp
     src/utils/previewpage.h src/utils/previewpage.cpp
-    resources/resources.qrc
 )
 
 include_directories(
@@ -50,6 +52,7 @@ target_link_libraries(CuteDevToolBox
         Qt::Concurrent
         Qt::WebEngineCore
         Qt::WebEngineWidgets
+        Qt::PrintSupport
 )
 
 include(GNUInstallDirs)

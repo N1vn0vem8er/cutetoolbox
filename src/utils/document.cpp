@@ -6,8 +6,8 @@ Document::Document(QObject *parent)
 
 void Document::setText(const QString &text)
 {
-    if(this->text == text)
+    if(m_text == text)
         return;
-    this->text = text;
-    emit textChanged(this->text);
+    m_text = text;
+    emit textChanged(m_text);
 }
