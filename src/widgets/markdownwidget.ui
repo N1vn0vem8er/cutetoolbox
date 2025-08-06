@@ -99,7 +99,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="verticalLayoutWidget_2">
-      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
@@ -131,7 +131,13 @@
         </layout>
        </item>
        <item>
-        <widget class="QWidget" name="widget" native="true"/>
+        <widget class="QWebEngineView" name="preview">
+         <property name="url">
+          <url>
+           <string>about:blank</string>
+          </url>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -140,6 +146,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header>qwebengineview.h</header>
+  </customwidget>
   <customwidget>
    <class>CodeEditor</class>
    <extends>QPlainTextEdit</extends>

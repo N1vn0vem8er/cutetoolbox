@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(CuteDevToolBox LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets)
 
 qt_standard_project_setup()
 
@@ -48,6 +48,7 @@ target_link_libraries(CuteDevToolBox
         Qt::Xml
         Qt::Concurrent
         Qt::WebEngineCore
+        Qt::WebEngineWidgets
 )
 
 include(GNUInstallDirs)
