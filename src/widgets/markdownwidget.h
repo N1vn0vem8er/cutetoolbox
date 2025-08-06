@@ -2,6 +2,7 @@
 #define MARKDOWNWIDGET_H
 
 #include "document.h"
+#include "syntaxhighlighters/markdownsyntaxhighlighter.h"
 #include <QWidget>
 
 namespace Ui {
@@ -19,6 +20,7 @@ public:
 private:
     Ui::MarkdownWidget *ui;
     Document document;
+    MarkdownSyntaxHighlighter* syntaxHighlighter {nullptr};
 };
 
 #endif // MARKDOWNWIDGET_H

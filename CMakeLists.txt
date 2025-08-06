@@ -37,6 +37,7 @@ qt_add_executable(CuteDevToolBox
     src/utils/editor/codeeditor.cpp src/utils/editor/codeeditor.h src/utils/editor/linenumberarea.cpp src/utils/editor/linenumberarea.h
     src/utils/document.h src/utils/document.cpp
     src/utils/previewpage.h src/utils/previewpage.cpp
+    src/utils/syntaxhighlighters/markdownsyntaxhighlighter.h src/utils/syntaxhighlighters/markdownsyntaxhighlighter.cpp
 )
 
 include_directories(
