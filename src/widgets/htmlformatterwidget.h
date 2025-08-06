@@ -1,6 +1,7 @@
 #ifndef HTMLFORMATTERWIDGET_H
 #define HTMLFORMATTERWIDGET_H
 
+#include "syntaxhighlighters/htmlsyntaxhighlighter.h"
 #include <QWidget>
 
 namespace Ui {
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::HTMLFormatterWidget *ui;
+    HTMLSyntaxHighlighter* syntaxHighlighter {nullptr};
 
 private slots:
     void format();

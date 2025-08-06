@@ -9,6 +9,7 @@ HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     ui->spinBox->setValue(4);
+    syntaxHighlighter = new HTMLSyntaxHighlighter(ui->codeEditor->document());
     connect(ui->formatButton, &QPushButton::clicked, this, &HTMLFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);
@@ -18,6 +19,8 @@ HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
 
 HTMLFormatterWidget::~HTMLFormatterWidget()
 {
+    if(syntaxHighlighter)
+        syntaxHighlighter->deleteLater();
     delete ui;
 }
 

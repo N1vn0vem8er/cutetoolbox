@@ -2,7 +2,6 @@
 #include "previewpage.h"
 #include "src/widgets/ui_markdownwidget.h"
 #include "syntaxhighlighters/markdownsyntaxhighlighter.h"
-
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QWebChannel>
