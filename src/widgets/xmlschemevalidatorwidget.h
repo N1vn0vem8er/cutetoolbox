@@ -2,6 +2,8 @@
 #define XMLSCHEMEVALIDATORWIDGET_H
 
 #include <QWidget>
+#include <libxml/xmlschemas.h>
+#include <qlabel.h>
 
 namespace Ui {
 class XMLSchemeValidatorWidget;
@@ -17,6 +19,14 @@ public:
 
 private:
     Ui::XMLSchemeValidatorWidget *ui;
+    QStringList errors;
+    QLabel* infoLabel {nullptr};
+
+private:
+    static void handleErrorMsg(void* userData, xmlErrorPtr error);
+
+private slots:
+    void validate();
 };
 
 #endif // XMLSCHEMEVALIDATORWIDGET_H
