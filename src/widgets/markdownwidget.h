@@ -1,6 +1,7 @@
 #ifndef MARKDOWNWIDGET_H
 #define MARKDOWNWIDGET_H
 
+#include "document.h"
 #include <QWidget>
 
 namespace Ui {
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::MarkdownWidget *ui;
+    Document document;
 
 private slots:
     void displayDocument();
