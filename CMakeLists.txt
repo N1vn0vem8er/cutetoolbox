@@ -40,6 +40,7 @@ qt_add_executable(CuteDevToolBox
     src/utils/previewpage.h src/utils/previewpage.cpp
     src/utils/syntaxhighlighters/markdownsyntaxhighlighter.h src/utils/syntaxhighlighters/markdownsyntaxhighlighter.cpp
     src/utils/syntaxhighlighters/htmlsyntaxhighlighter.h src/utils/syntaxhighlighters/htmlsyntaxhighlighter.cpp
+    src/utils/syntaxhighlighters/jsonsyntaxhighlighter.h src/utils/syntaxhighlighters/jsonsyntaxhighlighter.cpp
 )
 
 include_directories(

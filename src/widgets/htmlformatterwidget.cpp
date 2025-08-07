@@ -19,8 +19,6 @@ HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
 
 HTMLFormatterWidget::~HTMLFormatterWidget()
 {
-    if(syntaxHighlighter)
-        syntaxHighlighter->deleteLater();
     delete ui;
 }
 

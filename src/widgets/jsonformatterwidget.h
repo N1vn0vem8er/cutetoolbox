@@ -1,6 +1,7 @@
 #ifndef JSONFORMATTERWIDGET_H
 #define JSONFORMATTERWIDGET_H
 
+#include "syntaxhighlighters/jsonsyntaxhighlighter.h"
 #include <QWidget>
 
 namespace Ui {
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::JsonFormatterWidget *ui;
+    JSONSyntaxHighlighter* syntaxHighlighter {nullptr};
 
 private slots:
     void format();

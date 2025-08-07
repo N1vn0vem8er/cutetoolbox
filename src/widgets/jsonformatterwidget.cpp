@@ -10,6 +10,7 @@ JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
     , ui(new Ui::JsonFormatterWidget)
 {
     ui->setupUi(this);
+    syntaxHighlighter = new JSONSyntaxHighlighter(ui->codeEditor->document());
     connect(ui->formatButton, &QPushButton::clicked, this, &JsonFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);

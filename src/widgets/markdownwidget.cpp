@@ -25,7 +25,5 @@ MarkdownWidget::MarkdownWidget(QWidget *parent)
 
 MarkdownWidget::~MarkdownWidget()
 {
-    if(syntaxHighlighter)
-        syntaxHighlighter->deleteLater();
     delete ui;
 }
