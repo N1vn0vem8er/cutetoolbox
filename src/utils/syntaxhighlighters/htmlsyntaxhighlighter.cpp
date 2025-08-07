@@ -1,11 +1,11 @@
 #include "htmlsyntaxhighlighter.h"
 
-HTMLSyntaxHighlighter::HTMLSyntaxHighlighter(QObject *parent)
+HTMLSyntaxHighlighter::HTMLSyntaxHighlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
 {
     HighlightingRule rule;
     QTextCharFormat format;
-    format.setForeground(QColor::fromRgb(200, 0, 77));
+    format.setForeground(QColor::fromRgb(0, 100, 255));
     rule.pattern = QRegularExpression(QStringLiteral(R"(</?[a-zA-Z0-9]+.*?>)"));
     rule.format = format;
     highlightingRules.append(rule);

@@ -8,7 +8,7 @@ class HTMLSyntaxHighlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 public:
-    explicit HTMLSyntaxHighlighter(QObject *parent = nullptr);
+    explicit HTMLSyntaxHighlighter(QTextDocument *parent = nullptr);
 
 private:
     struct HighlightingRule
