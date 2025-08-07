@@ -24,8 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Hash"), QIcon());
     addMenuItem(tr("Lorem ipsum"), QIcon());
     addMenuItem(tr("UUID"), QIcon());
-    addMenuItem(tr("Random text"), QIcon());
-    addMenuItem(tr("Random number"), QIcon());
+    addMenuItem(tr("Random Text"), QIcon());
+    addMenuItem(tr("Random Number"), QIcon());
+    addMenuItem(tr("Chmod Calculator"), QIcon());
     addMenuItem(tr("Qr code"), QIcon());
     addMenuItem(tr("Text"), QIcon(), false);
     addMenuItem(tr("Regex"), QIcon());

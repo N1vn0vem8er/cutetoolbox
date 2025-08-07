@@ -42,6 +42,7 @@
        <widget class="UUIDGeneratorWidget" name="uuidGenerator"/>
        <widget class="RandomTextGeneratorWidget" name="randomTextGenerator"/>
        <widget class="RandomNumberGeneratorWidget" name="randomNumberGenerator"/>
+       <widget class="ChmodCalculatorWidget" name="chmodCalculator"/>
        <widget class="QrCodeGenerator" name="qrCodeGenerator"/>
        <widget class="RegexWidget" name="regexWidget"/>
        <widget class="TextDiffWidget" name="textDiff"/>
@@ -185,6 +186,12 @@
    <class>RandomNumberGeneratorWidget</class>
    <extends>QWidget</extends>
    <header>randomnumbergeneratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ChmodCalculatorWidget</class>
+   <extends>QWidget</extends>
+   <header>chmodcalculatorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

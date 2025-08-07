@@ -42,6 +42,7 @@ qt_add_executable(CuteDevToolBox
     src/utils/syntaxhighlighters/htmlsyntaxhighlighter.h src/utils/syntaxhighlighters/htmlsyntaxhighlighter.cpp
     src/utils/syntaxhighlighters/jsonsyntaxhighlighter.h src/utils/syntaxhighlighters/jsonsyntaxhighlighter.cpp
     src/widgets/randomnumbergeneratorwidget.h src/widgets/randomnumbergeneratorwidget.cpp src/widgets/randomnumbergeneratorwidget.ui
+    src/widgets/chmodcalculatorwidget.h src/widgets/chmodcalculatorwidget.cpp src/widgets/chmodcalculatorwidget.ui
 )
 
 include_directories(
