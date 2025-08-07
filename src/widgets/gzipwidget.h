@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::GZipWidget *ui;
+    bool compressing {false};
+
+private slots:
+    void compress();
+    void decompress();
 };
 
 #endif // GZIPWIDGET_H

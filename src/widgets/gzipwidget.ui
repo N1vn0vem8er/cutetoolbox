@@ -16,38 +16,7 @@
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QRadioButton" name="compresButton">
-       <property name="text">
-        <string>Compres</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="decompresButton">
-       <property name="text">
-        <string>Decompres</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
+  <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1">
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
@@ -60,7 +29,7 @@
          <item>
           <widget class="QLabel" name="label">
            <property name="text">
-            <string>Input</string>
+            <string>Text</string>
            </property>
           </widget>
          </item>
@@ -78,7 +47,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="openButton">
+          <widget class="QPushButton" name="openTextButton">
            <property name="toolTip">
             <string>Open</string>
            </property>
@@ -91,7 +60,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="copyButton">
+          <widget class="QPushButton" name="copyTextButton">
            <property name="toolTip">
             <string>Copy</string>
            </property>
@@ -104,7 +73,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pasteButton">
+          <widget class="QPushButton" name="pasteTextButton">
            <property name="toolTip">
             <string>Paste</string>
            </property>
@@ -117,7 +86,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="clearButton">
+          <widget class="QPushButton" name="clearTextButton">
            <property name="toolTip">
             <string>Clear</string>
            </property>
@@ -132,7 +101,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        <widget class="QPlainTextEdit" name="input"/>
        </item>
       </layout>
      </widget>
@@ -143,7 +112,7 @@
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Output</string>
+            <string>GZip</string>
            </property>
           </widget>
          </item>
@@ -161,6 +130,19 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="openGZipButton">
+           <property name="toolTip">
+            <string>Open</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="copyOutputButton">
            <property name="toolTip">
             <string>Copy</string>
@@ -173,10 +155,36 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="pasteGZipButton">
+           <property name="toolTip">
+            <string>Paste</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearGZipButton">
+           <property name="toolTip">
+            <string>Clear</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditClear"/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+        <widget class="QPlainTextEdit" name="output"/>
        </item>
       </layout>
      </widget>

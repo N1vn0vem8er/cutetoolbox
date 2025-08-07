@@ -3,6 +3,7 @@ project(CuteDevToolBox LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport)
 find_package(LibXml2 REQUIRED)
+find_package(ZLIB)
 
 qt_standard_project_setup()
 
@@ -57,6 +58,7 @@ target_link_libraries(CuteDevToolBox
         Qt::WebEngineWidgets
         Qt::PrintSupport
         LibXml2::LibXml2
+        ZLIB::ZLIB
 )
 
 include(GNUInstallDirs)
