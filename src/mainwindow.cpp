@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Lorem ipsum"), QIcon());
     addMenuItem(tr("UUID"), QIcon());
     addMenuItem(tr("Random text"), QIcon());
+    addMenuItem(tr("Random number"), QIcon());
     addMenuItem(tr("Qr code"), QIcon());
     addMenuItem(tr("Text"), QIcon(), false);
     addMenuItem(tr("Regex"), QIcon());

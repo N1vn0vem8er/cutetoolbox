@@ -41,6 +41,7 @@
        <widget class="LoremIpsumGenerator" name="loremIpsumGenerator"/>
        <widget class="UUIDGeneratorWidget" name="uuidGenerator"/>
        <widget class="RandomTextGeneratorWidget" name="randomTextGenerator"/>
+       <widget class="RandomNumberGeneratorWidget" name="randomNumberGenerator"/>
        <widget class="QrCodeGenerator" name="qrCodeGenerator"/>
        <widget class="RegexWidget" name="regexWidget"/>
        <widget class="TextDiffWidget" name="textDiff"/>
@@ -178,6 +179,12 @@
    <class>JsonYamlConverter</class>
    <extends>QWidget</extends>
    <header>jsonyamlconverter.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RandomNumberGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>randomnumbergeneratorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
