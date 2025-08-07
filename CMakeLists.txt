@@ -59,6 +59,7 @@ target_link_libraries(CuteDevToolBox
         Qt::PrintSupport
         LibXml2::LibXml2
         ZLIB::ZLIB
+        qrcodegencpp
 )
 
 include(GNUInstallDirs)
