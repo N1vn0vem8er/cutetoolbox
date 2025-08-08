@@ -17,6 +17,14 @@ public:
 
 private:
     Ui::NumberBasesWidget *ui;
+
+private slots:
+    void fromBin();
+    void fromDec();
+    void fromOct();
+    void fromHex();
+    void fromASCII();
+    void fromUTF8();
 };
 
 #endif // NUMBERBASESWIDGET_H
