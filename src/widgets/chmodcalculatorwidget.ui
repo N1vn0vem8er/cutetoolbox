@@ -200,9 +200,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="saveOther">
+        <widget class="QCheckBox" name="writeOther">
          <property name="text">
-          <string>Save</string>
+          <string>Write</string>
          </property>
         </widget>
        </item>
@@ -245,9 +245,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="saveGroup">
+        <widget class="QCheckBox" name="writeGroup">
          <property name="text">
-          <string>Save</string>
+          <string>Write</string>
          </property>
         </widget>
        </item>
@@ -290,9 +290,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="saveOwner">
+        <widget class="QCheckBox" name="writeOwner">
          <property name="text">
-          <string>Save</string>
+          <string>Write</string>
          </property>
         </widget>
        </item>

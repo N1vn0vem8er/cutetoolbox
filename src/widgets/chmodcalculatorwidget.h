@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::ChmodCalculatorWidget *ui;
+
+private slots:
+    void generate();
+    void updateCheckboxes();
 };
 
 #endif // CHMODCALCULATORWIDGET_H
