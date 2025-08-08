@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::TimestampWidget *ui;
+
+private slots:
+    void updateTimestamp();
+    void setDateTime();
 };
 
 #endif // TIMESTAMPWIDGET_H

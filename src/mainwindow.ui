@@ -50,6 +50,7 @@
        <widget class="XMLSchemeValidatorWidget" name="xmlSchemeValidator"/>
        <widget class="JSONSchemaValidatorWidget" name="jsonSchemaValidator"/>
        <widget class="JsonYamlConverter" name="jsonYamlConverter"/>
+       <widget class="TimestampWidget" name="timestamp"/>
       </widget>
      </widget>
     </item>
@@ -192,6 +193,12 @@
    <class>ChmodCalculatorWidget</class>
    <extends>QWidget</extends>
    <header>chmodcalculatorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TimestampWidget</class>
+   <extends>QWidget</extends>
+   <header>timestampwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
