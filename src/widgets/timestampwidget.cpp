@@ -11,6 +11,14 @@ TimestampWidget::TimestampWidget(QWidget *parent)
     connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, [&]{ui->currentTime->setText(QString::number(ui->dateTimeEdit->dateTime().currentSecsSinceEpoch()));});
     connect(ui->currentTime, &QLineEdit::editingFinished, this, [&]{ui->dateTimeEdit->setDateTime(QDateTime::fromSecsSinceEpoch(ui->currentTime->text().toInt()));});
     connect(ui->currentTime, &QLineEdit::textChanged, this, &TimestampWidget::setDateTime);
+    connect(ui->copyISO8601Button, &QPushButton::clicked, this, [&]{ui->iso8601->selectAll(); ui->iso8601->copy();});
+    connect(ui->copyRFC2822Button, &QPushButton::clicked, this, [&]{ui->rfc2822->selectAll(); ui->rfc2822->copy();});
+    connect(ui->copyShortTimeButton, &QPushButton::clicked, this, [&]{ui->shortTime->selectAll(); ui->shortTime->copy();});
+    connect(ui->copyShortDateButton, &QPushButton::clicked, this, [&]{ui->shortDate->selectAll(); ui->shortDate->copy();});
+    connect(ui->copyLongDateButton, &QPushButton::clicked, this, [&]{ui->longDate->selectAll(); ui->longDate->copy();});
+    connect(ui->copyLongTimeButton, &QPushButton::clicked, this, [&]{ui->longTime->selectAll(); ui->longTime->copy();});
+    connect(ui->copyFullDateButton, &QPushButton::clicked, this, [&]{ui->fullTimeDate->selectAll(); ui->fullTimeDate->copy();});
+    connect(ui->copyCurrentTimeButton, &QPushButton::clicked, this, [&]{ui->currentTime->selectAll(); ui->currentTime->copy();});
     updateTimestamp();
     setDateTime();
 }
