@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(CuteDevToolBox LANGUAGES CXX)
+project(CuteToolBox LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport)
 find_package(LibXml2 REQUIRED)
@@ -9,7 +9,7 @@ qt_standard_project_setup()
 
 set(CMAKE_AUTORCC ON)
 
-qt_add_executable(CuteDevToolBox
+qt_add_executable(CuteToolBox
     WIN32 MACOSX_BUNDLE
     resources/resources.qrc
     src/main.cpp
@@ -53,7 +53,7 @@ include_directories(
     src/utils
 )
 
-target_link_libraries(CuteDevToolBox
+target_link_libraries(CuteToolBox
     PRIVATE
         Qt::Core
         Qt::Widgets
@@ -69,14 +69,14 @@ target_link_libraries(CuteDevToolBox
 
 include(GNUInstallDirs)
 
-install(TARGETS CuteDevToolBox
+install(TARGETS CuteToolBox
     BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 qt_generate_deploy_app_script(
-    TARGET CuteDevToolBox
+    TARGET CuteToolBox
     OUTPUT_SCRIPT deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
