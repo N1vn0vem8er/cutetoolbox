@@ -44,6 +44,7 @@ qt_add_executable(CuteDevToolBox
     src/widgets/randomnumbergeneratorwidget.h src/widgets/randomnumbergeneratorwidget.cpp src/widgets/randomnumbergeneratorwidget.ui
     src/widgets/chmodcalculatorwidget.h src/widgets/chmodcalculatorwidget.cpp src/widgets/chmodcalculatorwidget.ui
     src/widgets/timestampwidget.h src/widgets/timestampwidget.cpp src/widgets/timestampwidget.ui
+    src/widgets/numberbaseswidget.h src/widgets/numberbaseswidget.cpp src/widgets/numberbaseswidget.ui
 )
 
 include_directories(

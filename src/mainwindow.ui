@@ -51,6 +51,7 @@
        <widget class="JSONSchemaValidatorWidget" name="jsonSchemaValidator"/>
        <widget class="JsonYamlConverter" name="jsonYamlConverter"/>
        <widget class="TimestampWidget" name="timestamp"/>
+       <widget class="NumberBasesWidget" name="numberBases"/>
       </widget>
      </widget>
     </item>
@@ -199,6 +200,12 @@
    <class>TimestampWidget</class>
    <extends>QWidget</extends>
    <header>timestampwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NumberBasesWidget</class>
+   <extends>QWidget</extends>
+   <header>numberbaseswidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
