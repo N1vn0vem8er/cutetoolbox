@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::QDateTimeConverterWidget *ui;
+
+private slots:
+    void format();
 };
 
 #endif // QDATETIMECONVERTERWIDGET_H

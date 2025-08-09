@@ -35,6 +35,19 @@
      <item>
       <widget class="QDateTimeEdit" name="dateTimeEdit"/>
      </item>
+     <item>
+      <widget class="QPushButton" name="getCurrentDateTimeButton">
+       <property name="toolTip">
+        <string>Get current date time</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="QIcon::ThemeIcon::ViewRefresh"/>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
