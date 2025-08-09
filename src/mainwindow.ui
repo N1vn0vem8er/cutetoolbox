@@ -52,6 +52,7 @@
        <widget class="JsonYamlConverter" name="jsonYamlConverter"/>
        <widget class="TimestampWidget" name="timestamp"/>
        <widget class="NumberBasesWidget" name="numberBases"/>
+       <widget class="QDateTimeConverterWidget" name="qDateTimeConverter"/>
       </widget>
      </widget>
     </item>
@@ -206,6 +207,12 @@
    <class>NumberBasesWidget</class>
    <extends>QWidget</extends>
    <header>numberbaseswidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QDateTimeConverterWidget</class>
+   <extends>QWidget</extends>
+   <header>qdatetimeconverterwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

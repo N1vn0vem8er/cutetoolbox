@@ -45,6 +45,7 @@ qt_add_executable(CuteToolBox
     src/widgets/chmodcalculatorwidget.h src/widgets/chmodcalculatorwidget.cpp src/widgets/chmodcalculatorwidget.ui
     src/widgets/timestampwidget.h src/widgets/timestampwidget.cpp src/widgets/timestampwidget.ui
     src/widgets/numberbaseswidget.h src/widgets/numberbaseswidget.cpp src/widgets/numberbaseswidget.ui
+    src/widgets/qdatetimeconverterwidget.h src/widgets/qdatetimeconverterwidget.cpp src/widgets/qdatetimeconverterwidget.ui
 )
 
 include_directories(
