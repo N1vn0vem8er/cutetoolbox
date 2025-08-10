@@ -20,6 +20,12 @@ ChmodCalculatorWidget::ChmodCalculatorWidget(QWidget *parent)
     connect(ui->sticky, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
     connect(ui->numeric, &QLineEdit::editingFinished, this, &ChmodCalculatorWidget::updateCheckboxesNumeric);
     connect(ui->symbolic, &QLineEdit::editingFinished, this, &ChmodCalculatorWidget::updateCheckBoxesSymbolic);
+    connect(ui->copyNumericButton, &QPushButton::clicked, this, [&]{ui->numeric->selectAll(); ui->numeric->copy();});
+    connect(ui->pasteNumericButton, &QPushButton::clicked, ui->numeric, &QLineEdit::paste);
+    connect(ui->clearNumericButton, &QPushButton::clicked, ui->numeric, &QLineEdit::clear);
+    connect(ui->copySymbolicButton, &QPushButton::clicked, this, [&]{ui->symbolic->selectAll(); ui->symbolic->copy();});
+    connect(ui->pasteSymbolicButton, &QPushButton::clicked, ui->symbolic, &QLineEdit::paste);
+    connect(ui->clearSymbolicButton, &QPushButton::clicked, ui->symbolic, &QLineEdit::clear);
 }
 
 ChmodCalculatorWidget::~ChmodCalculatorWidget()
