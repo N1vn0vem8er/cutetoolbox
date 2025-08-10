@@ -18,7 +18,8 @@ ChmodCalculatorWidget::ChmodCalculatorWidget(QWidget *parent)
     connect(ui->setuid, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
     connect(ui->setgui, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
     connect(ui->sticky, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
-    connect(ui->numeric, &QLineEdit::editingFinished, this, &ChmodCalculatorWidget::updateCheckboxes);
+    connect(ui->numeric, &QLineEdit::editingFinished, this, &ChmodCalculatorWidget::updateCheckboxesNumeric);
+    connect(ui->symbolic, &QLineEdit::editingFinished, this, &ChmodCalculatorWidget::updateCheckBoxesSymbolic);
 }
 
 ChmodCalculatorWidget::~ChmodCalculatorWidget()
@@ -100,7 +101,9 @@ void ChmodCalculatorWidget::generate()
             else if(type == Type::Other && (specialPermissions & 1))
             {
                 result += "T";
-            } else {
+            }
+            else
+            {
                 result += "-";
             }
         }
@@ -109,39 +112,65 @@ void ChmodCalculatorWidget::generate()
     ui->symbolic->setText(getSymbolic(userPermissions, special, Type::User) + getSymbolic(groupPermissions, special, Type::Group) + getSymbolic(otherPermissions, special, Type::Other));
 }
 
-void ChmodCalculatorWidget::updateCheckboxes()
+void ChmodCalculatorWidget::updateCheckboxesNumeric()
 {
     const int READ_PERMISSION = 4;
     const int WRITE_PERMISSION = 2;
     const int RUN_PERMISSION = 1;
     const QString numeric = ui->numeric->text();
-    if(numeric.length() < 3 || numeric.length() > 4)
-        return;
-    int index = 0;
-    if(numeric.length() == 4)
+    if(numeric.length() == 3 || numeric.length() == 4)
     {
-        const int special = numeric.at(0).digitValue();
-        ui->setuid->setChecked(special & 4);
-        ui->setgui->setChecked(special & 2);
-        ui->sticky->setChecked(special & 1);
-        index = 1;
+        int index = 0;
+        if(numeric.length() == 4)
+        {
+            const int special = numeric.at(0).digitValue();
+            ui->setuid->setChecked(special & 4);
+            ui->setgui->setChecked(special & 2);
+            ui->sticky->setChecked(special & 1);
+            index = 1;
+        }
+        else
+        {
+            ui->setuid->setChecked(false);
+            ui->setgui->setChecked(false);
+            ui->sticky->setChecked(false);
+        }
+        const int userPermissions = numeric.at(index++).digitValue();
+        ui->readOwner->setChecked(userPermissions & READ_PERMISSION);
+        ui->runOwner->setChecked(userPermissions & RUN_PERMISSION);
+        ui->writeOwner->setChecked(userPermissions & WRITE_PERMISSION);
+        const int groupPermissions = numeric.at(index++).digitValue();
+        ui->readGroup->setChecked(groupPermissions & READ_PERMISSION);
+        ui->runGroup->setChecked(groupPermissions & RUN_PERMISSION);
+        ui->writeGroup->setChecked(groupPermissions & WRITE_PERMISSION);
+        const int otherPermissions = numeric.at(index++).digitValue();
+        ui->readOther->setChecked(otherPermissions & READ_PERMISSION);
+        ui->runOther->setChecked(otherPermissions & RUN_PERMISSION);
+        ui->writeOther->setChecked(otherPermissions & WRITE_PERMISSION);
     }
-    else
+    generate();
+}
+
+void ChmodCalculatorWidget::updateCheckBoxesSymbolic()
+{
+    const QString symbolic = ui->symbolic->text();
+    if(symbolic.length() == 9)
     {
-        ui->setuid->setChecked(false);
-        ui->setgui->setChecked(false);
-        ui->sticky->setChecked(false);
+        int index = 0;
+        ui->readOwner->setChecked(symbolic.at(index++) == 'r');
+        ui->writeOwner->setChecked(symbolic.at(index++) == 'w');
+        ui->runOwner->setChecked(symbolic.at(index) == 'x' || symbolic.at(index) == 's');
+        ui->setuid->setChecked(symbolic.at(index) == 'S' || symbolic.at(index) == 's');
+        index++;
+        ui->readGroup->setChecked(symbolic.at(index++) == 'r');
+        ui->writeGroup->setChecked(symbolic.at(index++) == 'w');
+        ui->runGroup->setChecked(symbolic.at(index) == 'x' || symbolic.at(index) == 's');
+        ui->setgui->setChecked(symbolic.at(index) == 'S' || symbolic.at(index) == 's');
+        index++;
+        ui->readOther->setChecked(symbolic.at(index++) == 'r');
+        ui->writeOther->setChecked(symbolic.at(index++) == 'w');
+        ui->runOther->setChecked(symbolic.at(index) == 'x' || symbolic.at(index) == 't');
+        ui->sticky->setChecked(symbolic.at(index) == 'T' || symbolic.at(index) == 't');
     }
-    const int userPermissions = numeric.at(index++).digitValue();
-    ui->readOwner->setChecked(userPermissions & READ_PERMISSION);
-    ui->runOwner->setChecked(userPermissions & RUN_PERMISSION);
-    ui->writeOwner->setChecked(userPermissions & WRITE_PERMISSION);
-    const int groupPermissions = numeric.at(index++).digitValue();
-    ui->readGroup->setChecked(groupPermissions & READ_PERMISSION);
-    ui->runGroup->setChecked(groupPermissions & RUN_PERMISSION);
-    ui->writeGroup->setChecked(groupPermissions & WRITE_PERMISSION);
-    const int otherPermissions = numeric.at(index++).digitValue();
-    ui->readOther->setChecked(otherPermissions & READ_PERMISSION);
-    ui->runOther->setChecked(otherPermissions & RUN_PERMISSION);
-    ui->writeOther->setChecked(otherPermissions & WRITE_PERMISSION);
+    generate();
 }

@@ -20,7 +20,8 @@ private:
 
 private slots:
     void generate();
-    void updateCheckboxes();
+    void updateCheckboxesNumeric();
+    void updateCheckBoxesSymbolic();
 };
 
 #endif // CHMODCALCULATORWIDGET_H
