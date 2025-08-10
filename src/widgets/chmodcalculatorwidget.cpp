@@ -15,6 +15,9 @@ ChmodCalculatorWidget::ChmodCalculatorWidget(QWidget *parent)
     connect(ui->readOther, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
     connect(ui->writeOther, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
     connect(ui->runOther, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
+    connect(ui->setuid, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
+    connect(ui->setgui, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
+    connect(ui->sticky, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
 }
 
 ChmodCalculatorWidget::~ChmodCalculatorWidget()
@@ -45,15 +48,64 @@ void ChmodCalculatorWidget::generate()
         otherPermissions+=2;
     if(ui->runOther->isChecked())
         otherPermissions+=1;
+    int special = 0;
+    if(ui->setuid->isChecked())
+        special+=4;
+    if(ui->setgui->isChecked())
+        special+=2;
+    if(ui->sticky->isChecked())
+        special+=1;
     ui->numeric->setText(QString("%1%2%3").arg(userPermissions).arg(groupPermissions).arg(otherPermissions));
-    auto getSymbolic = [&](int permissions){
+    if(special > 0)
+        ui->numeric->setText(QString("%1%2").arg(special).arg(ui->numeric->text()));
+    enum Type{
+        User,
+        Group,
+        Other
+    };
+    auto getSymbolic = [&](int permissions, int specialPermissions, Type type){
         QString result = "";
         result += (permissions & 4) ? "r" : "-";
         result += (permissions & 2) ? "w" : "-";
-        result += (permissions & 1) ? "x" : "-";
+        if(permissions & 1)
+        {
+            if(type == Type::User && (specialPermissions & 4))
+            {
+                result += "s";
+            }
+            else if(type == Type::Group && (specialPermissions & 2))
+            {
+                result += "s";
+            }
+            else if(type == Type::Other && (specialPermissions & 1))
+            {
+                result += "t";
+            }
+            else
+            {
+                result += "x";
+            }
+        }
+        else
+        {
+            if(type == Type::User && (specialPermissions & 4))
+            {
+                result += "S";
+            }
+            else if(type == Type::Group && (specialPermissions & 2))
+            {
+                result += "S";
+            }
+            else if(type == Type::Other && (specialPermissions & 1))
+            {
+                result += "T";
+            } else {
+                result += "-";
+            }
+        }
         return result;
     };
-    ui->symbolic->setText(getSymbolic(userPermissions) + getSymbolic(groupPermissions) + getSymbolic(otherPermissions));
+    ui->symbolic->setText(getSymbolic(userPermissions, special, Type::User) + getSymbolic(groupPermissions, special, Type::Group) + getSymbolic(otherPermissions, special, Type::Other));
 }
 
 void ChmodCalculatorWidget::updateCheckboxes()
