@@ -2,6 +2,7 @@
 #define QRCODEGENERATOR_H
 
 #include <QWidget>
+#include <qcombobox.h>
 #include <qformlayout.h>
 #include <qgraphicsscene.h>
 #include <qlineedit.h>
@@ -20,13 +21,22 @@ public:
 
 private:
     Ui::QrCodeGenerator *ui;
-    QFormLayout* textUrlLayout {nullptr};
     QLineEdit* textUrl {nullptr};
     QGraphicsScene* scene {nullptr};
+    QWidget* textUrlWidget {nullptr};
+    QWidget* wifiNetworkWidget {nullptr};
+    QLineEdit* networkName {nullptr};
+    QComboBox* encryptionType {nullptr};
+    QLineEdit* networkPassword {nullptr};
+    QWidget* contactWidget {nullptr};
+    QLineEdit* firstName {nullptr};
+    QLineEdit* lastName {nullptr};
+    QLineEdit* phoneNumber {nullptr};
+    QLineEdit* email {nullptr};
 
 private slots:
     void generate();
-    void optionSelected();
+    void optionSelected(int index);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
