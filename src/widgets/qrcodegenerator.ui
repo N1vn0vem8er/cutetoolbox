@@ -88,13 +88,21 @@
     </layout>
    </item>
    <item>
-    <widget class="QStackedWidget" name="stackedWidget"/>
+    <widget class="ResizableStackedWidget" name="stackedWidget"/>
    </item>
    <item>
     <widget class="QGraphicsView" name="output"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ResizableStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>resizablestackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
