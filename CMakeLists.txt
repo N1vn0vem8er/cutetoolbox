@@ -47,6 +47,7 @@ qt_add_executable(CuteToolBox
     src/widgets/numberbaseswidget.h src/widgets/numberbaseswidget.cpp src/widgets/numberbaseswidget.ui
     src/widgets/qdatetimeconverterwidget.h src/widgets/qdatetimeconverterwidget.cpp src/widgets/qdatetimeconverterwidget.ui
     src/widgets/resizablestackedwidget.h src/widgets/resizablestackedwidget.cpp
+    src/widgets/desktopcreatorwidget.h src/widgets/desktopcreatorwidget.cpp src/widgets/desktopcreatorwidget.ui
 )
 
 include_directories(

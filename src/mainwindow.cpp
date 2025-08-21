@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Random Number"), QIcon());
     addMenuItem(tr("Chmod Calculator"), QIcon());
     addMenuItem(tr("Qr code"), QIcon());
+    addMenuItem(tr("Desktop Creator"), QIcon());
     addMenuItem(tr("Text"), QIcon(), false);
     addMenuItem(tr("Regex"), QIcon());
     addMenuItem(tr("Text diff"), QIcon());

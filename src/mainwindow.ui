@@ -44,6 +44,7 @@
        <widget class="RandomNumberGeneratorWidget" name="randomNumberGenerator"/>
        <widget class="ChmodCalculatorWidget" name="chmodCalculator"/>
        <widget class="QrCodeGenerator" name="qrCodeGenerator"/>
+       <widget class="DesktopCreatorWidget" name="desktopCreator"/>
        <widget class="RegexWidget" name="regexWidget"/>
        <widget class="TextDiffWidget" name="textDiff"/>
        <widget class="MarkdownWidget" name="markdownWidget"/>
@@ -213,6 +214,12 @@
    <class>QDateTimeConverterWidget</class>
    <extends>QWidget</extends>
    <header>qdatetimeconverterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DesktopCreatorWidget</class>
+   <extends>QWidget</extends>
+   <header>desktopcreatorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
