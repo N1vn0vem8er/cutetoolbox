@@ -2,6 +2,7 @@
 #define DESKTOPCREATORWIDGET_H
 
 #include <QWidget>
+#include <qfuturewatcher.h>
 
 namespace Ui {
 class DesktopCreatorWidget;
@@ -17,9 +18,15 @@ public:
 
 private:
     Ui::DesktopCreatorWidget *ui;
+    QFutureWatcher<QList<QString>> watcher;
+    QStringList icons;
+
+private:
+    void startSearchingForIcons();
 
 private slots:
     void generate();
+    void openSelectIcon();
 };
 
 #endif // DESKTOPCREATORWIDGET_H
