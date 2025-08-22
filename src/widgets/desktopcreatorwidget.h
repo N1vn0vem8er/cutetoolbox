@@ -26,7 +26,6 @@ private:
 
 private slots:
     void generate();
-    void openSelectIcon();
 };
 
 #endif // DESKTOPCREATORWIDGET_H

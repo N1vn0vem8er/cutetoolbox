@@ -67,11 +67,7 @@
             <widget class="QLineEdit" name="icon"/>
            </item>
            <item>
-            <widget class="QPushButton" name="selectIconButton">
-             <property name="text">
-              <string>Select</string>
-             </property>
-            </widget>
+            <widget class="QComboBox" name="selectIcon"/>
            </item>
           </layout>
          </item>

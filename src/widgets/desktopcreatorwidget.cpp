@@ -2,6 +2,7 @@
 #include "src/widgets/ui_desktopcreatorwidget.h"
 #include <QSettings>
 #include <QStandardPaths>
+#include <qdialog.h>
 #include <qdir.h>
 #include <qtconcurrentrun.h>
 
@@ -25,8 +26,16 @@ DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
     connect(ui->startupNotify, &QCheckBox::clicked, this, &DesktopCreatorWidget::generate);
     connect(ui->keywords, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);
     connect(ui->genericName, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);
-    connect(&watcher, &QFutureWatcher<QString>::started, this, [&]{ui->selectIconButton->setEnabled(false);});
-    connect(&watcher, &QFutureWatcher<QString>::finished, this, [&]{icons = watcher.result(); ui->selectIconButton->setEnabled(true);});
+    connect(&watcher, &QFutureWatcher<QString>::started, this, [&]{ui->selectIcon->setEnabled(false);});
+    connect(&watcher, &QFutureWatcher<QString>::finished, this, [&]{
+        icons = watcher.result();
+        for(const QString& icon : std::as_const(icons))
+        {
+            ui->selectIcon->addItem(QIcon::fromTheme(icon), icon);
+        }
+        ui->selectIcon->setEnabled(true);
+    });
+    connect(ui->selectIcon, &QComboBox::currentTextChanged, this, [&](const QString& text){ui->icon->setText(text);});
     startSearchingForIcons();
 }
 
@@ -43,7 +52,7 @@ void DesktopCreatorWidget::startSearchingForIcons()
         paths.append("/usr/share/applications");
         paths.append(QDir::homePath() + "/.local/share/applications");
         paths << QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
-        paths << QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).first() + "/applications";
+        paths << QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation).constFirst() + "/applications";
         paths.removeDuplicates();
         for(const QString& path : std::as_const(paths))
         {
@@ -60,6 +69,7 @@ void DesktopCreatorWidget::startSearchingForIcons()
                 }
             }
         }
+        result.removeDuplicates();
         return result;
     });
     watcher.setFuture(future);
@@ -80,13 +90,8 @@ void DesktopCreatorWidget::generate()
     buffer.append(QString("[MimeType]=%1\n").arg(ui->mimeTypes->text()));
     buffer.append(QString("[Keywords]=%1\n").arg(ui->keywords->text()));
     buffer.append(QString("[StartupWMClass]=%1\n").arg(ui->startupWMClass->text()));
-    buffer.append(QString("[Terminal]=%1\n").arg(ui->terminal->isChecked()));
-    buffer.append(QString("[NoDisplay]=%1\n").arg(ui->noDisplay->isChecked()));
-    buffer.append(QString("[StartupNotify]=%1\n").arg(ui->startupNotify->isChecked()));
+    buffer.append(QString("[Terminal]=%1\n").arg(ui->terminal->isChecked() ? "true" : "false"));
+    buffer.append(QString("[NoDisplay]=%1\n").arg(ui->noDisplay->isChecked() ? "true" : "false"));
+    buffer.append(QString("[StartupNotify]=%1\n").arg(ui->startupNotify->isChecked() ? "true" : "false"));
     ui->output->setPlainText(buffer);
-}
-
-void DesktopCreatorWidget::openSelectIcon()
-{
-
 }
