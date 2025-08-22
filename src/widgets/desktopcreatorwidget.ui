@@ -31,7 +31,7 @@
         <height>853</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0">
        <item>
         <layout class="QFormLayout" name="formLayout">
          <item row="0" column="0">
@@ -170,7 +170,7 @@
        <item>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="1">
-          <widget class="QCheckBox" name="setupNotify">
+          <widget class="QCheckBox" name="startupNotify">
            <property name="text">
             <string>Startup Notify</string>
            </property>

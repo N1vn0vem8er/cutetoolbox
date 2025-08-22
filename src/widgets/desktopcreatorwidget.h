@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::DesktopCreatorWidget *ui;
+
+private slots:
+    void generate();
 };
 
 #endif // DESKTOPCREATORWIDGET_H
