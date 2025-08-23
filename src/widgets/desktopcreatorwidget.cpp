@@ -112,6 +112,24 @@ void DesktopCreatorWidget::openDesktopFile()
         {
             ui->output->setPlainText(file.readAll());
             file.close();
+            QSettings settings(path, QSettings::IniFormat);
+            settings.beginGroup("Desktop Entry");
+            ui->name->setText(settings.value("Name").toString());
+            ui->exec->setText(settings.value("Exec").toString());
+            ui->tryexec->setText(settings.value("TryExec").toString());
+            ui->icon->setText(settings.value("Icon").toString());
+            ui->type->setText(settings.value("Type").toString());
+            ui->version->setText(settings.value("Version").toString());
+            ui->genericName->setText(settings.value("GenericName").toString());
+            ui->categories->setText(settings.value("Categories").toString());
+            ui->comment->setText(settings.value("Comment").toString());
+            ui->mimeTypes->setText(settings.value("MimeType").toStringList().join(";"));
+            ui->keywords->setText(settings.value("Keywords").toStringList().join(";"));
+            ui->startupWMClass->setText(settings.value("StartupWMClass").toString());
+            ui->terminal->setChecked(settings.value("Terminal", false).toBool());
+            ui->noDisplay->setChecked(settings.value("NoDisplay", false).toBool());
+            ui->startupNotify->setChecked(settings.value("StartupNotify", false).toBool());
+            settings.endGroup();
         }
     }
 }
