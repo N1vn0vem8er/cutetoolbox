@@ -1,5 +1,6 @@
 #include "desktopcreatorwidget.h"
 #include "src/widgets/ui_desktopcreatorwidget.h"
+#include <QFileDialog>
 #include <QSettings>
 #include <QStandardPaths>
 #include <qdialog.h>
@@ -36,6 +37,10 @@ DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
         ui->selectIcon->setEnabled(true);
     });
     connect(ui->selectIcon, &QComboBox::currentTextChanged, this, [&](const QString& text){ui->icon->setText(text);});
+    connect(ui->openButton, &QPushButton::clicked, this, &DesktopCreatorWidget::openDesktopFile);
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->output->selectAll(); ui->output->copy();});
+    connect(ui->clearButton, &QPushButton::clicked, ui->output, &QPlainTextEdit::clear);
+    connect(ui->saveButton, &QPushButton::clicked, this, &DesktopCreatorWidget::saveDesktopFile);
     startSearchingForIcons();
 }
 
@@ -78,20 +83,49 @@ void DesktopCreatorWidget::startSearchingForIcons()
 void DesktopCreatorWidget::generate()
 {
     QString buffer;
-    buffer.append(QString("[Name]=%1\n").arg(ui->name->text()));
-    buffer.append(QString("[Exec]=%1\n").arg(ui->exec->text()));
-    buffer.append(QString("[TryExec]=%1\n").arg(ui->tryexec->text()));
-    buffer.append(QString("[Icon]=%1\n").arg(ui->icon->text()));
-    buffer.append(QString("[Type]=%1\n").arg(ui->type->text()));
-    buffer.append(QString("[Version]=%1\n").arg(ui->version->text()));
-    buffer.append(QString("[GenericName]=%1\n").arg(ui->genericName->text()));
-    buffer.append(QString("[Categories]=%1\n").arg(ui->categories->text()));
-    buffer.append(QString("[Comment]=%1\n").arg(ui->comment->text()));
-    buffer.append(QString("[MimeType]=%1\n").arg(ui->mimeTypes->text()));
-    buffer.append(QString("[Keywords]=%1\n").arg(ui->keywords->text()));
-    buffer.append(QString("[StartupWMClass]=%1\n").arg(ui->startupWMClass->text()));
-    buffer.append(QString("[Terminal]=%1\n").arg(ui->terminal->isChecked() ? "true" : "false"));
-    buffer.append(QString("[NoDisplay]=%1\n").arg(ui->noDisplay->isChecked() ? "true" : "false"));
-    buffer.append(QString("[StartupNotify]=%1\n").arg(ui->startupNotify->isChecked() ? "true" : "false"));
+    buffer.append("[Desktop Entry]\n");
+    buffer.append(QString("Name=%1\n").arg(ui->name->text()));
+    buffer.append(QString("Exec=%1\n").arg(ui->exec->text()));
+    buffer.append(QString("TryExec=%1\n").arg(ui->tryexec->text()));
+    buffer.append(QString("Icon=%1\n").arg(ui->icon->text()));
+    buffer.append(QString("Type=%1\n").arg(ui->type->text()));
+    buffer.append(QString("Version=%1\n").arg(ui->version->text()));
+    buffer.append(QString("GenericName=%1\n").arg(ui->genericName->text()));
+    buffer.append(QString("Categories=%1\n").arg(ui->categories->text()));
+    buffer.append(QString("Comment=%1\n").arg(ui->comment->text()));
+    buffer.append(QString("MimeType=%1\n").arg(ui->mimeTypes->text()));
+    buffer.append(QString("Keywords=%1\n").arg(ui->keywords->text()));
+    buffer.append(QString("StartupWMClass=%1\n").arg(ui->startupWMClass->text()));
+    buffer.append(QString("Terminal=%1\n").arg(ui->terminal->isChecked() ? "true" : "false"));
+    buffer.append(QString("NoDisplay=%1\n").arg(ui->noDisplay->isChecked() ? "true" : "false"));
+    buffer.append(QString("StartupNotify=%1\n").arg(ui->startupNotify->isChecked() ? "true" : "false"));
     ui->output->setPlainText(buffer);
+}
+
+void DesktopCreatorWidget::openDesktopFile()
+{
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.desktop");
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->output->setPlainText(file.readAll());
+            file.close();
+        }
+    }
+}
+
+void DesktopCreatorWidget::saveDesktopFile()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save"), QDir::homePath(), "*.desktop");
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->output->toPlainText().toUtf8());
+            file.close();
+        }
+    }
 }

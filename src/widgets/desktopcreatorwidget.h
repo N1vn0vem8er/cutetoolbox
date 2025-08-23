@@ -26,6 +26,8 @@ private:
 
 private slots:
     void generate();
+    void openDesktopFile();
+    void saveDesktopFile();
 };
 
 #endif // DESKTOPCREATORWIDGET_H
