@@ -4,6 +4,7 @@ project(CuteToolBox LANGUAGES CXX)
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport)
 find_package(LibXml2 REQUIRED)
 find_package(ZLIB)
+find_package(yaml-cpp)
 
 qt_standard_project_setup()
 
@@ -68,6 +69,7 @@ target_link_libraries(CuteToolBox
         LibXml2::LibXml2
         ZLIB::ZLIB
         qrcodegencpp
+        yaml-cpp::yaml-cpp
 )
 
 include(GNUInstallDirs)
