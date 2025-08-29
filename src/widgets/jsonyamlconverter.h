@@ -18,11 +18,15 @@ public:
 
 private:
     Ui::JsonYamlConverter *ui;
+    bool converting {false};
 
 private:
-    YAML::Node convert(const QJsonValue& value);
+    YAML::Node convertQJsonValueToYaml(const QJsonValue& value);
     YAML::Node convertQJsonArrayToYaml(const QJsonArray& array);
     YAML::Node convertQJsonObjectToYaml(const QJsonObject& object);
+    QJsonValue yamlNodeToJsonValue(const YAML::Node& node);
+    QJsonArray yamlSequenceToJsonArray(const YAML::Node& node);
+    QJsonObject yamlMapToJsonObject(const YAML::Node& node);
 
 private slots:
     void jsonToYaml();

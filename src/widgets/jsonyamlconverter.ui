@@ -22,26 +22,29 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Indentations</string>
+        <string>Indentations Json</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox"/>
+      <widget class="QSpinBox" name="jsonIndentations"/>
      </item>
      <item>
-      <widget class="QRadioButton" name="jsonToYamlButton">
+      <widget class="QLabel" name="errorLabel">
        <property name="text">
-        <string>JSON -&gt; YAML</string>
+        <string/>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="yamlToJsonButton">
+      <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>YAML -&gt; JSON</string>
+        <string>Indentations Yaml</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="yamlIndentations"/>
      </item>
      <item>
       <spacer name="horizontalSpacer_3">
@@ -70,7 +73,7 @@
          <item>
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Input</string>
+            <string>Json</string>
            </property>
           </widget>
          </item>
@@ -90,7 +93,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="input"/>
+        <widget class="QPlainTextEdit" name="json"/>
        </item>
       </layout>
      </widget>
@@ -101,7 +104,7 @@
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Output</string>
+            <string>Yaml</string>
            </property>
           </widget>
          </item>
@@ -121,7 +124,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="output"/>
+        <widget class="QPlainTextEdit" name="yaml"/>
        </item>
       </layout>
      </widget>
