@@ -90,7 +90,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit"/>
+        <widget class="QPlainTextEdit" name="input"/>
        </item>
       </layout>
      </widget>
@@ -121,7 +121,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+        <widget class="QPlainTextEdit" name="output"/>
        </item>
       </layout>
      </widget>

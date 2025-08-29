@@ -2,6 +2,7 @@
 #define JSONYAMLCONVERTER_H
 
 #include <QWidget>
+#include <yaml-cpp/yaml.h>
 
 namespace Ui {
 class JsonYamlConverter;
@@ -17,6 +18,15 @@ public:
 
 private:
     Ui::JsonYamlConverter *ui;
+
+private:
+    YAML::Node convert(const QJsonValue& value);
+    YAML::Node convertQJsonArrayToYaml(const QJsonArray& array);
+    YAML::Node convertQJsonObjectToYaml(const QJsonObject& object);
+
+private slots:
+    void jsonToYaml();
+    void yamlToJson();
 };
 
 #endif // JSONYAMLCONVERTER_H
