@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
     connect(ui->actionSide_menu, &QAction::triggered, this, [&]{ui->listWidget->setVisible(ui->actionSide_menu->isChecked());});
 
+    currentToolLabel = new QLabel(ui->statusbar);
+    currentToolLabel->setText("HTML Coder");
+    ui->statusbar->addPermanentWidget(currentToolLabel);
+
     ui->actionSide_menu->setChecked(true);
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
@@ -53,6 +57,7 @@ void MainWindow::showWidget(const QModelIndex& index)
     const QString text = index.data().toString();
     if(menuIndexMap.contains(text))
     {
+        currentToolLabel->setText(text);
         ui->stackedWidget->setCurrentIndex(menuIndexMap.value(text));
     }
 }
@@ -73,7 +78,7 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enable
     {
         int currentIndex = index;
         menuIndexMap[text] = index++;
-        connect(action, &QAction::triggered, this, [this, currentIndex]{ui->stackedWidget->setCurrentIndex(currentIndex);});
+        connect(action, &QAction::triggered, this, [this, currentIndex, text]{ui->stackedWidget->setCurrentIndex(currentIndex); currentToolLabel->setText(text);});
     }
     ui->listWidget->addItem(item);
     ui->menuTools->addAction(action);

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <qlabel.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,5 +25,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QMap<QString, int> menuIndexMap;
+    QLabel* currentToolLabel {nullptr};
 };
 #endif // MAINWINDOW_H
