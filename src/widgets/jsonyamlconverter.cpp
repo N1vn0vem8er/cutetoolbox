@@ -10,8 +10,10 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
     , ui(new Ui::JsonYamlConverter)
 {
     ui->setupUi(this);
+    ui->yamlIndentations->setValue(4);
     connect(ui->json, &QPlainTextEdit::textChanged, this, &JsonYamlConverter::jsonToYaml);
     connect(ui->yaml, &QPlainTextEdit::textChanged, this, &JsonYamlConverter::yamlToJson);
+    connect(ui->yamlIndentations, &QSpinBox::valueChanged, this, &JsonYamlConverter::jsonToYaml);
 }
 
 JsonYamlConverter::~JsonYamlConverter()
@@ -139,6 +141,7 @@ void JsonYamlConverter::jsonToYaml()
         QJsonDocument doc = QJsonDocument::fromJson(ui->json->toPlainText().toLatin1(), &parseError);
         YAML::Node node = convertQJsonValueToYaml(doc.object());
         YAML::Emitter emitter;
+        emitter.SetIndent(ui->yamlIndentations->value());
         emitter << node;
         if(emitter.good())
             ui->yaml->setPlainText(QString::fromUtf8(emitter.c_str()));

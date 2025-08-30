@@ -20,16 +20,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Indentations Json</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="jsonIndentations"/>
-     </item>
-     <item>
       <widget class="QLabel" name="errorLabel">
        <property name="text">
         <string/>
