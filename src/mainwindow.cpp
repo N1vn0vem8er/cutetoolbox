@@ -34,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Text diff"), QIcon());
     addMenuItem(tr("Markdown"), QIcon());
     addMenuItem(tr("XML Scheme Validator"), QIcon());
-    addMenuItem(tr("JSON Schema Validator"), QIcon());
     addMenuItem(tr("Converters"), QIcon(), false);
     addMenuItem(tr("JSON - YAML"), QIcon());
     addMenuItem(tr("Timestamp"), QIcon());
