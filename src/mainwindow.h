@@ -21,6 +21,7 @@ public:
 private slots:
     void showWidget(const QModelIndex &index);
     void addMenuItem(const QString& text, const QIcon& icon, bool enabled = true);
+    void showAbout();
 
 private:
     Ui::MainWindow *ui;

@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -8,16 +10,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
     connect(ui->actionSide_menu, &QAction::triggered, this, [&]{ui->listWidget->setVisible(ui->actionSide_menu->isChecked());});
+    connect(ui->actionAbout_Qt, &QAction::triggered, this, [&]{QMessageBox::aboutQt(this, tr("About Qt"));});
+    connect(ui->actionAbout_CuteToolBox, &QAction::triggered, this, &MainWindow::showAbout);
 
     currentToolLabel = new QLabel(ui->statusbar);
-    currentToolLabel->setText("HTML Coder");
+    currentToolLabel->setText("HTML Encoder");
     ui->statusbar->addPermanentWidget(currentToolLabel);
 
     ui->actionSide_menu->setChecked(true);
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
     addMenuItem(tr("Coders and decoders"), QIcon(), false);
-    addMenuItem(tr("HTML Coder"), QIcon());
+    addMenuItem(tr("HTML Encoder"), QIcon());
     addMenuItem(tr("Base64"), QIcon());
     addMenuItem(tr("Url"), QIcon());
     addMenuItem(tr("GZip"), QIcon());
@@ -82,4 +86,25 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enable
     }
     ui->listWidget->addItem(item);
     ui->menuTools->addAction(action);
+}
+
+void MainWindow::showAbout()
+{
+    QMessageBox::about(this, tr("About Cute ToolBox"), tr(R"(
+    <html>
+        <body>
+            <h3>Cute ToolBox</h3>
+            <p>Cute ToolBox is a collection of tools for developers.</p>
+            <p>Version: %1</p>
+            <p>License: <a href="%2">GPL 3</a>
+            <h4>External liblaries other then Qt used in this project:</h4>
+            <p>Lib Xml</p>
+            <p>Zlib</p>
+            <p>yaml-cpp</p>
+            <p>Qr Code Gen</p>
+            <p>Marked Copyright (c) 2011-2018, Christopher Jeffrey (https://github.com/chjj/) MIT License</p>
+            <p>markdown.css Copyright 2011 Kevin Burke Apache License, Version 2.0</p>
+        </body>
+    </html>
+)"));
 }

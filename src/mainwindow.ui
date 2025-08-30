@@ -130,7 +130,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAbout_CuteToolBox">
    <property name="text">
-    <string>About CuteToolBox</string>
+    <string>About Cute ToolBox</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
