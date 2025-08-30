@@ -59,10 +59,18 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enable
 {
     static int index = 0;
     QListWidgetItem* item = new QListWidgetItem(text, ui->listWidget);
+    QAction* action = new QAction(text, ui->menuTools);
+    action->setIcon(icon);
     item->setIcon(icon);
     if(!enabled)
+    {
         item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+        action->setEnabled(false);
+    }
     else
+    {
         menuIndexMap[text] = index++;
+    }
     ui->listWidget->addItem(item);
+    ui->menuTools->addAction(action);
 }
