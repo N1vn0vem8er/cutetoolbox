@@ -7,7 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
+    connect(ui->actionSide_menu, &QAction::triggered, this, [&]{ui->listWidget->setVisible(ui->actionSide_menu->isChecked());});
 
+    ui->actionSide_menu->setChecked(true);
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
     addMenuItem(tr("Coders and decoders"), QIcon(), false);
@@ -69,7 +71,9 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enable
     }
     else
     {
+        int currentIndex = index;
         menuIndexMap[text] = index++;
+        connect(action, &QAction::triggered, this, [this, currentIndex]{ui->stackedWidget->setCurrentIndex(currentIndex);});
     }
     ui->listWidget->addItem(item);
     ui->menuTools->addAction(action);
