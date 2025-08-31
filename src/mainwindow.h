@@ -24,6 +24,12 @@ private slots:
     void showAbout();
     void saveAs();
     void open();
+    void copy();
+    void cut();
+    void paste();
+    void selectAll();
+    void deleteSelected();
+    void deleteAll();
 
 private:
     Ui::MainWindow *ui;

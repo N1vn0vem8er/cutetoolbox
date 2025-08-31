@@ -14,6 +14,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAbout_CuteToolBox, &QAction::triggered, this, &MainWindow::showAbout);
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveAs);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::open);
+    connect(ui->actionCopy, &QAction::triggered, this, &MainWindow::copy);
+    connect(ui->actionCut, &QAction::triggered, this, &MainWindow::cut);
+    connect(ui->actionPaste, &QAction::triggered, this, &MainWindow::paste);
+    connect(ui->actionSelect_All, &QAction::triggered, this, &MainWindow::selectAll);
+    connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::deleteSelected);
+    connect(ui->actionDelete_All, &QAction::triggered, this, &MainWindow::deleteAll);
 
     currentToolLabel = new QLabel(ui->statusbar);
     currentToolLabel->setText("HTML Encoder");
@@ -128,5 +134,65 @@ void MainWindow::open()
     {
         if(widget->canOpenFiles())
             widget->open();
+    }
+}
+
+void MainWindow::copy()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->copy();
+    }
+}
+
+void MainWindow::cut()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->cut();
+    }
+}
+
+void MainWindow::paste()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->paste();
+    }
+}
+
+void MainWindow::selectAll()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->selectAll();
+    }
+}
+
+void MainWindow::deleteSelected()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->deleteText();
+    }
+}
+
+void MainWindow::deleteAll()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->deleteAllText();
     }
 }

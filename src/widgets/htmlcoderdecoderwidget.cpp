@@ -42,11 +42,25 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     connect(ui->pasteHtmlButton, &QPushButton::clicked, ui->html, &QPlainTextEdit::paste);
     connect(ui->clearCodedButton, &QPushButton::clicked, ui->encoded, &QPlainTextEdit::clear);
     connect(ui->clearHtmlButton, &QPushButton::clicked, ui->html, &QPlainTextEdit::clear);
+    ui->html->installEventFilter(this);
+    ui->encoded->installEventFilter(this);
 }
 
 HTMLCoderDecoderWidget::~HTMLCoderDecoderWidget()
 {
     delete ui;
+}
+
+bool HTMLCoderDecoderWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if(event->type() == QEvent::FocusOut)
+    {
+        if(watched == ui->html)
+            lastInFocus = TextEdits::html;
+        else if(watched == ui->encoded)
+            lastInFocus = TextEdits::encoded;
+    }
+    return QObject::eventFilter(watched, event);
 }
 
 void HTMLCoderDecoderWidget::encode()
@@ -102,13 +116,13 @@ void HTMLCoderDecoderWidget::save()
 
 void HTMLCoderDecoderWidget::saveAs()
 {
-    int option;
+    TextEdits option;
     QDialog dialog(this);
     QHBoxLayout layout(&dialog);
     QPushButton htmlButton(tr("Html"), &dialog);
     QPushButton encodedButton(tr("Encoded"), &dialog);
-    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = 0;});
-    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = 1;});
+    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::html;});
+    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::encoded;});
     connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
     connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
     layout.addWidget(&htmlButton);
@@ -122,7 +136,7 @@ void HTMLCoderDecoderWidget::saveAs()
             QFile file(path);
             if(file.open(QIODevice::WriteOnly))
             {
-                file.write(option == 0 ? ui->html->toPlainText().toUtf8() : ui->encoded->toPlainText().toUtf8());
+                file.write(option == TextEdits::html ? ui->html->toPlainText().toUtf8() : ui->encoded->toPlainText().toUtf8());
                 file.close();
             }
         }
@@ -131,13 +145,13 @@ void HTMLCoderDecoderWidget::saveAs()
 
 void HTMLCoderDecoderWidget::open()
 {
-    int option;
+    TextEdits option;
     QDialog dialog(this);
     QHBoxLayout layout(&dialog);
     QPushButton htmlButton(tr("Html"), &dialog);
     QPushButton encodedButton(tr("Encoded"), &dialog);
-    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = 0;});
-    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = 1;});
+    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::html;});
+    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::encoded;});
     connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
     connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
     layout.addWidget(&htmlButton);
@@ -151,9 +165,9 @@ void HTMLCoderDecoderWidget::open()
             QFile file(path);
             if(file.open(QIODevice::ReadOnly))
             {
-                if(option == 0)
+                if(option == TextEdits::html)
                     ui->html->setPlainText(file.readAll());
-                else
+                else if(option == TextEdits::encoded)
                     ui->encoded->setPlainText(file.readAll());
                 file.close();
             }
@@ -163,42 +177,66 @@ void HTMLCoderDecoderWidget::open()
 
 void HTMLCoderDecoderWidget::copy()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->copy();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->copy();
 }
 
 void HTMLCoderDecoderWidget::cut()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->cut();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->cut();
 }
 
 void HTMLCoderDecoderWidget::paste()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->paste();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->paste();
 }
 
 void HTMLCoderDecoderWidget::selectAll()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->selectAll();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->selectAll();
 }
 
 void HTMLCoderDecoderWidget::deleteText()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->deleteSelected();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->deleteSelected();
 }
 
 void HTMLCoderDecoderWidget::deleteAllText()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->deleteAll();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->deleteAll();
 }
 
 void HTMLCoderDecoderWidget::increaseFontSize()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->increaseFontSize();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->increaseFontSize();
 }
 
 void HTMLCoderDecoderWidget::decreaseFontSize()
 {
-
+    if(ui->html->hasFocus())
+        ui->html->decreaseFontSize();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->decreaseFontSize();
 }
 
 void HTMLCoderDecoderWidget::setFontSize()
