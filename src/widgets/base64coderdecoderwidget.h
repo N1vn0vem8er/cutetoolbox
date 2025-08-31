@@ -38,8 +38,8 @@ public:
 
 private:
     enum TextEdits{
-        html,
-        encoded,
+        text,
+        base64,
         none
     };
     Ui::Base64CoderDecoderWidget *ui;

@@ -1,6 +1,8 @@
 #include "base64coderdecoderwidget.h"
 #include "src/widgets/ui_base64coderdecoderwidget.h"
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 
 Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -85,7 +87,7 @@ void Base64CoderDecoderWidget::saveAs()
             QFile file(path);
             if(file.open(QIODevice::WriteOnly))
             {
-                file.write(option == TextEdits::html ? ui->text->toPlainText().toUtf8() : ui->base64->toPlainText().toUtf8());
+                file.write(option == TextEdits::text ? ui->text->toPlainText().toUtf8() : ui->base64->toPlainText().toUtf8());
                 file.close();
             }
         }
@@ -103,9 +105,9 @@ void Base64CoderDecoderWidget::open()
             QFile file(path);
             if(file.open(QIODevice::ReadOnly))
             {
-                if(option == TextEdits::html)
+                if(option == TextEdits::text)
                     ui->text->setPlainText(file.readAll());
-                else if(option == TextEdits::encoded)
+                else if(option == TextEdits::base64)
                     ui->base64->setPlainText(file.readAll());
                 file.close();
             }
@@ -115,67 +117,234 @@ void Base64CoderDecoderWidget::open()
 
 void Base64CoderDecoderWidget::copy()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->copy();
+    else if(ui->base64->hasFocus())
+        ui->base64->copy();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->copy();
+            else if(option == TextEdits::base64)
+                ui->base64->copy();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::cut()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->cut();
+    else if(ui->base64->hasFocus())
+        ui->base64->cut();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->cut();
+            else if(option == TextEdits::base64)
+                ui->base64->cut();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::paste()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->paste();
+    else if(ui->base64->hasFocus())
+        ui->base64->paste();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->paste();
+            else if(option == TextEdits::base64)
+                ui->base64->paste();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::selectAll()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->selectAll();
+    else if(ui->base64->hasFocus())
+        ui->base64->selectAll();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->selectAll();
+            else if(option == TextEdits::base64)
+                ui->base64->selectAll();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::deleteText()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->deleteSelected();
+    else if(ui->base64->hasFocus())
+        ui->base64->deleteSelected();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->deleteSelected();
+            else if(option == TextEdits::base64)
+                ui->base64->deleteSelected();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::deleteAllText()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->deleteAll();
+    else if(ui->base64->hasFocus())
+        ui->base64->deleteAll();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->deleteAll();
+            else if(option == TextEdits::base64)
+                ui->base64->deleteAll();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::undo()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->undo();
+    else if(ui->base64->hasFocus())
+        ui->base64->undo();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->undo();
+            else if(option == TextEdits::base64)
+                ui->base64->undo();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::redo()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->redo();
+    else if(ui->base64->hasFocus())
+        ui->base64->redo();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->redo();
+            else if(option == TextEdits::base64)
+                ui->base64->redo();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::increaseFontSize()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->increaseFontSize();
+    else if(ui->base64->hasFocus())
+        ui->base64->increaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->increaseFontSize();
+            else if(option == TextEdits::base64)
+                ui->base64->increaseFontSize();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::decreaseFontSize()
 {
-
+    if(ui->text->hasFocus())
+        ui->text->decreaseFontSize();
+    else if(ui->base64->hasFocus())
+        ui->base64->decreaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                ui->text->decreaseFontSize();
+            else if(option == TextEdits::base64)
+                ui->base64->decreaseFontSize();
+        }
+    }
 }
 
 void Base64CoderDecoderWidget::setFontSize()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200);
+        if(option == TextEdits::text)
+            ui->text->setFontSize(size);
+        else if(option == TextEdits::base64)
+            ui->base64->setFontSize(size);
+    }
 }
 
 void Base64CoderDecoderWidget::resetFontSize()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        if(option == TextEdits::text)
+            ui->text->setFontSize(10);
+        else if(option == TextEdits::base64)
+            ui->base64->setFontSize(10);
+    }
 }
 
 void Base64CoderDecoderWidget::setFont()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const QFont font = QFontDialog::getFont(&ok, this);
+        if(ok)
+        {
+            if(option == TextEdits::text)
+                ui->text->setFont(font);
+            else if(option == TextEdits::base64)
+                ui->base64->setFont(font);
+        }
+    }
 }
 
 Base64CoderDecoderWidget::TextEdits Base64CoderDecoderWidget::getSelectedOption()
@@ -183,14 +352,14 @@ Base64CoderDecoderWidget::TextEdits Base64CoderDecoderWidget::getSelectedOption(
     TextEdits option = TextEdits::none;
     QDialog dialog(this);
     QHBoxLayout layout(&dialog);
-    QPushButton htmlButton(tr("Text"), &dialog);
-    QPushButton encodedButton(tr("Base64"), &dialog);
-    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::html;});
-    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::encoded;});
-    connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    layout.addWidget(&htmlButton);
-    layout.addWidget(&encodedButton);
+    QPushButton textButton(tr("Text"), &dialog);
+    QPushButton base64Button(tr("Base64"), &dialog);
+    connect(&textButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::text;});
+    connect(&base64Button, &QPushButton::clicked, &dialog, [&]{option = TextEdits::base64;});
+    connect(&textButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&base64Button, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&textButton);
+    layout.addWidget(&base64Button);
     dialog.setLayout(&layout);
     if(dialog.exec() == QDialog::Accepted)
     {
