@@ -15,6 +15,24 @@ class HTMLCoderDecoderWidget : public CustomWidget
 public:
     explicit HTMLCoderDecoderWidget(QWidget *parent = nullptr);
     ~HTMLCoderDecoderWidget();
+    bool canOpenFiles() const override;
+    bool canSaveFiles() const override;
+    bool canBasicEdit() const override;
+    bool canChangeFont() const override;
+    void save() override;
+    void saveAs() override;
+    void open() override;
+    void copy() override;
+    void cut() override;
+    void paste() override;
+    void selectAll() override;
+    void deleteText() override;
+    void deleteAllText() override;
+    void increaseFontSize() override;
+    void decreaseFontSize() override;
+    void setFontSize() override;
+    void resetFontSize() override;
+    void setFont() override;
 
 private:
     Ui::HTMLCoderDecoderWidget *ui;
@@ -23,10 +41,6 @@ private:
 private slots:
     void encode();
     void decode();
-
-public:
-    bool canOpenFiles() const override;
-    bool canSaveFiles() const override;
 };
 
 #endif // HTMLCODERDECODERWIDGET_H

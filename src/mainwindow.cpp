@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSide_menu, &QAction::triggered, this, [&]{ui->listWidget->setVisible(ui->actionSide_menu->isChecked());});
     connect(ui->actionAbout_Qt, &QAction::triggered, this, [&]{QMessageBox::aboutQt(this, tr("About Qt"));});
     connect(ui->actionAbout_CuteToolBox, &QAction::triggered, this, &MainWindow::showAbout);
+    connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveAs);
+    connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::open);
 
     currentToolLabel = new QLabel(ui->statusbar);
     currentToolLabel->setText("HTML Encoder");
@@ -107,4 +109,24 @@ void MainWindow::showAbout()
         </body>
     </html>
 )"));
+}
+
+void MainWindow::saveAs()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canSaveFiles())
+            widget->saveAs();
+    }
+}
+
+void MainWindow::open()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canOpenFiles())
+            widget->open();
+    }
 }

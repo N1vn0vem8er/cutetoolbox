@@ -85,3 +85,134 @@ bool HTMLCoderDecoderWidget::canSaveFiles() const
     return true;
 }
 
+bool HTMLCoderDecoderWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool HTMLCoderDecoderWidget::canChangeFont() const
+{
+    return true;
+}
+
+void HTMLCoderDecoderWidget::save()
+{
+
+}
+
+void HTMLCoderDecoderWidget::saveAs()
+{
+    int option;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton htmlButton(tr("Html"), &dialog);
+    QPushButton encodedButton(tr("Encoded"), &dialog);
+    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = 0;});
+    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = 1;});
+    connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&htmlButton);
+    layout.addWidget(&encodedButton);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::WriteOnly))
+            {
+                file.write(option == 0 ? ui->html->toPlainText().toUtf8() : ui->encoded->toPlainText().toUtf8());
+                file.close();
+            }
+        }
+    }
+}
+
+void HTMLCoderDecoderWidget::open()
+{
+    int option;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton htmlButton(tr("Html"), &dialog);
+    QPushButton encodedButton(tr("Encoded"), &dialog);
+    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = 0;});
+    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = 1;});
+    connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&htmlButton);
+    layout.addWidget(&encodedButton);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                if(option == 0)
+                    ui->html->setPlainText(file.readAll());
+                else
+                    ui->encoded->setPlainText(file.readAll());
+                file.close();
+            }
+        }
+    }
+}
+
+void HTMLCoderDecoderWidget::copy()
+{
+
+}
+
+void HTMLCoderDecoderWidget::cut()
+{
+
+}
+
+void HTMLCoderDecoderWidget::paste()
+{
+
+}
+
+void HTMLCoderDecoderWidget::selectAll()
+{
+
+}
+
+void HTMLCoderDecoderWidget::deleteText()
+{
+
+}
+
+void HTMLCoderDecoderWidget::deleteAllText()
+{
+
+}
+
+void HTMLCoderDecoderWidget::increaseFontSize()
+{
+
+}
+
+void HTMLCoderDecoderWidget::decreaseFontSize()
+{
+
+}
+
+void HTMLCoderDecoderWidget::setFontSize()
+{
+
+}
+
+void HTMLCoderDecoderWidget::resetFontSize()
+{
+
+}
+
+void HTMLCoderDecoderWidget::setFont()
+{
+
+}
+
