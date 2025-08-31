@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSet_font, &QAction::triggered, this, &MainWindow::setFont);
     connect(ui->actionUndo, &QAction::triggered, this, &MainWindow::undo);
     connect(ui->actionRedo, &QAction::triggered, this, &MainWindow::redo);
+    connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, &MainWindow::widgetChanged);
 
     currentToolLabel = new QLabel(ui->statusbar);
     currentToolLabel->setText("HTML Encoder");
@@ -78,6 +79,30 @@ void MainWindow::showWidget(const QModelIndex& index)
     {
         currentToolLabel->setText(text);
         ui->stackedWidget->setCurrentIndex(menuIndexMap.value(text));
+    }
+}
+
+void MainWindow::widgetChanged()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        ui->actionSave->setEnabled(widget->canSaveFiles());
+        ui->actionSave_As->setEnabled(widget->canSaveFiles());
+        ui->actionCopy->setEnabled(widget->canBasicEdit());
+        ui->actionCut->setEnabled(widget->canBasicEdit());
+        ui->actionPaste->setEnabled(widget->canBasicEdit());
+        ui->actionSelect_All->setEnabled(widget->canBasicEdit());
+        ui->actionDelete_All->setEnabled(widget->canBasicEdit());
+        ui->actionDelete->setEnabled(widget->canBasicEdit());
+        ui->actionUndo->setEnabled(widget->canBasicEdit());
+        ui->actionRedo->setEnabled(widget->canBasicEdit());
+        ui->actionOpen->setEnabled(widget->canOpenFiles());
+        ui->actionIncrease_font_size->setEnabled(widget->canChangeFont());
+        ui->actionDecrease_font_size->setEnabled(widget->canChangeFont());
+        ui->actionSet_font_size->setEnabled(widget->canChangeFont());
+        ui->actionReset_font_size->setEnabled(widget->canChangeFont());
+        ui->actionSet_font->setEnabled(widget->canChangeFont());
     }
 }
 

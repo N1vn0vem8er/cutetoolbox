@@ -3,7 +3,7 @@
 #include <QFileDialog>
 
 Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::Base64CoderDecoderWidget)
 {
     ui->setupUi(this);

@@ -1,13 +1,14 @@
 #ifndef BASE64CODERDECODERWIDGET_H
 #define BASE64CODERDECODERWIDGET_H
 
+#include "customwidget.h"
 #include <QWidget>
 
 namespace Ui {
 class Base64CoderDecoderWidget;
 }
 
-class Base64CoderDecoderWidget : public QWidget
+class Base64CoderDecoderWidget : public CustomWidget
 {
     Q_OBJECT
 
