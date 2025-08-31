@@ -20,6 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSelect_All, &QAction::triggered, this, &MainWindow::selectAll);
     connect(ui->actionDelete, &QAction::triggered, this, &MainWindow::deleteSelected);
     connect(ui->actionDelete_All, &QAction::triggered, this, &MainWindow::deleteAll);
+    connect(ui->actionIncrease_font_size, &QAction::triggered, this, &MainWindow::increaseFontSize);
+    connect(ui->actionDecrease_font_size, &QAction::triggered, this, &MainWindow::decreaseFontSize);
+    connect(ui->actionSet_font_size, &QAction::triggered, this, &MainWindow::setFontSize);
+    connect(ui->actionReset_font_size, &QAction::triggered, this, &MainWindow::resetFontSize);
+    connect(ui->actionSet_font, &QAction::triggered, this, &MainWindow::setFont);
 
     currentToolLabel = new QLabel(ui->statusbar);
     currentToolLabel->setText("HTML Encoder");
@@ -194,5 +199,55 @@ void MainWindow::deleteAll()
     {
         if(widget->canBasicEdit())
             widget->deleteAllText();
+    }
+}
+
+void MainWindow::increaseFontSize()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canChangeFont())
+            widget->increaseFontSize();
+    }
+}
+
+void MainWindow::decreaseFontSize()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canChangeFont())
+            widget->decreaseFontSize();
+    }
+}
+
+void MainWindow::setFontSize()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canChangeFont())
+            widget->setFontSize();
+    }
+}
+
+void MainWindow::resetFontSize()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canChangeFont())
+            widget->resetFontSize();
+    }
+}
+
+void MainWindow::setFont()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canChangeFont())
+            widget->setFont();
     }
 }

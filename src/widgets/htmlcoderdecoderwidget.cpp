@@ -2,6 +2,8 @@
 #include "src/widgets/ui_htmlcoderdecoderwidget.h"
 
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 
 HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -116,19 +118,8 @@ void HTMLCoderDecoderWidget::save()
 
 void HTMLCoderDecoderWidget::saveAs()
 {
-    TextEdits option;
-    QDialog dialog(this);
-    QHBoxLayout layout(&dialog);
-    QPushButton htmlButton(tr("Html"), &dialog);
-    QPushButton encodedButton(tr("Encoded"), &dialog);
-    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::html;});
-    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::encoded;});
-    connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    layout.addWidget(&htmlButton);
-    layout.addWidget(&encodedButton);
-    dialog.setLayout(&layout);
-    if(dialog.exec() == QDialog::Accepted)
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
     {
         const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
         if(!path.isEmpty())
@@ -145,19 +136,8 @@ void HTMLCoderDecoderWidget::saveAs()
 
 void HTMLCoderDecoderWidget::open()
 {
-    TextEdits option;
-    QDialog dialog(this);
-    QHBoxLayout layout(&dialog);
-    QPushButton htmlButton(tr("Html"), &dialog);
-    QPushButton encodedButton(tr("Encoded"), &dialog);
-    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::html;});
-    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::encoded;});
-    connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
-    layout.addWidget(&htmlButton);
-    layout.addWidget(&encodedButton);
-    dialog.setLayout(&layout);
-    if(dialog.exec() == QDialog::Accepted)
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
     {
         const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
         if(!path.isEmpty())
@@ -181,6 +161,17 @@ void HTMLCoderDecoderWidget::copy()
         ui->html->copy();
     else if(ui->encoded->hasFocus())
         ui->encoded->copy();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->copy();
+            else if(option == TextEdits::encoded)
+                ui->encoded->copy();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::cut()
@@ -189,6 +180,17 @@ void HTMLCoderDecoderWidget::cut()
         ui->html->cut();
     else if(ui->encoded->hasFocus())
         ui->encoded->cut();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->cut();
+            else if(option == TextEdits::encoded)
+                ui->encoded->cut();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::paste()
@@ -197,6 +199,17 @@ void HTMLCoderDecoderWidget::paste()
         ui->html->paste();
     else if(ui->encoded->hasFocus())
         ui->encoded->paste();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->paste();
+            else if(option == TextEdits::encoded)
+                ui->encoded->paste();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::selectAll()
@@ -205,6 +218,17 @@ void HTMLCoderDecoderWidget::selectAll()
         ui->html->selectAll();
     else if(ui->encoded->hasFocus())
         ui->encoded->selectAll();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->selectAll();
+            else if(option == TextEdits::encoded)
+                ui->encoded->selectAll();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::deleteText()
@@ -213,6 +237,17 @@ void HTMLCoderDecoderWidget::deleteText()
         ui->html->deleteSelected();
     else if(ui->encoded->hasFocus())
         ui->encoded->deleteSelected();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->deleteSelected();
+            else if(option == TextEdits::encoded)
+                ui->encoded->deleteSelected();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::deleteAllText()
@@ -221,6 +256,17 @@ void HTMLCoderDecoderWidget::deleteAllText()
         ui->html->deleteAll();
     else if(ui->encoded->hasFocus())
         ui->encoded->deleteAll();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->deleteAll();
+            else if(option == TextEdits::encoded)
+                ui->encoded->deleteAll();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::increaseFontSize()
@@ -229,6 +275,17 @@ void HTMLCoderDecoderWidget::increaseFontSize()
         ui->html->increaseFontSize();
     else if(ui->encoded->hasFocus())
         ui->encoded->increaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->increaseFontSize();
+            else if(option == TextEdits::encoded)
+                ui->encoded->increaseFontSize();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::decreaseFontSize()
@@ -237,20 +294,79 @@ void HTMLCoderDecoderWidget::decreaseFontSize()
         ui->html->decreaseFontSize();
     else if(ui->encoded->hasFocus())
         ui->encoded->decreaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->decreaseFontSize();
+            else if(option == TextEdits::encoded)
+                ui->encoded->decreaseFontSize();
+        }
+    }
 }
 
 void HTMLCoderDecoderWidget::setFontSize()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200);
+        if(option == TextEdits::html)
+            ui->html->setFontSize(size);
+        else if(option == TextEdits::encoded)
+            ui->encoded->setFontSize(size);
+    }
 }
 
 void HTMLCoderDecoderWidget::resetFontSize()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        if(option == TextEdits::html)
+            ui->html->setFontSize(10);
+        else if(option == TextEdits::encoded)
+            ui->encoded->setFontSize(10);
+    }
 }
 
 void HTMLCoderDecoderWidget::setFont()
 {
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const QFont font = QFontDialog::getFont(&ok, this);
+        if(ok)
+        {
+            if(option == TextEdits::html)
+                ui->html->setFont(font);
+            else if(option == TextEdits::encoded)
+                ui->encoded->setFont(font);
+        }
+    }
+}
 
+HTMLCoderDecoderWidget::TextEdits HTMLCoderDecoderWidget::getSelectedOption()
+{
+    TextEdits option = TextEdits::none;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton htmlButton(tr("Html"), &dialog);
+    QPushButton encodedButton(tr("Encoded"), &dialog);
+    connect(&htmlButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::html;});
+    connect(&encodedButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::encoded;});
+    connect(&htmlButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&encodedButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&htmlButton);
+    layout.addWidget(&encodedButton);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        return option;
+    }
+    return option;
 }
 

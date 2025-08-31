@@ -30,6 +30,11 @@ private slots:
     void selectAll();
     void deleteSelected();
     void deleteAll();
+    void increaseFontSize();
+    void decreaseFontSize();
+    void setFontSize();
+    void resetFontSize();
+    void setFont();
 
 private:
     Ui::MainWindow *ui;

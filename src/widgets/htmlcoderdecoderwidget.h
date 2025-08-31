@@ -38,11 +38,13 @@ public:
 private:
     enum TextEdits{
         html,
-        encoded
+        encoded,
+        none
     };
     Ui::HTMLCoderDecoderWidget *ui;
     bool coding {false};
     TextEdits lastInFocus;
+    TextEdits getSelectedOption();
 
 private slots:
     void encode();
