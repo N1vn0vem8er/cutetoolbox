@@ -30,6 +30,8 @@ private slots:
     void selectAll();
     void deleteSelected();
     void deleteAll();
+    void undo();
+    void redo();
     void increaseFontSize();
     void decreaseFontSize();
     void setFontSize();

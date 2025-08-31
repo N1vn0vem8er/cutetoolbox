@@ -269,6 +269,44 @@ void HTMLCoderDecoderWidget::deleteAllText()
     }
 }
 
+void HTMLCoderDecoderWidget::undo()
+{
+    if(ui->html->hasFocus())
+        ui->html->undo();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->undo();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->undo();
+            else if(option == TextEdits::encoded)
+                ui->encoded->undo();
+        }
+    }
+}
+
+void HTMLCoderDecoderWidget::redo()
+{
+    if(ui->html->hasFocus())
+        ui->html->redo();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->redo();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                ui->html->redo();
+            else if(option == TextEdits::encoded)
+                ui->encoded->redo();
+        }
+    }
+}
+
 void HTMLCoderDecoderWidget::increaseFontSize()
 {
     if(ui->html->hasFocus())

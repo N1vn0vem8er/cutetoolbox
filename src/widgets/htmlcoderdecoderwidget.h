@@ -29,6 +29,8 @@ public:
     void selectAll() override;
     void deleteText() override;
     void deleteAllText() override;
+    void undo() override;
+    void redo() override;
     void increaseFontSize() override;
     void decreaseFontSize() override;
     void setFontSize() override;

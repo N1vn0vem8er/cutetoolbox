@@ -69,6 +69,16 @@ void CustomWidget::deleteAllText()
 
 }
 
+void CustomWidget::undo()
+{
+
+}
+
+void CustomWidget::redo()
+{
+
+}
+
 void CustomWidget::increaseFontSize()
 {
 

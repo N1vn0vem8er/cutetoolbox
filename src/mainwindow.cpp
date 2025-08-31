@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSet_font_size, &QAction::triggered, this, &MainWindow::setFontSize);
     connect(ui->actionReset_font_size, &QAction::triggered, this, &MainWindow::resetFontSize);
     connect(ui->actionSet_font, &QAction::triggered, this, &MainWindow::setFont);
+    connect(ui->actionUndo, &QAction::triggered, this, &MainWindow::undo);
+    connect(ui->actionRedo, &QAction::triggered, this, &MainWindow::redo);
 
     currentToolLabel = new QLabel(ui->statusbar);
     currentToolLabel->setText("HTML Encoder");
@@ -199,6 +201,26 @@ void MainWindow::deleteAll()
     {
         if(widget->canBasicEdit())
             widget->deleteAllText();
+    }
+}
+
+void MainWindow::undo()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->undo();
+    }
+}
+
+void MainWindow::redo()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canBasicEdit())
+            widget->redo();
     }
 }
 

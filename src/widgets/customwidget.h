@@ -21,6 +21,8 @@ public:
     virtual void selectAll();
     virtual void deleteText();
     virtual void deleteAllText();
+    virtual void undo();
+    virtual void redo();
     virtual void increaseFontSize();
     virtual void decreaseFontSize();
     virtual void setFontSize();
