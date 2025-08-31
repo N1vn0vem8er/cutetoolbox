@@ -1,13 +1,14 @@
 #ifndef HTMLCODERDECODERWIDGET_H
 #define HTMLCODERDECODERWIDGET_H
 
+#include "customwidget.h"
 #include <QWidget>
 
 namespace Ui {
 class HTMLCoderDecoderWidget;
 }
 
-class HTMLCoderDecoderWidget : public QWidget
+class HTMLCoderDecoderWidget : public CustomWidget
 {
     Q_OBJECT
 
@@ -22,6 +23,10 @@ private:
 private slots:
     void encode();
     void decode();
+
+public:
+    bool canOpenFiles() const override;
+    bool canSaveFiles() const override;
 };
 
 #endif // HTMLCODERDECODERWIDGET_H

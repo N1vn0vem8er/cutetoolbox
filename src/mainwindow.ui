@@ -89,8 +89,6 @@
     <addaction name="actionDelete"/>
     <addaction name="actionDelete_All"/>
     <addaction name="actionSelect_All"/>
-    <addaction name="separator"/>
-    <addaction name="actionRead_Only"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -104,8 +102,6 @@
     <addaction name="actionReset_font_size"/>
     <addaction name="actionSet_font"/>
     <addaction name="separator"/>
-    <addaction name="actionGo_up"/>
-    <addaction name="actionGo_down"/>
     <addaction name="separator"/>
     <addaction name="actionFull_screen"/>
    </widget>

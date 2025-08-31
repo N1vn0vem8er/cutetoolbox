@@ -4,7 +4,7 @@
 #include <QFileDialog>
 
 HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::HTMLCoderDecoderWidget)
 {
     ui->setupUi(this);
@@ -74,3 +74,14 @@ void HTMLCoderDecoderWidget::decode()
         coding = false;
     }
 }
+
+bool HTMLCoderDecoderWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool HTMLCoderDecoderWidget::canSaveFiles() const
+{
+    return true;
+}
+
