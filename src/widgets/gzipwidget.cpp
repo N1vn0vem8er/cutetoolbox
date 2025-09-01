@@ -115,44 +115,6 @@ void GZipWidget::open()
     }
 }
 
-void GZipWidget::deleteText()
-{
-    if(ui->input->hasFocus())
-        ui->input->deleteSelected();
-    else if(ui->output->hasFocus())
-        ui->output->deleteSelected();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->deleteSelected();
-            else if(option == TextEdits::output)
-                ui->output->deleteSelected();
-        }
-    }
-}
-
-void GZipWidget::deleteAllText()
-{
-    if(ui->input->hasFocus())
-        ui->input->deleteAll();
-    else if(ui->output->hasFocus())
-        ui->output->deleteAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->deleteAll();
-            else if(option == TextEdits::output)
-                ui->output->deleteAll();
-        }
-    }
-}
-
 void GZipWidget::increaseFontSize()
 {
     if(ui->input->hasFocus())

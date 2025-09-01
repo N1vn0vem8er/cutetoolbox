@@ -63,6 +63,11 @@ bool QrCodeGenerator::canSaveFiles() const
     return true;
 }
 
+bool QrCodeGenerator::canBasicEdit() const
+{
+    return true;
+}
+
 void QrCodeGenerator::save()
 {
     if(!openedFile.isEmpty())

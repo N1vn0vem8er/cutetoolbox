@@ -115,44 +115,6 @@ void Base64CoderDecoderWidget::open()
     }
 }
 
-void Base64CoderDecoderWidget::deleteText()
-{
-    if(ui->text->hasFocus())
-        ui->text->deleteSelected();
-    else if(ui->base64->hasFocus())
-        ui->base64->deleteSelected();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->deleteSelected();
-            else if(option == TextEdits::base64)
-                ui->base64->deleteSelected();
-        }
-    }
-}
-
-void Base64CoderDecoderWidget::deleteAllText()
-{
-    if(ui->text->hasFocus())
-        ui->text->deleteAll();
-    else if(ui->base64->hasFocus())
-        ui->base64->deleteAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->deleteAll();
-            else if(option == TextEdits::base64)
-                ui->base64->deleteAll();
-        }
-    }
-}
-
 void Base64CoderDecoderWidget::increaseFontSize()
 {
     if(ui->text->hasFocus())

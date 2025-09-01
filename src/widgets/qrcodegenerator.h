@@ -20,6 +20,7 @@ public:
     explicit QrCodeGenerator(QWidget *parent = nullptr);
     ~QrCodeGenerator();
     bool canSaveFiles() const override;
+    bool canBasicEdit() const override;
     void save() override;
     void saveAs() override;
 

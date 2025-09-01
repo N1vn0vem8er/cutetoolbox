@@ -64,16 +64,6 @@ void JsonFormatterWidget::saveAs()
     }
 }
 
-void JsonFormatterWidget::deleteText()
-{
-    ui->codeEditor->deleteSelected();
-}
-
-void JsonFormatterWidget::deleteAllText()
-{
-    ui->codeEditor->deleteAll();
-}
-
 void JsonFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

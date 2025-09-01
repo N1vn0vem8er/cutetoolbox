@@ -121,13 +121,3 @@ void HTMLFormatterWidget::open()
         }
     }
 }
-
-void HTMLFormatterWidget::deleteText()
-{
-    ui->codeEditor->deleteSelected();
-}
-
-void HTMLFormatterWidget::deleteAllText()
-{
-    ui->codeEditor->deleteAll();
-}

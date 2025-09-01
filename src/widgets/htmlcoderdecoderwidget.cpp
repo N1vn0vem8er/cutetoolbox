@@ -155,44 +155,6 @@ void HTMLCoderDecoderWidget::open()
     }
 }
 
-void HTMLCoderDecoderWidget::deleteText()
-{
-    if(ui->html->hasFocus())
-        ui->html->deleteSelected();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->deleteSelected();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->deleteSelected();
-            else if(option == TextEdits::encoded)
-                ui->encoded->deleteSelected();
-        }
-    }
-}
-
-void HTMLCoderDecoderWidget::deleteAllText()
-{
-    if(ui->html->hasFocus())
-        ui->html->deleteAll();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->deleteAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->deleteAll();
-            else if(option == TextEdits::encoded)
-                ui->encoded->deleteAll();
-        }
-    }
-}
-
 void HTMLCoderDecoderWidget::increaseFontSize()
 {
     if(ui->html->hasFocus())

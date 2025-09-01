@@ -119,44 +119,6 @@ void UrlCoderDecoderWidget::open()
     }
 }
 
-void UrlCoderDecoderWidget::deleteText()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->deleteSelected();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->deleteSelected();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->deleteSelected();
-            else if(option == TextEdits::encoded)
-                ui->encoded->deleteSelected();
-        }
-    }
-}
-
-void UrlCoderDecoderWidget::deleteAllText()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->deleteAll();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->deleteAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->deleteAll();
-            else if(option == TextEdits::encoded)
-                ui->encoded->deleteAll();
-        }
-    }
-}
-
 void UrlCoderDecoderWidget::increaseFontSize()
 {
     if(ui->decoded->hasFocus())

@@ -93,16 +93,6 @@ void SQLFormatterWidget::saveAs()
     }
 }
 
-void SQLFormatterWidget::deleteText()
-{
-    ui->codeEditor->deleteSelected();
-}
-
-void SQLFormatterWidget::deleteAllText()
-{
-    ui->codeEditor->deleteAll();
-}
-
 void SQLFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

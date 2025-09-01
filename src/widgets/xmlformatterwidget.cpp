@@ -77,16 +77,6 @@ void XMLFormatterWidget::saveAs()
     }
 }
 
-void XMLFormatterWidget::deleteText()
-{
-    ui->codeEditor->deleteSelected();
-}
-
-void XMLFormatterWidget::deleteAllText()
-{
-    ui->codeEditor->deleteAll();
-}
-
 void XMLFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();
