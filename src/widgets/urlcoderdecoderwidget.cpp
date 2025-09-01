@@ -1,9 +1,11 @@
 #include "urlcoderdecoderwidget.h"
 #include "src/widgets/ui_urlcoderdecoderwidget.h"
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 
 UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::UrlCoderDecoderWidget)
 {
     ui->setupUi(this);
@@ -51,6 +53,323 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
 UrlCoderDecoderWidget::~UrlCoderDecoderWidget()
 {
     delete ui;
+}
+
+bool UrlCoderDecoderWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool UrlCoderDecoderWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool UrlCoderDecoderWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool UrlCoderDecoderWidget::canChangeFont() const
+{
+    return true;
+}
+
+void UrlCoderDecoderWidget::save()
+{
+
+}
+
+void UrlCoderDecoderWidget::saveAs()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::WriteOnly))
+            {
+                file.write(option == TextEdits::decoded ? ui->decoded->toPlainText().toUtf8() : ui->encoded->toPlainText().toUtf8());
+                file.close();
+            }
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::open()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                if(option == TextEdits::decoded)
+                    ui->decoded->setPlainText(file.readAll());
+                else if(option == TextEdits::encoded)
+                    ui->encoded->setPlainText(file.readAll());
+                file.close();
+            }
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::copy()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->copy();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->copy();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->copy();
+            else if(option == TextEdits::encoded)
+                ui->encoded->copy();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::cut()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->cut();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->cut();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->cut();
+            else if(option == TextEdits::encoded)
+                ui->encoded->cut();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::paste()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->paste();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->paste();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->paste();
+            else if(option == TextEdits::encoded)
+                ui->encoded->paste();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::selectAll()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->selectAll();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->selectAll();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->selectAll();
+            else if(option == TextEdits::encoded)
+                ui->encoded->selectAll();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::deleteText()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->deleteSelected();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->deleteSelected();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->deleteSelected();
+            else if(option == TextEdits::encoded)
+                ui->encoded->deleteSelected();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::deleteAllText()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->deleteAll();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->deleteAll();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->deleteAll();
+            else if(option == TextEdits::encoded)
+                ui->encoded->deleteAll();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::undo()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->undo();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->undo();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->undo();
+            else if(option == TextEdits::encoded)
+                ui->encoded->undo();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::redo()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->redo();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->redo();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->redo();
+            else if(option == TextEdits::encoded)
+                ui->encoded->redo();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::increaseFontSize()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->increaseFontSize();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->increaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->increaseFontSize();
+            else if(option == TextEdits::encoded)
+                ui->encoded->increaseFontSize();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::decreaseFontSize()
+{
+    if(ui->decoded->hasFocus())
+        ui->decoded->decreaseFontSize();
+    else if(ui->encoded->hasFocus())
+        ui->encoded->decreaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->decreaseFontSize();
+            else if(option == TextEdits::encoded)
+                ui->encoded->decreaseFontSize();
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::setFontSize()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200);
+        if(option == TextEdits::decoded)
+            ui->decoded->setFontSize(size);
+        else if(option == TextEdits::encoded)
+            ui->encoded->setFontSize(size);
+    }
+}
+
+void UrlCoderDecoderWidget::resetFontSize()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        if(option == TextEdits::decoded)
+            ui->decoded->setFontSize(10);
+        else if(option == TextEdits::encoded)
+            ui->encoded->setFontSize(10);
+    }
+}
+
+void UrlCoderDecoderWidget::setFont()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const QFont font = QFontDialog::getFont(&ok, this);
+        if(ok)
+        {
+            if(option == TextEdits::decoded)
+                ui->decoded->setFont(font);
+            else if(option == TextEdits::encoded)
+                ui->encoded->setFont(font);
+        }
+    }
+}
+
+UrlCoderDecoderWidget::TextEdits UrlCoderDecoderWidget::getSelectedOption()
+{
+    TextEdits option = TextEdits::none;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton textButton(tr("Decoded"), &dialog);
+    QPushButton base64Button(tr("Encoded"), &dialog);
+    connect(&textButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::decoded;});
+    connect(&base64Button, &QPushButton::clicked, &dialog, [&]{option = TextEdits::encoded;});
+    connect(&textButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&base64Button, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&textButton);
+    layout.addWidget(&base64Button);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        return option;
+    }
+    return option;
 }
 
 void UrlCoderDecoderWidget::encode()

@@ -142,7 +142,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="decoded"/>
+        <widget class="CodeEditor" name="decoded"/>
        </item>
       </layout>
      </widget>
@@ -225,7 +225,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="encoded"/>
+        <widget class="CodeEditor" name="encoded"/>
        </item>
       </layout>
      </widget>
@@ -233,6 +233,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>editor/codeeditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <buttongroups>
