@@ -4,7 +4,7 @@
 #include <limits>
 
 RandomNumberGeneratorWidget::RandomNumberGeneratorWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::RandomNumberGeneratorWidget)
 {
     ui->setupUi(this);
@@ -24,6 +24,21 @@ RandomNumberGeneratorWidget::RandomNumberGeneratorWidget(QWidget *parent)
 RandomNumberGeneratorWidget::~RandomNumberGeneratorWidget()
 {
     delete ui;
+}
+
+bool RandomNumberGeneratorWidget::canBasicEdit() const
+{
+    return true;
+}
+
+void RandomNumberGeneratorWidget::deleteText()
+{
+    ui->lineEdit->del();
+}
+
+void RandomNumberGeneratorWidget::deleteAllText()
+{
+    ui->lineEdit->clear();
 }
 
 void RandomNumberGeneratorWidget::generate()
