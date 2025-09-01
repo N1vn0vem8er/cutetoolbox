@@ -101,7 +101,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="input"/>
+        <widget class="CodeEditor" name="input"/>
        </item>
       </layout>
      </widget>
@@ -184,7 +184,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="output"/>
+        <widget class="CodeEditor" name="output"/>
        </item>
       </layout>
      </widget>
@@ -192,6 +192,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>editor/codeeditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
