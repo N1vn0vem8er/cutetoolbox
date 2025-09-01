@@ -1,9 +1,12 @@
 #include "uuidgeneratorwidget.h"
 #include "src/widgets/ui_uuidgeneratorwidget.h"
+#include <QFileDialog>
+#include <QFontDialog>
 #include <QUuid>
+#include <qinputdialog.h>
 
 UUIDGeneratorWidget::UUIDGeneratorWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::UUIDGeneratorWidget)
 {
     ui->setupUi(this);
@@ -38,6 +41,84 @@ UUIDGeneratorWidget::UUIDGeneratorWidget(QWidget *parent)
 UUIDGeneratorWidget::~UUIDGeneratorWidget()
 {
     delete ui;
+}
+
+bool UUIDGeneratorWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool UUIDGeneratorWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool UUIDGeneratorWidget::canChangeFont() const
+{
+    return true;
+}
+
+void UUIDGeneratorWidget::save()
+{
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->plainTextEdit->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
+}
+
+void UUIDGeneratorWidget::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->plainTextEdit->toPlainText().toUtf8());
+            file.close();
+            openedFile = path;
+        }
+    }
+}
+
+void UUIDGeneratorWidget::increaseFontSize()
+{
+    ui->plainTextEdit->increaseFontSize();
+}
+
+void UUIDGeneratorWidget::decreaseFontSize()
+{
+    ui->plainTextEdit->decreaseFontSize();
+}
+
+void UUIDGeneratorWidget::setFontSize()
+{
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->plainTextEdit->setFontSize(size);
+}
+
+void UUIDGeneratorWidget::resetFontSize()
+{
+    ui->plainTextEdit->setFontSize(10);
+}
+
+void UUIDGeneratorWidget::setFont()
+{
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        ui->plainTextEdit->setFont(font);
+    }
 }
 
 void UUIDGeneratorWidget::generate()
