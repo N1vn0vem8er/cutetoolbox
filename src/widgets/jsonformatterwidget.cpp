@@ -2,11 +2,13 @@
 #include "src/widgets/ui_jsonformatterwidget.h"
 
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
 
 JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::JsonFormatterWidget)
 {
     ui->setupUi(this);
@@ -21,6 +23,118 @@ JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
 JsonFormatterWidget::~JsonFormatterWidget()
 {
     delete ui;
+}
+
+bool JsonFormatterWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool JsonFormatterWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool JsonFormatterWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool JsonFormatterWidget::canChangeFont() const
+{
+    return true;
+}
+
+void JsonFormatterWidget::save()
+{
+
+}
+
+void JsonFormatterWidget::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+}
+
+void JsonFormatterWidget::copy()
+{
+    ui->codeEditor->copy();
+}
+
+void JsonFormatterWidget::cut()
+{
+    ui->codeEditor->cut();
+}
+
+void JsonFormatterWidget::paste()
+{
+    ui->codeEditor->paste();
+}
+
+void JsonFormatterWidget::selectAll()
+{
+    ui->codeEditor->selectAll();
+}
+
+void JsonFormatterWidget::deleteText()
+{
+    ui->codeEditor->deleteSelected();
+}
+
+void JsonFormatterWidget::deleteAllText()
+{
+    ui->codeEditor->deleteAll();
+}
+
+void JsonFormatterWidget::undo()
+{
+    ui->codeEditor->undo();
+}
+
+void JsonFormatterWidget::redo()
+{
+    ui->codeEditor->redo();
+}
+
+void JsonFormatterWidget::increaseFontSize()
+{
+    ui->codeEditor->increaseFontSize();
+}
+
+void JsonFormatterWidget::decreaseFontSize()
+{
+    ui->codeEditor->decreaseFontSize();
+}
+
+void JsonFormatterWidget::setFontSize()
+{
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->codeEditor->setFontSize(size);
+}
+
+void JsonFormatterWidget::resetFontSize()
+{
+    ui->codeEditor->setFontSize(10);
+}
+
+void JsonFormatterWidget::setFont()
+{
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        ui->codeEditor->setFont(font);
+    }
 }
 
 void JsonFormatterWidget::format()
