@@ -15,14 +15,8 @@ public:
     virtual void save();
     virtual void saveAs();
     virtual void open();
-    virtual void copy();
-    virtual void cut();
-    virtual void paste();
-    virtual void selectAll();
     virtual void deleteText();
     virtual void deleteAllText();
-    virtual void undo();
-    virtual void redo();
     virtual void increaseFontSize();
     virtual void decreaseFontSize();
     virtual void setFontSize();

@@ -77,26 +77,6 @@ void XMLFormatterWidget::saveAs()
     }
 }
 
-void XMLFormatterWidget::copy()
-{
-    ui->codeEditor->copy();
-}
-
-void XMLFormatterWidget::cut()
-{
-    ui->codeEditor->cut();
-}
-
-void XMLFormatterWidget::paste()
-{
-    ui->codeEditor->paste();
-}
-
-void XMLFormatterWidget::selectAll()
-{
-    ui->codeEditor->selectAll();
-}
-
 void XMLFormatterWidget::deleteText()
 {
     ui->codeEditor->deleteSelected();
@@ -105,16 +85,6 @@ void XMLFormatterWidget::deleteText()
 void XMLFormatterWidget::deleteAllText()
 {
     ui->codeEditor->deleteAll();
-}
-
-void XMLFormatterWidget::undo()
-{
-    ui->codeEditor->undo();
-}
-
-void XMLFormatterWidget::redo()
-{
-    ui->codeEditor->redo();
 }
 
 void XMLFormatterWidget::increaseFontSize()

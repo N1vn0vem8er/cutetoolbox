@@ -115,82 +115,6 @@ void Base64CoderDecoderWidget::open()
     }
 }
 
-void Base64CoderDecoderWidget::copy()
-{
-    if(ui->text->hasFocus())
-        ui->text->copy();
-    else if(ui->base64->hasFocus())
-        ui->base64->copy();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->copy();
-            else if(option == TextEdits::base64)
-                ui->base64->copy();
-        }
-    }
-}
-
-void Base64CoderDecoderWidget::cut()
-{
-    if(ui->text->hasFocus())
-        ui->text->cut();
-    else if(ui->base64->hasFocus())
-        ui->base64->cut();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->cut();
-            else if(option == TextEdits::base64)
-                ui->base64->cut();
-        }
-    }
-}
-
-void Base64CoderDecoderWidget::paste()
-{
-    if(ui->text->hasFocus())
-        ui->text->paste();
-    else if(ui->base64->hasFocus())
-        ui->base64->paste();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->paste();
-            else if(option == TextEdits::base64)
-                ui->base64->paste();
-        }
-    }
-}
-
-void Base64CoderDecoderWidget::selectAll()
-{
-    if(ui->text->hasFocus())
-        ui->text->selectAll();
-    else if(ui->base64->hasFocus())
-        ui->base64->selectAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->selectAll();
-            else if(option == TextEdits::base64)
-                ui->base64->selectAll();
-        }
-    }
-}
-
 void Base64CoderDecoderWidget::deleteText()
 {
     if(ui->text->hasFocus())
@@ -225,44 +149,6 @@ void Base64CoderDecoderWidget::deleteAllText()
                 ui->text->deleteAll();
             else if(option == TextEdits::base64)
                 ui->base64->deleteAll();
-        }
-    }
-}
-
-void Base64CoderDecoderWidget::undo()
-{
-    if(ui->text->hasFocus())
-        ui->text->undo();
-    else if(ui->base64->hasFocus())
-        ui->base64->undo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->undo();
-            else if(option == TextEdits::base64)
-                ui->base64->undo();
-        }
-    }
-}
-
-void Base64CoderDecoderWidget::redo()
-{
-    if(ui->text->hasFocus())
-        ui->text->redo();
-    else if(ui->base64->hasFocus())
-        ui->base64->redo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::text)
-                ui->text->redo();
-            else if(option == TextEdits::base64)
-                ui->base64->redo();
         }
     }
 }

@@ -39,42 +39,12 @@ void CustomWidget::open()
 
 }
 
-void CustomWidget::copy()
-{
-
-}
-
-void CustomWidget::cut()
-{
-
-}
-
-void CustomWidget::paste()
-{
-
-}
-
-void CustomWidget::selectAll()
-{
-
-}
-
 void CustomWidget::deleteText()
 {
 
 }
 
 void CustomWidget::deleteAllText()
-{
-
-}
-
-void CustomWidget::undo()
-{
-
-}
-
-void CustomWidget::redo()
 {
 
 }

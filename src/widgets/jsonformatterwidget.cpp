@@ -64,26 +64,6 @@ void JsonFormatterWidget::saveAs()
     }
 }
 
-void JsonFormatterWidget::copy()
-{
-    ui->codeEditor->copy();
-}
-
-void JsonFormatterWidget::cut()
-{
-    ui->codeEditor->cut();
-}
-
-void JsonFormatterWidget::paste()
-{
-    ui->codeEditor->paste();
-}
-
-void JsonFormatterWidget::selectAll()
-{
-    ui->codeEditor->selectAll();
-}
-
 void JsonFormatterWidget::deleteText()
 {
     ui->codeEditor->deleteSelected();
@@ -92,16 +72,6 @@ void JsonFormatterWidget::deleteText()
 void JsonFormatterWidget::deleteAllText()
 {
     ui->codeEditor->deleteAll();
-}
-
-void JsonFormatterWidget::undo()
-{
-    ui->codeEditor->undo();
-}
-
-void JsonFormatterWidget::redo()
-{
-    ui->codeEditor->redo();
 }
 
 void JsonFormatterWidget::increaseFontSize()

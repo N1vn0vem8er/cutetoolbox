@@ -119,82 +119,6 @@ void UrlCoderDecoderWidget::open()
     }
 }
 
-void UrlCoderDecoderWidget::copy()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->copy();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->copy();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->copy();
-            else if(option == TextEdits::encoded)
-                ui->encoded->copy();
-        }
-    }
-}
-
-void UrlCoderDecoderWidget::cut()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->cut();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->cut();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->cut();
-            else if(option == TextEdits::encoded)
-                ui->encoded->cut();
-        }
-    }
-}
-
-void UrlCoderDecoderWidget::paste()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->paste();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->paste();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->paste();
-            else if(option == TextEdits::encoded)
-                ui->encoded->paste();
-        }
-    }
-}
-
-void UrlCoderDecoderWidget::selectAll()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->selectAll();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->selectAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->selectAll();
-            else if(option == TextEdits::encoded)
-                ui->encoded->selectAll();
-        }
-    }
-}
-
 void UrlCoderDecoderWidget::deleteText()
 {
     if(ui->decoded->hasFocus())
@@ -229,44 +153,6 @@ void UrlCoderDecoderWidget::deleteAllText()
                 ui->decoded->deleteAll();
             else if(option == TextEdits::encoded)
                 ui->encoded->deleteAll();
-        }
-    }
-}
-
-void UrlCoderDecoderWidget::undo()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->undo();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->undo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->undo();
-            else if(option == TextEdits::encoded)
-                ui->encoded->undo();
-        }
-    }
-}
-
-void UrlCoderDecoderWidget::redo()
-{
-    if(ui->decoded->hasFocus())
-        ui->decoded->redo();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->redo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::decoded)
-                ui->decoded->redo();
-            else if(option == TextEdits::encoded)
-                ui->encoded->redo();
         }
     }
 }

@@ -22,14 +22,8 @@ public:
     bool canChangeFont() const override;
     void save() override;
     void saveAs() override;
-    void copy() override;
-    void cut() override;
-    void paste() override;
-    void selectAll() override;
     void deleteText() override;
     void deleteAllText() override;
-    void undo() override;
-    void redo() override;
     void increaseFontSize() override;
     void decreaseFontSize() override;
     void setFontSize() override;

@@ -155,82 +155,6 @@ void HTMLCoderDecoderWidget::open()
     }
 }
 
-void HTMLCoderDecoderWidget::copy()
-{
-    if(ui->html->hasFocus())
-        ui->html->copy();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->copy();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->copy();
-            else if(option == TextEdits::encoded)
-                ui->encoded->copy();
-        }
-    }
-}
-
-void HTMLCoderDecoderWidget::cut()
-{
-    if(ui->html->hasFocus())
-        ui->html->cut();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->cut();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->cut();
-            else if(option == TextEdits::encoded)
-                ui->encoded->cut();
-        }
-    }
-}
-
-void HTMLCoderDecoderWidget::paste()
-{
-    if(ui->html->hasFocus())
-        ui->html->paste();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->paste();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->paste();
-            else if(option == TextEdits::encoded)
-                ui->encoded->paste();
-        }
-    }
-}
-
-void HTMLCoderDecoderWidget::selectAll()
-{
-    if(ui->html->hasFocus())
-        ui->html->selectAll();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->selectAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->selectAll();
-            else if(option == TextEdits::encoded)
-                ui->encoded->selectAll();
-        }
-    }
-}
-
 void HTMLCoderDecoderWidget::deleteText()
 {
     if(ui->html->hasFocus())
@@ -265,44 +189,6 @@ void HTMLCoderDecoderWidget::deleteAllText()
                 ui->html->deleteAll();
             else if(option == TextEdits::encoded)
                 ui->encoded->deleteAll();
-        }
-    }
-}
-
-void HTMLCoderDecoderWidget::undo()
-{
-    if(ui->html->hasFocus())
-        ui->html->undo();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->undo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->undo();
-            else if(option == TextEdits::encoded)
-                ui->encoded->undo();
-        }
-    }
-}
-
-void HTMLCoderDecoderWidget::redo()
-{
-    if(ui->html->hasFocus())
-        ui->html->redo();
-    else if(ui->encoded->hasFocus())
-        ui->encoded->redo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::html)
-                ui->html->redo();
-            else if(option == TextEdits::encoded)
-                ui->encoded->redo();
         }
     }
 }

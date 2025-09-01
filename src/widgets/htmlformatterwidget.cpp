@@ -63,46 +63,6 @@ void HTMLFormatterWidget::saveAs()
     }
 }
 
-void HTMLFormatterWidget::copy()
-{
-    ui->codeEditor->copy();
-}
-
-void HTMLFormatterWidget::cut()
-{
-    ui->codeEditor->cut();
-}
-
-void HTMLFormatterWidget::paste()
-{
-    ui->codeEditor->paste();
-}
-
-void HTMLFormatterWidget::selectAll()
-{
-    ui->codeEditor->selectAll();
-}
-
-void HTMLFormatterWidget::deleteText()
-{
-    ui->codeEditor->deleteSelected();
-}
-
-void HTMLFormatterWidget::deleteAllText()
-{
-    ui->codeEditor->deleteAll();
-}
-
-void HTMLFormatterWidget::undo()
-{
-    ui->codeEditor->undo();
-}
-
-void HTMLFormatterWidget::redo()
-{
-    ui->codeEditor->redo();
-}
-
 void HTMLFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();
@@ -160,4 +120,14 @@ void HTMLFormatterWidget::open()
             file.close();
         }
     }
+}
+
+void HTMLFormatterWidget::deleteText()
+{
+    ui->codeEditor->deleteSelected();
+}
+
+void HTMLFormatterWidget::deleteAllText()
+{
+    ui->codeEditor->deleteAll();
 }

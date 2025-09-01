@@ -115,82 +115,6 @@ void GZipWidget::open()
     }
 }
 
-void GZipWidget::copy()
-{
-    if(ui->input->hasFocus())
-        ui->input->copy();
-    else if(ui->output->hasFocus())
-        ui->output->copy();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->copy();
-            else if(option == TextEdits::output)
-                ui->output->copy();
-        }
-    }
-}
-
-void GZipWidget::cut()
-{
-    if(ui->input->hasFocus())
-        ui->input->cut();
-    else if(ui->output->hasFocus())
-        ui->output->cut();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->cut();
-            else if(option == TextEdits::output)
-                ui->output->cut();
-        }
-    }
-}
-
-void GZipWidget::paste()
-{
-    if(ui->input->hasFocus())
-        ui->input->paste();
-    else if(ui->output->hasFocus())
-        ui->output->paste();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->paste();
-            else if(option == TextEdits::output)
-                ui->output->paste();
-        }
-    }
-}
-
-void GZipWidget::selectAll()
-{
-    if(ui->input->hasFocus())
-        ui->input->selectAll();
-    else if(ui->output->hasFocus())
-        ui->output->selectAll();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->selectAll();
-            else if(option == TextEdits::output)
-                ui->output->selectAll();
-        }
-    }
-}
-
 void GZipWidget::deleteText()
 {
     if(ui->input->hasFocus())
@@ -225,44 +149,6 @@ void GZipWidget::deleteAllText()
                 ui->input->deleteAll();
             else if(option == TextEdits::output)
                 ui->output->deleteAll();
-        }
-    }
-}
-
-void GZipWidget::undo()
-{
-    if(ui->input->hasFocus())
-        ui->input->undo();
-    else if(ui->output->hasFocus())
-        ui->output->undo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->undo();
-            else if(option == TextEdits::output)
-                ui->output->undo();
-        }
-    }
-}
-
-void GZipWidget::redo()
-{
-    if(ui->input->hasFocus())
-        ui->input->redo();
-    else if(ui->output->hasFocus())
-        ui->output->redo();
-    else
-    {
-        TextEdits option = getSelectedOption();
-        if(option != TextEdits::none)
-        {
-            if(option == TextEdits::input)
-                ui->input->redo();
-            else if(option == TextEdits::output)
-                ui->output->redo();
         }
     }
 }

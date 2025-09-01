@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <qplaintextedit.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -191,7 +192,21 @@ void MainWindow::copy()
     if(widget)
     {
         if(widget->canBasicEdit())
-            widget->copy();
+        {
+            QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+            if(focused)
+            {
+                focused->copy();
+            }
+            else
+            {
+                QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                if(focused)
+                {
+                    focused->copy();
+                }
+            }
+        }
     }
 }
 
@@ -201,7 +216,21 @@ void MainWindow::cut()
     if(widget)
     {
         if(widget->canBasicEdit())
-            widget->cut();
+        {
+            QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+            if(focused)
+            {
+                focused->cut();
+            }
+            else
+            {
+                QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                if(focused)
+                {
+                    focused->cut();
+                }
+            }
+        }
     }
 }
 
@@ -211,7 +240,21 @@ void MainWindow::paste()
     if(widget)
     {
         if(widget->canBasicEdit())
-            widget->paste();
+        {
+            QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+            if(focused)
+            {
+                focused->paste();
+            }
+            else
+            {
+                QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                if(focused)
+                {
+                    focused->paste();
+                }
+            }
+        }
     }
 }
 
@@ -221,7 +264,21 @@ void MainWindow::selectAll()
     if(widget)
     {
         if(widget->canBasicEdit())
-            widget->selectAll();
+        {
+            QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+            if(focused)
+            {
+                focused->selectAll();
+            }
+            else
+            {
+                QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                if(focused)
+                {
+                    focused->selectAll();
+                }
+            }
+        }
     }
 }
 
@@ -251,7 +308,21 @@ void MainWindow::undo()
     if(widget)
     {
         if(widget->canBasicEdit())
-            widget->undo();
+        {
+            QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+            if(focused)
+            {
+                focused->undo();
+            }
+            else
+            {
+                QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                if(focused)
+                {
+                    focused->undo();
+                }
+            }
+        }
     }
 }
 
@@ -261,7 +332,21 @@ void MainWindow::redo()
     if(widget)
     {
         if(widget->canBasicEdit())
-            widget->redo();
+        {
+            QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+            if(focused)
+            {
+                focused->redo();
+            }
+            else
+            {
+                QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                if(focused)
+                {
+                    focused->redo();
+                }
+            }
+        }
     }
 }
 

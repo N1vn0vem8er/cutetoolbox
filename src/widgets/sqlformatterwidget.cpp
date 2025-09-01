@@ -93,26 +93,6 @@ void SQLFormatterWidget::saveAs()
     }
 }
 
-void SQLFormatterWidget::copy()
-{
-    ui->codeEditor->copy();
-}
-
-void SQLFormatterWidget::cut()
-{
-    ui->codeEditor->cut();
-}
-
-void SQLFormatterWidget::paste()
-{
-    ui->codeEditor->paste();
-}
-
-void SQLFormatterWidget::selectAll()
-{
-    ui->codeEditor->selectAll();
-}
-
 void SQLFormatterWidget::deleteText()
 {
     ui->codeEditor->deleteSelected();
@@ -121,16 +101,6 @@ void SQLFormatterWidget::deleteText()
 void SQLFormatterWidget::deleteAllText()
 {
     ui->codeEditor->deleteAll();
-}
-
-void SQLFormatterWidget::undo()
-{
-    ui->codeEditor->undo();
-}
-
-void SQLFormatterWidget::redo()
-{
-    ui->codeEditor->redo();
 }
 
 void SQLFormatterWidget::increaseFontSize()

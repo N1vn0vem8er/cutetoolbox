@@ -3,7 +3,7 @@
 #include <random>
 
 LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::LoremIpsumGenerator)
 {
     ui->setupUi(this);
@@ -19,6 +19,51 @@ LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
 LoremIpsumGenerator::~LoremIpsumGenerator()
 {
     delete ui;
+}
+
+bool LoremIpsumGenerator::canSaveFiles() const
+{
+
+}
+
+bool LoremIpsumGenerator::canChangeFont() const
+{
+
+}
+
+void LoremIpsumGenerator::save()
+{
+
+}
+
+void LoremIpsumGenerator::saveAs()
+{
+
+}
+
+void LoremIpsumGenerator::increaseFontSize()
+{
+
+}
+
+void LoremIpsumGenerator::decreaseFontSize()
+{
+
+}
+
+void LoremIpsumGenerator::setFontSize()
+{
+
+}
+
+void LoremIpsumGenerator::resetFontSize()
+{
+
+}
+
+void LoremIpsumGenerator::setFont()
+{
+
 }
 
 QString LoremIpsumGenerator::generateSentence(int minWords, int maxWords, bool makeFirstCharUpper) const

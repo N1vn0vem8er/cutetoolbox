@@ -1,19 +1,29 @@
 #ifndef LOREMIPSUMGENERATOR_H
 #define LOREMIPSUMGENERATOR_H
 
+#include "customwidget.h"
 #include <QWidget>
 
 namespace Ui {
 class LoremIpsumGenerator;
 }
 
-class LoremIpsumGenerator : public QWidget
+class LoremIpsumGenerator : public CustomWidget
 {
     Q_OBJECT
 
 public:
     explicit LoremIpsumGenerator(QWidget *parent = nullptr);
     ~LoremIpsumGenerator();
+    bool canSaveFiles() const override;
+    bool canChangeFont() const override;
+    void save() override;
+    void saveAs() override;
+    void increaseFontSize() override;
+    void decreaseFontSize() override;
+    void setFontSize() override;
+    void resetFontSize() override;
+    void setFont() override;
 
 private:
     Ui::LoremIpsumGenerator *ui;
@@ -36,6 +46,7 @@ private:
 
 private slots:
     void generate();
+
 };
 
 #endif // LOREMIPSUMGENERATOR_H
