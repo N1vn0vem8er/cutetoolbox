@@ -1,6 +1,7 @@
 #ifndef QRCODEGENERATOR_H
 #define QRCODEGENERATOR_H
 
+#include "customwidget.h"
 #include <QWidget>
 #include <qcombobox.h>
 #include <qformlayout.h>
@@ -11,13 +12,16 @@ namespace Ui {
 class QrCodeGenerator;
 }
 
-class QrCodeGenerator : public QWidget
+class QrCodeGenerator : public CustomWidget
 {
     Q_OBJECT
 
 public:
     explicit QrCodeGenerator(QWidget *parent = nullptr);
     ~QrCodeGenerator();
+    bool canSaveFiles() const override;
+    void save() override;
+    void saveAs() override;
 
 private:
     Ui::QrCodeGenerator *ui;
@@ -40,6 +44,7 @@ private slots:
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+
 };
 
 #endif // QRCODEGENERATOR_H

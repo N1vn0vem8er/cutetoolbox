@@ -5,7 +5,7 @@
 #include <QGraphicsRectItem>
 
 QrCodeGenerator::QrCodeGenerator(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::QrCodeGenerator)
 {
     ui->setupUi(this);
@@ -50,21 +50,34 @@ QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &QrCodeGenerator::optionSelected);
     connect(ui->generateButton, &QPushButton::clicked, this, &QrCodeGenerator::generate);
     optionSelected(0);
-    connect(ui->saveButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save Qr code"), QDir::homePath());
-        if(!path.isEmpty())
-        {
-            QImage image(400, 400, QImage::Format_RGB32);
-            QPainter painter(&image);
-            scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
-            image.save(path);
-        }
-    });
+    connect(ui->saveButton, &QPushButton::clicked, this, &QrCodeGenerator::saveAs);
 }
 
 QrCodeGenerator::~QrCodeGenerator()
 {
     delete ui;
+}
+
+bool QrCodeGenerator::canSaveFiles() const
+{
+    return true;
+}
+
+void QrCodeGenerator::save()
+{
+
+}
+
+void QrCodeGenerator::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save Qr code"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QImage image(400, 400, QImage::Format_RGB32);
+        QPainter painter(&image);
+        scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
+        image.save(path);
+    }
 }
 
 void QrCodeGenerator::generate()
