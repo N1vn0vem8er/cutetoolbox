@@ -65,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Timestamp"), QIcon());
     addMenuItem(tr("Number Bases"), QIcon());
     addMenuItem(tr("QDateTime"), QIcon());
+    if(currentMenu)
+        ui->menuTools->addMenu(currentMenu);
 }
 
 MainWindow::~MainWindow()
@@ -116,16 +118,19 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enable
     if(!enabled)
     {
         item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
-        action->setEnabled(false);
+        currentMenu = new QMenu(text, ui->menuTools);
+        currentMenu->setIcon(icon);
+        ui->menuTools->addMenu(currentMenu);
     }
     else
     {
         int currentIndex = index;
         menuIndexMap[text] = index++;
         connect(action, &QAction::triggered, this, [this, currentIndex, text]{ui->stackedWidget->setCurrentIndex(currentIndex); currentToolLabel->setText(text);});
+        if(currentMenu)
+            currentMenu->addAction(action);
     }
     ui->listWidget->addItem(item);
-    ui->menuTools->addAction(action);
 }
 
 void MainWindow::showAbout()
