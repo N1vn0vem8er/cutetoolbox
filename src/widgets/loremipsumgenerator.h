@@ -41,6 +41,7 @@ private:
         "sunt", "in", "culpa", "qui", "officia", "deserunt", "mollit",
         "anim", "id", "est", "laborum"
     };
+    QString openedFile;
 
 private:
     QString generateSentence(int minWords, int maxWords, bool makeFirstCharUpper = true) const;

@@ -1,5 +1,8 @@
 #include "loremipsumgenerator.h"
 #include "src/widgets/ui_loremipsumgenerator.h"
+#include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 #include <random>
 
 LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
@@ -12,7 +15,7 @@ LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &LoremIpsumGenerator::generate);
     connect(ui->beginWithLICheckBox, &QCheckBox::clicked, this, &LoremIpsumGenerator::generate);
     connect(ui->regenerateButton, &QPushButton::clicked, this, &LoremIpsumGenerator::generate);
-    connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->plainTextEdit->selectAll(); ui->plainTextEdit->copy();});
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->output->selectAll(); ui->output->copy();});
     generate();
 }
 
@@ -38,37 +41,65 @@ bool LoremIpsumGenerator::canBasicEdit() const
 
 void LoremIpsumGenerator::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->output->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
 }
 
 void LoremIpsumGenerator::saveAs()
 {
-
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->output->toPlainText().toUtf8());
+            file.close();
+            openedFile = path;
+        }
+    }
 }
 
 void LoremIpsumGenerator::increaseFontSize()
 {
-
+    ui->output->increaseFontSize();
 }
 
 void LoremIpsumGenerator::decreaseFontSize()
 {
-
+    ui->output->decreaseFontSize();
 }
 
 void LoremIpsumGenerator::setFontSize()
 {
-
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->output->setFontSize(size);
 }
 
 void LoremIpsumGenerator::resetFontSize()
 {
-
+    ui->output->setFontSize(10);
 }
 
 void LoremIpsumGenerator::setFont()
 {
-
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        ui->output->setFont(font);
+    }
 }
 
 QString LoremIpsumGenerator::generateSentence(int minWords, int maxWords, bool makeFirstCharUpper) const
@@ -107,20 +138,20 @@ void LoremIpsumGenerator::generate()
     switch(ui->comboBox->currentIndex())
     {
     case 0:
-        ui->plainTextEdit->setPlainText((ui->beginWithLICheckBox->isChecked() ? "Lorem ipsum dolor sit amet, " : "") + generateSentence(ui->spinBox->value(), ui->spinBox->value(), !ui->beginWithLICheckBox->isChecked()));
+        ui->output->setPlainText((ui->beginWithLICheckBox->isChecked() ? "Lorem ipsum dolor sit amet, " : "") + generateSentence(ui->spinBox->value(), ui->spinBox->value(), !ui->beginWithLICheckBox->isChecked()));
         break;
     case 1:
     {
-        ui->plainTextEdit->clear();
+        ui->output->clear();
         int i = 0;
         if(ui->beginWithLICheckBox->isChecked())
         {
-            ui->plainTextEdit->appendPlainText("Lorem ipsum dolor sit amet, " + generateSentence(5, 30, false));
+            ui->output->appendPlainText("Lorem ipsum dolor sit amet, " + generateSentence(5, 30, false));
             i = 1;
         }
         for(; i < ui->spinBox->value(); i++)
         {
-            ui->plainTextEdit->appendPlainText(generateSentence(5, 20));
+            ui->output->appendPlainText(generateSentence(5, 20));
         }
     }
         break;
@@ -129,21 +160,21 @@ void LoremIpsumGenerator::generate()
         std::random_device rg;
         std::mt19937_64 generator(rg());
         std::uniform_int_distribution<int> sentenceCount(5, 30);
-        ui->plainTextEdit->clear();
+        ui->output->clear();
         for(int i = 0; i < ui->spinBox->value(); i++)
         {
             int sentence = 0;
             if(ui->beginWithLICheckBox->isChecked())
             {
-                ui->plainTextEdit->appendPlainText("Lorem ipsum dolor sit amet, " + generateSentence(5, 30, false));
+                ui->output->appendPlainText("Lorem ipsum dolor sit amet, " + generateSentence(5, 30, false));
                 sentence = 1;
             }
             int sentences = sentenceCount(generator);
             for(; sentence < sentences; sentence++)
             {
-                ui->plainTextEdit->appendPlainText(generateSentence(5, 20));
+                ui->output->appendPlainText(generateSentence(5, 20));
             }
-            ui->plainTextEdit->appendPlainText("\n");
+            ui->output->appendPlainText("\n");
         }
     }
         break;
