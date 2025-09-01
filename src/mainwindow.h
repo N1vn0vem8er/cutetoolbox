@@ -23,6 +23,7 @@ private slots:
     void widgetChanged();
     void addMenuItem(const QString& text, const QIcon& icon, bool enabled = true);
     void showAbout();
+    void save();
     void saveAs();
     void open();
     void copy();

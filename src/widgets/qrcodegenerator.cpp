@@ -65,7 +65,15 @@ bool QrCodeGenerator::canSaveFiles() const
 
 void QrCodeGenerator::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QImage image(400, 400, QImage::Format_RGB32);
+        QPainter painter(&image);
+        scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
+        image.save(openedFile);
+    }
+    else
+        saveAs();
 }
 
 void QrCodeGenerator::saveAs()
@@ -77,6 +85,7 @@ void QrCodeGenerator::saveAs()
         QPainter painter(&image);
         scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
         image.save(path);
+        openedFile = path;
     }
 }
 

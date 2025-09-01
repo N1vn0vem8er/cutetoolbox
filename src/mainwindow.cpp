@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSide_menu, &QAction::triggered, this, [&]{ui->listWidget->setVisible(ui->actionSide_menu->isChecked());});
     connect(ui->actionAbout_Qt, &QAction::triggered, this, [&]{QMessageBox::aboutQt(this, tr("About Qt"));});
     connect(ui->actionAbout_CuteToolBox, &QAction::triggered, this, &MainWindow::showAbout);
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::save);
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveAs);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::open);
     connect(ui->actionCopy, &QAction::triggered, this, &MainWindow::copy);
@@ -152,6 +153,16 @@ void MainWindow::showAbout()
         </body>
     </html>
 )"));
+}
+
+void MainWindow::save()
+{
+    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canSaveFiles())
+            widget->save();
+    }
 }
 
 void MainWindow::saveAs()

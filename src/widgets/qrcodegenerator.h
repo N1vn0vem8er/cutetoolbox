@@ -37,6 +37,7 @@ private:
     QLineEdit* lastName {nullptr};
     QLineEdit* phoneNumber {nullptr};
     QLineEdit* email {nullptr};
+    QString openedFile;
 
 private slots:
     void generate();
