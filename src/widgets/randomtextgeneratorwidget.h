@@ -1,6 +1,7 @@
 #ifndef RANDOMTEXTGENERATORWIDGET_H
 #define RANDOMTEXTGENERATORWIDGET_H
 
+#include "customwidget.h"
 #include <QWidget>
 #include <QFutureWatcher>
 
@@ -8,13 +9,23 @@ namespace Ui {
 class RandomTextGeneratorWidget;
 }
 
-class RandomTextGeneratorWidget : public QWidget
+class RandomTextGeneratorWidget : public CustomWidget
 {
     Q_OBJECT
 
 public:
     explicit RandomTextGeneratorWidget(QWidget *parent = nullptr);
     ~RandomTextGeneratorWidget();
+    bool canSaveFiles() const override;
+    bool canBasicEdit() const override;
+    bool canChangeFont() const override;
+    void save() override;
+    void saveAs() override;
+    void increaseFontSize() override;
+    void decreaseFontSize() override;
+    void setFontSize() override;
+    void resetFontSize() override;
+    void setFont() override;
 
 private:
     Ui::RandomTextGeneratorWidget *ui;
@@ -22,6 +33,7 @@ private:
     const QList<QChar> numbers {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     const QList<QChar> specialCharacters {'+', '-', '/', '*', '_', '=', '?', '.', ',', '>', '<', '\\', '[', ']', '{', '}', '!', '@', '#', '$', '%', '^', '&', '(', ')', '`', '~'};
     QFutureWatcher<QString> watcher;
+    QString openedFile;
 
 private:
     void setUiEnabled(bool val);
@@ -29,6 +41,7 @@ private:
 private slots:
     void generate();
     void generationFinished();
+
 };
 
 #endif // RANDOMTEXTGENERATORWIDGET_H

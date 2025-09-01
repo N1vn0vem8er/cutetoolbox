@@ -1,10 +1,13 @@
 #include "randomtextgeneratorwidget.h"
 #include "src/widgets/ui_randomtextgeneratorwidget.h"
+#include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 #include <qtconcurrentrun.h>
 #include <random>
 
 RandomTextGeneratorWidget::RandomTextGeneratorWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::RandomTextGeneratorWidget)
 {
     ui->setupUi(this);
@@ -13,20 +16,98 @@ RandomTextGeneratorWidget::RandomTextGeneratorWidget(QWidget *parent)
     ui->lowerCheckBox->setChecked(true);
     ui->numbersCheckBox->setChecked(true);
     connect(&watcher, &QFutureWatcher<QString>::started, this, [&]{setUiEnabled(false);});
-    connect(&watcher, &QFutureWatcher<QString>::finished, this, [&]{ui->plainTextEdit->setPlainText(watcher.result()); setUiEnabled(true);});
+    connect(&watcher, &QFutureWatcher<QString>::finished, this, [&]{ui->codeEditor->setPlainText(watcher.result()); setUiEnabled(true);});
     connect(ui->regenerateButton, &QPushButton::clicked, this, &RandomTextGeneratorWidget::generate);
     connect(ui->spinBox, &QSpinBox::editingFinished, this, &RandomTextGeneratorWidget::generate);
     connect(ui->upperCheckBox, &QCheckBox::clicked, this, &RandomTextGeneratorWidget::generate);
     connect(ui->lowerCheckBox, &QCheckBox::clicked, this, &RandomTextGeneratorWidget::generate);
     connect(ui->numbersCheckBox, &QCheckBox::clicked, this, &RandomTextGeneratorWidget::generate);
     connect(ui->specialCharactersCheckBox, &QCheckBox::clicked, this, &RandomTextGeneratorWidget::generate);
-    connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->plainTextEdit->selectAll(); ui->plainTextEdit->copy();});
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->codeEditor->selectAll(); ui->codeEditor->copy();});
     generate();
 }
 
 RandomTextGeneratorWidget::~RandomTextGeneratorWidget()
 {
     delete ui;
+}
+
+bool RandomTextGeneratorWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool RandomTextGeneratorWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool RandomTextGeneratorWidget::canChangeFont() const
+{
+    return true;
+}
+
+void RandomTextGeneratorWidget::save()
+{
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
+}
+
+void RandomTextGeneratorWidget::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+            openedFile = path;
+        }
+    }
+}
+
+void RandomTextGeneratorWidget::increaseFontSize()
+{
+    ui->codeEditor->increaseFontSize();
+}
+
+void RandomTextGeneratorWidget::decreaseFontSize()
+{
+    ui->codeEditor->decreaseFontSize();
+}
+
+void RandomTextGeneratorWidget::setFontSize()
+{
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->codeEditor->setFontSize(size);
+}
+
+void RandomTextGeneratorWidget::resetFontSize()
+{
+    ui->codeEditor->setFontSize(10);
+}
+
+void RandomTextGeneratorWidget::setFont()
+{
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        ui->codeEditor->setFont(font);
+    }
 }
 
 void RandomTextGeneratorWidget::setUiEnabled(bool val)
@@ -62,7 +143,7 @@ void RandomTextGeneratorWidget::generate()
     {
         characters.append(specialCharacters);
     }
-    ui->plainTextEdit->clear();
+    ui->codeEditor->clear();
     if(characters.isEmpty()) return;
 
     const int length = ui->spinBox->value();
