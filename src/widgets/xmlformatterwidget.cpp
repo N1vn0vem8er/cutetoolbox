@@ -2,9 +2,11 @@
 #include "src/widgets/ui_xmlformatterwidget.h"
 #include <QFileDialog>
 #include <QDomDocument>
+#include <QFontDialog>
+#include <QInputDialog>
 
 XMLFormatterWidget::XMLFormatterWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::XMLFormatterWidget)
 {
     ui->setupUi(this);
@@ -33,6 +35,118 @@ void XMLFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
         }
+    }
+}
+
+bool XMLFormatterWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool XMLFormatterWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool XMLFormatterWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool XMLFormatterWidget::canChangeFont() const
+{
+    return true;
+}
+
+void XMLFormatterWidget::save()
+{
+
+}
+
+void XMLFormatterWidget::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+}
+
+void XMLFormatterWidget::copy()
+{
+    ui->codeEditor->copy();
+}
+
+void XMLFormatterWidget::cut()
+{
+    ui->codeEditor->cut();
+}
+
+void XMLFormatterWidget::paste()
+{
+    ui->codeEditor->paste();
+}
+
+void XMLFormatterWidget::selectAll()
+{
+    ui->codeEditor->selectAll();
+}
+
+void XMLFormatterWidget::deleteText()
+{
+    ui->codeEditor->deleteSelected();
+}
+
+void XMLFormatterWidget::deleteAllText()
+{
+    ui->codeEditor->deleteAll();
+}
+
+void XMLFormatterWidget::undo()
+{
+    ui->codeEditor->undo();
+}
+
+void XMLFormatterWidget::redo()
+{
+    ui->codeEditor->redo();
+}
+
+void XMLFormatterWidget::increaseFontSize()
+{
+    ui->codeEditor->increaseFontSize();
+}
+
+void XMLFormatterWidget::decreaseFontSize()
+{
+    ui->codeEditor->decreaseFontSize();
+}
+
+void XMLFormatterWidget::setFontSize()
+{
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->codeEditor->setFontSize(size);
+}
+
+void XMLFormatterWidget::resetFontSize()
+{
+    ui->codeEditor->setFontSize(10);
+}
+
+void XMLFormatterWidget::setFont()
+{
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        ui->codeEditor->setFont(font);
     }
 }
 
