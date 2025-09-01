@@ -2,9 +2,11 @@
 #include "src/widgets/ui_htmlformatterwidget.h"
 #include <QFileDialog>
 #include <QDomDocument>
+#include <QFontDialog>
+#include <QInputDialog>
 
 HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::HTMLFormatterWidget)
 {
     ui->setupUi(this);
@@ -20,6 +22,118 @@ HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
 HTMLFormatterWidget::~HTMLFormatterWidget()
 {
     delete ui;
+}
+
+bool HTMLFormatterWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool HTMLFormatterWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool HTMLFormatterWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool HTMLFormatterWidget::canChangeFont() const
+{
+    return true;
+}
+
+void HTMLFormatterWidget::save()
+{
+
+}
+
+void HTMLFormatterWidget::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+}
+
+void HTMLFormatterWidget::copy()
+{
+    ui->codeEditor->copy();
+}
+
+void HTMLFormatterWidget::cut()
+{
+    ui->codeEditor->cut();
+}
+
+void HTMLFormatterWidget::paste()
+{
+    ui->codeEditor->paste();
+}
+
+void HTMLFormatterWidget::selectAll()
+{
+    ui->codeEditor->selectAll();
+}
+
+void HTMLFormatterWidget::deleteText()
+{
+    ui->codeEditor->deleteSelected();
+}
+
+void HTMLFormatterWidget::deleteAllText()
+{
+    ui->codeEditor->deleteAll();
+}
+
+void HTMLFormatterWidget::undo()
+{
+    ui->codeEditor->undo();
+}
+
+void HTMLFormatterWidget::redo()
+{
+    ui->codeEditor->redo();
+}
+
+void HTMLFormatterWidget::increaseFontSize()
+{
+    ui->codeEditor->increaseFontSize();
+}
+
+void HTMLFormatterWidget::decreaseFontSize()
+{
+    ui->codeEditor->decreaseFontSize();
+}
+
+void HTMLFormatterWidget::setFontSize()
+{
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->codeEditor->setFontSize(size);
+}
+
+void HTMLFormatterWidget::resetFontSize()
+{
+    ui->codeEditor->setFontSize(10);
+}
+
+void HTMLFormatterWidget::setFont()
+{
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        ui->codeEditor->setFont(font);
+    }
 }
 
 void HTMLFormatterWidget::format()
