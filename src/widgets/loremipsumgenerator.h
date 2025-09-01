@@ -17,6 +17,7 @@ public:
     ~LoremIpsumGenerator();
     bool canSaveFiles() const override;
     bool canChangeFont() const override;
+    bool canBasicEdit() const override;
     void save() override;
     void saveAs() override;
     void increaseFontSize() override;

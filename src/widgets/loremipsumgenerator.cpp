@@ -23,12 +23,17 @@ LoremIpsumGenerator::~LoremIpsumGenerator()
 
 bool LoremIpsumGenerator::canSaveFiles() const
 {
-
+    return true;
 }
 
 bool LoremIpsumGenerator::canChangeFont() const
 {
+    return true;
+}
 
+bool LoremIpsumGenerator::canBasicEdit() const
+{
+    return true;
 }
 
 void LoremIpsumGenerator::save()
