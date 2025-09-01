@@ -1,10 +1,12 @@
 #include "sqlformatterwidget.h"
 #include "src/widgets/ui_sqlformatterwidget.h"
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 #include <qregularexpression.h>
 
 SQLFormatterWidget::SQLFormatterWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::SQLFormatterWidget)
 {
     ui->setupUi(this);
@@ -49,5 +51,117 @@ void SQLFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
         }
+    }
+}
+
+bool SQLFormatterWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool SQLFormatterWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool SQLFormatterWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool SQLFormatterWidget::canChangeFont() const
+{
+    return true;
+}
+
+void SQLFormatterWidget::save()
+{
+
+}
+
+void SQLFormatterWidget::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+}
+
+void SQLFormatterWidget::copy()
+{
+    ui->codeEditor->copy();
+}
+
+void SQLFormatterWidget::cut()
+{
+    ui->codeEditor->cut();
+}
+
+void SQLFormatterWidget::paste()
+{
+    ui->codeEditor->paste();
+}
+
+void SQLFormatterWidget::selectAll()
+{
+    ui->codeEditor->selectAll();
+}
+
+void SQLFormatterWidget::deleteText()
+{
+    ui->codeEditor->deleteSelected();
+}
+
+void SQLFormatterWidget::deleteAllText()
+{
+    ui->codeEditor->deleteAll();
+}
+
+void SQLFormatterWidget::undo()
+{
+    ui->codeEditor->undo();
+}
+
+void SQLFormatterWidget::redo()
+{
+    ui->codeEditor->redo();
+}
+
+void SQLFormatterWidget::increaseFontSize()
+{
+    ui->codeEditor->increaseFontSize();
+}
+
+void SQLFormatterWidget::decreaseFontSize()
+{
+    ui->codeEditor->decreaseFontSize();
+}
+
+void SQLFormatterWidget::setFontSize()
+{
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->codeEditor->setFontSize(size);
+}
+
+void SQLFormatterWidget::resetFontSize()
+{
+    ui->codeEditor->setFontSize(10);
+}
+
+void SQLFormatterWidget::setFont()
+{
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+    {
+        ui->codeEditor->setFont(font);
     }
 }
