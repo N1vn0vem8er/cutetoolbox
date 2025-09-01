@@ -89,7 +89,7 @@ void MainWindow::showWidget(const QModelIndex& index)
 
 void MainWindow::widgetChanged()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         ui->actionSave->setEnabled(widget->canSaveFiles());
@@ -159,7 +159,7 @@ void MainWindow::showAbout()
 
 void MainWindow::save()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canSaveFiles())
@@ -169,7 +169,7 @@ void MainWindow::save()
 
 void MainWindow::saveAs()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canSaveFiles())
@@ -179,7 +179,7 @@ void MainWindow::saveAs()
 
 void MainWindow::open()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canOpenFiles())
@@ -189,26 +189,26 @@ void MainWindow::open()
 
 void MainWindow::copy()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->copy();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     focused->copy();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         focused->copy();
@@ -221,26 +221,26 @@ void MainWindow::copy()
 
 void MainWindow::cut()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->cut();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     focused->cut();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         focused->cut();
@@ -253,26 +253,26 @@ void MainWindow::cut()
 
 void MainWindow::paste()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->paste();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     focused->paste();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         focused->paste();
@@ -285,26 +285,26 @@ void MainWindow::paste()
 
 void MainWindow::selectAll()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->selectAll();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     focused->selectAll();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         focused->selectAll();
@@ -317,26 +317,26 @@ void MainWindow::selectAll()
 
 void MainWindow::deleteSelected()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->deleteSelected();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     widget->deleteText();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         widget->deleteText();
@@ -349,26 +349,26 @@ void MainWindow::deleteSelected()
 
 void MainWindow::deleteAll()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->deleteAll();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     widget->deleteAllText();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         widget->deleteAllText();
@@ -381,26 +381,26 @@ void MainWindow::deleteAll()
 
 void MainWindow::undo()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->undo();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     focused->undo();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         focused->undo();
@@ -413,26 +413,26 @@ void MainWindow::undo()
 
 void MainWindow::redo()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canBasicEdit())
         {
-            CodeEditor* focused = dynamic_cast<CodeEditor*>(qApp->focusWidget());
+            CodeEditor* focused = qobject_cast<CodeEditor*>(qApp->focusWidget());
             if(focused)
             {
                 focused->redo();
             }
             else
             {
-                QPlainTextEdit* focused = dynamic_cast<QPlainTextEdit*>(qApp->focusWidget());
+                QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
                     focused->redo();
                 }
                 else
                 {
-                    QLineEdit* focused = dynamic_cast<QLineEdit*>(qApp->focusWidget());
+                    QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
                         focused->redo();
@@ -445,7 +445,7 @@ void MainWindow::redo()
 
 void MainWindow::increaseFontSize()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canChangeFont())
@@ -455,7 +455,7 @@ void MainWindow::increaseFontSize()
 
 void MainWindow::decreaseFontSize()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canChangeFont())
@@ -465,7 +465,7 @@ void MainWindow::decreaseFontSize()
 
 void MainWindow::setFontSize()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canChangeFont())
@@ -475,7 +475,7 @@ void MainWindow::setFontSize()
 
 void MainWindow::resetFontSize()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canChangeFont())
@@ -485,7 +485,7 @@ void MainWindow::resetFontSize()
 
 void MainWindow::setFont()
 {
-    CustomWidget* widget = dynamic_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
         if(widget->canChangeFont())
