@@ -1,21 +1,36 @@
 #ifndef HASHWIDGET_H
 #define HASHWIDGET_H
 
+#include "customwidget.h"
 #include <QWidget>
 
 namespace Ui {
 class HashWidget;
 }
 
-class HashWidget : public QWidget
+class HashWidget : public CustomWidget
 {
     Q_OBJECT
 
 public:
     explicit HashWidget(QWidget *parent = nullptr);
     ~HashWidget();
+    bool canOpenFiles() const override;
+    bool canBasicEdit() const override;
+    bool canChangeFont() const override;
+    void increaseFontSize() override;
+    void decreaseFontSize() override;
+    void setFontSize() override;
+    void resetFontSize() override;
+    void setFont() override;
+    void open() override;
 
 private:
+    enum TextEdits{
+        input,
+        output,
+        none
+    };
     Ui::HashWidget *ui;
     enum HashTypes{
         MD5,
@@ -44,9 +59,9 @@ private:
         {BLAKE2b512, "BLAKE2b512"},
         {BLAKE2s256, "BLAKE2s256"}
         };
+    TextEdits getSelectedOption();
 
 private slots:
-    void open();
     void calculateHash();
 };
 

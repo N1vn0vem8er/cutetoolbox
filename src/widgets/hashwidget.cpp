@@ -2,10 +2,12 @@
 #include "src/widgets/ui_hashwidget.h"
 #include <QCryptographicHash>
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 #include <QPalette>
 
 HashWidget::HashWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::HashWidget)
 {
     ui->setupUi(this);
@@ -30,6 +32,79 @@ HashWidget::~HashWidget()
     delete ui;
 }
 
+bool HashWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool HashWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool HashWidget::canChangeFont() const
+{
+    return true;
+}
+
+void HashWidget::increaseFontSize()
+{
+    if(ui->input->hasFocus())
+        ui->input->increaseFontSize();
+    else if(ui->output->hasFocus())
+        ui->output->increaseFontSize();
+}
+
+void HashWidget::decreaseFontSize()
+{
+    if(ui->input->hasFocus())
+        ui->input->decreaseFontSize();
+    else if(ui->output->hasFocus())
+        ui->output->decreaseFontSize();
+}
+
+void HashWidget::setFontSize()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+        if(ok)
+        {
+            if(option == TextEdits::input)
+                ui->input->setFontSize(size);
+            else if(option == TextEdits::output)
+                ui->output->setFontSize(size);
+        }
+    }
+}
+
+void HashWidget::resetFontSize()
+{
+    if(ui->input->hasFocus())
+        ui->input->setFontSize(10);
+    else if(ui->output->hasFocus())
+        ui->output->setFontSize(10);
+}
+
+void HashWidget::setFont()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const QFont font = QFontDialog::getFont(&ok, this);
+        if(ok)
+        {
+            if(option == TextEdits::input)
+                ui->input->setFont(font);
+            else if(option == TextEdits::output)
+                ui->output->setFont(font);
+        }
+    }
+}
+
 void HashWidget::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
@@ -43,6 +118,27 @@ void HashWidget::open()
             file.close();
         }
     }
+}
+
+HashWidget::TextEdits HashWidget::getSelectedOption()
+{
+    TextEdits option = TextEdits::none;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton inputButton(tr("Input"), &dialog);
+    QPushButton outputButton(tr("Output"), &dialog);
+    connect(&inputButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::input;});
+    connect(&outputButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::output;});
+    connect(&inputButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&outputButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&inputButton);
+    layout.addWidget(&outputButton);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        return option;
+    }
+    return option;
 }
 
 void HashWidget::calculateHash()
