@@ -2,7 +2,7 @@
 #include "src/widgets/ui_chmodcalculatorwidget.h"
 
 ChmodCalculatorWidget::ChmodCalculatorWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::ChmodCalculatorWidget)
 {
     ui->setupUi(this);
@@ -31,6 +31,21 @@ ChmodCalculatorWidget::ChmodCalculatorWidget(QWidget *parent)
 ChmodCalculatorWidget::~ChmodCalculatorWidget()
 {
     delete ui;
+}
+
+bool ChmodCalculatorWidget::canBasicEdit() const
+{
+    return true;
+}
+
+void ChmodCalculatorWidget::deleteText()
+{
+
+}
+
+void ChmodCalculatorWidget::deleteAllText()
+{
+
 }
 
 void ChmodCalculatorWidget::generate()

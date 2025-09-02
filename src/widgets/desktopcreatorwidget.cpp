@@ -8,7 +8,7 @@
 #include <qtconcurrentrun.h>
 
 DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::DesktopCreatorWidget)
 {
     ui->setupUi(this);
@@ -47,6 +47,46 @@ DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
 DesktopCreatorWidget::~DesktopCreatorWidget()
 {
     delete ui;
+}
+
+bool DesktopCreatorWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool DesktopCreatorWidget::canSaveFiles() const
+{
+    return true;
+}
+
+bool DesktopCreatorWidget::canBasicEdit() const
+{
+    return true;
+}
+
+void DesktopCreatorWidget::save()
+{
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->output->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
+}
+
+void DesktopCreatorWidget::saveAs()
+{
+    saveDesktopFile();
+}
+
+void DesktopCreatorWidget::open()
+{
+    openDesktopFile();
 }
 
 void DesktopCreatorWidget::startSearchingForIcons()
@@ -130,6 +170,7 @@ void DesktopCreatorWidget::openDesktopFile()
             ui->noDisplay->setChecked(settings.value("NoDisplay", false).toBool());
             ui->startupNotify->setChecked(settings.value("StartupNotify", false).toBool());
             settings.endGroup();
+            openedFile = path;
         }
     }
 }
@@ -144,6 +185,7 @@ void DesktopCreatorWidget::saveDesktopFile()
         {
             file.write(ui->output->toPlainText().toUtf8());
             file.close();
+            openedFile = path;
         }
     }
 }
