@@ -1,11 +1,13 @@
 #include "textdiffwidget.h"
 #include "src/widgets/ui_textdiffwidget.h"
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QTextStream>
+#include <qfontdialog.h>
 #include <qtextobject.h>
 
 TextDiffWidget::TextDiffWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::TextDiffWidget)
 {
     ui->setupUi(this);
@@ -49,6 +51,166 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
 TextDiffWidget::~TextDiffWidget()
 {
     delete ui;
+}
+
+bool TextDiffWidget::canOpenFiles() const
+{
+    return true;
+}
+
+bool TextDiffWidget::canBasicEdit() const
+{
+    return true;
+}
+
+bool TextDiffWidget::canChangeFont() const
+{
+    return true;
+}
+
+void TextDiffWidget::open()
+{
+    TextEdits option = TextEdits::none;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton oldTextButton(tr("Old Text"), &dialog);
+    QPushButton newTextButton(tr("New Text"), &dialog);
+    connect(&oldTextButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::oldText;});
+    connect(&newTextButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::newText;});
+    connect(&oldTextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&newTextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&oldTextButton);
+    layout.addWidget(&newTextButton);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        if(option != TextEdits::none)
+        {
+            const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+            if(!path.isEmpty())
+            {
+                QFile file(path);
+                file.open(QIODevice::ReadOnly);
+                if(file.isOpen())
+                {
+                    if(option == newText)
+                        ui->newText->setPlainText(file.readAll());
+                    else if(option == oldText)
+                        ui->oldText->setPlainText(file.readAll());
+                    file.close();
+                }
+            }
+        }
+    }
+}
+
+void TextDiffWidget::increaseFontSize()
+{
+    if(ui->newText->hasFocus())
+        ui->newText->increaseFontSize();
+    else if(ui->oldText->hasFocus())
+        ui->oldText->increaseFontSize();
+    else if(ui->diff->hasFocus())
+        ui->diff->increaseFontSize();
+}
+
+void TextDiffWidget::decreaseFontSize()
+{
+    if(ui->newText->hasFocus())
+        ui->newText->decreaseFontSize();
+    else if(ui->oldText->hasFocus())
+        ui->oldText->decreaseFontSize();
+    else if(ui->diff->hasFocus())
+        ui->diff->decreaseFontSize();
+}
+
+void TextDiffWidget::setFontSize()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+        if(ok)
+        {
+            switch(option)
+            {
+            case oldText:
+                ui->oldText->setFontSize(size);
+                break;
+            case newText:
+                ui->newText->setFontSize(size);
+                break;
+            case diff:
+                ui->diff->setFontSize(size);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
+void TextDiffWidget::resetFontSize()
+{
+    if(ui->newText->hasFocus())
+        ui->newText->setFontSize(10);
+    else if(ui->oldText->hasFocus())
+        ui->oldText->setFontSize(10);
+    else if(ui->diff->hasFocus())
+        ui->diff->setFontSize(10);
+}
+
+void TextDiffWidget::setFont()
+{
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const QFont font = QFontDialog::getFont(&ok, this);
+        if(ok)
+        {
+            switch(option)
+            {
+            case oldText:
+                ui->oldText->setFont(font);
+                break;
+            case newText:
+                ui->newText->setFont(font);
+                break;
+            case diff:
+                ui->diff->setFont(font);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
+TextDiffWidget::TextEdits TextDiffWidget::getSelectedOption()
+{
+    TextEdits option = TextEdits::none;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton oldTextButton(tr("Old Text"), &dialog);
+    QPushButton newTextButton(tr("New Text"), &dialog);
+    QPushButton diffTextButton(tr("Diff"), &dialog);
+    connect(&oldTextButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::oldText;});
+    connect(&newTextButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::newText;});
+    connect(&diffTextButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::diff;});
+    connect(&oldTextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&newTextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&diffTextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&oldTextButton);
+    layout.addWidget(&newTextButton);
+    layout.addWidget(&diffTextButton);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        return option;
+    }
+    return option;
 }
 
 void TextDiffWidget::showDiff()

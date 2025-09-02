@@ -228,7 +228,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="diff"/>
+        <widget class="CodeEditor" name="diff"/>
        </item>
       </layout>
      </widget>
