@@ -16,8 +16,6 @@ public:
     explicit ChmodCalculatorWidget(QWidget *parent = nullptr);
     ~ChmodCalculatorWidget();
     bool canBasicEdit() const override;
-    void deleteText() override;
-    void deleteAllText() override;
 
 private:
     Ui::ChmodCalculatorWidget *ui;

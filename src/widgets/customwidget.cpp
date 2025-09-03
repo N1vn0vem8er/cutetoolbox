@@ -39,16 +39,6 @@ void CustomWidget::open()
 
 }
 
-void CustomWidget::deleteText()
-{
-
-}
-
-void CustomWidget::deleteAllText()
-{
-
-}
-
 void CustomWidget::increaseFontSize()
 {
 

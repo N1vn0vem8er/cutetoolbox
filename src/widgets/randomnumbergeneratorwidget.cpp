@@ -31,16 +31,6 @@ bool RandomNumberGeneratorWidget::canBasicEdit() const
     return true;
 }
 
-void RandomNumberGeneratorWidget::deleteText()
-{
-    ui->lineEdit->del();
-}
-
-void RandomNumberGeneratorWidget::deleteAllText()
-{
-    ui->lineEdit->clear();
-}
-
 void RandomNumberGeneratorWidget::generate()
 {
     std::random_device rg;

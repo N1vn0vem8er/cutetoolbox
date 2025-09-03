@@ -16,8 +16,6 @@ public:
     explicit RandomNumberGeneratorWidget(QWidget *parent = nullptr);
     ~RandomNumberGeneratorWidget();
     bool canBasicEdit() const override;
-    void deleteText() override;
-    void deleteAllText() override;
 
 private:
     Ui::RandomNumberGeneratorWidget *ui;

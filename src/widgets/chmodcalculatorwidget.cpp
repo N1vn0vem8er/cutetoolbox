@@ -38,16 +38,6 @@ bool ChmodCalculatorWidget::canBasicEdit() const
     return true;
 }
 
-void ChmodCalculatorWidget::deleteText()
-{
-
-}
-
-void ChmodCalculatorWidget::deleteAllText()
-{
-
-}
-
 void ChmodCalculatorWidget::generate()
 {
     int userPermissions = 0;

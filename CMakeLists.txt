@@ -50,6 +50,7 @@ qt_add_executable(CuteToolBox
     src/widgets/resizablestackedwidget.h src/widgets/resizablestackedwidget.cpp
     src/widgets/desktopcreatorwidget.h src/widgets/desktopcreatorwidget.cpp src/widgets/desktopcreatorwidget.ui
     src/widgets/customwidget.h src/widgets/customwidget.cpp
+
 )
 
 include_directories(

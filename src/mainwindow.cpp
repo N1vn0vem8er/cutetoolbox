@@ -332,14 +332,14 @@ void MainWindow::deleteSelected()
                 QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
-                    widget->deleteText();
+                    focused->textCursor().removeSelectedText();
                 }
                 else
                 {
                     QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
-                        widget->deleteText();
+                        focused->del();
                     }
                 }
             }
@@ -364,14 +364,14 @@ void MainWindow::deleteAll()
                 QPlainTextEdit* focused = qobject_cast<QPlainTextEdit*>(qApp->focusWidget());
                 if(focused)
                 {
-                    widget->deleteAllText();
+                    focused->clear();
                 }
                 else
                 {
                     QLineEdit* focused = qobject_cast<QLineEdit*>(qApp->focusWidget());
                     if(focused)
                     {
-                        widget->deleteAllText();
+                        focused->clear();
                     }
                 }
             }
