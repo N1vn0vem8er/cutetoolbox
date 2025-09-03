@@ -2,7 +2,7 @@
 #include "src/widgets/ui_numberbaseswidget.h"
 
 NumberBasesWidget::NumberBasesWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::NumberBasesWidget)
 {
     ui->setupUi(this);
@@ -35,6 +35,11 @@ NumberBasesWidget::NumberBasesWidget(QWidget *parent)
 NumberBasesWidget::~NumberBasesWidget()
 {
     delete ui;
+}
+
+bool NumberBasesWidget::canBasicEdit() const
+{
+    return true;
 }
 
 void NumberBasesWidget::fromBin()

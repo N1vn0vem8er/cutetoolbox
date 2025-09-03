@@ -2,7 +2,7 @@
 #include "src/widgets/ui_qdatetimeconverterwidget.h"
 
 QDateTimeConverterWidget::QDateTimeConverterWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::QDateTimeConverterWidget)
 {
     ui->setupUi(this);
@@ -16,6 +16,11 @@ QDateTimeConverterWidget::QDateTimeConverterWidget(QWidget *parent)
 QDateTimeConverterWidget::~QDateTimeConverterWidget()
 {
     delete ui;
+}
+
+bool QDateTimeConverterWidget::canBasicEdit() const
+{
+    return true;
 }
 
 void QDateTimeConverterWidget::format()

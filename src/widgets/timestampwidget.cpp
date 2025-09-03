@@ -2,7 +2,7 @@
 #include "ui_timestampwidget.h"
 
 TimestampWidget::TimestampWidget(QWidget *parent)
-    : QWidget(parent)
+    : CustomWidget(parent)
     , ui(new Ui::TimestampWidget)
 {
     ui->setupUi(this);
@@ -33,6 +33,11 @@ TimestampWidget::TimestampWidget(QWidget *parent)
 TimestampWidget::~TimestampWidget()
 {
     delete ui;
+}
+
+bool TimestampWidget::canBasicEdit() const
+{
+    return true;
 }
 
 void TimestampWidget::updateTimestamp()

@@ -1,19 +1,21 @@
 #ifndef NUMBERBASESWIDGET_H
 #define NUMBERBASESWIDGET_H
 
+#include "customwidget.h"
 #include <QWidget>
 
 namespace Ui {
 class NumberBasesWidget;
 }
 
-class NumberBasesWidget : public QWidget
+class NumberBasesWidget : public CustomWidget
 {
     Q_OBJECT
 
 public:
     explicit NumberBasesWidget(QWidget *parent = nullptr);
     ~NumberBasesWidget();
+    bool canBasicEdit() const override;
 
 private:
     Ui::NumberBasesWidget *ui;
