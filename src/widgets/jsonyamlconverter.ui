@@ -83,7 +83,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="json"/>
+        <widget class="CodeEditor" name="json"/>
        </item>
       </layout>
      </widget>
@@ -114,7 +114,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QPlainTextEdit" name="yaml"/>
+        <widget class="CodeEditor" name="yaml"/>
        </item>
       </layout>
      </widget>
@@ -122,6 +122,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>editor/codeeditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
