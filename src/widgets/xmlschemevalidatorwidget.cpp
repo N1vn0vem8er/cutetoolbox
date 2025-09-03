@@ -182,11 +182,15 @@ void XMLSchemeValidatorWidget::setFontSize()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200);
-        if(option == TextEdits::xml)
-            ui->xml->setFontSize(size);
-        else if(option == TextEdits::xsd)
-            ui->schema->setFontSize(size);
+        bool ok;
+        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+        if(ok)
+        {
+            if(option == TextEdits::xml)
+                ui->xml->setFontSize(size);
+            else if(option == TextEdits::xsd)
+                ui->schema->setFontSize(size);
+        }
     }
 }
 
