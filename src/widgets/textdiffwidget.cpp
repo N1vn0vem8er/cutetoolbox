@@ -46,6 +46,12 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
         }
     });
     connect(ui->copyDiffButton, &QPushButton::clicked, ui->diff, [&]{ui->diff->selectAll(); ui->diff->copy();});
+    ui->oldText->setReplaceTabWithSpacesEnabled(false);
+    ui->oldText->setAutoClosingEnabled(false);
+    ui->newText->setAutoClosingEnabled(false);
+    ui->newText->setReplaceTabWithSpacesEnabled(false);
+    ui->diff->setReplaceTabWithSpacesEnabled(false);
+    ui->diff->setAutoClosingEnabled(false);
 }
 
 TextDiffWidget::~TextDiffWidget()

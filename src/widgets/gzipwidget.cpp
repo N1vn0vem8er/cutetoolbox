@@ -44,6 +44,10 @@ GZipWidget::GZipWidget(QWidget *parent)
             }
         }
     });
+    ui->input->setReplaceTabWithSpacesEnabled(false);
+    ui->input->setAutoClosingEnabled(false);
+    ui->output->setAutoClosingEnabled(false);
+    ui->output->setReplaceTabWithSpacesEnabled(false);
 }
 
 GZipWidget::~GZipWidget()

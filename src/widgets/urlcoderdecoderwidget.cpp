@@ -48,6 +48,10 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
     connect(ui->spacePlusButton, &QRadioButton::clicked, this, &UrlCoderDecoderWidget::encode);
     connect(ui->space20Button, &QRadioButton::clicked, this, &UrlCoderDecoderWidget::decode);
     connect(ui->spacePlusButton, &QRadioButton::clicked, this, &UrlCoderDecoderWidget::decode);
+    ui->decoded->setReplaceTabWithSpacesEnabled(false);
+    ui->decoded->setAutoClosingEnabled(false);
+    ui->encoded->setAutoClosingEnabled(false);
+    ui->encoded->setReplaceTabWithSpacesEnabled(false);
 }
 
 UrlCoderDecoderWidget::~UrlCoderDecoderWidget()

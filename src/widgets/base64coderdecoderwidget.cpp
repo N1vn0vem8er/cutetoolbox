@@ -44,6 +44,10 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
     connect(ui->clearCodedButton, &QPushButton::clicked, ui->base64, &QPlainTextEdit::clear);
     connect(ui->clearInputButton, &QPushButton::clicked, ui->text, &QPlainTextEdit::clear);
     connect(ui->urlSafeCheckBox, &QCheckBox::clicked, this, &Base64CoderDecoderWidget::encode);
+    ui->text->setAutoClosingEnabled(false);
+    ui->text->setReplaceTabWithSpacesEnabled(false);
+    ui->base64->setAutoClosingEnabled(false);
+    ui->base64->setReplaceTabWithSpacesEnabled(false);
 }
 
 Base64CoderDecoderWidget::~Base64CoderDecoderWidget()

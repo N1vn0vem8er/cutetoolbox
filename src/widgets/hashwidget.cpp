@@ -25,6 +25,10 @@ HashWidget::HashWidget(QWidget *parent)
     connect(ui->clearIntegrityCheckButton, &QPushButton::clicked, ui->lineEdit, &QLineEdit::clear);
     connect(ui->pasteIntegrityCheckButton, &QPushButton::clicked, ui->lineEdit, &QLineEdit::paste);
     connect(ui->copyOutputButton, &QPushButton::clicked, this, [&]{ui->output->selectAll(); ui->output->copy();});
+    ui->input->setReplaceTabWithSpacesEnabled(false);
+    ui->input->setAutoClosingEnabled(false);
+    ui->output->setAutoClosingEnabled(false);
+    ui->output->setReplaceTabWithSpacesEnabled(false);
 }
 
 HashWidget::~HashWidget()
