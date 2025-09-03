@@ -31,6 +31,10 @@ public:
     void increaseFontSize();
     void decreaseFontSize();
     void setFontSize(int size);
+    void setReplaceTabWithSpacesEnabled(bool val);
+    void setAutoClosingEnabled(bool val);
+    bool getAutoClosing() const;
+    bool getReplaceTabWithSpaces() const;
 
 public slots:
     void copyAll();
@@ -54,6 +58,8 @@ private:
     QTextCharFormat defaultFormat;
     QCompleter* completer {nullptr};
     QStringListModel* completerModel {nullptr};
+    bool autoClosing {true};
+    bool replaceTabWithSpaces {true};
 
 private slots:
     void insertCompletion(const QModelIndex& index);

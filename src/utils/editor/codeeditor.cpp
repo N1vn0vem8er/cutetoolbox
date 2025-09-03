@@ -108,6 +108,16 @@ void CodeEditor::updateLineNumber(const QRect &rect, int dy)
         updateLineNumberWidth(0);
 }
 
+bool CodeEditor::getReplaceTabWithSpaces() const
+{
+    return replaceTabWithSpaces;
+}
+
+bool CodeEditor::getAutoClosing() const
+{
+    return autoClosing;
+}
+
 void CodeEditor::insertCompletion(const QModelIndex &index)
 {
 
@@ -227,6 +237,16 @@ void CodeEditor::setFontSize(int size)
     emit fontSizeChanged(font.pointSize());
 }
 
+void CodeEditor::setReplaceTabWithSpacesEnabled(bool val)
+{
+    replaceTabWithSpaces = val;
+}
+
+void CodeEditor::setAutoClosingEnabled(bool val)
+{
+    autoClosing = val;
+}
+
 void CodeEditor::copyAll()
 {
     selectAll();
@@ -250,12 +270,14 @@ void CodeEditor::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
-    else
+    else if(replaceTabWithSpaces || autoClosing)
     {
         switch(event->key())
         {
         case Qt::Key_BraceLeft:
         {
+            if(!autoClosing)
+                return;
             QPlainTextEdit::keyPressEvent(event);
             QTextCursor tc = textCursor();
             tc.insertText("}");
@@ -265,6 +287,8 @@ void CodeEditor::keyPressEvent(QKeyEvent *event)
             return;
         case Qt::Key_BracketLeft:
         {
+            if(!autoClosing)
+                return;
             QPlainTextEdit::keyPressEvent(event);
             QTextCursor tc = textCursor();
             tc.insertText("]");
@@ -274,6 +298,9 @@ void CodeEditor::keyPressEvent(QKeyEvent *event)
             return;
         case Qt::Key_Tab:
         {
+
+            if(!replaceTabWithSpaces)
+                return;
             QTextCursor tc = textCursor();
             tc.insertText("    ");
             setTextCursor(tc);
@@ -282,6 +309,8 @@ void CodeEditor::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Enter:
         case Qt::Key_Return:
         {
+            if(!autoClosing)
+                return;
             QPlainTextEdit::keyPressEvent(event);
             QTextCursor tc = textCursor();
             int cursorPosition = tc.position();
@@ -360,6 +389,8 @@ void CodeEditor::keyPressEvent(QKeyEvent *event)
             return;
         case Qt::Key_Backspace:
         {
+            if(!replaceTabWithSpaces)
+                return;
             QTextCursor tc = textCursor();
             tc.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 4);
             if(tc.selectedText() == "    ")
