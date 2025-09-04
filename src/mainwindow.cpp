@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "editor/codeeditor.h"
 #include "ui_mainwindow.h"
-
 #include <QMessageBox>
 #include <qplaintextedit.h>
+
+#define VERSION "0.0.1"
+#define LICENSELINK "https://www.gnu.org/licenses/gpl-3.0.html"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -145,16 +147,16 @@ void MainWindow::showAbout()
             <p>Cute ToolBox is a collection of tools for developers.</p>
             <p>Version: %1</p>
             <p>License: <a href="%2">GPL 3</a>
-            <h4>External liblaries other then Qt used in this project:</h4>
-            <p>Lib Xml</p>
-            <p>Zlib</p>
-            <p>yaml-cpp</p>
-            <p>Qr Code Gen</p>
-            <p>Marked Copyright (c) 2011-2018, Christopher Jeffrey (https://github.com/chjj/) MIT License</p>
+            <h4>External libraries other then Qt used in this project:</h4>
+            <p>LibXml2 Copyright (C) 1998-2012 Daniel Veillard.  All Rights Reserved. Copyright (C) The Libxml2 Contributors. MIT License</p>
+            <p>Zlib copyright © 1995-2025 Jean-loup Gailly and Mark Adler.</p>
+            <p>yaml-cpp Copyright (c) 2008-2015 Jesse Beder. MIT License</p>
+            <p>Qr Code Genenerator Copyright © 2025 Project Nayuki. MIT License</p>
+            <p>Marked Copyright (c) 2011-2018, Christopher Jeffrey MIT License</p>
             <p>markdown.css Copyright 2011 Kevin Burke Apache License, Version 2.0</p>
         </body>
     </html>
-)"));
+)").arg(VERSION, LICENSELINK));
 }
 
 void MainWindow::save()
