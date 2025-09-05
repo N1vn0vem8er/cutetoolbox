@@ -15,7 +15,6 @@ class HTMLCoderDecoderWidget : public CustomWidget
 public:
     explicit HTMLCoderDecoderWidget(QWidget *parent = nullptr);
     ~HTMLCoderDecoderWidget();
-    bool eventFilter(QObject *watched, QEvent *event) override;
     bool canOpenFiles() const override;
     bool canSaveFiles() const override;
     bool canBasicEdit() const override;
@@ -37,7 +36,10 @@ private:
     };
     Ui::HTMLCoderDecoderWidget *ui;
     bool coding {false};
-    TextEdits lastInFocus;
+    QString openedHtmlFile;
+    QString openedEncodedFile;
+
+private:
     TextEdits getSelectedOption();
 
 private slots:

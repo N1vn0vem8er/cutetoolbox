@@ -21,6 +21,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->html->setPlainText(file.readAll());
+                openedHtmlFile = path;
                 file.close();
             }
         }
@@ -34,6 +35,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->encoded->setPlainText(file.readAll());
+                openedEncodedFile = path;
                 file.close();
             }
         }
@@ -44,25 +46,11 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     connect(ui->pasteHtmlButton, &QPushButton::clicked, ui->html, &QPlainTextEdit::paste);
     connect(ui->clearCodedButton, &QPushButton::clicked, ui->encoded, &QPlainTextEdit::clear);
     connect(ui->clearHtmlButton, &QPushButton::clicked, ui->html, &QPlainTextEdit::clear);
-    ui->html->installEventFilter(this);
-    ui->encoded->installEventFilter(this);
 }
 
 HTMLCoderDecoderWidget::~HTMLCoderDecoderWidget()
 {
     delete ui;
-}
-
-bool HTMLCoderDecoderWidget::eventFilter(QObject *watched, QEvent *event)
-{
-    if(event->type() == QEvent::FocusOut)
-    {
-        if(watched == ui->html)
-            lastInFocus = TextEdits::html;
-        else if(watched == ui->encoded)
-            lastInFocus = TextEdits::encoded;
-    }
-    return QObject::eventFilter(watched, event);
 }
 
 void HTMLCoderDecoderWidget::encode()
@@ -113,7 +101,43 @@ bool HTMLCoderDecoderWidget::canChangeFont() const
 
 void HTMLCoderDecoderWidget::save()
 {
-
+    if(!openedEncodedFile.isEmpty() || !openedHtmlFile.isEmpty())
+    {
+        TextEdits option = TextEdits::none;
+        if(ui->html->hasFocus() && !openedHtmlFile.isEmpty())
+            option = TextEdits::html;
+        else if(ui->encoded->hasFocus() && !openedEncodedFile.isEmpty())
+            option = TextEdits::encoded;
+        else if(!openedHtmlFile.isEmpty() && !openedEncodedFile.isEmpty())
+            option = getSelectedOption();
+        else if(!openedHtmlFile.isEmpty())
+            option = TextEdits::html;
+        else if(openedEncodedFile.isEmpty())
+            option = TextEdits::encoded;
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+            {
+                QFile file(openedHtmlFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->html->toPlainText().toUtf8());
+                    file.close();
+                }
+            }
+            else if(option == TextEdits::encoded)
+            {
+                QFile file(openedEncodedFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->encoded->toPlainText().toUtf8());
+                    file.close();
+                }
+            }
+        }
+    }
+    else
+        saveAs();
 }
 
 void HTMLCoderDecoderWidget::saveAs()
@@ -127,7 +151,16 @@ void HTMLCoderDecoderWidget::saveAs()
             QFile file(path);
             if(file.open(QIODevice::WriteOnly))
             {
-                file.write(option == TextEdits::html ? ui->html->toPlainText().toUtf8() : ui->encoded->toPlainText().toUtf8());
+                if(option == TextEdits::html)
+                {
+                    file.write(ui->html->toPlainText().toUtf8());
+                    openedHtmlFile = path;
+                }
+                else if(option == TextEdits::encoded)
+                {
+                    file.write(ui->encoded->toPlainText().toUtf8());
+                    openedEncodedFile = path;
+                }
                 file.close();
             }
         }
@@ -146,9 +179,15 @@ void HTMLCoderDecoderWidget::open()
             if(file.open(QIODevice::ReadOnly))
             {
                 if(option == TextEdits::html)
+                {
                     ui->html->setPlainText(file.readAll());
+                    openedHtmlFile = path;
+                }
                 else if(option == TextEdits::encoded)
+                {
                     ui->encoded->setPlainText(file.readAll());
+                    openedEncodedFile = path;
+                }
                 file.close();
             }
         }
