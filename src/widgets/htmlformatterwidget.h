@@ -32,6 +32,7 @@ public:
 private:
     Ui::HTMLFormatterWidget *ui;
     HTMLSyntaxHighlighter* syntaxHighlighter {nullptr};
+    QString openedFile;
 
 private slots:
     void format();

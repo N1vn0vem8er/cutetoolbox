@@ -46,7 +46,17 @@ bool HTMLFormatterWidget::canChangeFont() const
 
 void HTMLFormatterWidget::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
 }
 
 void HTMLFormatterWidget::saveAs()
@@ -58,6 +68,7 @@ void HTMLFormatterWidget::saveAs()
         if(file.open(QIODevice::WriteOnly))
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
+            openedFile = path;
             file.close();
         }
     }
@@ -117,6 +128,7 @@ void HTMLFormatterWidget::open()
         if(file.isOpen())
         {
             ui->codeEditor->setPlainText(file.readAll());
+            openedFile = path;
             file.close();
         }
     }
