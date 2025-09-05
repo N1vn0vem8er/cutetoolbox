@@ -77,7 +77,43 @@ bool Base64CoderDecoderWidget::canChangeFont() const
 
 void Base64CoderDecoderWidget::save()
 {
-
+    if(!openedBase64File.isEmpty() || !openedTextFile.isEmpty())
+    {
+        TextEdits option = TextEdits::none;
+        if(ui->text->hasFocus() && !openedTextFile.isEmpty())
+            option = TextEdits::text;
+        else if(ui->base64->hasFocus() && !openedBase64File.isEmpty())
+            option = TextEdits::base64;
+        else if(!openedTextFile.isEmpty() && !openedBase64File.isEmpty())
+            option = getSelectedOption();
+        else if(!openedTextFile.isEmpty())
+            option = TextEdits::text;
+        else if(openedBase64File.isEmpty())
+            option = TextEdits::base64;
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+            {
+                QFile file(openedTextFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->text->toPlainText().toUtf8());
+                    file.close();
+                }
+            }
+            else if(option == TextEdits::base64)
+            {
+                QFile file(openedBase64File);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->base64->toPlainText().toUtf8());
+                    file.close();
+                }
+            }
+        }
+    }
+    else
+        saveAs();
 }
 
 void Base64CoderDecoderWidget::saveAs()
@@ -91,7 +127,16 @@ void Base64CoderDecoderWidget::saveAs()
             QFile file(path);
             if(file.open(QIODevice::WriteOnly))
             {
-                file.write(option == TextEdits::text ? ui->text->toPlainText().toUtf8() : ui->base64->toPlainText().toUtf8());
+                if(option == TextEdits::text)
+                {
+                    file.write(ui->text->toPlainText().toUtf8());
+                    openedTextFile = path;
+                }
+                else if(option == TextEdits::base64)
+                {
+                    file.write(ui->base64->toPlainText().toUtf8());
+                    openedBase64File = path;
+                }
                 file.close();
             }
         }
@@ -110,9 +155,15 @@ void Base64CoderDecoderWidget::open()
             if(file.open(QIODevice::ReadOnly))
             {
                 if(option == TextEdits::text)
+                {
                     ui->text->setPlainText(file.readAll());
+                    openedTextFile = path;
+                }
                 else if(option == TextEdits::base64)
+                {
                     ui->base64->setPlainText(file.readAll());
+                    openedBase64File = path;
+                }
                 file.close();
             }
         }

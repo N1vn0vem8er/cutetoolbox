@@ -36,6 +36,10 @@ private:
     };
     Ui::Base64CoderDecoderWidget *ui;
     bool coding {false};
+    QString openedTextFile;
+    QString openedBase64File;
+
+private:
     TextEdits getSelectedOption();
 
 private slots:
