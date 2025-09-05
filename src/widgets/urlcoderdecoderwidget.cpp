@@ -21,6 +21,7 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->decoded->setPlainText(file.readAll());
+                openedDecodedFile = path;
                 file.close();
             }
         }
@@ -34,6 +35,7 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->encoded->setPlainText(file.readAll());
+                openedEncodedFile = path;
                 file.close();
             }
         }
@@ -81,7 +83,43 @@ bool UrlCoderDecoderWidget::canChangeFont() const
 
 void UrlCoderDecoderWidget::save()
 {
-
+    if(!openedEncodedFile.isEmpty() || !openedDecodedFile.isEmpty())
+    {
+        TextEdits option = TextEdits::none;
+        if(ui->decoded->hasFocus() && !openedDecodedFile.isEmpty())
+            option = TextEdits::decoded;
+        else if(ui->encoded->hasFocus() && !openedEncodedFile.isEmpty())
+            option = TextEdits::encoded;
+        else if(!openedDecodedFile.isEmpty() && !openedEncodedFile.isEmpty())
+            option = getSelectedOption();
+        else if(!openedDecodedFile.isEmpty())
+            option = TextEdits::decoded;
+        else if(openedEncodedFile.isEmpty())
+            option = TextEdits::encoded;
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+            {
+                QFile file(openedDecodedFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->decoded->toPlainText().toUtf8());
+                    file.close();
+                }
+            }
+            else if(option == TextEdits::encoded)
+            {
+                QFile file(openedEncodedFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->encoded->toPlainText().toUtf8());
+                    file.close();
+                }
+            }
+        }
+    }
+    else
+        saveAs();
 }
 
 void UrlCoderDecoderWidget::saveAs()
@@ -95,7 +133,16 @@ void UrlCoderDecoderWidget::saveAs()
             QFile file(path);
             if(file.open(QIODevice::WriteOnly))
             {
-                file.write(option == TextEdits::decoded ? ui->decoded->toPlainText().toUtf8() : ui->encoded->toPlainText().toUtf8());
+                if(option == TextEdits::decoded)
+                {
+                    file.write(ui->decoded->toPlainText().toUtf8());
+                    openedDecodedFile = path;
+                }
+                else if(option == TextEdits::encoded)
+                {
+                    file.write(ui->encoded->toPlainText().toUtf8());
+                    openedEncodedFile = path;
+                }
                 file.close();
             }
         }
@@ -114,9 +161,15 @@ void UrlCoderDecoderWidget::open()
             if(file.open(QIODevice::ReadOnly))
             {
                 if(option == TextEdits::decoded)
+                {
                     ui->decoded->setPlainText(file.readAll());
+                    openedDecodedFile = path;
+                }
                 else if(option == TextEdits::encoded)
+                {
                     ui->encoded->setPlainText(file.readAll());
+                    openedEncodedFile = path;
+                }
                 file.close();
             }
         }

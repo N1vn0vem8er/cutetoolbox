@@ -36,6 +36,10 @@ private:
     };
     Ui::UrlCoderDecoderWidget *ui;
     bool coding {false};
+    QString openedEncodedFile;
+    QString openedDecodedFile;
+
+private:
     TextEdits getSelectedOption();
 
 private slots:

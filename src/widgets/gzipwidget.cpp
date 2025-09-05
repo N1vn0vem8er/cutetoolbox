@@ -27,6 +27,7 @@ GZipWidget::GZipWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->input->setPlainText(file.readAll());
+                openedInputFile = path;
                 file.close();
             }
         }
@@ -40,6 +41,7 @@ GZipWidget::GZipWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->output->setPlainText(file.readAll().toBase64());
+                openedOutputFile = path;
                 file.close();
             }
         }

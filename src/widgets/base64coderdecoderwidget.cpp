@@ -20,6 +20,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->text->setPlainText(file.readAll());
+                openedTextFile = path;
                 file.close();
             }
         }
@@ -33,6 +34,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
             if(file.isOpen())
             {
                 ui->base64->setPlainText(file.readAll());
+                openedBase64File = path;
                 file.close();
             }
         }
