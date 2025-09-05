@@ -33,6 +33,7 @@ private slots:
 
 private:
     Ui::XMLFormatterWidget *ui;
+    QString openedFile;
 };
 
 #endif // XMLFORMATTERWIDGET_H

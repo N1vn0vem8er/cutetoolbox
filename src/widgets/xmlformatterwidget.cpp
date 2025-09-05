@@ -33,6 +33,7 @@ void XMLFormatterWidget::open()
         if(file.isOpen())
         {
             ui->codeEditor->setPlainText(file.readAll());
+            openedFile = path;
             file.close();
         }
     }
@@ -60,7 +61,17 @@ bool XMLFormatterWidget::canChangeFont() const
 
 void XMLFormatterWidget::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
 }
 
 void XMLFormatterWidget::saveAs()
@@ -72,6 +83,7 @@ void XMLFormatterWidget::saveAs()
         if(file.open(QIODevice::WriteOnly))
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
+            openedFile = path;
             file.close();
         }
     }

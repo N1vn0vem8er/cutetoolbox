@@ -30,6 +30,7 @@ public:
 
 private:
     Ui::SQLFormatterWidget *ui;
+    QString openedFile;
 
 private slots:
     void format();
