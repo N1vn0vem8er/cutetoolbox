@@ -36,6 +36,10 @@ private:
     };
     Ui::GZipWidget *ui;
     bool compressing {false};
+    QString openedInputFile;
+    QString openedOutputFile;
+
+private:
     GZipWidget::TextEdits getSelectedOption();
 
 private slots:

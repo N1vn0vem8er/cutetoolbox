@@ -77,7 +77,43 @@ bool GZipWidget::canChangeFont() const
 
 void GZipWidget::save()
 {
-
+    if(!openedOutputFile.isEmpty() || !openedInputFile.isEmpty())
+    {
+        TextEdits option = TextEdits::none;
+        if(ui->input->hasFocus() && !openedInputFile.isEmpty())
+            option = TextEdits::input;
+        else if(ui->output->hasFocus() && !openedOutputFile.isEmpty())
+            option = TextEdits::output;
+        else if(!openedInputFile.isEmpty() && !openedOutputFile.isEmpty())
+            option = getSelectedOption();
+        else if(!openedInputFile.isEmpty())
+            option = TextEdits::input;
+        else if(openedOutputFile.isEmpty())
+            option = TextEdits::output;
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::input)
+            {
+                QFile file(openedInputFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->input->toPlainText().toUtf8());
+                    file.close();
+                }
+            }
+            else if(option == TextEdits::output)
+            {
+                QFile file(openedOutputFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(QByteArray::fromBase64(ui->output->toPlainText().toUtf8()));
+                    file.close();
+                }
+            }
+        }
+    }
+    else
+        saveAs();
 }
 
 void GZipWidget::saveAs()
@@ -91,7 +127,16 @@ void GZipWidget::saveAs()
             QFile file(path);
             if(file.open(QIODevice::WriteOnly))
             {
-                file.write(option == TextEdits::input ? ui->input->toPlainText().toUtf8() : ui->output->toPlainText().toUtf8());
+                if(option == TextEdits::input)
+                {
+                    file.write(ui->input->toPlainText().toUtf8());
+                    openedInputFile = path;
+                }
+                else if(option == TextEdits::output)
+                {
+                    file.write(QByteArray::fromBase64(ui->output->toPlainText().toUtf8()));
+                    openedOutputFile = path;
+                }
                 file.close();
             }
         }
@@ -110,9 +155,15 @@ void GZipWidget::open()
             if(file.open(QIODevice::ReadOnly))
             {
                 if(option == TextEdits::input)
+                {
                     ui->input->setPlainText(file.readAll());
+                    openedInputFile = path;
+                }
                 else if(option == TextEdits::output)
-                    ui->output->setPlainText(file.readAll());
+                {
+                    ui->output->setPlainText(file.readAll().toBase64());
+                    openedOutputFile = path;
+                }
                 file.close();
             }
         }
