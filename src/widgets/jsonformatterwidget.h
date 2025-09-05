@@ -32,6 +32,7 @@ public:
 private:
     Ui::JsonFormatterWidget *ui;
     JSONSyntaxHighlighter* syntaxHighlighter {nullptr};
+    QString openedFile;
 
 private slots:
     void format();

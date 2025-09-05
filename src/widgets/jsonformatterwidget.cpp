@@ -47,7 +47,17 @@ bool JsonFormatterWidget::canChangeFont() const
 
 void JsonFormatterWidget::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
 }
 
 void JsonFormatterWidget::saveAs()
@@ -59,6 +69,7 @@ void JsonFormatterWidget::saveAs()
         if(file.open(QIODevice::WriteOnly))
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
+            openedFile = path;
             file.close();
         }
     }
@@ -121,6 +132,7 @@ void JsonFormatterWidget::open()
         if(file.isOpen())
         {
             ui->codeEditor->setPlainText(file.readAll());
+            openedFile = path;
             file.close();
         }
     }
