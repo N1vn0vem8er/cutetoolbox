@@ -45,5 +45,8 @@ private:
     QMap<QString, int> menuIndexMap;
     QLabel* currentToolLabel {nullptr};
     QMenu* currentMenu {nullptr};
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 };
 #endif // MAINWINDOW_H

@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <qplaintextedit.h>
+#include <qsettings.h>
 
 #define VERSION "0.0.1"
 #define LICENSELINK "https://www.gnu.org/licenses/gpl-3.0.html"
@@ -12,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QSettings settings("cutetoolbox");
+    restoreGeometry(settings.value("Geometry").toByteArray());
+    restoreState(settings.value("State").toByteArray());
     connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
     connect(ui->actionSide_menu, &QAction::triggered, this, [&]{ui->listWidget->setVisible(ui->actionSide_menu->isChecked());});
     connect(ui->actionAbout_Qt, &QAction::triggered, this, [&]{QMessageBox::aboutQt(this, tr("About Qt"));});
@@ -494,4 +498,12 @@ void MainWindow::setFont()
         if(widget->canChangeFont())
             widget->setFont();
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QSettings settings("cutetoolbox");
+    settings.setValue("State", saveState());
+    settings.setValue("Geometry", saveGeometry());
+    QMainWindow::closeEvent(event);
 }
