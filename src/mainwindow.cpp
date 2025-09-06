@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionUndo, &QAction::triggered, this, &MainWindow::undo);
     connect(ui->actionRedo, &QAction::triggered, this, &MainWindow::redo);
     connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, &MainWindow::widgetChanged);
+    connect(ui->actionExit, &QAction::triggered, qApp, &QApplication::closeAllWindows);
 
     currentToolLabel = new QLabel(ui->statusbar);
     currentToolLabel->setText("HTML Encoder");
