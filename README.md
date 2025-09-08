@@ -1,6 +1,7 @@
 # CuteToolBox
 
 This application is a collection of various developer tools. It is inspired by [Dev Tool Box](https://www.github.com/aleiepure/devtoolbox).
+Cute Toolbox is currently under development and it is not fully released. Some features are not implemented and it may contain bugs.
 
 ## Tools
 
