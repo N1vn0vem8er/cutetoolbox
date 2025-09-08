@@ -501,11 +501,6 @@ void CodeEditor::setName(const QString &newName)
     name = newName;
 }
 
-void CodeEditor::find(const QString &text)
-{
-
-}
-
 void CodeEditor::highlightTextSequence(const QString& text, bool caseSensitive)
 {
     QList<QTextEdit::ExtraSelection> found;
@@ -540,11 +535,6 @@ void CodeEditor::replace(const QString &find, const QString &replace)
         cursor.insertText(replace);
         setTextCursor(cursor);
     }
-}
-
-void CodeEditor::clearSearchFormatting()
-{
-
 }
 
 void CodeEditor::deleteSelected()

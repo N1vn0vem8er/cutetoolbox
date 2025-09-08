@@ -162,8 +162,3 @@ void RandomTextGeneratorWidget::generate()
     });
     watcher.setFuture(future);
 }
-
-void RandomTextGeneratorWidget::generationFinished()
-{
-
-}

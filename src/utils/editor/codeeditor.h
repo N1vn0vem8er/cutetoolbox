@@ -18,9 +18,7 @@ public:
     void lineNumberAreaPaint(QPaintEvent* event);
     QString getName() const;
     void setName(const QString &newName);
-    void find(const QString& text);
     void replace(const QString& find, const QString& replace);
-    void clearSearchFormatting();
     void deleteSelected();
     void deleteAll();
     void mergeSelectedLines();

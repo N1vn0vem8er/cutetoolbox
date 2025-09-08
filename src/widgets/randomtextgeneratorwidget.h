@@ -40,7 +40,6 @@ private:
 
 private slots:
     void generate();
-    void generationFinished();
 
 };
 
