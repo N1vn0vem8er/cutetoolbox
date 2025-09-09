@@ -18,11 +18,13 @@ public:
 
 private:
     Ui::CustomWidget *ui;
-    bool gettingColor {false};
 
 private slots:
     void selectColor();
     void selectColorFromScreen();
+    void updateColor();
+    void copyQColor();
+    void pasteQColor();
 };
 
 #endif // COLORPICKER_H

@@ -70,11 +70,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="redLineEdit">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
+        <widget class="QSpinBox" name="red255"/>
        </item>
        <item>
         <widget class="QLabel" name="label_3">
@@ -84,11 +80,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="greenLineEdit">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
+        <widget class="QSpinBox" name="green255"/>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
@@ -98,23 +90,19 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="blueLineEdit">
+        <widget class="QSpinBox" name="blue255"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="copyQColorButton">
          <property name="text">
-          <string>0</string>
+          <string>Copy QColor</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="pasteQColorButton">
          <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string/>
+          <string>Paste QColor</string>
          </property>
         </widget>
        </item>
