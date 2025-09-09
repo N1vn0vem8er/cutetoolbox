@@ -12,12 +12,6 @@ ColorPicker::ColorPicker(QWidget *parent)
     , ui(new Ui::CustomWidget)
 {
     ui->setupUi(this);
-    ui->red255->setMaximum(255);
-    ui->green255->setMaximum(255);
-    ui->blue255->setMaximum(255);
-    ui->red255->setMinimum(0);
-    ui->green255->setMinimum(0);
-    ui->blue255->setMinimum(0);
     connect(ui->selectColorButton, &QPushButton::clicked, this, &ColorPicker::selectColor);
     connect(ui->selectFromScreenButton, &QPushButton::clicked, this, &ColorPicker::selectColorFromScreen);
     connect(ui->red255, &QSpinBox::valueChanged, this, &ColorPicker::updateColor);
