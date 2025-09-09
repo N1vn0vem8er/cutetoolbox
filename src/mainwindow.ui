@@ -57,6 +57,7 @@
        <widget class="TimestampWidget" name="timestamp"/>
        <widget class="NumberBasesWidget" name="numberBases"/>
        <widget class="QDateTimeConverterWidget" name="qDateTimeConverter"/>
+       <widget class="ColorPicker" name="colorPicker"/>
       </widget>
      </widget>
     </item>
@@ -476,6 +477,12 @@
    <class>DesktopCreatorWidget</class>
    <extends>QWidget</extends>
    <header>desktopcreatorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ColorPicker</class>
+   <extends>QWidget</extends>
+   <header>colorpicker.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -75,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Timestamp"), QIcon());
     addMenuItem(tr("Number Bases"), QIcon());
     addMenuItem(tr("QDateTime"), QIcon());
+    addMenuItem(tr("Graphics"), QIcon(), false);
+    addMenuItem(tr("Color Picker"), QIcon());
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 }
