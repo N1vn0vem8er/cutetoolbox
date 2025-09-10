@@ -22,6 +22,16 @@ ColorPicker::ColorPicker(QWidget *parent)
     connect(ui->greenf, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedRgbF);
     connect(ui->bluef, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedRgbF);
     connect(ui->alphaf, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedRgbF);
+    connect(ui->cmykK, &QSpinBox::valueChanged, this, &ColorPicker::changedCmyk);
+    connect(ui->cmykM, &QSpinBox::valueChanged, this, &ColorPicker::changedCmyk);
+    connect(ui->cmykY, &QSpinBox::valueChanged, this, &ColorPicker::changedCmyk);
+    connect(ui->cmykC, &QSpinBox::valueChanged, this, &ColorPicker::changedCmyk);
+    connect(ui->cmykA, &QSpinBox::valueChanged, this, &ColorPicker::changedCmyk);
+    connect(ui->cmykfC, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedCmykF);
+    connect(ui->cmykfM, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedCmykF);
+    connect(ui->cmykfY, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedCmykF);
+    connect(ui->cmykfK, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedCmykF);
+    connect(ui->cmykfA, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedCmykF);
     connect(ui->copyQColorButton, &QPushButton::clicked, this, &ColorPicker::copyQColor);
     connect(ui->pasteQColorButton, &QPushButton::clicked, this, &ColorPicker::pasteQColor);
     ui->colorWidget->setAutoFillBackground(true);
@@ -170,17 +180,144 @@ void ColorPicker::changedRgbF()
 
 void ColorPicker::changedRgb64()
 {
-
+    if(!lock)
+    {
+        lock = true;
+        const QColor color = QColor::fromRgba64(ui->red64->value(), ui->green64->value(), ui->blue64->value(), ui->alpha64->value());
+        if(color.isValid())
+        {
+            ui->red255->setValue(color.red());
+            ui->green255->setValue(color.green());
+            ui->blue255->setValue(color.blue());
+            ui->alpha255->setValue(color.alpha());
+            ui->redf->setValue(color.redF());
+            ui->greenf->setValue(color.greenF());
+            ui->bluef->setValue(color.blueF());
+            ui->alphaf->setValue(color.alphaF());
+            ui->cmykC->setValue(color.cyan());
+            ui->cmykK->setValue(color.black());
+            ui->cmykM->setValue(color.magenta());
+            ui->cmykY->setValue(color.yellow());
+            ui->cmykA->setValue(color.alpha());
+            ui->cmykfC->setValue(color.cyanF());
+            ui->cmykfK->setValue(color.blackF());
+            ui->cmykfM->setValue(color.magentaF());
+            ui->cmykfY->setValue(color.yellowF());
+            ui->cmykfA->setValue(color.alphaF());
+            ui->hsvH->setValue(color.hsvHue());
+            ui->hsvS->setValue(color.hsvSaturation());
+            ui->hsvV->setValue(color.value());
+            ui->hsvA->setValue(color.alpha());
+            ui->hsvfH->setValue(color.hsvHueF());
+            ui->hsvfS->setValue(color.hsvSaturationF());
+            ui->hsvfV->setValue(color.valueF());
+            ui->hsvfA->setValue(color.alphaF());
+            ui->hslH->setValue(color.hslHue());
+            ui->hslS->setValue(color.hslSaturation());
+            ui->hslL->setValue(color.lightness());
+            ui->hslA->setValue(color.alpha());
+            ui->hslfH->setValue(color.hslHueF());
+            ui->hslfS->setValue(color.hslSaturationF());
+            ui->hslfL->setValue(color.lightnessF());
+            ui->hslfA->setValue(color.alphaF());
+            updateColor();
+        }
+        lock = false;
+    }
 }
 
 void ColorPicker::changedCmyk()
 {
-
+    if(!lock)
+    {
+        lock = true;
+        const QColor color = QColor::fromCmyk(ui->cmykC->value(), ui->cmykM->value(), ui->cmykY->value(), ui->cmykK->value(), ui->cmykA->value());
+        if(color.isValid())
+        {
+            ui->red255->setValue(color.red());
+            ui->green255->setValue(color.green());
+            ui->blue255->setValue(color.blue());
+            ui->alpha255->setValue(color.alpha());
+            ui->red64->setValue(color.rgba64().red());
+            ui->green64->setValue(color.rgba64().green());
+            ui->blue64->setValue(color.rgba64().blue());
+            ui->alpha64->setValue(color.rgba64().alpha());
+            ui->cmykfC->setValue(color.cyanF());
+            ui->cmykfK->setValue(color.blackF());
+            ui->cmykfM->setValue(color.magentaF());
+            ui->cmykfY->setValue(color.yellowF());
+            ui->cmykfA->setValue(color.alphaF());
+            ui->redf->setValue(color.redF());
+            ui->greenf->setValue(color.greenF());
+            ui->bluef->setValue(color.blueF());
+            ui->alphaf->setValue(color.alphaF());
+            ui->hsvH->setValue(color.hsvHue());
+            ui->hsvS->setValue(color.hsvSaturation());
+            ui->hsvV->setValue(color.value());
+            ui->hsvA->setValue(color.alpha());
+            ui->hsvfH->setValue(color.hsvHueF());
+            ui->hsvfS->setValue(color.hsvSaturationF());
+            ui->hsvfV->setValue(color.valueF());
+            ui->hsvfA->setValue(color.alphaF());
+            ui->hslH->setValue(color.hslHue());
+            ui->hslS->setValue(color.hslSaturation());
+            ui->hslL->setValue(color.lightness());
+            ui->hslA->setValue(color.alpha());
+            ui->hslfH->setValue(color.hslHueF());
+            ui->hslfS->setValue(color.hslSaturationF());
+            ui->hslfL->setValue(color.lightnessF());
+            ui->hslfA->setValue(color.alphaF());
+            updateColor();
+        }
+        lock = false;
+    }
 }
 
 void ColorPicker::changedCmykF()
 {
-
+    if(!lock)
+    {
+        lock = true;
+        const QColor color = QColor::fromCmykF(ui->cmykfC->value(), ui->cmykfM->value(), ui->cmykfY->value(), ui->cmykfK->value(), ui->cmykfA->value());
+        if(color.isValid())
+        {
+            ui->red255->setValue(color.red());
+            ui->green255->setValue(color.green());
+            ui->blue255->setValue(color.blue());
+            ui->alpha255->setValue(color.alpha());
+            ui->red64->setValue(color.rgba64().red());
+            ui->green64->setValue(color.rgba64().green());
+            ui->blue64->setValue(color.rgba64().blue());
+            ui->alpha64->setValue(color.rgba64().alpha());
+            ui->cmykC->setValue(color.cyan());
+            ui->cmykK->setValue(color.black());
+            ui->cmykM->setValue(color.magenta());
+            ui->cmykY->setValue(color.yellow());
+            ui->cmykA->setValue(color.alpha());
+            ui->redf->setValue(color.redF());
+            ui->greenf->setValue(color.greenF());
+            ui->bluef->setValue(color.blueF());
+            ui->alphaf->setValue(color.alphaF());
+            ui->hsvH->setValue(color.hsvHue());
+            ui->hsvS->setValue(color.hsvSaturation());
+            ui->hsvV->setValue(color.value());
+            ui->hsvA->setValue(color.alpha());
+            ui->hsvfH->setValue(color.hsvHueF());
+            ui->hsvfS->setValue(color.hsvSaturationF());
+            ui->hsvfV->setValue(color.valueF());
+            ui->hsvfA->setValue(color.alphaF());
+            ui->hslH->setValue(color.hslHue());
+            ui->hslS->setValue(color.hslSaturation());
+            ui->hslL->setValue(color.lightness());
+            ui->hslA->setValue(color.alpha());
+            ui->hslfH->setValue(color.hslHueF());
+            ui->hslfS->setValue(color.hslSaturationF());
+            ui->hslfL->setValue(color.lightnessF());
+            ui->hslfA->setValue(color.alphaF());
+            updateColor();
+        }
+        lock = false;
+    }
 }
 
 void ColorPicker::selectColor()
