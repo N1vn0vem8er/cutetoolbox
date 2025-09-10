@@ -18,6 +18,7 @@ public:
 
 private:
     Ui::CustomWidget *ui;
+    bool lock {false};
 
 private slots:
     void selectColor();
@@ -25,6 +26,11 @@ private slots:
     void updateColor();
     void copyQColor();
     void pasteQColor();
+    void changedRgb255();
+    void changedRgbF();
+    void changedRgb64();
+    void changedCmyk();
+    void changedCmykF();
 };
 
 #endif // COLORPICKER_H
