@@ -233,11 +233,14 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="redf">
+         <property name="decimals">
+          <number>3</number>
+         </property>
          <property name="maximum">
           <double>1.000000000000000</double>
          </property>
          <property name="singleStep">
-          <double>0.000001000000000</double>
+          <double>0.010000000000000</double>
          </property>
         </widget>
        </item>
@@ -250,11 +253,14 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="greenf">
+         <property name="decimals">
+          <number>3</number>
+         </property>
          <property name="maximum">
           <double>1.000000000000000</double>
          </property>
          <property name="singleStep">
-          <double>0.000001000000000</double>
+          <double>0.010000000000000</double>
          </property>
         </widget>
        </item>
@@ -267,11 +273,14 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="bluef">
+         <property name="decimals">
+          <number>3</number>
+         </property>
          <property name="maximum">
           <double>1.000000000000000</double>
          </property>
          <property name="singleStep">
-          <double>0.000001000000000</double>
+          <double>0.010000000000000</double>
          </property>
         </widget>
        </item>
@@ -284,11 +293,14 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="alphaf">
+         <property name="decimals">
+          <number>3</number>
+         </property>
          <property name="maximum">
           <double>1.000000000000000</double>
          </property>
          <property name="singleStep">
-          <double>0.000001000000000</double>
+          <double>0.010000000000000</double>
          </property>
          <property name="value">
           <double>1.000000000000000</double>
@@ -543,7 +555,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="cmykfC"/>
+        <widget class="QDoubleSpinBox" name="cmykfC">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_29">
@@ -553,7 +575,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="cmykfM"/>
+        <widget class="QDoubleSpinBox" name="cmykfM">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_30">
@@ -563,7 +595,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="cmykfY"/>
+        <widget class="QDoubleSpinBox" name="cmykfY">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_31">
@@ -573,7 +615,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="cmykfK"/>
+        <widget class="QDoubleSpinBox" name="cmykfK">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_32">
@@ -583,7 +635,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="cmykfA"/>
+        <widget class="QDoubleSpinBox" name="cmykfA">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="horizontalSpacer_6">
@@ -643,7 +705,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hslH"/>
+        <widget class="QSpinBox" name="hslH">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_34">
@@ -653,7 +719,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hslS"/>
+        <widget class="QSpinBox" name="hslS">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_35">
@@ -663,7 +733,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hslL"/>
+        <widget class="QSpinBox" name="hslL">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_36">
@@ -673,7 +747,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hslA"/>
+        <widget class="QSpinBox" name="hslA">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="horizontalSpacer_7">
@@ -733,7 +811,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hslfH"/>
+        <widget class="QDoubleSpinBox" name="hslfH">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_38">
@@ -743,7 +831,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hslfS"/>
+        <widget class="QDoubleSpinBox" name="hslfS">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_39">
@@ -753,7 +851,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hslfL"/>
+        <widget class="QDoubleSpinBox" name="hslfL">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_40">
@@ -763,7 +871,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hslfA"/>
+        <widget class="QDoubleSpinBox" name="hslfA">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="horizontalSpacer_10">
@@ -823,7 +941,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hsvH"/>
+        <widget class="QSpinBox" name="hsvH">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_42">
@@ -833,7 +955,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hsvS"/>
+        <widget class="QSpinBox" name="hsvS">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_43">
@@ -843,7 +969,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hsvV"/>
+        <widget class="QSpinBox" name="hsvV">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_44">
@@ -853,7 +983,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="hsvA"/>
+        <widget class="QSpinBox" name="hsvA">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="horizontalSpacer_8">
@@ -913,7 +1047,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hsvfH"/>
+        <widget class="QDoubleSpinBox" name="hsvfH">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_46">
@@ -923,7 +1067,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hsvfS"/>
+        <widget class="QDoubleSpinBox" name="hsvfS">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_47">
@@ -933,7 +1087,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hsvfV"/>
+        <widget class="QDoubleSpinBox" name="hsvfV">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_48">
@@ -943,7 +1107,17 @@
         </widget>
        </item>
        <item>
-        <widget class="QDoubleSpinBox" name="hsvfA"/>
+        <widget class="QDoubleSpinBox" name="hsvfA">
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="horizontalSpacer_9">
