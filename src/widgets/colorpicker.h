@@ -31,6 +31,12 @@ private slots:
     void changedRgb64();
     void changedCmyk();
     void changedCmykF();
+    void changedHsv();
+    void changedHsvF();
+    void changedHsl();
+    void changedHslF();
+    void changedHex();
+    void changedHexARGB();
 };
 
 #endif // COLORPICKER_H
