@@ -49,6 +49,26 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="pasteCSSButton">
+       <property name="text">
+        <string>Paste CSS</string>
+       </property>
+       <property name="icon">
+        <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pasteQColorButton">
+       <property name="text">
+        <string>Paste QColor</string>
+       </property>
+       <property name="icon">
+        <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -157,19 +177,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="pasteQColorButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="1" column="0">
@@ -217,19 +224,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pasteHexButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
          </property>
         </widget>
        </item>
@@ -363,19 +357,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="pasteRgbfButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="4" column="0">
@@ -460,19 +441,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pasteRgba64Button">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
          </property>
         </widget>
        </item>
@@ -570,19 +538,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pasteCmykButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
          </property>
         </widget>
        </item>
@@ -733,19 +688,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="pasteCmykFButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="7" column="0">
@@ -846,19 +788,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pasteHslButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
          </property>
         </widget>
        </item>
@@ -989,19 +918,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="pasteHslFButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="9" column="0">
@@ -1092,19 +1008,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pasteHsvButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
          </property>
         </widget>
        </item>
@@ -1225,19 +1128,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="pasteHsvFButton">
-         <property name="toolTip">
-          <string>Paste from QColor</string>
-         </property>
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="2" column="0">
@@ -1282,16 +1172,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pasteARGBQColorButton">
-         <property name="text">
-          <string>Paste QColor</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditPaste"/>
          </property>
         </widget>
        </item>
