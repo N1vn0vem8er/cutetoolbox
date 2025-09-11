@@ -87,7 +87,8 @@ ColorPicker::ColorPicker(QWidget *parent)
         QGuiApplication::clipboard()->setText(QString("cmyk(%1, %2, %3, %4, %5)").arg(ui->cmykC->value()).arg(ui->cmykM->value()).arg(ui->cmykY->value()).arg(ui->cmykK->value()).arg(ui->cmykA->value()));});
     connect(ui->copyHslCSSButton, &QPushButton::clicked, this, [&]{
         QGuiApplication::clipboard()->setText(QString("hsl(%1, %2, %3, %4)").arg(ui->hslH->value()).arg(ui->hslS->value()).arg(ui->hslL->value()).arg(ui->hslA->value()));});
-
+    connect(ui->copyHexARGBCSSButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(ui->hexARGBLineEdit->text());});
+    connect(ui->copyHexRGBCSSButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(ui->hexRGBLineEdit->text());});
     connect(ui->pasteQColorButton, &QPushButton::clicked, this, &ColorPicker::pasteQColor);
     ui->colorWidget->setAutoFillBackground(true);
     updateColor();
