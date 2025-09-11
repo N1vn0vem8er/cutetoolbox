@@ -129,7 +129,47 @@ void ColorPicker::pasteQColor()
             ui->cmykfA->setValue(match.captured(6).toFloat());
         return;
     }
-}
+    match = QRegularExpression(R"(QColor::fromHsv\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    if(match.hasMatch())
+    {
+        ui->hsvH->setValue(match.captured(1).toInt());
+        ui->hsvS->setValue(match.captured(2).toInt());
+        ui->hsvV->setValue(match.captured(3).toInt());
+        if(match.capturedTexts().length() >= 5)
+            ui->hsvA->setValue(match.captured(5).toInt());
+        return;
+    }
+    match = QRegularExpression(R"(QColor::fromHsvF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    if(match.hasMatch())
+    {
+        ui->hsvfH->setValue(match.captured(1).toFloat());
+        ui->hsvfS->setValue(match.captured(2).toFloat());
+        ui->hsvfV->setValue(match.captured(3).toFloat());
+        if(match.capturedTexts().length() >= 5)
+            ui->hsvfA->setValue(match.captured(5).toFloat());
+        return;
+    }
+    match = QRegularExpression(R"(QColor::fromHsl\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    if(match.hasMatch())
+    {
+        ui->hslH->setValue(match.captured(1).toInt());
+        ui->hslS->setValue(match.captured(2).toInt());
+        ui->hslL->setValue(match.captured(3).toInt());
+        if(match.capturedTexts().length() >= 5)
+            ui->hslA->setValue(match.captured(5).toInt());
+        return;
+    }
+    match = QRegularExpression(R"(QColor::fromHslF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    if(match.hasMatch())
+    {
+        ui->hslfH->setValue(match.captured(1).toFloat());
+        ui->hslfS->setValue(match.captured(2).toFloat());
+        ui->hslfL->setValue(match.captured(3).toFloat());
+        if(match.capturedTexts().length() >= 5)
+            ui->hslfA->setValue(match.captured(5).toFloat());
+        return;
+    }
+};
 
 void ColorPicker::pasteCSS()
 {
