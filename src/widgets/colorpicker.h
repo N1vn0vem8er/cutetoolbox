@@ -24,7 +24,6 @@ private slots:
     void selectColor();
     void selectColorFromScreen();
     void updateColor();
-    void copyQColor();
     void pasteQColor();
     void changedRgb255();
     void changedRgbF();

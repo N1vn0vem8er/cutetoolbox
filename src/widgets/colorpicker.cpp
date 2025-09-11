@@ -50,7 +50,24 @@ ColorPicker::ColorPicker(QWidget *parent)
     connect(ui->hsvfA, &QDoubleSpinBox::valueChanged, this, &ColorPicker::changedHsvF);
     connect(ui->hexRGBLineEdit, &QLineEdit::textChanged, this, &ColorPicker::changedHex);
     connect(ui->hexARGBLineEdit, &QLineEdit::textChanged, this, &ColorPicker::changedHexARGB);
-    connect(ui->copyQColorButton, &QPushButton::clicked, this, &ColorPicker::copyQColor);
+    connect(ui->copyQColorButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromRgb(%1, %2, %3, %4)").arg(ui->red255->value()).arg(ui->green255->value()).arg(ui->blue255->value()).arg(ui->alpha255->value()));});
+    connect(ui->copyRgbfButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromRgbF(%1, %2, %3, %4)").arg(ui->redf->value()).arg(ui->greenf->value()).arg(ui->bluef->value()).arg(ui->alphaf->value()));});
+    connect(ui->copyRgba64Button, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromRgb64(%1, %2, %3, %4)").arg(ui->red64->value()).arg(ui->green64->value()).arg(ui->blue64->value()).arg(ui->alpha64->value()));});
+    connect(ui->copyCmykButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromCmyk(%1, %2, %3, %4, %5)").arg(ui->cmykC->value()).arg(ui->cmykM->value()).arg(ui->cmykY->value()).arg(ui->cmykK->value()).arg(ui->cmykA->value()));});
+    connect(ui->copyCmykFButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromCmykF(%1, %2, %3, %4, %5)").arg(ui->cmykfC->value()).arg(ui->cmykfM->value()).arg(ui->cmykfY->value()).arg(ui->cmykfK->value()).arg(ui->cmykfA->value()));});
+    connect(ui->copyHsvButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromHsv(%1, %2, %3, %4)").arg(ui->hsvH->value()).arg(ui->hsvS->value()).arg(ui->hsvV->value()).arg(ui->hsvA->value()));});
+    connect(ui->copyHsvFButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromHsvF(%1, %2, %3, %4)").arg(ui->hsvfH->value()).arg(ui->hsvfS->value()).arg(ui->hsvfV->value()).arg(ui->hsvfA->value()));});
+    connect(ui->copyHslButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromHsl(%1, %2, %3, %4)").arg(ui->hslH->value()).arg(ui->hslS->value()).arg(ui->hslL->value()).arg(ui->hslA->value()));});
+    connect(ui->copyHslFButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromHslF(%1, %2, %3, %4)").arg(ui->hslfH->value()).arg(ui->hslfS->value()).arg(ui->hslfL->value()).arg(ui->hslfA->value()));});
     connect(ui->pasteQColorButton, &QPushButton::clicked, this, &ColorPicker::pasteQColor);
     ui->colorWidget->setAutoFillBackground(true);
     updateColor();
@@ -66,11 +83,6 @@ void ColorPicker::updateColor()
     QPalette palette = ui->colorWidget->palette();
     palette.setColor(QPalette::Window, QColor::fromRgb(ui->red255->value(), ui->green255->value(), ui->blue255->value(), ui->alpha255->value()));
     ui->colorWidget->setPalette(palette);
-}
-
-void ColorPicker::copyQColor()
-{
-    QGuiApplication::clipboard()->setText(QString("QColor::fromRgb(%1, %2, %3)").arg(ui->red255->value()).arg(ui->green255->value()).arg(ui->blue255->value()));
 }
 
 void ColorPicker::pasteQColor()
