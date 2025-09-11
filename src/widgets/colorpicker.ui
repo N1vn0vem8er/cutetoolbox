@@ -148,7 +148,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="copyRGBCSSButton">
          <property name="text">
           <string>Copy CSS</string>
          </property>
@@ -198,7 +198,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="copyHexRGBCSSButton">
          <property name="text">
           <string>Copy CSS</string>
          </property>
@@ -328,16 +328,6 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>Copy CSS</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="copyRgbfButton">
          <property name="toolTip">
           <string>Copy as QColor::fromRgbF</string>
@@ -413,16 +403,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_5">
-         <property name="text">
-          <string>Copy CSS</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="copyRgba64Button">
@@ -512,7 +492,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_6">
+        <widget class="QPushButton" name="copyCmykCSSButton">
          <property name="text">
           <string>Copy CSS</string>
          </property>
@@ -659,16 +639,6 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_7">
-         <property name="text">
-          <string>Copy CSS</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="copyCmykFButton">
          <property name="toolTip">
           <string>Copy as QColor::fromCmykF</string>
@@ -762,7 +732,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_8">
+        <widget class="QPushButton" name="copyHslCSSButton">
          <property name="text">
           <string>Copy CSS</string>
          </property>
@@ -887,16 +857,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_9">
-         <property name="text">
-          <string>Copy CSS</string>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditCopy"/>
-         </property>
-        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="copyHslFButton">
@@ -1149,7 +1109,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="copyHexARGBCSSButton">
          <property name="text">
           <string>Copy CSS</string>
          </property>

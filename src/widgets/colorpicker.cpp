@@ -68,6 +68,26 @@ ColorPicker::ColorPicker(QWidget *parent)
         QGuiApplication::clipboard()->setText(QString("QColor::fromHsl(%1, %2, %3, %4)").arg(ui->hslH->value()).arg(ui->hslS->value()).arg(ui->hslL->value()).arg(ui->hslA->value()));});
     connect(ui->copyHslFButton, &QPushButton::clicked, this, [&]{
         QGuiApplication::clipboard()->setText(QString("QColor::fromHslF(%1, %2, %3, %4)").arg(ui->hslfH->value()).arg(ui->hslfS->value()).arg(ui->hslfL->value()).arg(ui->hslfA->value()));});
+    connect(ui->copyQColorButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromRgb(%1, %2, %3, %4)").arg(ui->red255->value()).arg(ui->green255->value()).arg(ui->blue255->value()).arg(ui->alpha255->value()));});
+    connect(ui->copyRgbfButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromRgbF(%1, %2, %3, %4)").arg(ui->redf->value()).arg(ui->greenf->value()).arg(ui->bluef->value()).arg(ui->alphaf->value()));});
+    connect(ui->copyRgba64Button, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromRgb64(%1, %2, %3, %4)").arg(ui->red64->value()).arg(ui->green64->value()).arg(ui->blue64->value()).arg(ui->alpha64->value()));});
+    connect(ui->copyCmykButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromCmyk(%1, %2, %3, %4, %5)").arg(ui->cmykC->value()).arg(ui->cmykM->value()).arg(ui->cmykY->value()).arg(ui->cmykK->value()).arg(ui->cmykA->value()));});
+    connect(ui->copyCmykFButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromCmykF(%1, %2, %3, %4, %5)").arg(ui->cmykfC->value()).arg(ui->cmykfM->value()).arg(ui->cmykfY->value()).arg(ui->cmykfK->value()).arg(ui->cmykfA->value()));});    connect(ui->copyHslButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromHsl(%1, %2, %3, %4)").arg(ui->hslH->value()).arg(ui->hslS->value()).arg(ui->hslL->value()).arg(ui->hslA->value()));});
+    connect(ui->copyHslFButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromHslF(%1, %2, %3, %4)").arg(ui->hslfH->value()).arg(ui->hslfS->value()).arg(ui->hslfL->value()).arg(ui->hslfA->value()));});
+    connect(ui->copyRGBCSSButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("rgb(%1, %2, %3, %4)").arg(ui->red255->value()).arg(ui->green255->value()).arg(ui->blue255->value()).arg(ui->alpha255->value()));});
+    connect(ui->copyCmykCSSButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("cmyk(%1, %2, %3, %4, %5)").arg(ui->cmykC->value()).arg(ui->cmykM->value()).arg(ui->cmykY->value()).arg(ui->cmykK->value()).arg(ui->cmykA->value()));});
+    connect(ui->copyHslCSSButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("hsl(%1, %2, %3, %4)").arg(ui->hslH->value()).arg(ui->hslS->value()).arg(ui->hslL->value()).arg(ui->hslA->value()));});
+
     connect(ui->pasteQColorButton, &QPushButton::clicked, this, &ColorPicker::pasteQColor);
     ui->colorWidget->setAutoFillBackground(true);
     updateColor();
