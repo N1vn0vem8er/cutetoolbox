@@ -26,7 +26,6 @@ private slots:
     void updateColor();
     void copyQColor();
     void pasteQColor();
-    void pasteCSS();
     void changedRgb255();
     void changedRgbF();
     void changedRgb64();

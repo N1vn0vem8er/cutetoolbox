@@ -52,7 +52,6 @@ ColorPicker::ColorPicker(QWidget *parent)
     connect(ui->hexARGBLineEdit, &QLineEdit::textChanged, this, &ColorPicker::changedHexARGB);
     connect(ui->copyQColorButton, &QPushButton::clicked, this, &ColorPicker::copyQColor);
     connect(ui->pasteQColorButton, &QPushButton::clicked, this, &ColorPicker::pasteQColor);
-    connect(ui->pasteCSSButton, &QPushButton::clicked, this, &ColorPicker::pasteCSS);
     ui->colorWidget->setAutoFillBackground(true);
     updateColor();
 }
@@ -169,12 +168,33 @@ void ColorPicker::pasteQColor()
             ui->hslfA->setValue(match.captured(5).toFloat());
         return;
     }
+    match = QRegularExpression(R"(rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    if(match.hasMatch())
+    {
+        ui->red255->setValue(match.captured(1).toInt());
+        ui->green255->setValue(match.captured(2).toInt());
+        ui->blue255->setValue(match.captured(3).toInt());
+        return;
+    }
+    match = QRegularExpression(R"(rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    if(match.hasMatch())
+    {
+        ui->red255->setValue(match.captured(1).toInt());
+        ui->green255->setValue(match.captured(2).toInt());
+        ui->blue255->setValue(match.captured(3).toInt());
+        ui->alpha255->setValue(match.captured(4).toInt());
+        return;
+    }
+    match = QRegularExpression(R"(rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1}\.\d{1})\))").match(text);
+    if(match.hasMatch())
+    {
+        ui->red255->setValue(match.captured(1).toInt());
+        ui->green255->setValue(match.captured(2).toInt());
+        ui->blue255->setValue(match.captured(3).toInt());
+        ui->alphaf->setValue(match.captured(4).toFloat());
+        return;
+    }
 };
-
-void ColorPicker::pasteCSS()
-{
-
-}
 
 void ColorPicker::changedRgb255()
 {

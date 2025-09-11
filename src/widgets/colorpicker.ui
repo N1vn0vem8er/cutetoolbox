@@ -50,19 +50,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pasteCSSButton">
-       <property name="text">
-        <string>Paste CSS</string>
-       </property>
-       <property name="icon">
-        <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="pasteQColorButton">
+       <property name="toolTip">
+        <string>Paste QColor or CSS color</string>
+       </property>
        <property name="text">
-        <string>Paste QColor</string>
+        <string>Paste Color</string>
        </property>
        <property name="icon">
         <iconset theme="QIcon::ThemeIcon::EditPaste"/>
