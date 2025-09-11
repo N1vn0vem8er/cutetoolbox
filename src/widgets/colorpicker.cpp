@@ -77,49 +77,58 @@ void ColorPicker::copyQColor()
 void ColorPicker::pasteQColor()
 {
     QString text = QGuiApplication::clipboard()->text();
-    QRegularExpressionMatch match = QRegularExpression(R"(QColor::fromRgbF\((\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    QRegularExpressionMatch match = QRegularExpression(R"(QColor::fromRgbF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
     if(match.hasMatch())
     {
         ui->redf->setValue(match.captured(1).toFloat());
         ui->greenf->setValue(match.captured(2).toFloat());
         ui->bluef->setValue(match.captured(3).toFloat());
+        if(match.capturedTexts().length() >= 5)
+            ui->alphaf->setValue(match.captured(4).toFloat());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromRgb64\((\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    match = QRegularExpression(R"(QColor::fromRgb64\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
     if(match.hasMatch())
     {
         ui->red64->setValue(match.captured(1).toInt());
         ui->green64->setValue(match.captured(2).toInt());
         ui->blue64->setValue(match.captured(3).toInt());
+        if(match.capturedTexts().length() >= 5)
+            ui->alpha64->setValue(match.captured(5).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromRgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    match = QRegularExpression(R"(QColor::fromRgb\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
     if(match.hasMatch())
     {
         ui->red255->setValue(match.captured(1).toInt());
         ui->green255->setValue(match.captured(2).toInt());
         ui->blue255->setValue(match.captured(3).toInt());
+        if(match.capturedTexts().length() >= 5)
+            ui->alpha255->setValue(match.captured(5).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromCmyk\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    match = QRegularExpression(R"(QColor::fromCmyk\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
     if(match.hasMatch())
     {
         ui->cmykC->setValue(match.captured(1).toInt());
         ui->cmykM->setValue(match.captured(2).toInt());
         ui->cmykY->setValue(match.captured(3).toInt());
         ui->cmykK->setValue(match.captured(4).toInt());
+        if(match.capturedTexts().length() >= 6)
+            ui->cmykA->setValue(match.captured(6).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromCmykF\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    match = QRegularExpression(R"(QColor::fromCmykF\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
     if(match.hasMatch())
     {
         ui->cmykfC->setValue(match.captured(1).toFloat());
         ui->cmykfM->setValue(match.captured(2).toFloat());
         ui->cmykfY->setValue(match.captured(3).toFloat());
         ui->cmykfK->setValue(match.captured(4).toFloat());
+        if(match.capturedTexts().length() >= 6)
+            ui->cmykfA->setValue(match.captured(6).toFloat());
         return;
     }
-
 }
 
 void ColorPicker::pasteCSS()
