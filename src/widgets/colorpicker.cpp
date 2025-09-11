@@ -76,7 +76,20 @@ void ColorPicker::copyQColor()
 void ColorPicker::pasteQColor()
 {
     QString text = QGuiApplication::clipboard()->text();
-    QRegularExpressionMatch match = QRegularExpression(R"(QColor::fromRgbF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    QRegularExpressionMatch match = QRegularExpression(R"(#[\da-f-A-F]{6,8})").match(text);
+    if(match.hasMatch())
+    {
+        const QString captured = match.captured(0);
+        if(captured.length() == 7)
+        {
+            ui->hexRGBLineEdit->setText(captured);
+        }
+        else if(captured.length() == 9)
+        {
+            ui->hexARGBLineEdit->setText(captured);
+        }
+    }
+    match = QRegularExpression(R"(QColor::fromRgbF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
     if(match.hasMatch())
     {
         ui->redf->setValue(match.captured(1).toFloat());
