@@ -16,6 +16,7 @@ ColorPicker::ColorPicker(QWidget *parent)
     ui->green255->setValue(settings.value("colorpicker.green", 0).toInt());
     ui->blue255->setValue(settings.value("colorpicker.blue", 0).toInt());
     ui->alpha255->setValue(settings.value("colorpicker.alpha", 255).toInt());
+    changedRgb255();
     connect(ui->selectColorButton, &QPushButton::clicked, this, &ColorPicker::selectColor);
     connect(ui->red255, &QSpinBox::valueChanged, this, &ColorPicker::changedRgb255);
     connect(ui->green255, &QSpinBox::valueChanged, this, &ColorPicker::changedRgb255);
@@ -92,6 +93,10 @@ ColorPicker::ColorPicker(QWidget *parent)
         QGuiApplication::clipboard()->setText(QString("hsl(%1, %2, %3, %4)").arg(ui->hslH->value()).arg(ui->hslS->value()).arg(ui->hslL->value()).arg(ui->hslA->value()));});
     connect(ui->copyHexARGBCSSButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(ui->hexARGBLineEdit->text());});
     connect(ui->copyHexRGBCSSButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(ui->hexRGBLineEdit->text());});
+    connect(ui->copyARGBQColorButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromString(\"%1\")").arg(ui->hexARGBLineEdit->text()));});
+    connect(ui->copyHexButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QString("QColor::fromString(\"%1\")").arg(ui->hexRGBLineEdit->text()));});
     connect(ui->pasteQColorButton, &QPushButton::clicked, this, &ColorPicker::pasteQColor);
     ui->colorWidget->setAutoFillBackground(true);
     updateColor();
