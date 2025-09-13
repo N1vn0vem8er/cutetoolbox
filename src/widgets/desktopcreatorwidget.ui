@@ -42,7 +42,11 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="name"/>
+          <widget class="QLineEdit" name="name">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_2">
@@ -52,7 +56,11 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="exec"/>
+          <widget class="QLineEdit" name="exec">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_3">
@@ -64,7 +72,11 @@
          <item row="3" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QLineEdit" name="icon"/>
+            <widget class="QLineEdit" name="icon">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QComboBox" name="selectIcon"/>
@@ -79,7 +91,11 @@
           </widget>
          </item>
          <item row="4" column="1">
-          <widget class="QLineEdit" name="type"/>
+          <widget class="QLineEdit" name="type">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="5" column="0">
           <widget class="QLabel" name="label_11">
@@ -89,7 +105,11 @@
           </widget>
          </item>
          <item row="5" column="1">
-          <widget class="QLineEdit" name="version"/>
+          <widget class="QLineEdit" name="version">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="6" column="0">
           <widget class="QLabel" name="label_4">
@@ -99,7 +119,11 @@
           </widget>
          </item>
          <item row="6" column="1">
-          <widget class="QLineEdit" name="genericName"/>
+          <widget class="QLineEdit" name="genericName">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="7" column="0">
           <widget class="QLabel" name="label_5">
@@ -109,7 +133,11 @@
           </widget>
          </item>
          <item row="7" column="1">
-          <widget class="QLineEdit" name="categories"/>
+          <widget class="QLineEdit" name="categories">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="8" column="0">
           <widget class="QLabel" name="label_6">
@@ -119,7 +147,11 @@
           </widget>
          </item>
          <item row="8" column="1">
-          <widget class="QLineEdit" name="comment"/>
+          <widget class="QLineEdit" name="comment">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="9" column="0">
           <widget class="QLabel" name="label_7">
@@ -129,7 +161,11 @@
           </widget>
          </item>
          <item row="9" column="1">
-          <widget class="QLineEdit" name="mimeTypes"/>
+          <widget class="QLineEdit" name="mimeTypes">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="10" column="0">
           <widget class="QLabel" name="label_8">
@@ -139,7 +175,11 @@
           </widget>
          </item>
          <item row="10" column="1">
-          <widget class="QLineEdit" name="keywords"/>
+          <widget class="QLineEdit" name="keywords">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="11" column="0">
           <widget class="QLabel" name="label_10">
@@ -149,7 +189,11 @@
           </widget>
          </item>
          <item row="11" column="1">
-          <widget class="QLineEdit" name="startupWMClass"/>
+          <widget class="QLineEdit" name="startupWMClass">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_13">
@@ -159,7 +203,11 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="tryexec"/>
+          <widget class="QLineEdit" name="tryexec">
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
