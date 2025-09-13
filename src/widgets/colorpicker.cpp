@@ -2,9 +2,8 @@
 #include "src/widgets/ui_colorpicker.h"
 #include <QColorDialog>
 #include <QMouseEvent>
+#include <qsettings.h>
 #include <qvalidator.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 #include <QClipboard>
 
 ColorPicker::ColorPicker(QWidget *parent)
@@ -12,6 +11,11 @@ ColorPicker::ColorPicker(QWidget *parent)
     , ui(new Ui::CustomWidget)
 {
     ui->setupUi(this);
+    QSettings settings("cutetoolbox");
+    ui->red255->setValue(settings.value("colorpicker.red", 0).toInt());
+    ui->green255->setValue(settings.value("colorpicker.green", 0).toInt());
+    ui->blue255->setValue(settings.value("colorpicker.blue", 0).toInt());
+    ui->alpha255->setValue(settings.value("colorpicker.alpha", 255).toInt());
     connect(ui->selectColorButton, &QPushButton::clicked, this, &ColorPicker::selectColor);
     connect(ui->red255, &QSpinBox::valueChanged, this, &ColorPicker::changedRgb255);
     connect(ui->green255, &QSpinBox::valueChanged, this, &ColorPicker::changedRgb255);
@@ -95,6 +99,11 @@ ColorPicker::ColorPicker(QWidget *parent)
 
 ColorPicker::~ColorPicker()
 {
+    QSettings settings("cutetoolbox");
+    settings.setValue("colorpicker.red", ui->red255->value());
+    settings.setValue("colorpicker.green", ui->green255->value());
+    settings.setValue("colorpicker.blue", ui->blue255->value());
+    settings.setValue("colorpicker.alpha", ui->alpha255->value());
     delete ui;
 }
 
