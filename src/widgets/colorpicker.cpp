@@ -13,7 +13,6 @@ ColorPicker::ColorPicker(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->selectColorButton, &QPushButton::clicked, this, &ColorPicker::selectColor);
-    connect(ui->selectFromScreenButton, &QPushButton::clicked, this, &ColorPicker::selectColorFromScreen);
     connect(ui->red255, &QSpinBox::valueChanged, this, &ColorPicker::changedRgb255);
     connect(ui->green255, &QSpinBox::valueChanged, this, &ColorPicker::changedRgb255);
     connect(ui->blue255, &QSpinBox::valueChanged, this, &ColorPicker::changedRgb255);
@@ -811,9 +810,4 @@ void ColorPicker::selectColor()
         ui->green255->setValue(color.green());
         ui->blue255->setValue(color.blue());
     }
-}
-
-void ColorPicker::selectColorFromScreen()
-{
-
 }

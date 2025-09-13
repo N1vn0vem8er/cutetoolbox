@@ -40,12 +40,8 @@
        <property name="text">
         <string>Select Color</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="selectFromScreenButton">
-       <property name="text">
-        <string>Select Color From Screen</string>
+       <property name="icon">
+        <iconset theme="QIcon::ThemeIcon::EditSelectAll"/>
        </property>
       </widget>
      </item>
