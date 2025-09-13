@@ -49,6 +49,7 @@
        <widget class="ChmodCalculatorWidget" name="chmodCalculator"/>
        <widget class="QrCodeGenerator" name="qrCodeGenerator"/>
        <widget class="DesktopCreatorWidget" name="desktopCreator"/>
+       <widget class="UserGeneratorWidget" name="userGeneratorWidget"/>
        <widget class="RegexWidget" name="regexWidget"/>
        <widget class="TextDiffWidget" name="textDiff"/>
        <widget class="MarkdownWidget" name="markdownWidget"/>
@@ -483,6 +484,12 @@
    <class>ColorPicker</class>
    <extends>QWidget</extends>
    <header>colorpicker.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>usergeneratorwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
