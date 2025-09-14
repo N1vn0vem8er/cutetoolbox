@@ -62,7 +62,11 @@
      <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLineEdit" name="format"/>
+        <widget class="QLineEdit" name="format">
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="copyButton">
@@ -87,19 +91,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="clearButton">
-         <property name="toolTip">
-          <string>Clear</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditClear"/>
          </property>
         </widget>
        </item>

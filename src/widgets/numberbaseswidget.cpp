@@ -14,22 +14,16 @@ NumberBasesWidget::NumberBasesWidget(QWidget *parent)
     connect(ui->utf8, &QLineEdit::textEdited, this, &NumberBasesWidget::fromUTF8);
     connect(ui->copyBinaryButton, &QPushButton::clicked, this, [&]{ui->binary->selectAll(); ui->binary->copy();});
     connect(ui->pasteBinaryButton, &QPushButton::clicked, ui->binary, &QLineEdit::paste);
-    connect(ui->clearBinaryButton, &QPushButton::clicked, ui->binary, &QLineEdit::clear);
     connect(ui->copyDecimalButton, &QPushButton::clicked, this, [&]{ui->decimal->selectAll(); ui->decimal->copy();});
     connect(ui->pasteDecimalButton, &QPushButton::clicked, ui->decimal, &QLineEdit::paste);
-    connect(ui->clearDecimalButton, &QPushButton::clicked, ui->decimal, &QLineEdit::clear);
     connect(ui->copyOctalButton, &QPushButton::clicked, this, [&]{ui->octal->selectAll(); ui->octal->copy();});
     connect(ui->pasteOctalButton, &QPushButton::clicked, ui->octal, &QLineEdit::paste);
-    connect(ui->clearOctalButton, &QPushButton::clicked, ui->octal, &QLineEdit::clear);
     connect(ui->copyHexButton, &QPushButton::clicked, this, [&]{ui->hexadecimal->selectAll(); ui->hexadecimal->copy();});
     connect(ui->pasteHexButton, &QPushButton::clicked, ui->hexadecimal, &QLineEdit::paste);
-    connect(ui->clearHexButton, &QPushButton::clicked, ui->hexadecimal, &QLineEdit::clear);
     connect(ui->copyASCIIButton, &QPushButton::clicked, this, [&]{ui->ascii->selectAll(); ui->ascii->copy();});
     connect(ui->pasteASCIIButton, &QPushButton::clicked, ui->ascii, &QLineEdit::paste);
-    connect(ui->clearASCIIButton, &QPushButton::clicked, ui->ascii, &QLineEdit::clear);
     connect(ui->copyUTF8Button, &QPushButton::clicked, this, [&]{ui->utf8->selectAll(); ui->utf8->copy();});
     connect(ui->pasteUTF8Button, &QPushButton::clicked, ui->utf8, &QLineEdit::paste);
-    connect(ui->clearUTF8Button, &QPushButton::clicked, ui->utf8, &QLineEdit::clear);
 }
 
 NumberBasesWidget::~NumberBasesWidget()

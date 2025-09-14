@@ -13,6 +13,7 @@ QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     QFormLayout* textUrlLayout = nullptr;
     textUrlLayout = new QFormLayout(textUrlWidget);
     textUrl = new QLineEdit(textUrlWidget);
+    textUrl->setClearButtonEnabled(true);
     textUrlLayout->addWidget(textUrl);
     textUrlWidget->setLayout(textUrlLayout);
     ui->stackedWidget->addWidget(textUrlWidget);
@@ -20,9 +21,11 @@ QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     wifiNetworkWidget = new QWidget(ui->stackedWidget);
     QFormLayout* wifiNetworkLayout = new QFormLayout(wifiNetworkWidget);
     networkName = new QLineEdit(wifiNetworkWidget);
+    networkName->setClearButtonEnabled(true);
     encryptionType = new QComboBox(wifiNetworkWidget);
     encryptionType->addItems({tr("WPA"), tr("WEP"), tr("No encryption")});
     networkPassword = new QLineEdit(wifiNetworkWidget);
+    networkPassword->setClearButtonEnabled(true);
     wifiNetworkLayout->addRow(tr("Network Name"), networkName);
     wifiNetworkLayout->addRow(tr("Network Encryption"), encryptionType);
     wifiNetworkLayout->addRow(tr("Network Password"), networkPassword);
@@ -32,9 +35,13 @@ QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     contactWidget = new QWidget(ui->stackedWidget);
     QFormLayout* contactLayout = new QFormLayout(contactWidget);
     firstName = new QLineEdit(contactWidget);
+    firstName->setClearButtonEnabled(true);
     lastName = new QLineEdit(contactWidget);
+    lastName->setClearButtonEnabled(true);
     phoneNumber = new QLineEdit(contactWidget);
+    phoneNumber->setClearButtonEnabled(true);
     email = new QLineEdit(contactWidget);
+    email->setClearButtonEnabled(true);
     contactLayout->addRow(tr("First Name"), firstName);
     contactLayout->addRow(tr("Last Name"), lastName);
     contactLayout->addRow(tr("Phone Number"), phoneNumber);

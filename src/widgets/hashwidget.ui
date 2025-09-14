@@ -34,6 +34,9 @@
        <property name="placeholderText">
         <string>Check for integrity</string>
        </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -43,16 +46,6 @@
        </property>
        <property name="icon">
         <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="clearIntegrityCheckButton">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset theme="QIcon::ThemeIcon::EditClear"/>
        </property>
       </widget>
      </item>

@@ -22,7 +22,6 @@ HashWidget::HashWidget(QWidget *parent)
     connect(ui->input, &QPlainTextEdit::textChanged, this, &HashWidget::calculateHash);
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &HashWidget::calculateHash);
     connect(ui->lineEdit, &QLineEdit::textChanged, this, &HashWidget::calculateHash);
-    connect(ui->clearIntegrityCheckButton, &QPushButton::clicked, ui->lineEdit, &QLineEdit::clear);
     connect(ui->pasteIntegrityCheckButton, &QPushButton::clicked, ui->lineEdit, &QLineEdit::paste);
     connect(ui->copyOutputButton, &QPushButton::clicked, this, [&]{ui->output->selectAll(); ui->output->copy();});
     ui->input->setReplaceTabWithSpacesEnabled(false);

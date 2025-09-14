@@ -15,7 +15,6 @@ RegexWidget::RegexWidget(QWidget *parent)
     connect(ui->openTextButton, &QPushButton::clicked, this, &RegexWidget::open);
     connect(ui->copyRegexButton, &QPushButton::clicked, this, [&]{ui->lineEdit->selectAll(); ui->lineEdit->copy();});
     connect(ui->pasteRegexButton, &QPushButton::clicked, ui->lineEdit, &QLineEdit::paste);
-    connect(ui->clearRegexButton, &QPushButton::clicked, ui->lineEdit, &QLineEdit::clear);
     connect(ui->copyTextButton, &QPushButton::clicked, ui->plainTextEdit, &CodeEditor::copyAll);
     connect(ui->pasteTextButton, &QPushButton::clicked, ui->plainTextEdit, &CodeEditor::paste);
     connect(ui->clearTextButton, &QPushButton::clicked, ui->plainTextEdit, &CodeEditor::clear);

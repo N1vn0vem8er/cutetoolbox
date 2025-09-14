@@ -36,7 +36,11 @@
      <item row="5" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QLineEdit" name="numeric"/>
+        <widget class="QLineEdit" name="numeric">
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="copyNumericButton">
@@ -64,25 +68,16 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="clearNumericButton">
-         <property name="toolTip">
-          <string>Clear</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditClear"/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_8">
        <item>
-        <widget class="QLineEdit" name="symbolic"/>
+        <widget class="QLineEdit" name="symbolic">
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="copySymbolicButton">
@@ -107,19 +102,6 @@
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::EditPaste"/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="clearSymbolicButton">
-         <property name="toolTip">
-          <string>Clear</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::EditClear"/>
          </property>
         </widget>
        </item>
