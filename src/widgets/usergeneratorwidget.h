@@ -24,6 +24,7 @@ public:
 
 private:
     Ui::UserGeneratorWidget *ui;
+    QString openedFile;
 
 private:
     QString getRandomQString(const QStringList& list) const;

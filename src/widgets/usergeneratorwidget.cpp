@@ -1,5 +1,6 @@
 #include "usergeneratorwidget.h"
 #include "src/widgets/ui_usergeneratorwidget.h"
+#include <QFileDialog>
 #include <QStandardItemModel>
 #include <qdialog.h>
 #include <random>
@@ -36,12 +37,82 @@ bool UserGeneratorWidget::canBasicEdit() const
 
 void UserGeneratorWidget::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->tableView->model());
+        QString out;
+        for(int col = 0; col < model->columnCount(); col++)
+        {
+            QString header = model->horizontalHeaderItem(col)->text();
+            header.replace("\"", "\"\"");
+            out += "\"" + header + "\"" + ",";
+        }
+        out += "\n";
+        for(int row = 0; row < model->rowCount(); row++)
+        {
+            for(int col = 0; col < model->columnCount(); col++)
+            {
+                QStandardItem* item = model->item(row, col);
+                if(item)
+                {
+                    QString text = item->text();
+                    text.replace("\"", "\"\"");
+                    out+="\"" + text + "\"" + ",";
+                }
+                else
+                    out+="";
+            }
+            out += "\n";
+        }
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(out.toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
 }
 
 void UserGeneratorWidget::saveAs()
 {
-
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->tableView->model());
+        QString out;
+        for(int col = 0; col < model->columnCount(); col++)
+        {
+            QString header = model->horizontalHeaderItem(col)->text();
+            header.replace("\"", "\"\"");
+            out += "\"" + header + "\"" + ",";
+        }
+        out += "\n";
+        for(int row = 0; row < model->rowCount(); row++)
+        {
+            for(int col = 0; col < model->columnCount(); col++)
+            {
+                QStandardItem* item = model->item(row, col);
+                if(item)
+                {
+                    QString text = item->text();
+                    text.replace("\"", "\"\"");
+                    out+="\"" + text + "\"" + ",";
+                }
+                else
+                    out+="";
+            }
+            out += "\n";
+        }
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(out.toUtf8());
+            openedFile = path;
+            file.close();
+        }
+    }
 }
 
 QString UserGeneratorWidget::getRandomQString(const QStringList &list) const
