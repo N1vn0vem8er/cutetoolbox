@@ -62,6 +62,10 @@ void UserGeneratorWidget::generate()
     {
         model->setHorizontalHeaderItem(index++, new QStandardItem("Last Name"));
     }
+    if(ui->usernameCheckBox->isChecked())
+    {
+        model->setHorizontalHeaderItem(index++, new QStandardItem("Username"));
+    }
     if(ui->emailCheckBox->isChecked())
     {
         model->setHorizontalHeaderItem(index++, new QStandardItem("Email"));
@@ -77,6 +81,15 @@ void UserGeneratorWidget::generate()
             row.append(new QStandardItem(getRandomQString(firstNames)));
         if(ui->lastNameCheckBox->isChecked())
             row.append(new QStandardItem(getRandomQString(lastNames)));
+        if(ui->usernameCheckBox->isChecked())
+        {
+            QString number;
+            for(int i=0; i<5; i++)
+            {
+                number += QString::number(random(generator));
+            }
+            row.append(new QStandardItem(getRandomQString(firstNames) + getRandomQString(lastNames) + number));
+        }
         if(ui->emailCheckBox->isChecked())
         {
             QString email;
