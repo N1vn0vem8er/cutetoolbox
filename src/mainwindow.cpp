@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     QSettings settings("cutetoolbox");
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("State").toByteArray());
+    ui->actionSide_menu->setChecked(settings.value("sideMenu", true).toBool());
+    ui->listWidget->setVisible(ui->actionSide_menu->isChecked());
     connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
     connect(ui->actionSide_menu, &QAction::triggered, this, [&]{ui->listWidget->setVisible(ui->actionSide_menu->isChecked());});
     connect(ui->actionAbout_Qt, &QAction::triggered, this, [&]{QMessageBox::aboutQt(this, tr("About Qt"));});
@@ -43,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
     currentToolLabel->setText("HTML Encoder");
     ui->statusbar->addPermanentWidget(currentToolLabel);
 
-    ui->actionSide_menu->setChecked(true);
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
     addMenuItem(tr("Coders and decoders"), QIcon(), false);
@@ -508,5 +509,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QSettings settings("cutetoolbox");
     settings.setValue("State", saveState());
     settings.setValue("Geometry", saveGeometry());
+    settings.setValue("sideMenu", ui->actionSide_menu->isChecked());
     QMainWindow::closeEvent(event);
 }
