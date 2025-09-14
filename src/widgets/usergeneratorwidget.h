@@ -28,6 +28,7 @@ private:
 
 private:
     QString getRandomQString(const QStringList& list) const;
+    QString toCsv() const;
 
 private slots:
     void generate();

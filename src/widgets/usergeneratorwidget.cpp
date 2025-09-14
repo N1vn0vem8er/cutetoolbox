@@ -4,6 +4,7 @@
 #include <QStandardItemModel>
 #include <qdialog.h>
 #include <random>
+#include <QClipboard>
 
 UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -18,6 +19,10 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     connect(ui->emailCheckBox, &QCheckBox::clicked, this, &UserGeneratorWidget::generate);
     connect(ui->usernameCheckBox, &QCheckBox::clicked, this, &UserGeneratorWidget::generate);
     connect(ui->phoneNumberCheckBox, &QCheckBox::clicked, this, &UserGeneratorWidget::generate);
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(toCsv());
+    });
+    connect(ui->saveAsButton, &QPushButton::clicked, this, &UserGeneratorWidget::saveAs);
 }
 
 UserGeneratorWidget::~UserGeneratorWidget()
@@ -39,35 +44,10 @@ void UserGeneratorWidget::save()
 {
     if(!openedFile.isEmpty())
     {
-        QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->tableView->model());
-        QString out;
-        for(int col = 0; col < model->columnCount(); col++)
-        {
-            QString header = model->horizontalHeaderItem(col)->text();
-            header.replace("\"", "\"\"");
-            out += "\"" + header + "\"" + ",";
-        }
-        out += "\n";
-        for(int row = 0; row < model->rowCount(); row++)
-        {
-            for(int col = 0; col < model->columnCount(); col++)
-            {
-                QStandardItem* item = model->item(row, col);
-                if(item)
-                {
-                    QString text = item->text();
-                    text.replace("\"", "\"\"");
-                    out+="\"" + text + "\"" + ",";
-                }
-                else
-                    out+="";
-            }
-            out += "\n";
-        }
         QFile file(openedFile);
         if(file.open(QIODevice::WriteOnly))
         {
-            file.write(out.toUtf8());
+            file.write(toCsv().toUtf8());
             file.close();
         }
     }
@@ -80,35 +60,11 @@ void UserGeneratorWidget::saveAs()
     const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
     if(!path.isEmpty())
     {
-        QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->tableView->model());
-        QString out;
-        for(int col = 0; col < model->columnCount(); col++)
-        {
-            QString header = model->horizontalHeaderItem(col)->text();
-            header.replace("\"", "\"\"");
-            out += "\"" + header + "\"" + ",";
-        }
-        out += "\n";
-        for(int row = 0; row < model->rowCount(); row++)
-        {
-            for(int col = 0; col < model->columnCount(); col++)
-            {
-                QStandardItem* item = model->item(row, col);
-                if(item)
-                {
-                    QString text = item->text();
-                    text.replace("\"", "\"\"");
-                    out+="\"" + text + "\"" + ",";
-                }
-                else
-                    out+="";
-            }
-            out += "\n";
-        }
+
         QFile file(path);
         if(file.open(QIODevice::WriteOnly))
         {
-            file.write(out.toUtf8());
+            file.write(toCsv().toUtf8());
             openedFile = path;
             file.close();
         }
@@ -121,6 +77,36 @@ QString UserGeneratorWidget::getRandomQString(const QStringList &list) const
     std::mt19937_64 generator(rg());
     std::uniform_int_distribution<int> random(0, list.length() - 1);
     return list[random(generator)];
+}
+
+QString UserGeneratorWidget::toCsv() const
+{
+    QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->tableView->model());
+    QString out;
+    for(int col = 0; col < model->columnCount(); col++)
+    {
+        QString header = model->horizontalHeaderItem(col)->text();
+        header.replace("\"", "\"\"");
+        out += "\"" + header + "\"" + ",";
+    }
+    out += "\n";
+    for(int row = 0; row < model->rowCount(); row++)
+    {
+        for(int col = 0; col < model->columnCount(); col++)
+        {
+            QStandardItem* item = model->item(row, col);
+            if(item)
+            {
+                QString text = item->text();
+                text.replace("\"", "\"\"");
+                out+="\"" + text + "\"" + ",";
+            }
+            else
+                out+="";
+        }
+        out += "\n";
+    }
+    return out;
 }
 
 void UserGeneratorWidget::generate()
