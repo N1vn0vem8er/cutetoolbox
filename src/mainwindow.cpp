@@ -81,6 +81,9 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Color Picker"), QIcon());
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
+
+    ui->stackedWidget->setCurrentIndex(settings.value("lastTool", 0).toInt());
+    currentToolLabel->setText(settings.value("lastTool.name").toString());
 }
 
 MainWindow::~MainWindow()
@@ -510,5 +513,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("State", saveState());
     settings.setValue("Geometry", saveGeometry());
     settings.setValue("sideMenu", ui->actionSide_menu->isChecked());
+    settings.setValue("lastTool", ui->stackedWidget->currentIndex());
+    settings.setValue("lastTool.name", currentToolLabel->text());
     QMainWindow::closeEvent(event);
 }
