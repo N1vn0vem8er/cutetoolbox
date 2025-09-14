@@ -79,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("QDateTime"), QIcon());
     addMenuItem(tr("Graphics"), QIcon(), false);
     addMenuItem(tr("Color Picker"), QIcon());
+    addMenuItem(tr("Image Format Converter"), QIcon());
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 

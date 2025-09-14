@@ -52,6 +52,8 @@ qt_add_executable(CuteToolBox
     src/widgets/customwidget.h src/widgets/customwidget.cpp
     src/widgets/colorpicker.h src/widgets/colorpicker.cpp src/widgets/colorpicker.ui
     src/widgets/usergeneratorwidget.h src/widgets/usergeneratorwidget.cpp src/widgets/usergeneratorwidget.ui
+    src/widgets/imageformatconverterwidget.h src/widgets/imageformatconverterwidget.cpp src/widgets/imageformatconverterwidget.ui
+    src/utils/imageview.h src/utils/imageview.cpp
 )
 
 include_directories(

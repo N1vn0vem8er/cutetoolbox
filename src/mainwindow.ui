@@ -59,6 +59,7 @@
        <widget class="NumberBasesWidget" name="numberBases"/>
        <widget class="QDateTimeConverterWidget" name="qDateTimeConverter"/>
        <widget class="ColorPicker" name="colorPicker"/>
+       <widget class="ImageFormatConverterWidget" name="imageFormatConverterWidget"/>
       </widget>
      </widget>
     </item>
@@ -490,6 +491,12 @@
    <class>UserGeneratorWidget</class>
    <extends>QWidget</extends>
    <header>usergeneratorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ImageFormatConverterWidget</class>
+   <extends>QWidget</extends>
+   <header>imageformatconverterwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
