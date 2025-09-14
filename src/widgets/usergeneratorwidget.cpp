@@ -11,6 +11,8 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     , ui(new Ui::UserGeneratorWidget)
 {
     ui->setupUi(this);
+    ui->phoneLength->setValue(10);
+    ui->quantitySpinBox->setValue(10);
     connect(ui->generateButton, &QPushButton::clicked, this, &UserGeneratorWidget::generate);
     connect(ui->quantitySpinBox, &QSpinBox::valueChanged, this, &UserGeneratorWidget::generate);
     connect(ui->phoneLength, &QSpinBox::valueChanged, this, &UserGeneratorWidget::generate);
@@ -152,7 +154,7 @@ void UserGeneratorWidget::generate()
             {
                 number += QString::number(random(generator));
             }
-            row.append(new QStandardItem(getRandomQString(firstNames) + getRandomQString(lastNames) + number));
+            row.append(new QStandardItem(getRandomQString(firstNames) + number));
         }
         if(ui->emailCheckBox->isChecked())
         {
