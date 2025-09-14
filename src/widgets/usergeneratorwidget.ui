@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>885</width>
+    <width>1076</width>
     <height>697</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="quantitySpinBox">
        <property name="suffix">
         <string/>
        </property>
@@ -47,39 +47,49 @@
       </spacer>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="firstNameCheckBox">
        <property name="text">
         <string>First Name</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="lastNameCheckBox">
        <property name="text">
         <string>Last Name</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_3">
+      <widget class="QCheckBox" name="usernameCheckBox">
        <property name="text">
         <string>Username</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_4">
+      <widget class="QCheckBox" name="emailCheckBox">
        <property name="text">
         <string>Email</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_5">
+      <widget class="QCheckBox" name="phoneNumberCheckBox">
        <property name="text">
         <string>Phone Number</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Phone Number Length</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="phoneLength"/>
      </item>
      <item>
       <widget class="QPushButton" name="saveAsButton">
