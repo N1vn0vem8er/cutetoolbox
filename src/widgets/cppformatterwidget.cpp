@@ -2,6 +2,8 @@
 #include "src/widget/ui_cppformatterwidget.h"
 
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 #include <QProcess>
 #include <qsettings.h>
 
@@ -93,27 +95,33 @@ void CppFormatterWidget::open()
 
 void CppFormatterWidget::increaseFontSize()
 {
-
+    ui->codeEditor->increaseFontSize();
 }
 
 void CppFormatterWidget::decreaseFontSize()
 {
-
+    ui->codeEditor->decreaseFontSize();
 }
 
 void CppFormatterWidget::setFontSize()
 {
-
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->codeEditor->setFontSize(size);
 }
 
 void CppFormatterWidget::resetFontSize()
 {
-
+    ui->codeEditor->setFontSize(10);
 }
 
 void CppFormatterWidget::setFont()
 {
-
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+        ui->codeEditor->setFont(font);
 }
 
 void CppFormatterWidget::format()
