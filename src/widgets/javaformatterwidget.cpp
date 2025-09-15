@@ -5,16 +5,26 @@
 #include <QFontDialog>
 #include <QInputDialog>
 #include <QProcess>
+#include <qsettings.h>
 
 JavaFormatterWidget::JavaFormatterWidget(QWidget *parent)
     : CustomWidget(parent)
     , ui(new Ui::JavaFormatterWidget)
 {
     ui->setupUi(this);
+    QSettings settings("cutetoolbox");
+    ui->styleComboBox->setCurrentIndex(settings.value("javaformatter.style", 0).toInt());
+    connect(ui->formatButton, &QPushButton::clicked, this, &JavaFormatterWidget::format);
+    connect(ui->openButton, &QPushButton::clicked, this, &JavaFormatterWidget::open);
+    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
+    connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
+    connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
 }
 
 JavaFormatterWidget::~JavaFormatterWidget()
 {
+    QSettings settings("cutetoolbox");
+    settings.setValue("javaformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }
 
