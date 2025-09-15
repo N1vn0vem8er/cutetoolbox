@@ -57,6 +57,7 @@ qt_add_executable(CuteToolBox
     src/widgets/contrastcheckerwidget.h src/widgets/contrastcheckerwidget.cpp src/widgets/contrastcheckerwidget.ui
     src/widgets/cppformatterwidget.h src/widgets/cppformatterwidget.cpp src/widgets/cppformatterwidget.ui
     src/widgets/csharpformatterwidget.h src/widgets/csharpformatterwidget.cpp src/widgets/csharpformatterwidget.ui
+    src/widgets/javaformatterwidget.h src/widgets/javaformatterwidget.cpp src/widgets/javaformatterwidget.ui
 )
 
 include_directories(
