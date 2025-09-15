@@ -47,41 +47,41 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
-    addMenuItem(tr("Coders and decoders"), QIcon(), false);
-    addMenuItem(tr("HTML Encoder"), QIcon());
-    addMenuItem(tr("Base64"), QIcon());
-    addMenuItem(tr("Url"), QIcon());
-    addMenuItem(tr("GZip"), QIcon());
-    addMenuItem(tr("Formatters"), QIcon(), false);
-    addMenuItem(tr("JSON"), QIcon());
-    addMenuItem(tr("SQL"), QIcon());
-    addMenuItem(tr("XML"), QIcon());
-    addMenuItem(tr("HTML"), QIcon());
-    addMenuItem(tr("C++"), QIcon());
-    addMenuItem(tr("Generators"), QIcon(), false);
-    addMenuItem(tr("Hash"), QIcon());
-    addMenuItem(tr("Lorem ipsum"), QIcon());
-    addMenuItem(tr("UUID"), QIcon());
-    addMenuItem(tr("Random Text"), QIcon());
-    addMenuItem(tr("Random Number"), QIcon());
-    addMenuItem(tr("Chmod Calculator"), QIcon());
-    addMenuItem(tr("Qr code"), QIcon());
-    addMenuItem(tr("Desktop Creator"), QIcon());
-    addMenuItem(tr("Users"), QIcon());
-    addMenuItem(tr("Text"), QIcon(), false);
-    addMenuItem(tr("Regex"), QIcon());
-    addMenuItem(tr("Text diff"), QIcon());
-    addMenuItem(tr("Markdown"), QIcon());
-    addMenuItem(tr("XML Scheme Validator"), QIcon());
-    addMenuItem(tr("Converters"), QIcon(), false);
-    addMenuItem(tr("JSON - YAML"), QIcon());
-    addMenuItem(tr("Timestamp"), QIcon());
-    addMenuItem(tr("Number Bases"), QIcon());
-    addMenuItem(tr("QDateTime"), QIcon());
-    addMenuItem(tr("Graphics"), QIcon(), false);
-    addMenuItem(tr("Color Picker"), QIcon());
-    addMenuItem(tr("Image Format Converter"), QIcon());
-    addMenuItem(tr("Contrast Checker"), QIcon());
+    addMenuItem(tr("Coders and decoders"), QIcon());
+    addMenuItem(tr("HTML Encoder"), QIcon(), new HTMLCoderDecoderWidget(ui->stackedWidget));
+    addMenuItem(tr("Base64"), QIcon(), new Base64CoderDecoderWidget(ui->stackedWidget));
+    addMenuItem(tr("Url"), QIcon(), new UrlCoderDecoderWidget(ui->stackedWidget));
+    addMenuItem(tr("GZip"), QIcon(), new GZipWidget(ui->stackedWidget));
+    addMenuItem(tr("Formatters"), QIcon());
+    addMenuItem(tr("JSON"), QIcon(), new JsonFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("SQL"), QIcon(), new SQLFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("XML"), QIcon(), new XMLFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("HTML"), QIcon(), new HTMLFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("C++"), QIcon(), new CppFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("Generators"), QIcon());
+    addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
+    addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));
+    addMenuItem(tr("UUID"), QIcon(), new UUIDGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Random Text"), QIcon(), new RandomTextGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Random Number"), QIcon(), new RandomNumberGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Chmod Calculator"), QIcon(), new ChmodCalculatorWidget(ui->stackedWidget));
+    addMenuItem(tr("Qr code"), QIcon(), new QrCodeGenerator(ui->stackedWidget));
+    addMenuItem(tr("Desktop Creator"), QIcon(), new DesktopCreatorWidget(ui->stackedWidget));
+    addMenuItem(tr("Users"), QIcon(), new UserGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Text"), QIcon());
+    addMenuItem(tr("Regex"), QIcon(), new RegexWidget(ui->stackedWidget));
+    addMenuItem(tr("Text diff"), QIcon(), new TextDiffWidget(ui->stackedWidget));
+    addMenuItem(tr("Markdown"), QIcon(), new MarkdownWidget(ui->stackedWidget));
+    addMenuItem(tr("XML Scheme Validator"), QIcon(), new XMLSchemeValidatorWidget(ui->stackedWidget));
+    addMenuItem(tr("Converters"), QIcon());
+    addMenuItem(tr("JSON - YAML"), QIcon(), new JsonYamlConverter(ui->stackedWidget));
+    addMenuItem(tr("Timestamp"), QIcon(), new TimestampWidget(ui->stackedWidget));
+    addMenuItem(tr("Number Bases"), QIcon(), new NumberBasesWidget(ui->stackedWidget));
+    addMenuItem(tr("QDateTime"), QIcon(), new QDateTimeConverterWidget(ui->stackedWidget));
+    addMenuItem(tr("Graphics"), QIcon());
+    addMenuItem(tr("Color Picker"), QIcon(), new ColorPicker(ui->stackedWidget));
+    addMenuItem(tr("Image Format Converter"), QIcon(), new ImageFormatConverterWidget(ui->stackedWidget));
+    addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 
@@ -128,14 +128,14 @@ void MainWindow::widgetChanged()
     }
 }
 
-void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enabled)
+void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidget *widget)
 {
     static int index = 0;
     QListWidgetItem* item = new QListWidgetItem(text, ui->listWidget);
     QAction* action = new QAction(text, ui->menuTools);
     action->setIcon(icon);
     item->setIcon(icon);
-    if(!enabled)
+    if(!widget)
     {
         item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
         currentMenu = new QMenu(text, ui->menuTools);
@@ -144,6 +144,7 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, bool enable
     }
     else
     {
+        ui->stackedWidget->addWidget(widget);
         int currentIndex = index;
         menuIndexMap[text] = index++;
         connect(action, &QAction::triggered, this, [this, currentIndex, text]{ui->stackedWidget->setCurrentIndex(currentIndex); currentToolLabel->setText(text);});

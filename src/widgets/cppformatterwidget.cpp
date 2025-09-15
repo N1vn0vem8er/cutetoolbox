@@ -1,6 +1,5 @@
 #include "cppformatterwidget.h"
 #include "src/widget/ui_cppformatterwidget.h"
-
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>

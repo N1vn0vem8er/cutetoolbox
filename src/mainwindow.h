@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "customwidget.h"
 #include <QMainWindow>
 #include <qlabel.h>
 
@@ -21,7 +22,7 @@ public:
 private slots:
     void showWidget(const QModelIndex &index);
     void widgetChanged();
-    void addMenuItem(const QString& text, const QIcon& icon, bool enabled = true);
+    void addMenuItem(const QString& text, const QIcon& icon, CustomWidget* widget = nullptr);
     void showAbout();
     void save();
     void saveAs();
