@@ -3,8 +3,8 @@ project(CuteToolBox LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport)
 find_package(LibXml2 REQUIRED)
-find_package(ZLIB)
-find_package(yaml-cpp)
+find_package(ZLIB REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 qt_standard_project_setup()
 
@@ -55,6 +55,7 @@ qt_add_executable(CuteToolBox
     src/widgets/imageformatconverterwidget.h src/widgets/imageformatconverterwidget.cpp src/widgets/imageformatconverterwidget.ui
     src/utils/imageview.h src/utils/imageview.cpp
     src/widgets/contrastcheckerwidget.h src/widgets/contrastcheckerwidget.cpp src/widgets/contrastcheckerwidget.ui
+    src/widgets/cppformatterwidget.h src/widgets/cppformatterwidget.cpp src/widgets/cppformatterwidget.ui
 )
 
 include_directories(

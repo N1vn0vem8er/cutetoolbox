@@ -41,6 +41,7 @@
        <widget class="SQLFormatterWidget" name="sqlFormatter"/>
        <widget class="XMLFormatterWidget" name="xmlFormatter"/>
        <widget class="HTMLFormatterWidget" name="htmlFormatter"/>
+       <widget class="CppFormatterWidget" name="cppFormatterWidget"/>
        <widget class="HashWidget" name="hashChecker"/>
        <widget class="LoremIpsumGenerator" name="loremIpsumGenerator"/>
        <widget class="UUIDGeneratorWidget" name="uuidGenerator"/>
@@ -504,6 +505,12 @@
    <class>ContrastCheckerWidget</class>
    <extends>QWidget</extends>
    <header>contrastcheckerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CppFormatterWidget</class>
+   <extends>QWidget</extends>
+   <header>cppformatterwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

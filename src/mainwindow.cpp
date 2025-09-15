@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("SQL"), QIcon());
     addMenuItem(tr("XML"), QIcon());
     addMenuItem(tr("HTML"), QIcon());
+    addMenuItem(tr("C++"), QIcon());
     addMenuItem(tr("Generators"), QIcon(), false);
     addMenuItem(tr("Hash"), QIcon());
     addMenuItem(tr("Lorem ipsum"), QIcon());
