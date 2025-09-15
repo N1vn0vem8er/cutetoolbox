@@ -58,7 +58,7 @@
      <item>
       <widget class="QPushButton" name="convertButton">
        <property name="toolTip">
-        <string>Convert</string>
+        <string>Convert image to format</string>
        </property>
        <property name="text">
         <string>Convert</string>
