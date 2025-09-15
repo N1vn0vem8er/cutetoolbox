@@ -22,6 +22,8 @@ private:
     Ui::ImageFormatConverterWidget *ui;
     QImage image;
 
+private slots:
+    void convert();
 };
 
 #endif // IMAGEFORMATCONVERTERWIDGET_H
