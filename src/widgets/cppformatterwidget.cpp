@@ -2,17 +2,26 @@
 #include "src/widget/ui_cppformatterwidget.h"
 
 #include <QProcess>
+#include <qsettings.h>
 
 CppFormatterWidget::CppFormatterWidget(QWidget *parent)
     : CustomWidget(parent)
     , ui(new Ui::CppFormatterWidget)
 {
     ui->setupUi(this);
+    QSettings settings("cutetoolbox");
+    ui->styleComboBox->setCurrentIndex(settings.value("cppformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &CppFormatterWidget::format);
+    connect(ui->openButton, &QPushButton::clicked, this, &CppFormatterWidget::open);
+    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
+    connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
+    connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
 }
 
 CppFormatterWidget::~CppFormatterWidget()
 {
+    QSettings settings("cutetoolbox");
+    settings.setValue("cppformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }
 
