@@ -30,6 +30,7 @@ public:
 
 private:
     Ui::CppFormatterWidget *ui;
+    QString openedFile;
 
 private slots:
     void format();

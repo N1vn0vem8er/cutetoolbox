@@ -1,6 +1,7 @@
 #include "cppformatterwidget.h"
 #include "src/widget/ui_cppformatterwidget.h"
 
+#include <QFileDialog>
 #include <QProcess>
 #include <qsettings.h>
 
@@ -47,17 +48,47 @@ bool CppFormatterWidget::canChangeFont() const
 
 void CppFormatterWidget::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+        }
+    }
+    else
+        saveAs();
 }
 
 void CppFormatterWidget::saveAs()
 {
-
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cpp *.h *.hpp");
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+            openedFile = path;
+        }
+    }
 }
 
 void CppFormatterWidget::open()
 {
-
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cpp *.h *.hpp");
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+        }
+    }
 }
 
 void CppFormatterWidget::increaseFontSize()
