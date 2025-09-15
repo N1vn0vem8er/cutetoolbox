@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Graphics"), QIcon(), false);
     addMenuItem(tr("Color Picker"), QIcon());
     addMenuItem(tr("Image Format Converter"), QIcon());
+    addMenuItem(tr("Contrast Checker"), QIcon());
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 

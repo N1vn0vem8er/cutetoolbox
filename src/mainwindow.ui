@@ -60,6 +60,7 @@
        <widget class="QDateTimeConverterWidget" name="qDateTimeConverter"/>
        <widget class="ColorPicker" name="colorPicker"/>
        <widget class="ImageFormatConverterWidget" name="imageFormatConverterWidget"/>
+       <widget class="ContrastCheckerWidget" name="contrastCheckerWidget"/>
       </widget>
      </widget>
     </item>
@@ -497,6 +498,12 @@
    <class>ImageFormatConverterWidget</class>
    <extends>QWidget</extends>
    <header>imageformatconverterwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ContrastCheckerWidget</class>
+   <extends>QWidget</extends>
+   <header>contrastcheckerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
