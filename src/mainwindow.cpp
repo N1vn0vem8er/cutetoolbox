@@ -2,6 +2,7 @@
 #include "csharpformatterwidget.h"
 #include "editor/codeeditor.h"
 #include "javaformatterwidget.h"
+#include "javascriptformatterwidget.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <qplaintextedit.h>
@@ -62,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("C++"), QIcon(), new CppFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("CSharp"), QIcon(), new CSharpFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Java"), QIcon(), new JavaFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("JavaScript"), QIcon(), new JavaScriptFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));

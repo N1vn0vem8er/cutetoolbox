@@ -130,7 +130,7 @@ void JavaScriptFormatterWidget::format()
     connect(process, &QProcess::readyReadStandardOutput, this, [this, process]{ui->codeEditor->setPlainText(process->readAllStandardOutput());});
     connect(process, &QProcess::readyReadStandardError, this, [this, process]{qDebug() << process->readAllStandardError();});
     connect(process, &QProcess::finished, process, &QProcess::deleteLater);
-    process->start("clang-format", {QString("--style=%1").arg(ui->styleComboBox->currentText()), "--assume-filename=some_file.java"});
+    process->start("clang-format", {QString("--style=%1").arg(ui->styleComboBox->currentText()), "--assume-filename=some_file.js"});
     process->waitForStarted();
     process->write(ui->codeEditor->toPlainText().toUtf8());
     process->closeWriteChannel();
