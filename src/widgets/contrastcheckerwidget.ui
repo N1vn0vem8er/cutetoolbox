@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="locale">
-   <locale language="English" country="Kenya"/>
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -58,6 +58,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="selectTextColorButton">
+       <property name="toolTip">
+        <string>Select text color</string>
+       </property>
        <property name="text">
         <string>Select</string>
        </property>
@@ -82,6 +85,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="selectBackgroundColorButton">
+       <property name="toolTip">
+        <string>Select background color</string>
+       </property>
        <property name="text">
         <string>Select</string>
        </property>
