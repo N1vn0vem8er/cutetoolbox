@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CppFormatterWidget</class>
- <widget class="QWidget" name="CppFormatterWidget">
+ <class>CSharpFormatterWidget</class>
+ <widget class="QWidget" name="CSharpFormatterWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
-    <height>703</height>
+    <width>974</width>
+    <height>627</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -146,11 +146,8 @@
    </item>
    <item>
     <widget class="CodeEditor" name="codeEditor">
-     <property name="locale">
-      <locale language="English" country="UnitedStates"/>
-     </property>
      <property name="placeholderText">
-      <string>Put C++ code here</string>
+      <string>Put CS code here</string>
      </property>
     </widget>
    </item>

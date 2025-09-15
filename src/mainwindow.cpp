@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "csharpformatterwidget.h"
 #include "editor/codeeditor.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
@@ -58,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("XML"), QIcon(), new XMLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("HTML"), QIcon(), new HTMLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("C++"), QIcon(), new CppFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("CSharp"), QIcon(), new CSharpFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));
