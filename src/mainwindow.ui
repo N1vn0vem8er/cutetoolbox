@@ -32,8 +32,7 @@
         <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
        </property>
       </widget>
-      <widget class="QStackedWidget" name="stackedWidget">
-      </widget>
+      <widget class="QStackedWidget" name="stackedWidget"/>
      </widget>
     </item>
    </layout>
@@ -293,8 +292,14 @@
    </property>
   </action>
   <action name="actionFull_screen">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::ViewFullscreen"/>
+   </property>
    <property name="text">
     <string>Full screen</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
    </property>
   </action>
   <action name="actionSide_menu">
@@ -309,182 +314,6 @@
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>JsonFormatterWidget</class>
-   <extends>QWidget</extends>
-   <header>jsonformatterwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SQLFormatterWidget</class>
-   <extends>QWidget</extends>
-   <header>sqlformatterwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>XMLFormatterWidget</class>
-   <extends>QWidget</extends>
-   <header>xmlformatterwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>HTMLFormatterWidget</class>
-   <extends>QWidget</extends>
-   <header>htmlformatterwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>HashWidget</class>
-   <extends>QWidget</extends>
-   <header>hashwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>LoremIpsumGenerator</class>
-   <extends>QWidget</extends>
-   <header>loremipsumgenerator.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>UUIDGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>uuidgeneratorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>RandomTextGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>randomtextgeneratorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QrCodeGenerator</class>
-   <extends>QWidget</extends>
-   <header>qrcodegenerator.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>RegexWidget</class>
-   <extends>QWidget</extends>
-   <header>regexwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TextDiffWidget</class>
-   <extends>QWidget</extends>
-   <header>textdiffwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MarkdownWidget</class>
-   <extends>QWidget</extends>
-   <header>markdownwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>XMLSchemeValidatorWidget</class>
-   <extends>QWidget</extends>
-   <header>xmlschemevalidatorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>HTMLCoderDecoderWidget</class>
-   <extends>QWidget</extends>
-   <header>htmlcoderdecoderwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Base64CoderDecoderWidget</class>
-   <extends>QWidget</extends>
-   <header>base64coderdecoderwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>UrlCoderDecoderWidget</class>
-   <extends>QWidget</extends>
-   <header>urlcoderdecoderwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>GZipWidget</class>
-   <extends>QWidget</extends>
-   <header>gzipwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>JsonYamlConverter</class>
-   <extends>QWidget</extends>
-   <header>jsonyamlconverter.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>RandomNumberGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>randomnumbergeneratorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ChmodCalculatorWidget</class>
-   <extends>QWidget</extends>
-   <header>chmodcalculatorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TimestampWidget</class>
-   <extends>QWidget</extends>
-   <header>timestampwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>NumberBasesWidget</class>
-   <extends>QWidget</extends>
-   <header>numberbaseswidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>QDateTimeConverterWidget</class>
-   <extends>QWidget</extends>
-   <header>qdatetimeconverterwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>DesktopCreatorWidget</class>
-   <extends>QWidget</extends>
-   <header>desktopcreatorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ColorPicker</class>
-   <extends>QWidget</extends>
-   <header>colorpicker.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>UserGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>usergeneratorwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ImageFormatConverterWidget</class>
-   <extends>QWidget</extends>
-   <header>imageformatconverterwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ContrastCheckerWidget</class>
-   <extends>QWidget</extends>
-   <header>contrastcheckerwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CppFormatterWidget</class>
-   <extends>QWidget</extends>
-   <header>cppformatterwidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../resources/resources.qrc"/>
  </resources>

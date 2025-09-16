@@ -1,12 +1,41 @@
 #include "mainwindow.h"
+#include "base64coderdecoderwidget.h"
+#include "chmodcalculatorwidget.h"
+#include "colorpicker.h"
+#include "contrastcheckerwidget.h"
+#include "cppformatterwidget.h"
 #include "csharpformatterwidget.h"
+#include "desktopcreatorwidget.h"
 #include "editor/codeeditor.h"
+#include "gzipwidget.h"
+#include "hashwidget.h"
+#include "htmlformatterwidget.h"
+#include "imageformatconverterwidget.h"
 #include "javaformatterwidget.h"
 #include "javascriptformatterwidget.h"
+#include "jsonformatterwidget.h"
+#include "jsonyamlconverter.h"
+#include "loremipsumgenerator.h"
+#include "markdownwidget.h"
+#include "numberbaseswidget.h"
+#include "qdatetimeconverterwidget.h"
+#include "qrcodegenerator.h"
+#include "randomnumbergeneratorwidget.h"
+#include "randomtextgeneratorwidget.h"
+#include "regexwidget.h"
+#include "sqlformatterwidget.h"
+#include "textdiffwidget.h"
+#include "timestampwidget.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <qplaintextedit.h>
 #include <qsettings.h>
+#include "htmlcoderdecoderwidget.h"
+#include "urlcoderdecoderwidget.h"
+#include "usergeneratorwidget.h"
+#include "uuidgeneratorwidget.h"
+#include "xmlformatterwidget.h"
+#include "xmlschemevalidatorwidget.h"
 
 #define VERSION "0.0.1"
 #define LICENSELINK "https://www.gnu.org/licenses/gpl-3.0.html"
@@ -43,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionRedo, &QAction::triggered, this, &MainWindow::redo);
     connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, &MainWindow::widgetChanged);
     connect(ui->actionExit, &QAction::triggered, qApp, &QApplication::closeAllWindows);
+    connect(ui->actionFull_screen, &QAction::triggered, this, [&]{if(isFullScreen()) showNormal(); else showFullScreen();});
 
     currentToolLabel = new QLabel(ui->statusbar);
     currentToolLabel->setText("HTML Encoder");
