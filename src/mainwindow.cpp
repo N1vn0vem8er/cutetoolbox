@@ -18,6 +18,7 @@
 #include "loremipsumgenerator.h"
 #include "markdownwidget.h"
 #include "numberbaseswidget.h"
+#include "objectivecformatterwidget.h"
 #include "qdatetimeconverterwidget.h"
 #include "qrcodegenerator.h"
 #include "randomnumbergeneratorwidget.h"
@@ -94,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("CSharp"), QIcon(), new CSharpFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Java"), QIcon(), new JavaFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("JavaScript"), QIcon(), new JavaScriptFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("Objective C"), QIcon(), new ObjectiveCFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));
