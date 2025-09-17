@@ -15,9 +15,25 @@ class ObjectiveCFormatterWidget : public CustomWidget
 public:
     explicit ObjectiveCFormatterWidget(QWidget *parent = nullptr);
     ~ObjectiveCFormatterWidget();
+    bool canOpenFiles() const override;
+    bool canSaveFiles() const override;
+    bool canBasicEdit() const override;
+    bool canChangeFont() const override;
+    void save() override;
+    void saveAs() override;
+    void open() override;
+    void increaseFontSize() override;
+    void decreaseFontSize() override;
+    void setFontSize() override;
+    void resetFontSize() override;
+    void setFont() override;
 
 private:
     Ui::ObjectiveCFormatterWidget *ui;
+    QString openedFile;
+
+private slots:
+    void format();
 };
 
 #endif // OBJECTIVECFORMATTERWIDGET_H

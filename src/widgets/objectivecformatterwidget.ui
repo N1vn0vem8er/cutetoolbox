@@ -27,7 +27,48 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="styleComboBox"/>
+      <widget class="QComboBox" name="styleComboBox">
+       <item>
+        <property name="text">
+         <string>LLVM</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>GNU</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Google</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Chromium</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Microsoft</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Mozilla</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>WebKit</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>File</string>
+        </property>
+       </item>
+      </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -50,7 +91,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="openButtton">
+      <widget class="QPushButton" name="openButton">
        <property name="toolTip">
         <string>Open</string>
        </property>
