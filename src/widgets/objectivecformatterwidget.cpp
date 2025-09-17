@@ -134,4 +134,3 @@ void ObjectiveCFormatterWidget::format()
     process->write(ui->codeEditor->toPlainText().toUtf8());
     process->closeWriteChannel();
 }
-
