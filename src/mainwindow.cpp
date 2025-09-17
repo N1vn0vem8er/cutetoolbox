@@ -38,6 +38,7 @@
 #include "urlcoderdecoderwidget.h"
 #include "usergeneratorwidget.h"
 #include "uuidgeneratorwidget.h"
+#include "verilogformatterwidget.h"
 #include "xmlformatterwidget.h"
 #include "xmlschemevalidatorwidget.h"
 
@@ -102,6 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Proto"), QIcon(), new ProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TableGen"), QIcon(), new TableGenFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TextProto"), QIcon(), new TextProtoFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("Verilog"), QIcon(), new VerilogFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));

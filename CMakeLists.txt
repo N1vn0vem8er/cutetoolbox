@@ -63,6 +63,7 @@ qt_add_executable(CuteToolBox
     src/widgets/protoformatterwidget.h src/widgets/protoformatterwidget.cpp src/widgets/protoformatterwidget.ui
     src/widgets/tablegenformatterwidget.h src/widgets/tablegenformatterwidget.cpp src/widgets/tablegenformatterwidget.ui
     src/widgets/textprotoformatterwidget.h src/widgets/textprotoformatterwidget.cpp src/widgets/textprotoformatterwidget.ui
+    src/widgets/verilogformatterwidget.h src/widgets/verilogformatterwidget.cpp src/widgets/verilogformatterwidget.ui
 )
 
 include_directories(
