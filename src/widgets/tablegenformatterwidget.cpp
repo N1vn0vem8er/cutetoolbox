@@ -64,7 +64,7 @@ void TableGenFormatterWidget::save()
 
 void TableGenFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.td");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -79,7 +79,7 @@ void TableGenFormatterWidget::saveAs()
 
 void TableGenFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.td");
     if(!path.isEmpty())
     {
         QFile file(path);

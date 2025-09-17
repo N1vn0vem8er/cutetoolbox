@@ -64,7 +64,7 @@ void TextProtoFormatterWidget::save()
 
 void TextProtoFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.textpb *.txtpb *.pb.txt *.textproto *.asciipb");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -79,7 +79,7 @@ void TextProtoFormatterWidget::saveAs()
 
 void TextProtoFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.textpb *.txtpb *.pb.txt *.textproto *.asciipb");
     if(!path.isEmpty())
     {
         QFile file(path);

@@ -65,7 +65,7 @@ void ProtoFormatterWidget::save()
 
 void ProtoFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.proto *.protodevel");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -80,7 +80,7 @@ void ProtoFormatterWidget::saveAs()
 
 void ProtoFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.proto *.protodevel");
     if(!path.isEmpty())
     {
         QFile file(path);

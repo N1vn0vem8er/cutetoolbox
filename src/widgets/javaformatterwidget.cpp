@@ -65,7 +65,7 @@ void JavaFormatterWidget::save()
 
 void JavaFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.java");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -80,7 +80,7 @@ void JavaFormatterWidget::saveAs()
 
 void JavaFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.java");
     if(!path.isEmpty())
     {
         QFile file(path);
