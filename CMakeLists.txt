@@ -61,6 +61,7 @@ qt_add_executable(CuteToolBox
     src/widgets/javascriptformatterwidget.h src/widgets/javascriptformatterwidget.cpp src/widgets/javascriptformatterwidget.ui
     src/widgets/objectivecformatterwidget.h src/widgets/objectivecformatterwidget.cpp src/widgets/objectivecformatterwidget.ui
     src/widgets/protoformatterwidget.h src/widgets/protoformatterwidget.cpp src/widgets/protoformatterwidget.ui
+    src/widgets/tablegenformatterwidget.h src/widgets/tablegenformatterwidget.cpp src/widgets/tablegenformatterwidget.ui
 )
 
 include_directories(

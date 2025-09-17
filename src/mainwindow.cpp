@@ -26,6 +26,7 @@
 #include "randomtextgeneratorwidget.h"
 #include "regexwidget.h"
 #include "sqlformatterwidget.h"
+#include "tablegenformatterwidget.h"
 #include "textdiffwidget.h"
 #include "timestampwidget.h"
 #include "ui_mainwindow.h"
@@ -98,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("JavaScript"), QIcon(), new JavaScriptFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Objective C"), QIcon(), new ObjectiveCFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Proto"), QIcon(), new ProtoFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("TableGen"), QIcon(), new TableGenFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));
