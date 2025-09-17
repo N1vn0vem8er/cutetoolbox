@@ -6,6 +6,7 @@ ChmodCalculatorWidget::ChmodCalculatorWidget(QWidget *parent)
     , ui(new Ui::ChmodCalculatorWidget)
 {
     ui->setupUi(this);
+    setName(tr("Chmod Calculator"));
     connect(ui->readOwner, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
     connect(ui->writeOwner, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);
     connect(ui->runOwner, &QCheckBox::clicked, this, &ChmodCalculatorWidget::generate);

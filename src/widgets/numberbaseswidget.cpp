@@ -6,6 +6,7 @@ NumberBasesWidget::NumberBasesWidget(QWidget *parent)
     , ui(new Ui::NumberBasesWidget)
 {
     ui->setupUi(this);
+    setName(tr("Number Bases Converter"));
     connect(ui->binary, &QLineEdit::textEdited, this, &NumberBasesWidget::fromBin);
     connect(ui->decimal, &QLineEdit::textEdited, this, &NumberBasesWidget::fromDec);
     connect(ui->octal, &QLineEdit::textEdited, this, &NumberBasesWidget::fromOct);

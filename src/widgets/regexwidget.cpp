@@ -10,6 +10,7 @@ RegexWidget::RegexWidget(QWidget *parent)
     , ui(new Ui::RegexWidget)
 {
     ui->setupUi(this);
+    setName(tr("Regex Tester"));
     connect(ui->lineEdit, &QLineEdit::textChanged, this, &RegexWidget::regex);
     connect(ui->plainTextEdit, &CodeEditor::textChanged, this, &RegexWidget::regex);
     connect(ui->openTextButton, &QPushButton::clicked, this, &RegexWidget::open);

@@ -11,6 +11,7 @@ HashWidget::HashWidget(QWidget *parent)
     , ui(new Ui::HashWidget)
 {
     ui->setupUi(this);
+    setName(tr("Hash Generator"));
     for(const auto& i : hashTypes)
     {
         ui->comboBox->addItem(i);

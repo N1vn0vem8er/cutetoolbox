@@ -12,6 +12,7 @@ DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
     , ui(new Ui::DesktopCreatorWidget)
 {
     ui->setupUi(this);
+    setName(tr("Desktop File Creator"));
     connect(ui->name, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);
     connect(ui->exec, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);
     connect(ui->tryexec, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);

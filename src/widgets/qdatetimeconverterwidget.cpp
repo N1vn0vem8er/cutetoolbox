@@ -6,6 +6,7 @@ QDateTimeConverterWidget::QDateTimeConverterWidget(QWidget *parent)
     , ui(new Ui::QDateTimeConverterWidget)
 {
     ui->setupUi(this);
+    setName(tr("QDateTime to QString Converter"));
     ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
     connect(ui->format, &QLineEdit::textChanged, this, &QDateTimeConverterWidget::format);
     connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &QDateTimeConverterWidget::format);

@@ -1,6 +1,5 @@
 #include "htmlcoderdecoderwidget.h"
 #include "src/widgets/ui_htmlcoderdecoderwidget.h"
-
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
@@ -10,6 +9,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     , ui(new Ui::HTMLCoderDecoderWidget)
 {
     ui->setupUi(this);
+    setName(tr("Html Encoder/Decoder"));
     connect(ui->html, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::encode);
     connect(ui->encoded, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::decode);
     connect(ui->openHtmlButton, &QPushButton::clicked, this, [&]{

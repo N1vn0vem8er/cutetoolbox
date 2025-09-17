@@ -10,6 +10,7 @@ HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
     , ui(new Ui::HTMLFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("HTML Formatter"));
     ui->spinBox->setValue(4);
     syntaxHighlighter = new HTMLSyntaxHighlighter(ui->codeEditor->document());
     connect(ui->formatButton, &QPushButton::clicked, this, &HTMLFormatterWidget::format);

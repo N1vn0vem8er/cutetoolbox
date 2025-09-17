@@ -9,6 +9,7 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
     , ui(new Ui::UrlCoderDecoderWidget)
 {
     ui->setupUi(this);
+    setName(tr("Url Encoder/Decoder"));
     ui->spacePlusButton->setChecked(true);
     connect(ui->decoded, &QPlainTextEdit::textChanged, this, &UrlCoderDecoderWidget::encode);
     connect(ui->encoded, &QPlainTextEdit::textChanged, this, &UrlCoderDecoderWidget::decode);

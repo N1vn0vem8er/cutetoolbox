@@ -8,6 +8,7 @@ ContrastCheckerWidget::ContrastCheckerWidget(QWidget *parent)
     , ui(new Ui::ContrastCheckerWidget)
 {
     ui->setupUi(this);
+    setName(tr("Contrast Checker"));
     connect(ui->selectBackgroundColorButton, &QPushButton::clicked, this, &ContrastCheckerWidget::selectBackgroundColor);
     connect(ui->selectTextColorButton, &QPushButton::clicked, this, &ContrastCheckerWidget::selectTextColor);
     ui->textColorWidget->setAutoFillBackground(true);

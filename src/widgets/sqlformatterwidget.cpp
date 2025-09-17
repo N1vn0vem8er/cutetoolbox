@@ -10,6 +10,7 @@ SQLFormatterWidget::SQLFormatterWidget(QWidget *parent)
     , ui(new Ui::SQLFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("SQL Formatter"));
     connect(ui->formatButton, &QPushButton::clicked, this, &SQLFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &SQLFormatterWidget::open);
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);

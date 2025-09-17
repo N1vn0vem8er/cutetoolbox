@@ -6,6 +6,7 @@ TimestampWidget::TimestampWidget(QWidget *parent)
     , ui(new Ui::TimestampWidget)
 {
     ui->setupUi(this);
+    setName(tr("Timestamp Converter"));
     connect(ui->refreshTimeButton, &QPushButton::clicked, this, &TimestampWidget::updateTimestamp);
     connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &TimestampWidget::setDateTime);
     connect(ui->dateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, [&]{ui->currentTime->setText(QString::number(ui->dateTimeEdit->dateTime().currentSecsSinceEpoch()));});

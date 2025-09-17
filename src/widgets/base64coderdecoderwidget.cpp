@@ -9,6 +9,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
     , ui(new Ui::Base64CoderDecoderWidget)
 {
     ui->setupUi(this);
+    setName(tr("Base64 Encoder/Decoder"));
     connect(ui->text, &QPlainTextEdit::textChanged, this, &Base64CoderDecoderWidget::encode);
     connect(ui->base64, &QPlainTextEdit::textChanged, this, &Base64CoderDecoderWidget::decode);
     connect(ui->openInputButton, &QPushButton::clicked, this, [&]{

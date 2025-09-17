@@ -11,6 +11,7 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     , ui(new Ui::UserGeneratorWidget)
 {
     ui->setupUi(this);
+    setName(tr("User Generator"));
     ui->phoneLength->setValue(10);
     ui->quantitySpinBox->setValue(10);
     connect(ui->generateButton, &QPushButton::clicked, this, &UserGeneratorWidget::generate);

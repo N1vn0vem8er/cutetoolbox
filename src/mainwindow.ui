@@ -32,7 +32,27 @@
         <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
        </property>
       </widget>
-      <widget class="QStackedWidget" name="stackedWidget"/>
+      <widget class="QWidget" name="widget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="toolNameLabel">
+          <property name="styleSheet">
+           <string notr="true">font-size: 20px;
+font-weight: bold;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QStackedWidget" name="stackedWidget"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

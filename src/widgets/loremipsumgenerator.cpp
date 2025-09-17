@@ -10,6 +10,7 @@ LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
     , ui(new Ui::LoremIpsumGenerator)
 {
     ui->setupUi(this);
+    setName(tr("Lorem Ipsum Generator"));
     ui->spinBox->setValue(5);
     connect(ui->spinBox, &QSpinBox::valueChanged, this, &LoremIpsumGenerator::generate);
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &LoremIpsumGenerator::generate);

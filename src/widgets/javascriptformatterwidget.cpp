@@ -12,6 +12,7 @@ JavaScriptFormatterWidget::JavaScriptFormatterWidget(QWidget *parent)
     , ui(new Ui::JavaScriptFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("JavaScript Formatter"));
     QSettings settings("cutetoolbox");
     ui->styleComboBox->setCurrentIndex(settings.value("javascriptformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &JavaScriptFormatterWidget::format);

@@ -12,6 +12,7 @@ XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
     , ui(new Ui::XMLSchemeValidatorWidget)
 {
     ui->setupUi(this);
+    setName(tr("XML Scheme Validator"));
     infoLabel = new QLabel(ui->infoLabelContainer);
     QVBoxLayout* layout = new QVBoxLayout(ui->infoLabelContainer);
     layout->addWidget(infoLabel);

@@ -12,6 +12,7 @@ VerilogFormatterWidget::VerilogFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     QSettings settings("cutetoolbox");
+    setName(tr("Verilog Formatter"));
     ui->styleComboBox->setCurrentIndex(settings.value("verilogformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &VerilogFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &VerilogFormatterWidget::open);

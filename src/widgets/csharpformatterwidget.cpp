@@ -11,6 +11,7 @@ CSharpFormatterWidget::CSharpFormatterWidget(QWidget *parent)
     , ui(new Ui::CSharpFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("C# Formatter"));
     QSettings settings("cutetoolbox");
     ui->styleComboBox->setCurrentIndex(settings.value("csformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &CSharpFormatterWidget::format);

@@ -133,6 +133,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->stackedWidget->setCurrentIndex(settings.value("lastTool", 0).toInt());
     currentToolLabel->setText(settings.value("lastTool.name").toString());
+    ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
 }
 
 MainWindow::~MainWindow()
@@ -147,6 +148,7 @@ void MainWindow::showWidget(const QModelIndex& index)
     {
         currentToolLabel->setText(text);
         ui->stackedWidget->setCurrentIndex(menuIndexMap.value(text));
+        ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
     }
 }
 
@@ -193,7 +195,11 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
         ui->stackedWidget->addWidget(widget);
         int currentIndex = index;
         menuIndexMap[text] = index++;
-        connect(action, &QAction::triggered, this, [this, currentIndex, text]{ui->stackedWidget->setCurrentIndex(currentIndex); currentToolLabel->setText(text);});
+        connect(action, &QAction::triggered, this, [this, currentIndex, text]{
+            ui->stackedWidget->setCurrentIndex(currentIndex);
+            currentToolLabel->setText(text);
+            ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->widget(currentIndex))->getName());
+        });
         if(currentMenu)
             currentMenu->addAction(action);
     }

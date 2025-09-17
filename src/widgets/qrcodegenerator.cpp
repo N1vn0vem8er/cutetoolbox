@@ -9,6 +9,7 @@ QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     , ui(new Ui::QrCodeGenerator)
 {
     ui->setupUi(this);
+    setName(tr("Qr Code Generator"));
     textUrlWidget = new QWidget(ui->stackedWidget);
     QFormLayout* textUrlLayout = nullptr;
     textUrlLayout = new QFormLayout(textUrlWidget);

@@ -11,6 +11,7 @@ CppFormatterWidget::CppFormatterWidget(QWidget *parent)
     , ui(new Ui::CppFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("C++ Formatter"));
     QSettings settings("cutetoolbox");
     ui->styleComboBox->setCurrentIndex(settings.value("cppformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &CppFormatterWidget::format);

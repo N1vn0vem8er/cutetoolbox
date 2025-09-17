@@ -8,6 +8,7 @@ RandomNumberGeneratorWidget::RandomNumberGeneratorWidget(QWidget *parent)
     , ui(new Ui::RandomNumberGeneratorWidget)
 {
     ui->setupUi(this);
+    setName(tr("Random Number Generator"));
     ui->maxSpinBox->setMaximum(std::numeric_limits<int>::max());
     ui->minSpinBox->setMaximum(std::numeric_limits<int>::max());
     ui->maxSpinBox->setMinimum(std::numeric_limits<int>::min());

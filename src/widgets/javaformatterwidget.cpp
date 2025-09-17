@@ -12,6 +12,7 @@ JavaFormatterWidget::JavaFormatterWidget(QWidget *parent)
     , ui(new Ui::JavaFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("Java Formatter"));
     QSettings settings("cutetoolbox");
     ui->styleComboBox->setCurrentIndex(settings.value("javaformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &JavaFormatterWidget::format);

@@ -11,6 +11,7 @@ RandomTextGeneratorWidget::RandomTextGeneratorWidget(QWidget *parent)
     , ui(new Ui::RandomTextGeneratorWidget)
 {
     ui->setupUi(this);
+    setName(tr("Random Text Generator"));
     ui->spinBox->setValue(50);
     ui->upperCheckBox->setChecked(true);
     ui->lowerCheckBox->setChecked(true);

@@ -10,6 +10,7 @@ GZipWidget::GZipWidget(QWidget *parent)
     , ui(new Ui::GZipWidget)
 {
     ui->setupUi(this);
+    setName(tr("GZip Compresser and Decompresser"));
     connect(ui->input, &QPlainTextEdit::textChanged, this, &GZipWidget::compress);
     connect(ui->output, &QPlainTextEdit::textChanged, this, &GZipWidget::decompress);
     connect(ui->clearTextButton, &QPushButton::clicked, ui->input, &QPlainTextEdit::clear);

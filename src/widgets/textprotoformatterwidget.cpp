@@ -11,6 +11,7 @@ TextProtoFormatterWidget::TextProtoFormatterWidget(QWidget *parent)
     , ui(new Ui::TextProtoFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("TextProto Formatter"));
     QSettings settings("cutetoolbox");
     ui->styleComboBox->setCurrentIndex(settings.value("textprotoformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &TextProtoFormatterWidget::format);

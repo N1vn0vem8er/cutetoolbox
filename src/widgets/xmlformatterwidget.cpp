@@ -10,6 +10,7 @@ XMLFormatterWidget::XMLFormatterWidget(QWidget *parent)
     , ui(new Ui::XMLFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("XML Formatter"));
     ui->spinBox->setValue(4);
     connect(ui->formatButton, &QPushButton::clicked, this, &XMLFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);

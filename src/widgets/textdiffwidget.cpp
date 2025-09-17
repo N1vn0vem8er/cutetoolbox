@@ -11,6 +11,7 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
     , ui(new Ui::TextDiffWidget)
 {
     ui->setupUi(this);
+    setName(tr("Text Diff"));
     connect(ui->oldText, &CodeEditor::textChanged, this, &TextDiffWidget::showDiff);
     connect(ui->newText, &CodeEditor::textChanged, this, &TextDiffWidget::showDiff);
     connect(ui->pasteOldButton, &QPushButton::clicked, ui->oldText, &CodeEditor::paste);

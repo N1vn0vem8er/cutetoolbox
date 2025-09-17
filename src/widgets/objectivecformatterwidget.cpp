@@ -11,6 +11,7 @@ ObjectiveCFormatterWidget::ObjectiveCFormatterWidget(QWidget *parent)
     , ui(new Ui::ObjectiveCFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("Objective C Formatter"));
     QSettings settings("cutetoolbox");
     ui->styleComboBox->setCurrentIndex(settings.value("objectivecformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &ObjectiveCFormatterWidget::format);

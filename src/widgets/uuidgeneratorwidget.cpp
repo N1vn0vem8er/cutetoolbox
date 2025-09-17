@@ -10,6 +10,7 @@ UUIDGeneratorWidget::UUIDGeneratorWidget(QWidget *parent)
     , ui(new Ui::UUIDGeneratorWidget)
 {
     ui->setupUi(this);
+    setName(tr("UUID Generator"));
     ui->spinBox->setValue(5);
     ui->dataLabel->setVisible(false);
     ui->dataLineEdit->setVisible(false);

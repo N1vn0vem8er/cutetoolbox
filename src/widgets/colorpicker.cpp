@@ -11,6 +11,7 @@ ColorPicker::ColorPicker(QWidget *parent)
     , ui(new Ui::CustomWidget)
 {
     ui->setupUi(this);
+    setName(tr("Color Picker"));
     QSettings settings("cutetoolbox");
     ui->red255->setValue(settings.value("colorpicker.red", 0).toInt());
     ui->green255->setValue(settings.value("colorpicker.green", 0).toInt());

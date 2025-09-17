@@ -15,6 +15,7 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
     , ui(new Ui::JsonYamlConverter)
 {
     ui->setupUi(this);
+    setName(tr("JSON - YAML Converter"));
     ui->yamlIndentations->setValue(4);
     connect(ui->json, &QPlainTextEdit::textChanged, this, &JsonYamlConverter::jsonToYaml);
     connect(ui->yaml, &QPlainTextEdit::textChanged, this, &JsonYamlConverter::yamlToJson);

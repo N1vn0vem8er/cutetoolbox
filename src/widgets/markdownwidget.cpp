@@ -15,6 +15,7 @@ MarkdownWidget::MarkdownWidget(QWidget *parent)
     , ui(new Ui::MarkdownWidget)
 {
     ui->setupUi(this);
+    setName(tr("Markdown Preview"));
     syntaxHighlighter = new MarkdownSyntaxHighlighter(ui->editor->document());
     ui->preview->setContextMenuPolicy(Qt::NoContextMenu);
     PreviewPage* page = new PreviewPage(this);

@@ -11,6 +11,7 @@ TableGenFormatterWidget::TableGenFormatterWidget(QWidget *parent)
     , ui(new Ui::TableGenFormatterWidget)
 {
     ui->setupUi(this);
+    setName(tr("TableGen Formatter"));
     QSettings settings("cutetoolbox");
     ui->styleComboBox->setCurrentIndex(settings.value("tabelgenformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &TableGenFormatterWidget::format);

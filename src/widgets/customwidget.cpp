@@ -4,6 +4,11 @@ CustomWidget::CustomWidget(QWidget *parent)
     : QWidget{parent}
 {}
 
+CustomWidget::CustomWidget(const QString &name, QWidget *parent)
+{
+    this->name = name;
+}
+
 bool CustomWidget::canOpenFiles() const
 {
     return false;
@@ -62,4 +67,14 @@ void CustomWidget::resetFontSize()
 void CustomWidget::setFont()
 {
 
+}
+
+QString CustomWidget::getName() const
+{
+    return name;
+}
+
+void CustomWidget::setName(const QString &name)
+{
+    this->name = name;
 }

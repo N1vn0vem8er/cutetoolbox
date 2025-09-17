@@ -8,6 +8,7 @@ ImageFormatConverterWidget::ImageFormatConverterWidget(QWidget *parent)
     , ui(new Ui::ImageFormatConverterWidget)
 {
     ui->setupUi(this);
+    setName(tr("Image Format Converter"));
     connect(ui->openButton, &QPushButton::clicked, this, &ImageFormatConverterWidget::open);
     connect(ui->convertButton, &QPushButton::clicked, this, &ImageFormatConverterWidget::convert);
     for(const QString& i : QImageWriter::supportedImageFormats())
