@@ -28,6 +28,7 @@
 #include "sqlformatterwidget.h"
 #include "tablegenformatterwidget.h"
 #include "textdiffwidget.h"
+#include "textprotoformatterwidget.h"
 #include "timestampwidget.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
@@ -100,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Objective C"), QIcon(), new ObjectiveCFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Proto"), QIcon(), new ProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TableGen"), QIcon(), new TableGenFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("TextProto"), QIcon(), new TextProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));

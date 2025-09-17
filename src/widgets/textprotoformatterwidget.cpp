@@ -1,53 +1,53 @@
-#include "tablegenformatterwidget.h"
-#include "src/widgets/ui_tablegenformatterwidget.h"
+#include "textprotoformatterwidget.h"
+#include "src/widgets/ui_textprotoformatterwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
 #include <qprocess.h>
 #include <qsettings.h>
 
-TableGenFormatterWidget::TableGenFormatterWidget(QWidget *parent)
+TextProtoFormatterWidget::TextProtoFormatterWidget(QWidget *parent)
     : CustomWidget(parent)
-    , ui(new Ui::TableGenFormatterWidget)
+    , ui(new Ui::TextProtoFormatterWidget)
 {
     ui->setupUi(this);
     QSettings settings("cutetoolbox");
-    ui->styleComboBox->setCurrentIndex(settings.value("tabelgenformatter.style", 0).toInt());
-    connect(ui->formatButton, &QPushButton::clicked, this, &TableGenFormatterWidget::format);
-    connect(ui->openButton, &QPushButton::clicked, this, &TableGenFormatterWidget::open);
+    ui->styleComboBox->setCurrentIndex(settings.value("textprotoformatter.style", 0).toInt());
+    connect(ui->formatButton, &QPushButton::clicked, this, &TextProtoFormatterWidget::format);
+    connect(ui->openButton, &QPushButton::clicked, this, &TextProtoFormatterWidget::open);
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
 }
 
-TableGenFormatterWidget::~TableGenFormatterWidget()
+TextProtoFormatterWidget::~TextProtoFormatterWidget()
 {
     QSettings settings("cutetoolbox");
-    settings.setValue("tabelgenformatter.style", ui->styleComboBox->currentIndex());
+    settings.setValue("textprotoformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }
 
-bool TableGenFormatterWidget::canOpenFiles() const
+bool TextProtoFormatterWidget::canOpenFiles() const
 {
     return true;
 }
 
-bool TableGenFormatterWidget::canSaveFiles() const
+bool TextProtoFormatterWidget::canSaveFiles() const
 {
     return true;
 }
 
-bool TableGenFormatterWidget::canBasicEdit() const
+bool TextProtoFormatterWidget::canBasicEdit() const
 {
     return true;
 }
 
-bool TableGenFormatterWidget::canChangeFont() const
+bool TextProtoFormatterWidget::canChangeFont() const
 {
     return true;
 }
 
-void TableGenFormatterWidget::save()
+void TextProtoFormatterWidget::save()
 {
     if(!openedFile.isEmpty())
     {
@@ -62,7 +62,7 @@ void TableGenFormatterWidget::save()
         saveAs();
 }
 
-void TableGenFormatterWidget::saveAs()
+void TextProtoFormatterWidget::saveAs()
 {
     const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cs");
     if(!path.isEmpty())
@@ -77,7 +77,7 @@ void TableGenFormatterWidget::saveAs()
     }
 }
 
-void TableGenFormatterWidget::open()
+void TextProtoFormatterWidget::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cs");
     if(!path.isEmpty())
@@ -92,17 +92,17 @@ void TableGenFormatterWidget::open()
     }
 }
 
-void TableGenFormatterWidget::increaseFontSize()
+void TextProtoFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();
 }
 
-void TableGenFormatterWidget::decreaseFontSize()
+void TextProtoFormatterWidget::decreaseFontSize()
 {
     ui->codeEditor->decreaseFontSize();
 }
 
-void TableGenFormatterWidget::setFontSize()
+void TextProtoFormatterWidget::setFontSize()
 {
     bool ok;
     const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
@@ -110,12 +110,12 @@ void TableGenFormatterWidget::setFontSize()
         ui->codeEditor->setFontSize(size);
 }
 
-void TableGenFormatterWidget::resetFontSize()
+void TextProtoFormatterWidget::resetFontSize()
 {
     ui->codeEditor->setFontSize(10);
 }
 
-void TableGenFormatterWidget::setFont()
+void TextProtoFormatterWidget::setFont()
 {
     bool ok;
     const QFont font = QFontDialog::getFont(&ok, this);
@@ -123,13 +123,13 @@ void TableGenFormatterWidget::setFont()
         ui->codeEditor->setFont(font);
 }
 
-void TableGenFormatterWidget::format()
+void TextProtoFormatterWidget::format()
 {
     QProcess* process = new QProcess(this);
     connect(process, &QProcess::readyReadStandardOutput, this, [this, process]{ui->codeEditor->setPlainText(process->readAllStandardOutput());});
     connect(process, &QProcess::readyReadStandardError, this, [this, process]{qDebug() << process->readAllStandardError();});
     connect(process, &QProcess::finished, process, &QProcess::deleteLater);
-    process->start("clang-format", {QString("--style=%1").arg(ui->styleComboBox->currentText()), "--assume-filename=some_file.td"});
+    process->start("clang-format", {QString("--style=%1").arg(ui->styleComboBox->currentText()), "--assume-filename=some_file.textpb"});
     process->waitForStarted();
     process->write(ui->codeEditor->toPlainText().toUtf8());
     process->closeWriteChannel();
