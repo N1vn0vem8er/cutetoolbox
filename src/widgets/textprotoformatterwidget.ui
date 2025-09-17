@@ -145,7 +145,11 @@
     </layout>
    </item>
    <item>
-    <widget class="CodeEditor" name="codeEditor"/>
+    <widget class="CodeEditor" name="codeEditor">
+     <property name="placeholderText">
+      <string>Put TextProto here</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
