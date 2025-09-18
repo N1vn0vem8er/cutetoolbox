@@ -33,7 +33,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_11">
+      <widget class="QPushButton" name="addColorButton">
        <property name="text">
         <string>Add Color</string>
        </property>
@@ -43,7 +43,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_32">
+      <widget class="QPushButton" name="generateColorsButton">
        <property name="text">
         <string>Generate</string>
        </property>
@@ -73,10 +73,10 @@
         <widget class="QWidget" name="horizontalWidget" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QWidget" name="widget_2" native="true">
+           <widget class="QWidget" name="color1Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QPushButton" name="pushButton_33">
+              <widget class="QPushButton" name="selectColor1Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -86,7 +86,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_22">
+              <widget class="QPushButton" name="copyHexColor1Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -96,7 +96,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_8">
+              <widget class="QPushButton" name="lockColor1Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -115,7 +115,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_12">
+              <widget class="QPushButton" name="removeColor1Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -141,10 +141,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_8" native="true">
+           <widget class="QWidget" name="color2Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_11">
              <item>
-              <widget class="QPushButton" name="pushButton_34">
+              <widget class="QPushButton" name="selectColor2Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -154,7 +154,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_23">
+              <widget class="QPushButton" name="copyHexColor2Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -164,7 +164,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="lockColor2Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -183,7 +183,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_13">
+              <widget class="QPushButton" name="removeColor2Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -209,10 +209,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_6" native="true">
+           <widget class="QWidget" name="color3Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
-              <widget class="QPushButton" name="pushButton_35">
+              <widget class="QPushButton" name="selectColor3Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -222,7 +222,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_24">
+              <widget class="QPushButton" name="copyHexColor3Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -232,7 +232,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="lockColor3Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -251,7 +251,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_14">
+              <widget class="QPushButton" name="removeColor3Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -277,10 +277,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_4" native="true">
+           <widget class="QWidget" name="color4Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_9">
              <item>
-              <widget class="QPushButton" name="pushButton_36">
+              <widget class="QPushButton" name="selectColor4Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -290,7 +290,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_25">
+              <widget class="QPushButton" name="copyHexColor4Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -300,7 +300,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_6">
+              <widget class="QPushButton" name="lockColor4Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -319,7 +319,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_15">
+              <widget class="QPushButton" name="removeColor4Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -345,10 +345,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_7" native="true">
+           <widget class="QWidget" name="color5Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
-              <widget class="QPushButton" name="pushButton_37">
+              <widget class="QPushButton" name="selectColor5Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -358,7 +358,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_26">
+              <widget class="QPushButton" name="copyHexColor5Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -368,7 +368,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="lockColor5Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -387,7 +387,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_16">
+              <widget class="QPushButton" name="removeColor5Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -413,10 +413,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_5" native="true">
+           <widget class="QWidget" name="color6Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_7">
              <item>
-              <widget class="QPushButton" name="pushButton_38">
+              <widget class="QPushButton" name="selectColor6Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -426,7 +426,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_27">
+              <widget class="QPushButton" name="copyHexColor6Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -436,7 +436,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_5">
+              <widget class="QPushButton" name="lockColor6Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -455,7 +455,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_17">
+              <widget class="QPushButton" name="removeColorButton">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -481,10 +481,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_10" native="true">
+           <widget class="QWidget" name="color7Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
-              <widget class="QPushButton" name="pushButton_39">
+              <widget class="QPushButton" name="selectColor7Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -494,7 +494,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_28">
+              <widget class="QPushButton" name="copyHexColor7Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -504,7 +504,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_9">
+              <widget class="QPushButton" name="lockColor7Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -523,7 +523,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_18">
+              <widget class="QPushButton" name="removeColor7Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -549,10 +549,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_9" native="true">
+           <widget class="QWidget" name="color8Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <item>
-              <widget class="QPushButton" name="pushButton_40">
+              <widget class="QPushButton" name="selectColor8Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -562,7 +562,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_29">
+              <widget class="QPushButton" name="copyHexColor8Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -572,7 +572,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="lockColor8Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -591,7 +591,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_19">
+              <widget class="QPushButton" name="removeColor8Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -617,10 +617,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_3" native="true">
+           <widget class="QWidget" name="color9Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
-              <widget class="QPushButton" name="pushButton_41">
+              <widget class="QPushButton" name="selectHexColor9Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -630,7 +630,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_30">
+              <widget class="QPushButton" name="copyHexColor9Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -640,7 +640,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_7">
+              <widget class="QPushButton" name="lockColor9Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -659,7 +659,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_20">
+              <widget class="QPushButton" name="removeColor9Button">
                <property name="text">
                 <string>Remove</string>
                </property>
@@ -685,10 +685,10 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget" native="true">
+           <widget class="QWidget" name="color10Widget" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
-              <widget class="QPushButton" name="pushButton_42">
+              <widget class="QPushButton" name="selectColor10Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -698,7 +698,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_31">
+              <widget class="QPushButton" name="copyHexColor10Button">
                <property name="text">
                 <string>Copy Hex</string>
                </property>
@@ -708,7 +708,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_10">
+              <widget class="QPushButton" name="lockColor10Button">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -727,7 +727,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_21">
+              <widget class="QPushButton" name="removeColor10Button">
                <property name="text">
                 <string>Remove</string>
                </property>
