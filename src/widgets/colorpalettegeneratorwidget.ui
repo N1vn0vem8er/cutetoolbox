@@ -74,6 +74,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QWidget" name="color1Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <widget class="QPushButton" name="selectColor1Button">
@@ -142,6 +145,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color2Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_11">
              <item>
               <widget class="QPushButton" name="selectColor2Button">
@@ -210,6 +216,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color3Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
               <widget class="QPushButton" name="selectColor3Button">
@@ -278,6 +287,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color4Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_9">
              <item>
               <widget class="QPushButton" name="selectColor4Button">
@@ -346,6 +358,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color5Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
               <widget class="QPushButton" name="selectColor5Button">
@@ -414,6 +429,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color6Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_7">
              <item>
               <widget class="QPushButton" name="selectColor6Button">
@@ -482,6 +500,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color7Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
               <widget class="QPushButton" name="selectColor7Button">
@@ -550,6 +571,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color8Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <item>
               <widget class="QPushButton" name="selectColor8Button">
@@ -618,9 +642,12 @@
           </item>
           <item>
            <widget class="QWidget" name="color9Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
-              <widget class="QPushButton" name="selectHexColor9Button">
+              <widget class="QPushButton" name="selectColor9Button">
                <property name="text">
                 <string>Select Color</string>
                </property>
@@ -686,6 +713,9 @@
           </item>
           <item>
            <widget class="QWidget" name="color10Widget" native="true">
+            <property name="autoFillBackground">
+             <bool>true</bool>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
               <widget class="QPushButton" name="selectColor10Button">
