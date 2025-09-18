@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "base64coderdecoderwidget.h"
 #include "chmodcalculatorwidget.h"
+#include "colorpalettegeneratorwidget.h"
 #include "colorpicker.h"
 #include "contrastcheckerwidget.h"
 #include "cppformatterwidget.h"
@@ -124,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Color Picker"), QIcon(), new ColorPicker(ui->stackedWidget));
     addMenuItem(tr("Image Format Converter"), QIcon(), new ImageFormatConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
+    addMenuItem(tr("Color Palette"), QIcon(), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 
