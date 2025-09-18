@@ -1,5 +1,6 @@
 #include "colorcardwidget.h"
 #include "ui_colorcardwidget.h"
+#include <qcolordialog.h>
 #include <qpainter.h>
 #include <qstyleoption.h>
 
@@ -10,6 +11,7 @@ ColorCardWidget::ColorCardWidget(QWidget *parent)
     ui->setupUi(this);
     connect(ui->lockButton, &QPushButton::clicked, this, &ColorCardWidget::lockOrUnlock);
     connect(ui->removeButton, &QPushButton::clicked, this, &ColorCardWidget::remove);
+    connect(ui->selectButton, &QPushButton::clicked, this, &ColorCardWidget::selectColor);
 }
 
 ColorCardWidget::~ColorCardWidget()
@@ -36,7 +38,7 @@ bool ColorCardWidget::isLocked() const
 
 void ColorCardWidget::update()
 {
-    setStyleSheet(QString("background-color: %1;").arg(color.name(QColor::HexArgb)));
+    setStyleSheet(QString("ColorCardWidget {background-color: %1;} QPushButton {background-color: %1;}").arg(color.name(QColor::HexArgb)));
 }
 
 void ColorCardWidget::lockOrUnlock()
@@ -56,6 +58,15 @@ void ColorCardWidget::lockOrUnlock()
 void ColorCardWidget::remove()
 {
     emit removeColor(this);
+}
+
+void ColorCardWidget::selectColor()
+{
+    const QColor color = QColorDialog::getColor(this->color, parentWidget(), tr("Select Color"));
+    if(color.isValid())
+        setColor(color);
+    else
+        update();
 }
 
 void ColorCardWidget::paintEvent(QPaintEvent *event)

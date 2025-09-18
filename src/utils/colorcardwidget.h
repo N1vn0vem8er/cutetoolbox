@@ -27,6 +27,7 @@ private:
 private slots:
     void lockOrUnlock();
     void remove();
+    void selectColor();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
