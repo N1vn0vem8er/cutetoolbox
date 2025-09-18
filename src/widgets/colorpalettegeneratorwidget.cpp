@@ -17,16 +17,10 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
     connect(&watcher, &QFutureWatcher<QList<QPair<bool, QColor>>>::started, this, [&]{setUiEnabled(false);});
     connect(&watcher, &QFutureWatcher<QList<QPair<bool, QColor>>>::finished, this, [&]{
         QList<QPair<bool, QColor>> results = watcher.result();
-        for(int i=0;i<results.length();i++)
+        for(int i = 0; i<results.length(); i++)
         {
-            if(!results[i].first)
-                colorWidgets[i]->setBadContrast(true);
-            else
-            {
-                if(!colorWidgets[i]->isLocked())
-                    colorWidgets[i]->setColor(results[i].second);
-                colorWidgets[i]->setBadContrast(false);
-            }
+            colorWidgets[i]->setColor(results[i].second);
+            colorWidgets[i]->setBadContrast(results[i].first);
         }
         setUiEnabled(true);
     });
@@ -110,36 +104,41 @@ void ColorPaletteGeneratorWidget::generate()
     {
         float minContrastRatio = ui->contrastSpinBox->value();
         int maxAttempts = ui->attemptsSpinBox->value();
-        QFuture<QList<QPair<bool, QColor>>> future = QtConcurrent::run([minContrastRatio, maxAttempts, this]{
         QList<QPair<bool, QColor>> colors;
-        for(int i = 0; i < colorWidgets.length(); i++)
+        for(ColorCardWidget* widget : std::as_const(colorWidgets))
         {
-            bool suitableColorFound = false;
-            int attempts = 0;
-            QColor newColor;
-            while(!suitableColorFound && attempts < maxAttempts)
-            {
-                newColor = generateRandomColor();
-                bool hasSufficientContrast = true;
-                for(int j = 0; j < colorWidgets.length(); j++)
-                {
-                    if(i == j) continue;
-                    if(calculateContrastRatio(newColor, colorWidgets[j]->getColor()) < minContrastRatio)
-                    {
-                        hasSufficientContrast = false;
-                        break;
-                    }
-                }
-                if(hasSufficientContrast)
-                {
-                    suitableColorFound = true;
-                    break;
-                }
-                attempts++;
-            }
-            colors.append(QPair(suitableColorFound, newColor));
+            colors.append(QPair(widget->isLocked(), widget->getColor()));
         }
-        return colors;
+        QFuture<QList<QPair<bool, QColor>>> future = QtConcurrent::run([minContrastRatio, maxAttempts, colors, this]{
+            QList<QPair<bool, QColor>> ret = colors;
+            for(int i = 0; i < ret.length(); i++)
+            {
+                bool suitableColorFound = false;
+                int attempts = 0;
+                QColor newColor;
+                while(!suitableColorFound && attempts < maxAttempts)
+                {
+                    newColor = generateRandomColor();
+                    bool hasSufficientContrast = true;
+                    for(int j = 0; j < ret.length(); j++)
+                    {
+                        if(i == j) continue;
+                        if(calculateContrastRatio(newColor, ret[j].second) < minContrastRatio)
+                        {
+                            hasSufficientContrast = false;
+                            break;
+                        }
+                    }
+                    if(hasSufficientContrast)
+                    {
+                        suitableColorFound = true;
+                    }
+                    attempts++;
+                }
+                ret[i].second = newColor;
+                ret[i].first = !suitableColorFound;
+            }
+            return ret;
         });
         watcher.setFuture(future);
     }
