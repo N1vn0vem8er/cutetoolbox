@@ -1,6 +1,7 @@
 #ifndef COLORPALETTEGENERATORWIDGET_H
 #define COLORPALETTEGENERATORWIDGET_H
 
+#include "colorcardwidget.h"
 #include "customwidget.h"
 #include <QWidget>
 
@@ -18,18 +19,15 @@ public:
 
 private:
     Ui::ColorPaletteGeneratorWidget *ui;
-    QList<QColor> colors {QColor(), QColor(), QColor(), QColor(), QColor(), QColor(), QColor(), QColor(), QColor(), QColor()};
-    QList<bool> lockedColors {false, false, false, false, false, false, false, false, false, false};
-    int colorsCount {0};
+    QList<ColorCardWidget*> colorWidgets;
 
 private:
-    void setColorsVisible(int count);
-    void setColorsInvisible();
     QColor generateRandomColor() const;
-    void updateColors();
 
 private slots:
     void generate();
+    void colorRemoved(ColorCardWidget* widget);
+    void addColor();
 };
 
 #endif // COLORPALETTEGENERATORWIDGET_H
