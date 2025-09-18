@@ -18,11 +18,14 @@ public:
     QColor getColor() const;
     bool isLocked() const;
     void update();
+    bool isBadContrast() const;
+    void setBadContrast(bool newBadContrast);
 
 private:
     Ui::ColorCardWidget *ui;
     QColor color;
     bool locked {false};
+    bool badContrast {false};
 
 private slots:
     void lockOrUnlock();

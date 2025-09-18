@@ -33,6 +33,40 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="attemptsLabel">
+       <property name="text">
+        <string>Attempts</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="attemptsSpinBox">
+       <property name="maximum">
+        <number>9999999</number>
+       </property>
+       <property name="value">
+        <number>1000</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="contrastSpinBox">
+       <property name="maximum">
+        <double>21.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkContrastCheckBox">
+       <property name="text">
+        <string>Check Contrast</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="addColorButton">
        <property name="text">
         <string>Add Color</string>
@@ -65,7 +99,7 @@
         <x>0</x>
         <y>0</y>
         <width>1175</width>
-        <height>675</height>
+        <height>674</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">

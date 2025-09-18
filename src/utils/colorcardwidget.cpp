@@ -12,6 +12,7 @@ ColorCardWidget::ColorCardWidget(QWidget *parent)
     connect(ui->lockButton, &QPushButton::clicked, this, &ColorCardWidget::lockOrUnlock);
     connect(ui->removeButton, &QPushButton::clicked, this, &ColorCardWidget::remove);
     connect(ui->selectButton, &QPushButton::clicked, this, &ColorCardWidget::selectColor);
+    ui->insufficientContrastLabel->setVisible(false);
 }
 
 ColorCardWidget::~ColorCardWidget()
@@ -39,6 +40,20 @@ bool ColorCardWidget::isLocked() const
 void ColorCardWidget::update()
 {
     setStyleSheet(QString("ColorCardWidget {background-color: %1;} QPushButton {background-color: %1;}").arg(color.name(QColor::HexArgb)));
+}
+
+bool ColorCardWidget::isBadContrast() const
+{
+    return badContrast;
+}
+
+void ColorCardWidget::setBadContrast(bool newBadContrast)
+{
+    badContrast = newBadContrast;
+    if(badContrast)
+        ui->insufficientContrastLabel->setVisible(true);
+    else
+        ui->insufficientContrastLabel->setVisible(false);
 }
 
 void ColorCardWidget::lockOrUnlock()

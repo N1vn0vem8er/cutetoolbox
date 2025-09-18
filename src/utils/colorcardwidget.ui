@@ -61,6 +61,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="insufficientContrastLabel">
+     <property name="text">
+      <string>Insufficient Contrast</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
