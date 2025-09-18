@@ -2,6 +2,7 @@
 #include "colorcardwidget.h"
 #include "src/widgets/ui_colorpalettegeneratorwidget.h"
 #include <QColorDialog>
+#include <qtconcurrentrun.h>
 #include <random>
 
 ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
@@ -13,6 +14,22 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
     connect(ui->generateColorsButton, &QPushButton::clicked, this, &ColorPaletteGeneratorWidget::generate);
     connect(ui->addColorButton, &QPushButton::clicked, this, &ColorPaletteGeneratorWidget::addColor);
     connect(ui->checkContrastCheckBox, &QCheckBox::clicked, this, &ColorPaletteGeneratorWidget::onContrastCheckPressed);
+    connect(&watcher, &QFutureWatcher<QList<QPair<bool, QColor>>>::started, this, [&]{setUiEnabled(false);});
+    connect(&watcher, &QFutureWatcher<QList<QPair<bool, QColor>>>::finished, this, [&]{
+        QList<QPair<bool, QColor>> results = watcher.result();
+        for(int i=0;i<results.length();i++)
+        {
+            if(!results[i].first)
+                colorWidgets[i]->setBadContrast(true);
+            else
+            {
+                if(!colorWidgets[i]->isLocked())
+                    colorWidgets[i]->setColor(results[i].second);
+                colorWidgets[i]->setBadContrast(false);
+            }
+        }
+        setUiEnabled(true);
+    });
     ui->contrastSpinBox->setVisible(false);
     ui->attemptsLabel->setVisible(false);
     ui->attemptsSpinBox->setVisible(false);
@@ -67,6 +84,19 @@ float ColorPaletteGeneratorWidget::calculateContrastRatio(const QColor &color1, 
     return (l1 + 0.05) / (l2 + 0.05);
 }
 
+void ColorPaletteGeneratorWidget::setUiEnabled(bool val)
+{
+    ui->generateColorsButton->setEnabled(val);
+    ui->addColorButton->setEnabled(val);
+    ui->checkContrastCheckBox->setEnabled(val);
+    ui->attemptsSpinBox->setEnabled(val);
+    ui->contrastSpinBox->setEnabled(val);
+    for(ColorCardWidget* i : std::as_const(colorWidgets))
+    {
+        i->setEnabled(val);
+    }
+}
+
 void ColorPaletteGeneratorWidget::generate()
 {
     if(!ui->checkContrastCheckBox->isChecked())
@@ -80,6 +110,8 @@ void ColorPaletteGeneratorWidget::generate()
     {
         float minContrastRatio = ui->contrastSpinBox->value();
         int maxAttempts = ui->attemptsSpinBox->value();
+        QFuture<QList<QPair<bool, QColor>>> future = QtConcurrent::run([minContrastRatio, maxAttempts, this]{
+        QList<QPair<bool, QColor>> colors;
         for(int i = 0; i < colorWidgets.length(); i++)
         {
             bool suitableColorFound = false;
@@ -89,7 +121,7 @@ void ColorPaletteGeneratorWidget::generate()
             {
                 newColor = generateRandomColor();
                 bool hasSufficientContrast = true;
-                for(int j = 0; j < colorWidgets.length(); ++j)
+                for(int j = 0; j < colorWidgets.length(); j++)
                 {
                     if(i == j) continue;
                     if(calculateContrastRatio(newColor, colorWidgets[j]->getColor()) < minContrastRatio)
@@ -101,18 +133,15 @@ void ColorPaletteGeneratorWidget::generate()
                 if(hasSufficientContrast)
                 {
                     suitableColorFound = true;
+                    break;
                 }
                 attempts++;
             }
-            if(!suitableColorFound)
-                colorWidgets[i]->setBadContrast(true);
-            else
-            {
-                if(!colorWidgets[i]->isLocked())
-                    colorWidgets[i]->setColor(newColor);
-                colorWidgets[i]->setBadContrast(false);
-            }
+            colors.append(QPair(suitableColorFound, newColor));
         }
+        return colors;
+        });
+        watcher.setFuture(future);
     }
 }
 

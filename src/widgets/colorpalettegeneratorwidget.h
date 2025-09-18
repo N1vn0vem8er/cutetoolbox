@@ -21,11 +21,12 @@ public:
 private:
     Ui::ColorPaletteGeneratorWidget *ui;
     QList<ColorCardWidget*> colorWidgets;
-    QFutureWatcher<QString> watcher;
+    QFutureWatcher<QList<QPair<bool, QColor>>> watcher;
 
 private:
     QColor generateRandomColor() const;
     float calculateContrastRatio(const QColor& color1, const QColor& color2);
+    void setUiEnabled(bool val);
 
 private slots:
     void generate();
