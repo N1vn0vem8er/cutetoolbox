@@ -44,7 +44,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QMap<QString, int> menuIndexMap;
-    QLabel* currentToolLabel {nullptr};
     QMenu* currentMenu {nullptr};
 
 protected:

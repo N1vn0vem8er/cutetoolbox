@@ -79,10 +79,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionExit, &QAction::triggered, qApp, &QApplication::closeAllWindows);
     connect(ui->actionFull_screen, &QAction::triggered, this, [&]{if(isFullScreen()) showNormal(); else showFullScreen();});
 
-    currentToolLabel = new QLabel(ui->statusbar);
-    currentToolLabel->setText("HTML Encoder");
-    ui->statusbar->addPermanentWidget(currentToolLabel);
-
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
     addMenuItem(tr("Coders and decoders"), QIcon());
@@ -132,7 +128,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->menuTools->addMenu(currentMenu);
 
     ui->stackedWidget->setCurrentIndex(settings.value("lastTool", 0).toInt());
-    currentToolLabel->setText(settings.value("lastTool.name").toString());
     ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
 }
 
@@ -146,7 +141,6 @@ void MainWindow::showWidget(const QModelIndex& index)
     const QString text = index.data().toString();
     if(menuIndexMap.contains(text))
     {
-        currentToolLabel->setText(text);
         ui->stackedWidget->setCurrentIndex(menuIndexMap.value(text));
         ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
     }
@@ -197,7 +191,6 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
         menuIndexMap[text] = index++;
         connect(action, &QAction::triggered, this, [this, currentIndex, text]{
             ui->stackedWidget->setCurrentIndex(currentIndex);
-            currentToolLabel->setText(text);
             ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->widget(currentIndex))->getName());
         });
         if(currentMenu)
@@ -570,6 +563,5 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("Geometry", saveGeometry());
     settings.setValue("sideMenu", ui->actionSide_menu->isChecked());
     settings.setValue("lastTool", ui->stackedWidget->currentIndex());
-    settings.setValue("lastTool.name", currentToolLabel->text());
     QMainWindow::closeEvent(event);
 }
