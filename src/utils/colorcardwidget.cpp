@@ -1,5 +1,6 @@
 #include "colorcardwidget.h"
 #include "ui_colorcardwidget.h"
+#include <qclipboard.h>
 #include <qcolordialog.h>
 #include <qpainter.h>
 #include <qstyleoption.h>
@@ -12,6 +13,7 @@ ColorCardWidget::ColorCardWidget(QWidget *parent)
     connect(ui->lockButton, &QPushButton::clicked, this, &ColorCardWidget::lockOrUnlock);
     connect(ui->removeButton, &QPushButton::clicked, this, &ColorCardWidget::remove);
     connect(ui->selectButton, &QPushButton::clicked, this, &ColorCardWidget::selectColor);
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(color.name());});
     ui->insufficientContrastLabel->setVisible(false);
 }
 

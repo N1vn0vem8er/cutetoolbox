@@ -90,6 +90,9 @@
    </item>
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="frameShape">
+      <enum>QFrame::Shape::NoFrame</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -98,8 +101,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1175</width>
-        <height>674</height>
+        <width>1177</width>
+        <height>676</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
