@@ -2,6 +2,7 @@
 #include "colorcardwidget.h"
 #include "src/widgets/ui_colorpalettegeneratorwidget.h"
 #include <QColorDialog>
+#include <QSettings>
 #include <qtconcurrentrun.h>
 #include <random>
 
@@ -11,6 +12,11 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Color Palette Generator"));
+    QSettings settings("cutetoolbox");
+    int colorCount = settings.value("colorpalettegenerator.color.count", 5).toInt();
+    ui->checkContrastCheckBox->setChecked(settings.value("colorpalettegenerator.checkContrast", false).toBool());
+    ui->contrastSpinBox->setValue(settings.value("colorpalettegenerator.contrast", 0.0).toFloat());
+    ui->attemptsSpinBox->setValue(settings.value("colorpalettegenerator.attempts", 1000).toInt());
     connect(ui->generateColorsButton, &QPushButton::clicked, this, &ColorPaletteGeneratorWidget::generate);
     connect(ui->addColorButton, &QPushButton::clicked, this, &ColorPaletteGeneratorWidget::addColor);
     connect(ui->checkContrastCheckBox, &QCheckBox::clicked, this, &ColorPaletteGeneratorWidget::onContrastCheckPressed);
@@ -27,7 +33,7 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
     ui->contrastSpinBox->setVisible(false);
     ui->attemptsLabel->setVisible(false);
     ui->attemptsSpinBox->setVisible(false);
-    for(int i=0; i<5; i++)
+    for(int i=0; i<colorCount; i++)
     {
         addColor();
     }
@@ -35,6 +41,11 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
 
 ColorPaletteGeneratorWidget::~ColorPaletteGeneratorWidget()
 {
+    QSettings settings("cutetoolbox");
+    settings.setValue("colorpalettegenerator.color.count", colorWidgets.length());
+    settings.setValue("colorpalettegenerator.checkContrast", ui->checkContrastCheckBox->isChecked());
+    settings.setValue("colorpalettegenerator.contrast", ui->contrastSpinBox->value());
+    settings.setValue("colorpalettegenerator.attempts", ui->attemptsSpinBox->value());
     delete ui;
 }
 
