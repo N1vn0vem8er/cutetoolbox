@@ -1,4 +1,5 @@
 #include "tablegenformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_tablegenformatterwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
@@ -12,7 +13,7 @@ TableGenFormatterWidget::TableGenFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("TableGen Formatter"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->styleComboBox->setCurrentIndex(settings.value("tabelgenformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &TableGenFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &TableGenFormatterWidget::open);
@@ -23,7 +24,7 @@ TableGenFormatterWidget::TableGenFormatterWidget(QWidget *parent)
 
 TableGenFormatterWidget::~TableGenFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("tabelgenformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }

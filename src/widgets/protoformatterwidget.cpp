@@ -1,6 +1,6 @@
 #include "protoformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_protoformatterwidget.h"
-
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
@@ -13,7 +13,7 @@ ProtoFormatterWidget::ProtoFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Proto Formatter"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->styleComboBox->setCurrentIndex(settings.value("protoformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &ProtoFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &ProtoFormatterWidget::open);
@@ -24,7 +24,7 @@ ProtoFormatterWidget::ProtoFormatterWidget(QWidget *parent)
 
 ProtoFormatterWidget::~ProtoFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("protoformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }

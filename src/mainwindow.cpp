@@ -3,6 +3,7 @@
 #include "chmodcalculatorwidget.h"
 #include "colorpalettegeneratorwidget.h"
 #include "colorpicker.h"
+#include "config.h"
 #include "contrastcheckerwidget.h"
 #include "cppformatterwidget.h"
 #include "csharpformatterwidget.h"
@@ -51,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("State").toByteArray());
     ui->actionSide_menu->setChecked(settings.value("sideMenu", true).toBool());
@@ -560,7 +561,7 @@ void MainWindow::setFont()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("State", saveState());
     settings.setValue("Geometry", saveGeometry());
     settings.setValue("sideMenu", ui->actionSide_menu->isChecked());

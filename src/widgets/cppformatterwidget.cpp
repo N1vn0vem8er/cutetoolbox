@@ -1,4 +1,5 @@
 #include "cppformatterwidget.h"
+#include "config.h"
 #include "src/widget/ui_cppformatterwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
@@ -12,7 +13,7 @@ CppFormatterWidget::CppFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("C++ Formatter"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->styleComboBox->setCurrentIndex(settings.value("cppformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &CppFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &CppFormatterWidget::open);
@@ -23,7 +24,7 @@ CppFormatterWidget::CppFormatterWidget(QWidget *parent)
 
 CppFormatterWidget::~CppFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("cppformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }

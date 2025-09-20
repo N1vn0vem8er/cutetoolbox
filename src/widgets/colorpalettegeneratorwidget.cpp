@@ -1,5 +1,6 @@
 #include "colorpalettegeneratorwidget.h"
 #include "colorcardwidget.h"
+#include "config.h"
 #include "src/widgets/ui_colorpalettegeneratorwidget.h"
 #include <QColorDialog>
 #include <QSettings>
@@ -12,7 +13,7 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Color Palette Generator"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     int colorCount = settings.value("colorpalettegenerator.color.count", 5).toInt();
     ui->checkContrastCheckBox->setChecked(settings.value("colorpalettegenerator.checkContrast", false).toBool());
     ui->contrastSpinBox->setValue(settings.value("colorpalettegenerator.contrast", 0.0).toFloat());
@@ -41,7 +42,7 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
 
 ColorPaletteGeneratorWidget::~ColorPaletteGeneratorWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("colorpalettegenerator.color.count", colorWidgets.length());
     settings.setValue("colorpalettegenerator.checkContrast", ui->checkContrastCheckBox->isChecked());
     settings.setValue("colorpalettegenerator.contrast", ui->contrastSpinBox->value());

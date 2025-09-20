@@ -1,4 +1,5 @@
 #include "colorpicker.h"
+#include "config.h"
 #include "src/widgets/ui_colorpicker.h"
 #include <QColorDialog>
 #include <QMouseEvent>
@@ -12,7 +13,7 @@ ColorPicker::ColorPicker(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Color Picker"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->red255->setValue(settings.value("colorpicker.red", 0).toInt());
     ui->green255->setValue(settings.value("colorpicker.green", 0).toInt());
     ui->blue255->setValue(settings.value("colorpicker.blue", 0).toInt());
@@ -105,7 +106,7 @@ ColorPicker::ColorPicker(QWidget *parent)
 
 ColorPicker::~ColorPicker()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("colorpicker.red", ui->red255->value());
     settings.setValue("colorpicker.green", ui->green255->value());
     settings.setValue("colorpicker.blue", ui->blue255->value());

@@ -1,4 +1,5 @@
 #include "csharpformatterwidget.h"
+#include "config.h"
 #include "src/widget/ui_csharpformatterwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
@@ -12,7 +13,7 @@ CSharpFormatterWidget::CSharpFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("C# Formatter"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->styleComboBox->setCurrentIndex(settings.value("csformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &CSharpFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &CSharpFormatterWidget::open);
@@ -23,7 +24,7 @@ CSharpFormatterWidget::CSharpFormatterWidget(QWidget *parent)
 
 CSharpFormatterWidget::~CSharpFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("csformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }

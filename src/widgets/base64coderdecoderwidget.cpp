@@ -1,4 +1,5 @@
 #include "base64coderdecoderwidget.h"
+#include "config.h"
 #include "src/widgets/ui_base64coderdecoderwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
@@ -11,7 +12,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Base64 Encoder/Decoder"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->urlSafeCheckBox->setChecked(settings.value("base64CoderDecoder.urlsafe", false).toBool());
     connect(ui->text, &QPlainTextEdit::textChanged, this, &Base64CoderDecoderWidget::encode);
     connect(ui->base64, &QPlainTextEdit::textChanged, this, &Base64CoderDecoderWidget::decode);
@@ -58,7 +59,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
 
 Base64CoderDecoderWidget::~Base64CoderDecoderWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("base64CoderDecoder.urlsafe", ui->urlSafeCheckBox->isChecked());
     delete ui;
 }

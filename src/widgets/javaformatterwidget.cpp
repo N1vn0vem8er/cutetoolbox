@@ -1,6 +1,6 @@
 #include "javaformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_javaformatterwidget.h"
-
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
@@ -13,7 +13,7 @@ JavaFormatterWidget::JavaFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Java Formatter"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->styleComboBox->setCurrentIndex(settings.value("javaformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &JavaFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &JavaFormatterWidget::open);
@@ -24,7 +24,7 @@ JavaFormatterWidget::JavaFormatterWidget(QWidget *parent)
 
 JavaFormatterWidget::~JavaFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("javaformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }

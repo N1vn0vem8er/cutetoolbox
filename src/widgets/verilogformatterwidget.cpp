@@ -1,4 +1,5 @@
 #include "verilogformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_verilogformatterwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
@@ -11,7 +12,7 @@ VerilogFormatterWidget::VerilogFormatterWidget(QWidget *parent)
     , ui(new Ui::VerilogFormatterWidget)
 {
     ui->setupUi(this);
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     setName(tr("Verilog Formatter"));
     ui->styleComboBox->setCurrentIndex(settings.value("verilogformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &VerilogFormatterWidget::format);
@@ -23,7 +24,7 @@ VerilogFormatterWidget::VerilogFormatterWidget(QWidget *parent)
 
 VerilogFormatterWidget::~VerilogFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("verilogformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }

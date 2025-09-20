@@ -1,6 +1,6 @@
 #include "javascriptformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_javascriptformatterwidget.h"
-
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
@@ -13,7 +13,7 @@ JavaScriptFormatterWidget::JavaScriptFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("JavaScript Formatter"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->styleComboBox->setCurrentIndex(settings.value("javascriptformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &JavaScriptFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &JavaScriptFormatterWidget::open);
@@ -24,7 +24,7 @@ JavaScriptFormatterWidget::JavaScriptFormatterWidget(QWidget *parent)
 
 JavaScriptFormatterWidget::~JavaScriptFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("javascriptformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }

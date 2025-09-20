@@ -1,4 +1,5 @@
 #include "objectivecformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_objectivecformatterwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
@@ -12,7 +13,7 @@ ObjectiveCFormatterWidget::ObjectiveCFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Objective C Formatter"));
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     ui->styleComboBox->setCurrentIndex(settings.value("objectivecformatter.style", 0).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &ObjectiveCFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &ObjectiveCFormatterWidget::open);
@@ -23,7 +24,7 @@ ObjectiveCFormatterWidget::ObjectiveCFormatterWidget(QWidget *parent)
 
 ObjectiveCFormatterWidget::~ObjectiveCFormatterWidget()
 {
-    QSettings settings("cutetoolbox");
+    QSettings settings(Config::settingsName);
     settings.setValue("objectivecformatter.style", ui->styleComboBox->currentIndex());
     delete ui;
 }
