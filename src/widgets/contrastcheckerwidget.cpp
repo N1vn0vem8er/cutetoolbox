@@ -1,7 +1,8 @@
 #include "contrastcheckerwidget.h"
+#include "config.h"
 #include "src/widgets/ui_contrastcheckerwidget.h"
-
 #include <QColorDialog>
+#include <qsettings.h>
 
 ContrastCheckerWidget::ContrastCheckerWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -9,6 +10,9 @@ ContrastCheckerWidget::ContrastCheckerWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Contrast Checker"));
+    QSettings settings(Config::settingsName);
+    backgroundColor = QColor::fromString(settings.value("contrastChecker.backgroundColor", "#ffffff").toString());
+    textColor = QColor::fromString(settings.value("contrastChecker.textColor", "#000000").toString());
     connect(ui->selectBackgroundColorButton, &QPushButton::clicked, this, &ContrastCheckerWidget::selectBackgroundColor);
     connect(ui->selectTextColorButton, &QPushButton::clicked, this, &ContrastCheckerWidget::selectTextColor);
     ui->textColorWidget->setAutoFillBackground(true);
@@ -24,6 +28,9 @@ ContrastCheckerWidget::ContrastCheckerWidget(QWidget *parent)
 
 ContrastCheckerWidget::~ContrastCheckerWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("contrastChecker.backgroundColor", backgroundColor.name(QColor::HexArgb));
+    settings.setValue("contrastChecker.textColor", textColor.name(QColor::HexArgb));
     delete ui;
 }
 
