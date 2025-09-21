@@ -15,9 +15,15 @@ class VideoConverterWidget : public CustomWidget
 public:
     explicit VideoConverterWidget(QWidget *parent = nullptr);
     ~VideoConverterWidget();
+    bool canOpenFiles() const override;
+    void open() override;
 
 private:
     Ui::VideoConverterWidget *ui;
+    QStringList decodingFormats;
+    QStringList encodingFormats;
+    QString openedFile;
+
 };
 
 #endif // VIDEOCONVERTERWIDGET_H
