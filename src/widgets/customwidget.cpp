@@ -78,3 +78,8 @@ void CustomWidget::setName(const QString &name)
 {
     this->name = name;
 }
+
+QString CustomWidget::getOpenedFileName() const
+{
+    return "";
+}

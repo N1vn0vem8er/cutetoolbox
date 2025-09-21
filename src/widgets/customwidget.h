@@ -23,12 +23,14 @@ public:
     virtual void setFont();
     virtual QString getName() const;
     void setName(const QString& name);
+    virtual QString getOpenedFileName() const;
 
 private:
     QString name;
 
 signals:
     void saved(const QString& path);
+    void opened(const QString& path);
 };
 
 #endif // CUSTOMWIDGET_H

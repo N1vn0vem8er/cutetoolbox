@@ -73,7 +73,10 @@ void VideoConverterWidget::open()
     if(!path.isEmpty())
     {
         if(decodingFormats.contains(QFileInfo(path).completeSuffix()))
+        {
             openedFile = path;
+            emit opened(openedFile);
+        }
         else
             QMessageBox::critical(this, tr("Error"), tr("Unsupported file format"));
     }
@@ -103,4 +106,9 @@ void VideoConverterWidget::convert()
             process->waitForStarted();
         }
     }
+}
+
+QString VideoConverterWidget::getOpenedFileName() const
+{
+    return openedFile;
 }

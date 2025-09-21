@@ -53,6 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    openedFileLabel = new QLabel(ui->statusbar);
+    ui->statusbar->addPermanentWidget(openedFileLabel);
     QSettings settings(Config::settingsName);
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("State").toByteArray());
@@ -172,6 +174,10 @@ void MainWindow::widgetChanged()
         ui->actionSet_font_size->setEnabled(widget->canChangeFont());
         ui->actionReset_font_size->setEnabled(widget->canChangeFont());
         ui->actionSet_font->setEnabled(widget->canChangeFont());
+        if(widget->canOpenFiles())
+            openedFileLabel->setText(widget->getOpenedFileName());
+        else
+            openedFileLabel->clear();
     }
 }
 
@@ -198,6 +204,7 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
             ui->stackedWidget->setCurrentIndex(currentIndex);
             ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->widget(currentIndex))->getName());
         });
+        connect(widget, &CustomWidget::opened, this, &MainWindow::openedFile);
         if(currentMenu)
             currentMenu->addAction(action);
     }
@@ -559,6 +566,16 @@ void MainWindow::setFont()
         if(widget->canChangeFont())
             widget->setFont();
     }
+}
+
+void MainWindow::savedFile(const QString &path)
+{
+    ui->statusbar->showMessage(path, 3000);
+}
+
+void MainWindow::openedFile(const QString &path)
+{
+    openedFileLabel->setText(path);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

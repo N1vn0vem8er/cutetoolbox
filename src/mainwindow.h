@@ -40,11 +40,14 @@ private slots:
     void setFontSize();
     void resetFontSize();
     void setFont();
+    void savedFile(const QString& path);
+    void openedFile(const QString& path);
 
 private:
     Ui::MainWindow *ui;
     QMap<QString, int> menuIndexMap;
     QMenu* currentMenu {nullptr};
+    QLabel* openedFileLabel {nullptr};
 
 protected:
     void closeEvent(QCloseEvent *event) override;
