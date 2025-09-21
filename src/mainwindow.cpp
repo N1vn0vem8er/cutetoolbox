@@ -41,6 +41,7 @@
 #include "usergeneratorwidget.h"
 #include "uuidgeneratorwidget.h"
 #include "verilogformatterwidget.h"
+#include "videoconverterwidget.h"
 #include "xmlformatterwidget.h"
 #include "xmlschemevalidatorwidget.h"
 
@@ -125,6 +126,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Graphics"), QIcon());
     addMenuItem(tr("Color Picker"), QIcon(), new ColorPicker(ui->stackedWidget));
     addMenuItem(tr("Image Format Converter"), QIcon(), new ImageFormatConverterWidget(ui->stackedWidget));
+    addMenuItem(tr("Video Format Converter"), QIcon(), new VideoConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
     addMenuItem(tr("Color Palette"), QIcon(), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     if(currentMenu)
