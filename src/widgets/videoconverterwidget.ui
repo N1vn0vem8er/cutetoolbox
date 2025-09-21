@@ -20,14 +20,11 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="convertingLabel">
        <property name="text">
-        <string>Format</string>
+        <string>Converting</string>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="formatComboBox"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -41,6 +38,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Format will be chosen based on file extension</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="convertButton">

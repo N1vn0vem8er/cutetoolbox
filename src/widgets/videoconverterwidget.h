@@ -24,6 +24,9 @@ private:
     QStringList encodingFormats;
     QString openedFile;
 
+private slots:
+    void convert();
+
 };
 
 #endif // VIDEOCONVERTERWIDGET_H
