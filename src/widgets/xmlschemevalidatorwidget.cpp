@@ -70,6 +70,7 @@ void XMLSchemeValidatorWidget::save()
                 {
                     file.write(ui->xml->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedXmlFile));
                 }
             }
             else if(option == TextEdits::xsd)
@@ -79,6 +80,7 @@ void XMLSchemeValidatorWidget::save()
                 {
                     file.write(ui->schema->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedXsdFile));
                 }
             }
         }
@@ -102,13 +104,16 @@ void XMLSchemeValidatorWidget::saveAs()
                 {
                     file.write(ui->xml->toPlainText().toUtf8());
                     openedXmlFile = path;
+                    emit saved(tr("Saved: %1").arg(openedXmlFile));
                 }
                 else if(option == TextEdits::xsd)
                 {
                     file.write(ui->schema->toPlainText().toUtf8());
                     openedXsdFile = path;
+                    emit saved(tr("Saved: %1").arg(openedXsdFile));
                 }
                 file.close();
+                emit opened(openedXmlFile + " " + openedXsdFile);
             }
         }
     }
@@ -135,6 +140,7 @@ void XMLSchemeValidatorWidget::open()
                     ui->schema->setPlainText(file.readAll());
                     openedXsdFile = path;
                 }
+                emit opened(openedXmlFile + " " + openedXsdFile);
             }
         }
     }
@@ -229,6 +235,11 @@ void XMLSchemeValidatorWidget::setFont()
                 ui->schema->setFont(font);
         }
     }
+}
+
+QString XMLSchemeValidatorWidget::getOpenedFileName() const
+{
+    return openedXmlFile + " " + openedXsdFile;
 }
 
 void XMLSchemeValidatorWidget::handleErrorMsg(void *userData, xmlErrorPtr error)

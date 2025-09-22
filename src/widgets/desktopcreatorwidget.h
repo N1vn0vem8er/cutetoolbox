@@ -22,6 +22,7 @@ public:
     void save() override;
     void saveAs() override;
     void open() override;
+    QString getOpenedFileName() const override;
 
 private:
     Ui::DesktopCreatorWidget *ui;
@@ -34,8 +35,6 @@ private:
 
 private slots:
     void generate();
-    void openDesktopFile();
-    void saveDesktopFile();
 };
 
 #endif // DESKTOPCREATORWIDGET_H

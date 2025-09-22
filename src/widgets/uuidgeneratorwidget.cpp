@@ -68,6 +68,7 @@ void UUIDGeneratorWidget::save()
         {
             file.write(ui->plainTextEdit->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -85,6 +86,8 @@ void UUIDGeneratorWidget::saveAs()
             file.write(ui->plainTextEdit->toPlainText().toUtf8());
             file.close();
             openedFile = path;
+            emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
         }
     }
 }
@@ -120,6 +123,11 @@ void UUIDGeneratorWidget::setFont()
     {
         ui->plainTextEdit->setFont(font);
     }
+}
+
+QString UUIDGeneratorWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void UUIDGeneratorWidget::generate()
