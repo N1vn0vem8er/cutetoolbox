@@ -36,8 +36,15 @@ void ImageFormatConverterWidget::open()
         if(!image.isNull())
         {
             ui->graphicsView->setImage(image);
+            openedFile = path;
+            emit opened(openedFile);
         }
     }
+}
+
+QString ImageFormatConverterWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void ImageFormatConverterWidget::convert()
@@ -46,5 +53,6 @@ void ImageFormatConverterWidget::convert()
     if(!path.isEmpty())
     {
         image.save(path, ui->comboBox->currentText().toUtf8());
+        emit saved(tr("Converted: %1").arg(path));
     }
 }

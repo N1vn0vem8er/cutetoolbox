@@ -30,6 +30,7 @@ GZipWidget::GZipWidget(QWidget *parent)
                 ui->input->setPlainText(file.readAll());
                 openedInputFile = path;
                 file.close();
+                emit opened(openedInputFile + " " + openedOutputFile);
             }
         }
     });
@@ -44,6 +45,7 @@ GZipWidget::GZipWidget(QWidget *parent)
                 ui->output->setPlainText(file.readAll().toBase64());
                 openedOutputFile = path;
                 file.close();
+                emit opened(openedInputFile + " " + openedOutputFile);
             }
         }
     });
@@ -102,6 +104,7 @@ void GZipWidget::save()
                 {
                     file.write(ui->input->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedInputFile));
                 }
             }
             else if(option == TextEdits::output)
@@ -111,6 +114,7 @@ void GZipWidget::save()
                 {
                     file.write(QByteArray::fromBase64(ui->output->toPlainText().toUtf8()));
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedOutputFile));
                 }
             }
         }
@@ -134,11 +138,13 @@ void GZipWidget::saveAs()
                 {
                     file.write(ui->input->toPlainText().toUtf8());
                     openedInputFile = path;
+                    emit saved(tr("Saved: %1").arg(openedInputFile));
                 }
                 else if(option == TextEdits::output)
                 {
                     file.write(QByteArray::fromBase64(ui->output->toPlainText().toUtf8()));
                     openedOutputFile = path;
+                    emit saved(tr("Saved: %1").arg(openedOutputFile));
                 }
                 file.close();
             }
@@ -161,11 +167,13 @@ void GZipWidget::open()
                 {
                     ui->input->setPlainText(file.readAll());
                     openedInputFile = path;
+                    emit opened(openedInputFile + " " + openedOutputFile);
                 }
                 else if(option == TextEdits::output)
                 {
                     ui->output->setPlainText(file.readAll().toBase64());
                     openedOutputFile = path;
+                    emit opened(openedInputFile + " " + openedOutputFile);
                 }
                 file.close();
             }
@@ -251,6 +259,11 @@ void GZipWidget::setFont()
                 ui->output->setFont(font);
         }
     }
+}
+
+QString GZipWidget::getOpenedFileName() const
+{
+    return openedInputFile + " " + openedOutputFile;
 }
 
 GZipWidget::TextEdits GZipWidget::getSelectedOption()

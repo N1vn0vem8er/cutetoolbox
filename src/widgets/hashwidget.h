@@ -24,6 +24,7 @@ public:
     void resetFontSize() override;
     void setFont() override;
     void open() override;
+    QString getOpenedFileName() const override;
 
 private:
     enum TextEdits{
@@ -59,6 +60,7 @@ private:
         {BLAKE2b512, "BLAKE2b512"},
         {BLAKE2s256, "BLAKE2s256"}
         };
+    QString openedFile;
     TextEdits getSelectedOption();
 
 private slots:

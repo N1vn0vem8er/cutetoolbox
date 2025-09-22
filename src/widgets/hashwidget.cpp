@@ -120,8 +120,15 @@ void HashWidget::open()
         {
             ui->input->setPlainText(file.readAll());
             file.close();
+            openedFile = path;
+            emit opened(openedFile);
         }
     }
+}
+
+QString HashWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 HashWidget::TextEdits HashWidget::getSelectedOption()

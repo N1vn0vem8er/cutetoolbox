@@ -71,6 +71,7 @@ void JsonYamlConverter::save()
                 {
                     file.write(ui->json->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedJsonFile));
                 }
             }
             else if(option == TextEdits::yaml)
@@ -80,6 +81,7 @@ void JsonYamlConverter::save()
                 {
                     file.write(ui->yaml->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedYamlFile));
                 }
             }
         }
@@ -103,11 +105,13 @@ void JsonYamlConverter::saveAs()
                 {
                     file.write(ui->json->toPlainText().toUtf8());
                     openedJsonFile = path;
+                    emit saved(tr("Saved: %1").arg(openedJsonFile));
                 }
                 else if(option == TextEdits::yaml)
                 {
                     file.write(ui->yaml->toPlainText().toUtf8());
                     openedYamlFile = path;
+                    emit saved(tr("Saved: %1").arg(openedYamlFile));
                 }
                 file.close();
             }
@@ -130,11 +134,13 @@ void JsonYamlConverter::open()
                 {
                     ui->json->setPlainText(file.readAll());
                     openedJsonFile = path;
+                    emit opened(openedJsonFile + " " + openedYamlFile);
                 }
                 else if(option == TextEdits::yaml)
                 {
                     ui->yaml->setPlainText(file.readAll());
                     openedYamlFile = path;
+                    emit opened(openedJsonFile + " " + openedYamlFile);
                 }
             }
         }
@@ -226,6 +232,11 @@ void JsonYamlConverter::setFont()
                 ui->yaml->setFont(font);
         }
     }
+}
+
+QString JsonYamlConverter::getOpenedFileName() const
+{
+    return openedJsonFile + " " + openedYamlFile;
 }
 
 YAML::Node JsonYamlConverter::convertQJsonValueToYaml(const QJsonValue &value)

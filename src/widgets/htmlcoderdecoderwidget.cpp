@@ -23,6 +23,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
                 ui->html->setPlainText(file.readAll());
                 openedHtmlFile = path;
                 file.close();
+                emit opened(openedHtmlFile + " " + openedEncodedFile);
             }
         }
     });
@@ -37,6 +38,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
                 ui->encoded->setPlainText(file.readAll());
                 openedEncodedFile = path;
                 file.close();
+                emit opened(openedHtmlFile + " " + openedEncodedFile);
             }
         }
     });
@@ -123,6 +125,7 @@ void HTMLCoderDecoderWidget::save()
                 {
                     file.write(ui->html->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedHtmlFile));
                 }
             }
             else if(option == TextEdits::encoded)
@@ -132,6 +135,7 @@ void HTMLCoderDecoderWidget::save()
                 {
                     file.write(ui->encoded->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedEncodedFile));
                 }
             }
         }
@@ -155,11 +159,13 @@ void HTMLCoderDecoderWidget::saveAs()
                 {
                     file.write(ui->html->toPlainText().toUtf8());
                     openedHtmlFile = path;
+                    emit saved(tr("Saved: %1").arg(openedHtmlFile));
                 }
                 else if(option == TextEdits::encoded)
                 {
                     file.write(ui->encoded->toPlainText().toUtf8());
                     openedEncodedFile = path;
+                    emit saved(tr("Saved: %1").arg(openedEncodedFile));
                 }
                 file.close();
             }
@@ -182,11 +188,13 @@ void HTMLCoderDecoderWidget::open()
                 {
                     ui->html->setPlainText(file.readAll());
                     openedHtmlFile = path;
+                    emit opened(openedHtmlFile + " " + openedEncodedFile);
                 }
                 else if(option == TextEdits::encoded)
                 {
                     ui->encoded->setPlainText(file.readAll());
                     openedEncodedFile = path;
+                    emit opened(openedHtmlFile + " " + openedEncodedFile);
                 }
                 file.close();
             }
@@ -272,6 +280,11 @@ void HTMLCoderDecoderWidget::setFont()
                 ui->encoded->setFont(font);
         }
     }
+}
+
+QString HTMLCoderDecoderWidget::getOpenedFileName() const
+{
+    return openedHtmlFile + " " + openedEncodedFile;
 }
 
 HTMLCoderDecoderWidget::TextEdits HTMLCoderDecoderWidget::getSelectedOption()

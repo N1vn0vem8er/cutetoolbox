@@ -17,10 +17,12 @@ public:
     ~ImageFormatConverterWidget();
     bool canOpenFiles() const override;
     void open() override;
+    QString getOpenedFileName() const override;
 
 private:
     Ui::ImageFormatConverterWidget *ui;
     QImage image;
+    QString openedFile;
 
 private slots:
     void convert();
