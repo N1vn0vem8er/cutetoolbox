@@ -147,6 +147,7 @@ void GZipWidget::saveAs()
                     emit saved(tr("Saved: %1").arg(openedOutputFile));
                 }
                 file.close();
+                emit opened(openedInputFile + " " + openedOutputFile);
             }
         }
     }
@@ -167,15 +168,14 @@ void GZipWidget::open()
                 {
                     ui->input->setPlainText(file.readAll());
                     openedInputFile = path;
-                    emit opened(openedInputFile + " " + openedOutputFile);
                 }
                 else if(option == TextEdits::output)
                 {
                     ui->output->setPlainText(file.readAll().toBase64());
                     openedOutputFile = path;
-                    emit opened(openedInputFile + " " + openedOutputFile);
                 }
                 file.close();
+                emit opened(openedInputFile + " " + openedOutputFile);
             }
         }
     }

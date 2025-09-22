@@ -114,6 +114,7 @@ void JsonYamlConverter::saveAs()
                     emit saved(tr("Saved: %1").arg(openedYamlFile));
                 }
                 file.close();
+                emit opened(openedJsonFile + " " + openedYamlFile);
             }
         }
     }
@@ -134,14 +135,14 @@ void JsonYamlConverter::open()
                 {
                     ui->json->setPlainText(file.readAll());
                     openedJsonFile = path;
-                    emit opened(openedJsonFile + " " + openedYamlFile);
                 }
                 else if(option == TextEdits::yaml)
                 {
                     ui->yaml->setPlainText(file.readAll());
                     openedYamlFile = path;
-                    emit opened(openedJsonFile + " " + openedYamlFile);
                 }
+                file.close();
+                emit opened(openedJsonFile + " " + openedYamlFile);
             }
         }
     }

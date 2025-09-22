@@ -89,6 +89,7 @@ void XMLFormatterWidget::saveAs()
             openedFile = path;
             file.close();
             emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
         }
     }
 }

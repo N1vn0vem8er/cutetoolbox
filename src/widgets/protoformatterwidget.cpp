@@ -77,6 +77,7 @@ void ProtoFormatterWidget::saveAs()
             file.close();
             openedFile = path;
             emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
         }
     }
 }

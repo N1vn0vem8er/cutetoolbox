@@ -153,6 +153,7 @@ void Base64CoderDecoderWidget::saveAs()
                     emit saved(tr("Saved: %1").arg(openedBase64File));
                 }
                 file.close();
+                emit opened(openedTextFile + " " + openedBase64File);
             }
         }
     }
@@ -173,15 +174,14 @@ void Base64CoderDecoderWidget::open()
                 {
                     ui->text->setPlainText(file.readAll());
                     openedTextFile = path;
-                    emit opened(openedTextFile + " " + openedBase64File);
                 }
                 else if(option == TextEdits::base64)
                 {
                     ui->base64->setPlainText(file.readAll());
                     openedBase64File = path;
-                    emit opened(openedTextFile + " " + openedBase64File);
                 }
                 file.close();
+                emit opened(openedTextFile + " " + openedBase64File);
             }
         }
     }

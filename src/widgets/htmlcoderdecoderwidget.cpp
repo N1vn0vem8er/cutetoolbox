@@ -168,6 +168,7 @@ void HTMLCoderDecoderWidget::saveAs()
                     emit saved(tr("Saved: %1").arg(openedEncodedFile));
                 }
                 file.close();
+                emit opened(openedHtmlFile + " " + openedEncodedFile);
             }
         }
     }
@@ -188,15 +189,14 @@ void HTMLCoderDecoderWidget::open()
                 {
                     ui->html->setPlainText(file.readAll());
                     openedHtmlFile = path;
-                    emit opened(openedHtmlFile + " " + openedEncodedFile);
                 }
                 else if(option == TextEdits::encoded)
                 {
                     ui->encoded->setPlainText(file.readAll());
                     openedEncodedFile = path;
-                    emit opened(openedHtmlFile + " " + openedEncodedFile);
                 }
                 file.close();
+                emit opened(openedHtmlFile + " " + openedEncodedFile);
             }
         }
     }
