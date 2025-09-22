@@ -24,6 +24,7 @@ public:
     void setFontSize() override;
     void resetFontSize() override;
     void setFont() override;
+    QString getOpenedFileName() const override;
 
 private:
     enum TextEdits{
@@ -34,6 +35,8 @@ private:
     };
     Ui::TextDiffWidget *ui;
     TextEdits getSelectedOption();
+    QString openedOldFile;
+    QString openedNewFile;
 
 private slots:
     void showDiff();

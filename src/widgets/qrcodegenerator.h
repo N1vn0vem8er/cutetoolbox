@@ -23,6 +23,7 @@ public:
     bool canBasicEdit() const override;
     void save() override;
     void saveAs() override;
+    QString getOpenedFileName() const override;
 
 private:
     Ui::QrCodeGenerator *ui;

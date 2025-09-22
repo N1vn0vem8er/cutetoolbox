@@ -30,6 +30,7 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
             {
                 ui->oldText->setPlainText(file.readAll());
                 file.close();
+                emit opened(openedOldFile + " " + openedNewFile);
             }
         }
     });
@@ -43,6 +44,7 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
             {
                 ui->newText->setPlainText(file.readAll());
                 file.close();
+                emit opened(openedOldFile + " " + openedNewFile);
             }
         }
     });
@@ -101,10 +103,17 @@ void TextDiffWidget::open()
                 if(file.isOpen())
                 {
                     if(option == newText)
+                    {
                         ui->newText->setPlainText(file.readAll());
+                        openedNewFile = path;
+                    }
                     else if(option == oldText)
+                    {
                         ui->oldText->setPlainText(file.readAll());
+                        openedOldFile = path;
+                    }
                     file.close();
+                    emit opened(openedOldFile + " " + openedNewFile);
                 }
             }
         }
@@ -193,6 +202,11 @@ void TextDiffWidget::setFont()
             }
         }
     }
+}
+
+QString TextDiffWidget::getOpenedFileName() const
+{
+    return openedOldFile + " " + openedNewFile;
 }
 
 TextDiffWidget::TextEdits TextDiffWidget::getSelectedOption()

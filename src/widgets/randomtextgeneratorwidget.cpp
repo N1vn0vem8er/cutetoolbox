@@ -57,6 +57,7 @@ void RandomTextGeneratorWidget::save()
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -74,6 +75,8 @@ void RandomTextGeneratorWidget::saveAs()
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
             openedFile = path;
+            emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
         }
     }
 }
@@ -109,6 +112,11 @@ void RandomTextGeneratorWidget::setFont()
     {
         ui->codeEditor->setFont(font);
     }
+}
+
+QString RandomTextGeneratorWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void RandomTextGeneratorWidget::setUiEnabled(bool val)

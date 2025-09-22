@@ -24,6 +24,7 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
                 ui->decoded->setPlainText(file.readAll());
                 openedDecodedFile = path;
                 file.close();
+                emit opened(openedDecodedFile + " " + openedEncodedFile);
             }
         }
     });
@@ -38,6 +39,7 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
                 ui->encoded->setPlainText(file.readAll());
                 openedEncodedFile = path;
                 file.close();
+                emit opened(openedDecodedFile + " " + openedEncodedFile);
             }
         }
     });
@@ -106,6 +108,7 @@ void UrlCoderDecoderWidget::save()
                 {
                     file.write(ui->decoded->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedDecodedFile));
                 }
             }
             else if(option == TextEdits::encoded)
@@ -115,6 +118,7 @@ void UrlCoderDecoderWidget::save()
                 {
                     file.write(ui->encoded->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedEncodedFile));
                 }
             }
         }
@@ -138,11 +142,15 @@ void UrlCoderDecoderWidget::saveAs()
                 {
                     file.write(ui->decoded->toPlainText().toUtf8());
                     openedDecodedFile = path;
+                    emit saved(tr("Saved: %1").arg(openedDecodedFile));
+                    emit opened(openedDecodedFile + " " + openedEncodedFile);
                 }
                 else if(option == TextEdits::encoded)
                 {
                     file.write(ui->encoded->toPlainText().toUtf8());
                     openedEncodedFile = path;
+                    emit saved(tr("Saved: %1").arg(openedEncodedFile));
+                    emit opened(openedDecodedFile + " " + openedEncodedFile);
                 }
                 file.close();
             }
@@ -172,6 +180,7 @@ void UrlCoderDecoderWidget::open()
                     openedEncodedFile = path;
                 }
                 file.close();
+                emit opened(openedDecodedFile + " " + openedEncodedFile);
             }
         }
     }
@@ -255,6 +264,11 @@ void UrlCoderDecoderWidget::setFont()
                 ui->encoded->setFont(font);
         }
     }
+}
+
+QString UrlCoderDecoderWidget::getOpenedFileName() const
+{
+    return openedDecodedFile + " " + openedEncodedFile;
 }
 
 UrlCoderDecoderWidget::TextEdits UrlCoderDecoderWidget::getSelectedOption()

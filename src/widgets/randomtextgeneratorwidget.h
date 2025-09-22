@@ -26,6 +26,7 @@ public:
     void setFontSize() override;
     void resetFontSize() override;
     void setFont() override;
+    QString getOpenedFileName() const override;
 
 private:
     Ui::RandomTextGeneratorWidget *ui;

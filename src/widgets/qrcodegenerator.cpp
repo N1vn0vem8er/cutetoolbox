@@ -84,6 +84,7 @@ void QrCodeGenerator::save()
         QPainter painter(&image);
         scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
         image.save(openedFile);
+        emit saved(tr("Saved: %1").arg(openedFile));
     }
     else
         saveAs();
@@ -99,7 +100,14 @@ void QrCodeGenerator::saveAs()
         scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
         image.save(path);
         openedFile = path;
+        emit saved(tr("Saved: %1").arg(openedFile));
+        emit opened(openedFile);
     }
+}
+
+QString QrCodeGenerator::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void QrCodeGenerator::generate()

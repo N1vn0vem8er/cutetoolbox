@@ -49,6 +49,7 @@ void LoremIpsumGenerator::save()
         {
             file.write(ui->output->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -66,6 +67,8 @@ void LoremIpsumGenerator::saveAs()
             file.write(ui->output->toPlainText().toUtf8());
             file.close();
             openedFile = path;
+            emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
         }
     }
 }
@@ -101,6 +104,11 @@ void LoremIpsumGenerator::setFont()
     {
         ui->output->setFont(font);
     }
+}
+
+QString LoremIpsumGenerator::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 QString LoremIpsumGenerator::generateSentence(int minWords, int maxWords, bool makeFirstCharUpper) const

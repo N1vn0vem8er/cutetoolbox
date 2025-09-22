@@ -52,6 +52,7 @@ void UserGeneratorWidget::save()
         {
             file.write(toCsv().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -70,8 +71,15 @@ void UserGeneratorWidget::saveAs()
             file.write(toCsv().toUtf8());
             openedFile = path;
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
         }
     }
+}
+
+QString UserGeneratorWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 QString UserGeneratorWidget::getRandomQString(const QStringList &list) const

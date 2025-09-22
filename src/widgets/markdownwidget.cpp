@@ -61,6 +61,7 @@ void MarkdownWidget::save()
         {
             file.write(ui->editor->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -78,6 +79,8 @@ void MarkdownWidget::saveAs()
             file.write(ui->editor->toPlainText().toUtf8());
             file.close();
             openedFile = path;
+            emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
         }
     }
 }
@@ -93,6 +96,7 @@ void MarkdownWidget::open()
             ui->editor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            emit opened(openedFile);
         }
     }
 }
@@ -126,4 +130,9 @@ void MarkdownWidget::setFont()
     const QFont font = QFontDialog::getFont(&ok, this);
     if(ok)
         ui->editor->setFont(font);
+}
+
+QString MarkdownWidget::getOpenedFileName() const
+{
+    return openedFile;
 }

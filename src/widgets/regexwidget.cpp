@@ -54,6 +54,8 @@ void RegexWidget::open()
         {
             ui->plainTextEdit->setPlainText(file.readAll());
             file.close();
+            openedFile = path;
+            emit opened(openedFile);
         }
     }
 }
@@ -89,6 +91,11 @@ void RegexWidget::setFont()
     {
         ui->plainTextEdit->setFont(font);
     }
+}
+
+QString RegexWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void RegexWidget::regex()
