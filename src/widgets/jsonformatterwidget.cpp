@@ -55,6 +55,7 @@ void JsonFormatterWidget::save()
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -72,6 +73,7 @@ void JsonFormatterWidget::saveAs()
             file.write(ui->codeEditor->toPlainText().toUtf8());
             openedFile = path;
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
 }
@@ -109,6 +111,11 @@ void JsonFormatterWidget::setFont()
     }
 }
 
+QString JsonFormatterWidget::getOpenedFileName() const
+{
+    return openedFile;
+}
+
 void JsonFormatterWidget::format()
 {
     QJsonParseError parseError;
@@ -135,6 +142,7 @@ void JsonFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             openedFile = path;
             file.close();
+            emit opened(openedFile);
         }
     }
 }

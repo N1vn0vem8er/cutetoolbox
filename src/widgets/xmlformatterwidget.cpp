@@ -36,6 +36,7 @@ void XMLFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             openedFile = path;
             file.close();
+            emit opened(openedFile);
         }
     }
 }
@@ -69,6 +70,7 @@ void XMLFormatterWidget::save()
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -86,6 +88,7 @@ void XMLFormatterWidget::saveAs()
             file.write(ui->codeEditor->toPlainText().toUtf8());
             openedFile = path;
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
 }
@@ -121,6 +124,11 @@ void XMLFormatterWidget::setFont()
     {
         ui->codeEditor->setFont(font);
     }
+}
+
+QString XMLFormatterWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void XMLFormatterWidget::format()

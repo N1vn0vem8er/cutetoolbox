@@ -54,6 +54,7 @@ void HTMLFormatterWidget::save()
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -71,6 +72,7 @@ void HTMLFormatterWidget::saveAs()
             file.write(ui->codeEditor->toPlainText().toUtf8());
             openedFile = path;
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
 }
@@ -108,6 +110,11 @@ void HTMLFormatterWidget::setFont()
     }
 }
 
+QString HTMLFormatterWidget::getOpenedFileName() const
+{
+    return openedFile;
+}
+
 void HTMLFormatterWidget::format()
 {
     QDomDocument doc;
@@ -131,6 +138,7 @@ void HTMLFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             openedFile = path;
             file.close();
+            emit opened(openedFile);
         }
     }
 }

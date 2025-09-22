@@ -58,6 +58,7 @@ void ObjectiveCFormatterWidget::save()
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -75,6 +76,7 @@ void ObjectiveCFormatterWidget::saveAs()
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
             openedFile = path;
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
 }
@@ -90,6 +92,7 @@ void ObjectiveCFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            emit opened(openedFile);
         }
     }
 }
@@ -123,6 +126,11 @@ void ObjectiveCFormatterWidget::setFont()
     const QFont font = QFontDialog::getFont(&ok, this);
     if(ok)
         ui->codeEditor->setFont(font);
+}
+
+QString ObjectiveCFormatterWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void ObjectiveCFormatterWidget::format()

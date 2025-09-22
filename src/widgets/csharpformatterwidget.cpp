@@ -58,7 +58,7 @@ void CSharpFormatterWidget::save()
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
-            emit saved(openedFile);
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
     else
@@ -76,7 +76,7 @@ void CSharpFormatterWidget::saveAs()
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
             openedFile = path;
-            emit saved(openedFile);
+            emit saved(tr("Saved: %1").arg(openedFile));
         }
     }
 }
