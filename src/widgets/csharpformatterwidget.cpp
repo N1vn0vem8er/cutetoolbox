@@ -58,6 +58,7 @@ void CSharpFormatterWidget::save()
         {
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
+            emit saved(openedFile);
         }
     }
     else
@@ -75,6 +76,7 @@ void CSharpFormatterWidget::saveAs()
             file.write(ui->codeEditor->toPlainText().toUtf8());
             file.close();
             openedFile = path;
+            emit saved(openedFile);
         }
     }
 }
@@ -90,6 +92,7 @@ void CSharpFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            emit opened(openedFile);
         }
     }
 }
@@ -123,6 +126,11 @@ void CSharpFormatterWidget::setFont()
     const QFont font = QFontDialog::getFont(&ok, this);
     if(ok)
         ui->codeEditor->setFont(font);
+}
+
+QString CSharpFormatterWidget::getOpenedFileName() const
+{
+    return openedFile;
 }
 
 void CSharpFormatterWidget::format()

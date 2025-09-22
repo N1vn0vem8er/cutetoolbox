@@ -27,6 +27,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
                 ui->text->setPlainText(file.readAll());
                 openedTextFile = path;
                 file.close();
+                emit opened(openedTextFile + " " + openedBase64File);
             }
         }
     });
@@ -41,6 +42,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
                 ui->base64->setPlainText(file.readAll());
                 openedBase64File = path;
                 file.close();
+                emit opened(openedTextFile + " " + openedBase64File);
             }
         }
     });
@@ -108,6 +110,7 @@ void Base64CoderDecoderWidget::save()
                 {
                     file.write(ui->text->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedTextFile));
                 }
             }
             else if(option == TextEdits::base64)
@@ -117,6 +120,7 @@ void Base64CoderDecoderWidget::save()
                 {
                     file.write(ui->base64->toPlainText().toUtf8());
                     file.close();
+                    emit saved(tr("Saved: %1").arg(openedBase64File));
                 }
             }
         }
@@ -140,11 +144,13 @@ void Base64CoderDecoderWidget::saveAs()
                 {
                     file.write(ui->text->toPlainText().toUtf8());
                     openedTextFile = path;
+                    emit saved(tr("Saved: %1").arg(openedTextFile));
                 }
                 else if(option == TextEdits::base64)
                 {
                     file.write(ui->base64->toPlainText().toUtf8());
                     openedBase64File = path;
+                    emit saved(tr("Saved: %1").arg(openedBase64File));
                 }
                 file.close();
             }
@@ -167,11 +173,13 @@ void Base64CoderDecoderWidget::open()
                 {
                     ui->text->setPlainText(file.readAll());
                     openedTextFile = path;
+                    emit opened(openedTextFile + " " + openedBase64File);
                 }
                 else if(option == TextEdits::base64)
                 {
                     ui->base64->setPlainText(file.readAll());
                     openedBase64File = path;
+                    emit opened(openedTextFile + " " + openedBase64File);
                 }
                 file.close();
             }
@@ -257,6 +265,11 @@ void Base64CoderDecoderWidget::setFont()
                 ui->base64->setFont(font);
         }
     }
+}
+
+QString Base64CoderDecoderWidget::getOpenedFileName() const
+{
+    return openedTextFile + " " + openedBase64File;
 }
 
 Base64CoderDecoderWidget::TextEdits Base64CoderDecoderWidget::getSelectedOption()

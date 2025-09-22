@@ -205,6 +205,7 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
             ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->widget(currentIndex))->getName());
         });
         connect(widget, &CustomWidget::opened, this, &MainWindow::openedFile);
+        connect(widget, &CustomWidget::saved, this, &MainWindow::savedFile);
         if(currentMenu)
             currentMenu->addAction(action);
     }
