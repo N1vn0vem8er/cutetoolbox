@@ -13,6 +13,40 @@ XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("XML Scheme Validator"));
+    connect(ui->openXMLButton, &QPushButton::clicked, this, [&]{
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                ui->xml->setPlainText(file.readAll());
+                file.close();
+                openedXmlFile = path;
+                emit opened(openedXmlFile + " " + openedXsdFile);
+            }
+        }
+    });
+    connect(ui->openXSDButton, &QPushButton::clicked, this, [&]{
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                ui->schema->setPlainText(file.readAll());
+                file.close();
+                openedXsdFile = path;
+                emit opened(openedXmlFile + " " + openedXsdFile);
+            }
+        }
+    });
+    connect(ui->copyXMLButton, &QPushButton::clicked, ui->xml, &CodeEditor::copyAll);
+    connect(ui->copyXSDButton, &QPushButton::clicked, ui->schema, &CodeEditor::copyAll);
+    connect(ui->pasteXMLButton, &QPushButton::clicked, ui->xml, &CodeEditor::paste);
+    connect(ui->pasteXSDButton, &QPushButton::clicked, ui->schema, &CodeEditor::paste);
+    connect(ui->clearXMLButton, &QPushButton::clicked, ui->xml, &CodeEditor::clear);
+    connect(ui->clearXSDButton, &QPushButton::clicked, ui->schema, &CodeEditor::clear);
     infoLabel = new QLabel(ui->infoLabelContainer);
     QVBoxLayout* layout = new QVBoxLayout(ui->infoLabelContainer);
     layout->addWidget(infoLabel);

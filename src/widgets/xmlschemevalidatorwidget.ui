@@ -130,7 +130,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="opneXSDButton">
+          <widget class="QPushButton" name="openXSDButton">
            <property name="toolTip">
             <string>Open</string>
            </property>

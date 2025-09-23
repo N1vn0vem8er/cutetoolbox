@@ -16,6 +16,10 @@ MarkdownWidget::MarkdownWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Markdown Preview"));
+    connect(ui->openButton, &QPushButton::clicked, this, &MarkdownWidget::open);
+    connect(ui->copyButton, &QPushButton::clicked, ui->editor, &CodeEditor::copyAll);
+    connect(ui->pasteButton, &QPushButton::clicked, ui->editor, &CodeEditor::paste);
+    connect(ui->clearButton, &QPushButton::clicked, ui->editor, &CodeEditor::clear);
     syntaxHighlighter = new MarkdownSyntaxHighlighter(ui->editor->document());
     ui->preview->setContextMenuPolicy(Qt::NoContextMenu);
     PreviewPage* page = new PreviewPage(this);
