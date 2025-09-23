@@ -1,8 +1,10 @@
 #include "qrcodegenerator.h"
+#include "config.h"
 #include "src/widgets/ui_qrcodegenerator.h"
 #include <qrcodegen/QrCode.hpp>
 #include <QFileDialog>
 #include <QGraphicsRectItem>
+#include <qsettings.h>
 
 QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     : CustomWidget(parent)
@@ -59,10 +61,14 @@ QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     connect(ui->generateButton, &QPushButton::clicked, this, &QrCodeGenerator::generate);
     optionSelected(0);
     connect(ui->saveButton, &QPushButton::clicked, this, &QrCodeGenerator::saveAs);
+    QSettings settings(Config::settingsName);
+    ui->comboBox->setCurrentIndex(settings.value("qrCodeGenerator.type", 0).toInt());
 }
 
 QrCodeGenerator::~QrCodeGenerator()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("qrCodeGenerator.type", ui->comboBox->currentIndex());
     delete ui;
 }
 

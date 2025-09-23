@@ -33,6 +33,7 @@ private:
 
 private slots:
     void generate();
+    void hashTypeChanged(int index);
 };
 
 #endif // UUIDGENERATORWIDGET_H

@@ -1,10 +1,12 @@
 #include "usergeneratorwidget.h"
+#include "config.h"
 #include "src/widgets/ui_usergeneratorwidget.h"
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <qdialog.h>
 #include <random>
 #include <QClipboard>
+#include <QSettings>
 
 UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -12,8 +14,14 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("User Generator"));
-    ui->phoneLength->setValue(10);
-    ui->quantitySpinBox->setValue(10);
+    QSettings settings(Config::settingsName);
+    ui->phoneLength->setValue(settings.value("userGenerator.phoneLength", 10).toInt());
+    ui->quantitySpinBox->setValue(settings.value("userGenerator.quantity", 10).toInt());
+    ui->firstNameCheckBox->setChecked(settings.value("userGenerator.firstName", true).toBool());
+    ui->lastNameCheckBox->setChecked(settings.value("userGenerator.lastName", true).toBool());
+    ui->emailCheckBox->setChecked(settings.value("userGenerator.email", true).toBool());
+    ui->usernameCheckBox->setChecked(settings.value("userGenerator.username", true).toBool());
+    ui->phoneNumberCheckBox->setChecked(settings.value("userGenerator.phoneNumber", true).toBool());
     connect(ui->generateButton, &QPushButton::clicked, this, &UserGeneratorWidget::generate);
     connect(ui->quantitySpinBox, &QSpinBox::valueChanged, this, &UserGeneratorWidget::generate);
     connect(ui->phoneLength, &QSpinBox::valueChanged, this, &UserGeneratorWidget::generate);
@@ -26,10 +34,19 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
         QGuiApplication::clipboard()->setText(toCsv());
     });
     connect(ui->saveAsButton, &QPushButton::clicked, this, &UserGeneratorWidget::saveAs);
+    generate();
 }
 
 UserGeneratorWidget::~UserGeneratorWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("userGenerator.phoneLength", ui->phoneLength->value());
+    settings.setValue("userGenerator.quantity", ui->quantitySpinBox->value());
+    settings.setValue("userGenerator.firstName", ui->firstNameCheckBox->isChecked());
+    settings.setValue("userGenerator.lastName", ui->lastNameCheckBox->isChecked());
+    settings.setValue("userGenerator.email", ui->emailCheckBox->isChecked());
+    settings.setValue("userGenerator.username", ui->usernameCheckBox->isChecked());
+    settings.setValue("userGenerator.phoneNumber", ui->phoneNumberCheckBox->isChecked());
     delete ui;
 }
 

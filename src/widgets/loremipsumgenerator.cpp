@@ -1,8 +1,10 @@
 #include "loremipsumgenerator.h"
+#include "config.h"
 #include "src/widgets/ui_loremipsumgenerator.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
+#include <qsettings.h>
 #include <random>
 
 LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
@@ -11,7 +13,9 @@ LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Lorem Ipsum Generator"));
-    ui->spinBox->setValue(5);
+    QSettings settings(Config::settingsName);
+    ui->spinBox->setValue(settings.value("loremIpsumGenerator.count", 5).toInt());
+    ui->comboBox->setCurrentIndex(settings.value("loremIpsumGenerator.type", 0).toInt());
     connect(ui->spinBox, &QSpinBox::valueChanged, this, &LoremIpsumGenerator::generate);
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &LoremIpsumGenerator::generate);
     connect(ui->beginWithLICheckBox, &QCheckBox::clicked, this, &LoremIpsumGenerator::generate);
@@ -22,6 +26,9 @@ LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
 
 LoremIpsumGenerator::~LoremIpsumGenerator()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("loremIpsumGenerator.count", ui->spinBox->value());
+    settings.setValue("loremIpsumGenerator.type", ui->comboBox->currentIndex());
     delete ui;
 }
 

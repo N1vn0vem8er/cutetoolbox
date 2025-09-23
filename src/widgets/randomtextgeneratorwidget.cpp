@@ -1,8 +1,10 @@
 #include "randomtextgeneratorwidget.h"
+#include "config.h"
 #include "src/widgets/ui_randomtextgeneratorwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
+#include <qsettings.h>
 #include <qtconcurrentrun.h>
 #include <random>
 
@@ -12,10 +14,12 @@ RandomTextGeneratorWidget::RandomTextGeneratorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Random Text Generator"));
-    ui->spinBox->setValue(50);
-    ui->upperCheckBox->setChecked(true);
-    ui->lowerCheckBox->setChecked(true);
-    ui->numbersCheckBox->setChecked(true);
+    QSettings settings(Config::settingsName);
+    ui->spinBox->setValue(settings.value("randomTextGenerator.count", 50).toInt());
+    ui->upperCheckBox->setChecked(settings.value("randomTextGenerator.upper", true).toBool());
+    ui->lowerCheckBox->setChecked(settings.value("randomTextGenerator.lower", true).toBool());
+    ui->numbersCheckBox->setChecked(settings.value("randomTextGenerator.numbers", true).toBool());
+    ui->specialCharactersCheckBox->setChecked(settings.value("randomTextGenerator.specialCharacters", false).toBool());
     connect(&watcher, &QFutureWatcher<QString>::started, this, [&]{setUiEnabled(false);});
     connect(&watcher, &QFutureWatcher<QString>::finished, this, [&]{ui->codeEditor->setPlainText(watcher.result()); setUiEnabled(true);});
     connect(ui->regenerateButton, &QPushButton::clicked, this, &RandomTextGeneratorWidget::generate);
@@ -30,6 +34,12 @@ RandomTextGeneratorWidget::RandomTextGeneratorWidget(QWidget *parent)
 
 RandomTextGeneratorWidget::~RandomTextGeneratorWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("randomTextGenerator.count", ui->spinBox->value());
+    settings.setValue("randomTextGenerator.upper", ui->upperCheckBox->isChecked());
+    settings.setValue("randomTextGenerator.lower", ui->lowerCheckBox->isChecked());
+    settings.setValue("randomTextGenerator.numbers", ui->numbersCheckBox->isChecked());
+    settings.setValue("randomTextGenerator.specialCharacters", ui->specialCharactersCheckBox->isChecked());
     delete ui;
 }
 

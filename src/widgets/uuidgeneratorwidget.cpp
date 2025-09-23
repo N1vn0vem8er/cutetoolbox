@@ -1,9 +1,11 @@
 #include "uuidgeneratorwidget.h"
+#include "config.h"
 #include "src/widgets/ui_uuidgeneratorwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QUuid>
 #include <qinputdialog.h>
+#include <qsettings.h>
 
 UUIDGeneratorWidget::UUIDGeneratorWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -11,36 +13,23 @@ UUIDGeneratorWidget::UUIDGeneratorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("UUID Generator"));
-    ui->spinBox->setValue(5);
-    ui->dataLabel->setVisible(false);
-    ui->dataLineEdit->setVisible(false);
-    ui->namespaceLineEdit->setVisible(false);
-    ui->namespaceLabel->setVisible(false);
+    QSettings settings(Config::settingsName);
+    ui->spinBox->setValue(settings.value("uuidGenerator.count", 5).toInt());
+    ui->comboBox->setCurrentIndex(settings.value("uuidGenerator.type", 0).toInt());
+    hashTypeChanged(ui->comboBox->currentIndex());
     connect(ui->spinBox, &QSpinBox::valueChanged, this, &UUIDGeneratorWidget::generate);
     connect(ui->regenerateButton, &QPushButton::clicked, this, &UUIDGeneratorWidget::generate);
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &UUIDGeneratorWidget::generate);
     connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->plainTextEdit->selectAll(); ui->plainTextEdit->copy();});
-    connect(ui->comboBox, &QComboBox::currentIndexChanged, this, [&](int index){
-        if(index == 0)
-        {
-            ui->dataLabel->setVisible(false);
-            ui->dataLineEdit->setVisible(false);
-            ui->namespaceLineEdit->setVisible(false);
-            ui->namespaceLabel->setVisible(false);
-        }
-        else
-        {
-            ui->dataLabel->setVisible(true);
-            ui->dataLineEdit->setVisible(true);
-            ui->namespaceLineEdit->setVisible(true);
-            ui->namespaceLabel->setVisible(true);
-        }
-    });
+    connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &UUIDGeneratorWidget::hashTypeChanged);
     generate();
 }
 
 UUIDGeneratorWidget::~UUIDGeneratorWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("uuidGenerator.count", ui->spinBox->value());
+    settings.setValue("uuidGenerator.type", ui->comboBox->currentIndex());
     delete ui;
 }
 
@@ -147,5 +136,23 @@ void UUIDGeneratorWidget::generate()
             ui->plainTextEdit->appendPlainText(QUuid::createUuidV5(QUuid(ui->namespaceLineEdit->text()), ui->dataLineEdit->text()).toString(QUuid::WithoutBraces));
             break;
         }
+    }
+}
+
+void UUIDGeneratorWidget::hashTypeChanged(int index)
+{
+    if(index == 0)
+    {
+        ui->dataLabel->setVisible(false);
+        ui->dataLineEdit->setVisible(false);
+        ui->namespaceLineEdit->setVisible(false);
+        ui->namespaceLabel->setVisible(false);
+    }
+    else
+    {
+        ui->dataLabel->setVisible(true);
+        ui->dataLineEdit->setVisible(true);
+        ui->namespaceLineEdit->setVisible(true);
+        ui->namespaceLabel->setVisible(true);
     }
 }

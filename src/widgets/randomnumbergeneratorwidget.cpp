@@ -1,5 +1,7 @@
 #include "randomnumbergeneratorwidget.h"
+#include "config.h"
 #include "src/widgets/ui_randomnumbergeneratorwidget.h"
+#include <qsettings.h>
 #include <random>
 #include <limits>
 
@@ -13,8 +15,9 @@ RandomNumberGeneratorWidget::RandomNumberGeneratorWidget(QWidget *parent)
     ui->minSpinBox->setMaximum(std::numeric_limits<int>::max());
     ui->maxSpinBox->setMinimum(std::numeric_limits<int>::min());
     ui->minSpinBox->setMinimum(std::numeric_limits<int>::min());
-    ui->maxSpinBox->setValue(100);
-    ui->minSpinBox->setValue(0);
+    QSettings settings(Config::settingsName);
+    ui->maxSpinBox->setValue(settings.value("randomNumberGenerator.maxValue", 100).toInt());
+    ui->minSpinBox->setValue(settings.value("randomNumberGenerator.minValue", 0).toInt());
     connect(ui->regenerateButton, &QPushButton::clicked, this, &RandomNumberGeneratorWidget::generate);
     connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->lineEdit->selectAll(); ui->lineEdit->copy();});
     connect(ui->maxSpinBox, &QSpinBox::valueChanged, this, &RandomNumberGeneratorWidget::generate);
@@ -24,6 +27,9 @@ RandomNumberGeneratorWidget::RandomNumberGeneratorWidget(QWidget *parent)
 
 RandomNumberGeneratorWidget::~RandomNumberGeneratorWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("randomNumberGenerator.maxValue", ui->maxSpinBox->value());
+    settings.setValue("randomNumberGenerator.minValue", ui->minSpinBox->value());
     delete ui;
 }
 
