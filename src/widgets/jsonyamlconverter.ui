@@ -20,13 +20,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="errorLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Indentations Yaml</string>
@@ -48,6 +41,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="errorLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -80,6 +80,58 @@
            </property>
           </spacer>
          </item>
+         <item>
+          <widget class="QPushButton" name="openJsonButton">
+           <property name="toolTip">
+            <string>Open</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="copyJsonButton">
+           <property name="toolTip">
+            <string>Copy</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pasteJsonButton">
+           <property name="toolTip">
+            <string>Paste</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearJsonButton">
+           <property name="toolTip">
+            <string>Clear</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditClear"/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
@@ -110,6 +162,58 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="openYamlButton">
+           <property name="toolTip">
+            <string>Open</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="copyYamlButton">
+           <property name="toolTip">
+            <string>Copy</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pasteYamlButton">
+           <property name="toolTip">
+            <string>Paste</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="clearYamlButton">
+           <property name="toolTip">
+            <string>Clear</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset theme="QIcon::ThemeIcon::EditClear"/>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

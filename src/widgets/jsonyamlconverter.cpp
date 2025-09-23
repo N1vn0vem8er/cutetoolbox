@@ -1,4 +1,5 @@
 #include "jsonyamlconverter.h"
+#include "config.h"
 #include "src/widgets/ui_jsonyamlconverter.h"
 #include <QJsonValue>
 #include <qdialog.h>
@@ -9,6 +10,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QFontDialog>
+#include <QSettings>
 
 JsonYamlConverter::JsonYamlConverter(QWidget *parent)
     : CustomWidget(parent)
@@ -16,14 +18,51 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("JSON - YAML Converter"));
-    ui->yamlIndentations->setValue(4);
+    QSettings settings(Config::settingsName);
+    ui->yamlIndentations->setValue(settings.value("jsonYamlConverter.yamlIndentations", 4).toInt());
     connect(ui->json, &QPlainTextEdit::textChanged, this, &JsonYamlConverter::jsonToYaml);
     connect(ui->yaml, &QPlainTextEdit::textChanged, this, &JsonYamlConverter::yamlToJson);
     connect(ui->yamlIndentations, &QSpinBox::valueChanged, this, &JsonYamlConverter::jsonToYaml);
+    connect(ui->openJsonButton, &QPushButton::clicked, this, [&]{
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                ui->json->setPlainText(file.readAll());
+                file.close();
+                openedJsonFile = path;
+                emit opened(openedJsonFile + " " + openedYamlFile);
+            }
+        }
+    });
+    connect(ui->openYamlButton, &QPushButton::clicked, this, [&]{
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::ReadOnly))
+            {
+                ui->yaml->setPlainText(file.readAll());
+                file.close();
+                openedYamlFile = path;
+                emit opened(openedJsonFile + " " + openedYamlFile);
+            }
+        }
+    });
+    connect(ui->copyJsonButton, &QPushButton::clicked, ui->json, &CodeEditor::copyAll);
+    connect(ui->copyYamlButton, &QPushButton::clicked, ui->yaml, &CodeEditor::copyAll);
+    connect(ui->pasteJsonButton, &QPushButton::clicked, ui->json, &CodeEditor::paste);
+    connect(ui->pasteYamlButton, &QPushButton::clicked, ui->yaml, &CodeEditor::paste);
+    connect(ui->clearJsonButton, &QPushButton::clicked, ui->json, &CodeEditor::clear);
+    connect(ui->clearYamlButton, &QPushButton::clicked, ui->yaml, &CodeEditor::clear);
 }
 
 JsonYamlConverter::~JsonYamlConverter()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("jsonYamlConverter.yamlIndentations", ui->yamlIndentations->value());
     delete ui;
 }
 
