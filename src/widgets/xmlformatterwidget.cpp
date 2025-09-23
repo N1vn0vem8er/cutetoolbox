@@ -4,6 +4,8 @@
 #include <QDomDocument>
 #include <QFontDialog>
 #include <QInputDialog>
+#include <QSettings>
+#include "config.h"
 
 XMLFormatterWidget::XMLFormatterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -11,7 +13,8 @@ XMLFormatterWidget::XMLFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("XML Formatter"));
-    ui->spinBox->setValue(4);
+    QSettings settings(Config::settingsName);
+    ui->spinBox->setValue(settings.value("xmlFormatterWidget.indentations", 4).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &XMLFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);
@@ -21,6 +24,8 @@ XMLFormatterWidget::XMLFormatterWidget(QWidget *parent)
 
 XMLFormatterWidget::~XMLFormatterWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("xmlFormatterWidget.indentations", ui->spinBox->value());
     delete ui;
 }
 

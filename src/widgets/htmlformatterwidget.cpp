@@ -1,9 +1,11 @@
 #include "htmlformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_htmlformatterwidget.h"
 #include <QFileDialog>
 #include <QDomDocument>
 #include <QFontDialog>
 #include <QInputDialog>
+#include <qsettings.h>
 
 HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -11,7 +13,8 @@ HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("HTML Formatter"));
-    ui->spinBox->setValue(4);
+    QSettings settings(Config::settingsName);
+    ui->spinBox->setValue(settings.value("htmlFormatterWidget.indentations", 4).toInt());
     syntaxHighlighter = new HTMLSyntaxHighlighter(ui->codeEditor->document());
     connect(ui->formatButton, &QPushButton::clicked, this, &HTMLFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
@@ -22,6 +25,8 @@ HTMLFormatterWidget::HTMLFormatterWidget(QWidget *parent)
 
 HTMLFormatterWidget::~HTMLFormatterWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("htmlFormatterWidget.indentations", ui->spinBox->value());
     delete ui;
 }
 

@@ -1,10 +1,12 @@
 #include "hashwidget.h"
+#include "config.h"
 #include "src/widgets/ui_hashwidget.h"
 #include <QCryptographicHash>
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
 #include <QPalette>
+#include <qsettings.h>
 
 HashWidget::HashWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -16,6 +18,8 @@ HashWidget::HashWidget(QWidget *parent)
     {
         ui->comboBox->addItem(i);
     }
+    QSettings settings(Config::settingsName);
+    ui->comboBox->setCurrentIndex(settings.value("hashGenerator.hashType", 0).toInt());
     connect(ui->clearInpututton, &QPushButton::clicked, ui->input, &QPlainTextEdit::clear);
     connect(ui->copyInputButton, &QPushButton::clicked, ui->input, [&]{ui->input->selectAll(); ui->input->copy();});
     connect(ui->pasteInputButton, &QPushButton::clicked, ui->input, &QPlainTextEdit::paste);
@@ -29,10 +33,13 @@ HashWidget::HashWidget(QWidget *parent)
     ui->input->setAutoClosingEnabled(false);
     ui->output->setAutoClosingEnabled(false);
     ui->output->setReplaceTabWithSpacesEnabled(false);
+    calculateHash();
 }
 
 HashWidget::~HashWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("hashGenerator.hashType", ui->comboBox->currentIndex());
     delete ui;
 }
 

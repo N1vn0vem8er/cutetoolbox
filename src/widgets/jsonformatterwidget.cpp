@@ -1,11 +1,12 @@
 #include "jsonformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_jsonformatterwidget.h"
-
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <qsettings.h>
 
 JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -13,6 +14,8 @@ JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("JSON Formatter"));
+    QSettings settings(Config::settingsName);
+    ui->spinBox->setValue(settings.value("jsonFormatterWidget.indentations", 4).toInt());
     syntaxHighlighter = new JSONSyntaxHighlighter(ui->codeEditor->document());
     connect(ui->formatButton, &QPushButton::clicked, this, &JsonFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
@@ -23,6 +26,8 @@ JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
 
 JsonFormatterWidget::~JsonFormatterWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("jsonFormatterWidget.indentations", ui->spinBox->value());
     delete ui;
 }
 
