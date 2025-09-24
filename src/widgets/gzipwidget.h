@@ -3,6 +3,7 @@
 
 #include "customwidget.h"
 #include <QWidget>
+#include <qfuturewatcher.h>
 
 namespace Ui {
 class GZipWidget;
@@ -40,6 +41,8 @@ private:
     bool compressing {false};
     QString openedInputFile;
     QString openedOutputFile;
+    QFutureWatcher<QByteArray> compressingWatcher;
+    QFutureWatcher<QByteArray> decompressingWatcher;
 
 private:
     GZipWidget::TextEdits getSelectedOption();

@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QFontDialog>
 #include <qinputdialog.h>
+#include <qtconcurrentrun.h>
 #include <zlib.h>
 
 GZipWidget::GZipWidget(QWidget *parent)
@@ -48,6 +49,14 @@ GZipWidget::GZipWidget(QWidget *parent)
                 emit opened(openedInputFile + " " + openedOutputFile);
             }
         }
+    });
+    connect(&compressingWatcher, &QFutureWatcher<QByteArray>::finished, this, [&]{
+        ui->output->setPlainText(QString::fromLatin1(compressingWatcher.result().toBase64()));
+        compressing = false;
+    });
+    connect(&decompressingWatcher, &QFutureWatcher<QByteArray>::finished, this, [&]{
+        ui->input->setPlainText(decompressingWatcher.result());
+        compressing = false;
     });
     ui->input->setReplaceTabWithSpacesEnabled(false);
     ui->input->setAutoClosingEnabled(false);
@@ -312,35 +321,31 @@ void GZipWidget::compress()
     {
         compressing = true;
         const QByteArray data = ui->input->toPlainText().toUtf8();
-        z_stream zs;
-        zs.zalloc = Z_NULL;
-        zs.zfree = Z_NULL;
-        zs.opaque = Z_NULL;
+        QFuture<QByteArray> future = QtConcurrent::run([data]{
+            z_stream zs;
+            zs.zalloc = Z_NULL;
+            zs.zfree = Z_NULL;
+            zs.opaque = Z_NULL;
+            QByteArray compressedData;
+            if(deflateInit2(&zs, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY) != Z_OK)
+                return compressedData;
 
-        if(deflateInit2(&zs, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY) != Z_OK)
-        {
-            return;
-        }
-
-        zs.next_in = (Bytef*)data.constData();
-        zs.avail_in = data.size();
-        QByteArray compressedData;
-        const int CHUNK_SIZE = 16384;
-        char out[CHUNK_SIZE];
-
-        do {
-            zs.next_out = (Bytef*)out;
-            zs.avail_out = CHUNK_SIZE;
-            deflate(&zs, Z_FINISH);
-            int have = CHUNK_SIZE - zs.avail_out;
-            compressedData.append(out, have);
-        } while (zs.avail_out == 0);
-        deflateEnd(&zs);
-        ui->output->setPlainText(QString::fromLatin1(compressedData.toBase64()));
-    }
-    else
-    {
-        compressing = false;
+            zs.next_in = (Bytef*)data.constData();
+            zs.avail_in = data.size();
+            const int CHUNK_SIZE = 16384;
+            char out[CHUNK_SIZE];
+            do{
+                zs.next_out = (Bytef*)out;
+                zs.avail_out = CHUNK_SIZE;
+                deflate(&zs, Z_FINISH);
+                int have = CHUNK_SIZE - zs.avail_out;
+                compressedData.append(out, have);
+            }
+            while(zs.avail_out == 0);
+            deflateEnd(&zs);
+            return compressedData;
+        });
+        compressingWatcher.setFuture(future);
     }
 }
 
@@ -350,38 +355,34 @@ void GZipWidget::decompress()
     {
         compressing = true;
         const QByteArray data = QByteArray::fromBase64(ui->output->toPlainText().toUtf8());
-        z_stream zs;
-        zs.zalloc = Z_NULL;
-        zs.zfree = Z_NULL;
-        zs.opaque = Z_NULL;
-        zs.next_in = (Bytef*)data.constData();
-        zs.avail_in = data.size();
+        QFuture<QByteArray> future = QtConcurrent::run([data]{
+            z_stream zs;
+            zs.zalloc = Z_NULL;
+            zs.zfree = Z_NULL;
+            zs.opaque = Z_NULL;
+            zs.next_in = (Bytef*)data.constData();
+            zs.avail_in = data.size();
+            QByteArray decompressedData;
+            if(inflateInit2(&zs, 15 + 16) != Z_OK)
+                return decompressedData;
 
-        if(inflateInit2(&zs, 15 + 16) != Z_OK)
-        {
-            return;
-        }
-        QByteArray decompressedData;
-        const int CHUNK_SIZE = 16384;
-        char out[CHUNK_SIZE];
-
-        do {
-            zs.next_out = (Bytef*)out;
-            zs.avail_out = CHUNK_SIZE;
-            int ret = inflate(&zs, Z_NO_FLUSH);
-            if (ret != Z_OK && ret != Z_STREAM_END) {
-                inflateEnd(&zs);
-                return;
+            const int CHUNK_SIZE = 16384;
+            char out[CHUNK_SIZE];
+            do{
+                zs.next_out = (Bytef*)out;
+                zs.avail_out = CHUNK_SIZE;
+                int ret = inflate(&zs, Z_NO_FLUSH);
+                if (ret != Z_OK && ret != Z_STREAM_END) {
+                    inflateEnd(&zs);
+                    return decompressedData;
+                }
+                int have = CHUNK_SIZE - zs.avail_out;
+                decompressedData.append(out, have);
             }
-            int have = CHUNK_SIZE - zs.avail_out;
-            decompressedData.append(out, have);
-        } while (zs.avail_out == 0);
-
-        inflateEnd(&zs);
-        ui->input->setPlainText(decompressedData);
-    }
-    else
-    {
-        compressing = false;
+            while(zs.avail_out == 0);
+            inflateEnd(&zs);
+            return decompressedData;
+        });
+        decompressingWatcher.setFuture(future);
     }
 }
