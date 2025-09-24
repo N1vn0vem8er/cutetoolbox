@@ -98,6 +98,12 @@ void ObjectiveCFormatterWidget::open()
     }
 }
 
+void ObjectiveCFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void ObjectiveCFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

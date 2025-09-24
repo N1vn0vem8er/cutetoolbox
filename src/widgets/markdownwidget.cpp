@@ -105,6 +105,12 @@ void MarkdownWidget::open()
     }
 }
 
+void MarkdownWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void MarkdownWidget::increaseFontSize()
 {
     ui->editor->increaseFontSize();

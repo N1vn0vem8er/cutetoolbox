@@ -152,3 +152,9 @@ void JsonFormatterWidget::open()
         }
     }
 }
+
+void JsonFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}

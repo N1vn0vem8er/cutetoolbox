@@ -80,6 +80,12 @@ void LoremIpsumGenerator::saveAs()
     }
 }
 
+void LoremIpsumGenerator::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void LoremIpsumGenerator::increaseFontSize()
 {
     ui->output->increaseFontSize();

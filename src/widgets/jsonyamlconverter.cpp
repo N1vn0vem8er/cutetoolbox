@@ -187,6 +187,26 @@ void JsonYamlConverter::open()
     }
 }
 
+void JsonYamlConverter::close()
+{
+    if(openedJsonFile.isEmpty())
+        openedYamlFile.clear();
+    else if(openedYamlFile.isEmpty())
+        openedJsonFile.clear();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::json)
+                openedJsonFile.clear();
+            else if(option == TextEdits::yaml)
+                openedYamlFile.clear();
+        }
+    }
+    emit opened(openedJsonFile + " " + openedYamlFile);
+}
+
 void JsonYamlConverter::increaseFontSize()
 {
     if(ui->json->hasFocus())

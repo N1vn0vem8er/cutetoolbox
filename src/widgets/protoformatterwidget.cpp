@@ -98,6 +98,12 @@ void ProtoFormatterWidget::open()
     }
 }
 
+void ProtoFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void ProtoFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

@@ -98,6 +98,12 @@ void JavaFormatterWidget::open()
     }
 }
 
+void JavaFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void JavaFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

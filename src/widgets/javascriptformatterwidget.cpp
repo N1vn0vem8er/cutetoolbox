@@ -98,6 +98,12 @@ void JavaScriptFormatterWidget::open()
     }
 }
 
+void JavaScriptFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void JavaScriptFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();
