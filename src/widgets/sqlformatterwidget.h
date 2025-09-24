@@ -22,6 +22,7 @@ public:
     bool canChangeFont() const override;
     void save() override;
     void saveAs() override;
+    void close() override;
     void increaseFontSize() override;
     void decreaseFontSize() override;
     void setFontSize() override;

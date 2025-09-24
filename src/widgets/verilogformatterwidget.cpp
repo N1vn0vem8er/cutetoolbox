@@ -98,6 +98,12 @@ void VerilogFormatterWidget::open()
     }
 }
 
+void VerilogFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void VerilogFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

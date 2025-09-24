@@ -60,6 +60,12 @@ void RegexWidget::open()
     }
 }
 
+void RegexWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void RegexWidget::increaseFontSize()
 {
     ui->plainTextEdit->increaseFontSize();

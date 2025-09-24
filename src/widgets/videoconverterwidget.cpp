@@ -82,6 +82,12 @@ void VideoConverterWidget::open()
     }
 }
 
+void VideoConverterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void VideoConverterWidget::convert()
 {
     if(!openedFile.isEmpty())

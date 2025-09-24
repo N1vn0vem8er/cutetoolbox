@@ -341,6 +341,9 @@ font-weight: bold;</string>
    <property name="text">
     <string>Close</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
   </action>
  </widget>
  <resources>

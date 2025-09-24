@@ -19,6 +19,7 @@ public:
     bool canBasicEdit() const override;
     bool canChangeFont() const override;
     void open() override;
+    void close() override;
     void increaseFontSize() override;
     void decreaseFontSize() override;
     void setFontSize() override;

@@ -17,6 +17,7 @@ public:
     ~VideoConverterWidget();
     bool canOpenFiles() const override;
     void open() override;
+    void close() override;
     QString getOpenedFileName() const override;
 
 private:

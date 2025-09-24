@@ -110,6 +110,12 @@ void SQLFormatterWidget::saveAs()
     }
 }
 
+void SQLFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void SQLFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

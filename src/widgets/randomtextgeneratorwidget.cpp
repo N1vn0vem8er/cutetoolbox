@@ -91,6 +91,12 @@ void RandomTextGeneratorWidget::saveAs()
     }
 }
 
+void RandomTextGeneratorWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void RandomTextGeneratorWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

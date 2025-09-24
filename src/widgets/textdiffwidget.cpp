@@ -120,6 +120,37 @@ void TextDiffWidget::open()
     }
 }
 
+void TextDiffWidget::close()
+{
+    if(openedOldFile.isEmpty())
+        openedNewFile.clear();
+    else if(openedNewFile.isEmpty())
+        openedOldFile.clear();
+    else
+    {
+        TextEdits option = TextEdits::none;
+        QDialog dialog(this);
+        QHBoxLayout layout(&dialog);
+        QPushButton oldTextButton(tr("Old Text"), &dialog);
+        QPushButton newTextButton(tr("New Text"), &dialog);
+        connect(&oldTextButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::oldText;});
+        connect(&newTextButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::newText;});
+        connect(&oldTextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+        connect(&newTextButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+        layout.addWidget(&oldTextButton);
+        layout.addWidget(&newTextButton);
+        dialog.setLayout(&layout);
+        if(dialog.exec() == QDialog::Accepted)
+        {
+            if(option == TextEdits::newText)
+                openedNewFile.clear();
+            else if(option == TextEdits::oldText)
+                openedOldFile.clear();
+        }
+    }
+    emit opened(openedOldFile + " " + openedNewFile);
+}
+
 void TextDiffWidget::increaseFontSize()
 {
     if(ui->newText->hasFocus())

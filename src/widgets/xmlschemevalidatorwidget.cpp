@@ -180,6 +180,26 @@ void XMLSchemeValidatorWidget::open()
     }
 }
 
+void XMLSchemeValidatorWidget::close()
+{
+    if(openedXmlFile.isEmpty())
+        openedXsdFile.clear();
+    else if(openedXsdFile.isEmpty())
+        openedXmlFile.clear();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::xml)
+                openedXmlFile.clear();
+            else if(option == TextEdits::xsd)
+                openedXsdFile.clear();
+        }
+    }
+    emit opened(openedXmlFile + " " + openedXsdFile);
+}
+
 void XMLSchemeValidatorWidget::increaseFontSize()
 {
     if(ui->xml->hasFocus())

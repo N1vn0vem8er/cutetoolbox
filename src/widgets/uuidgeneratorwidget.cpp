@@ -81,6 +81,12 @@ void UUIDGeneratorWidget::saveAs()
     }
 }
 
+void UUIDGeneratorWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void UUIDGeneratorWidget::increaseFontSize()
 {
     ui->plainTextEdit->increaseFontSize();

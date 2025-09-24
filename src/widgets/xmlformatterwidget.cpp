@@ -46,6 +46,12 @@ void XMLFormatterWidget::open()
     }
 }
 
+void XMLFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 bool XMLFormatterWidget::canOpenFiles() const
 {
     return true;

@@ -21,6 +21,7 @@ public:
     bool canBasicEdit() const override;
     void save() override;
     void saveAs() override;
+    void close() override;
     QString getOpenedFileName() const override;
 
 private:

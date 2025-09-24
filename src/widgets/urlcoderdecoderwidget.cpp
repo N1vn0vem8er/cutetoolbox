@@ -186,6 +186,26 @@ void UrlCoderDecoderWidget::open()
     }
 }
 
+void UrlCoderDecoderWidget::close()
+{
+    if(openedEncodedFile.isEmpty())
+        openedDecodedFile.clear();
+    else if(openedDecodedFile.isEmpty())
+        openedEncodedFile.clear();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::decoded)
+                openedDecodedFile.clear();
+            else if(option == TextEdits::encoded)
+                openedEncodedFile.clear();
+        }
+    }
+    emit opened(openedDecodedFile + " " + openedEncodedFile);
+}
+
 void UrlCoderDecoderWidget::increaseFontSize()
 {
     if(ui->decoded->hasFocus())

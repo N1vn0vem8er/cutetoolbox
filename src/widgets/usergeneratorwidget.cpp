@@ -94,6 +94,12 @@ void UserGeneratorWidget::saveAs()
     }
 }
 
+void UserGeneratorWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 QString UserGeneratorWidget::getOpenedFileName() const
 {
     return openedFile;

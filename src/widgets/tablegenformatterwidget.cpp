@@ -98,6 +98,12 @@ void TableGenFormatterWidget::open()
     }
 }
 
+void TableGenFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void TableGenFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();
