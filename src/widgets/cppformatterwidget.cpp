@@ -98,6 +98,12 @@ void CppFormatterWidget::open()
     }
 }
 
+void CppFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void CppFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

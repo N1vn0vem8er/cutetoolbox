@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::save);
     connect(ui->actionSave_As, &QAction::triggered, this, &MainWindow::saveAs);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::open);
+    connect(ui->actionClose, &QAction::triggered, this, &MainWindow::close);
     connect(ui->actionCopy, &QAction::triggered, this, &MainWindow::copy);
     connect(ui->actionCut, &QAction::triggered, this, &MainWindow::cut);
     connect(ui->actionPaste, &QAction::triggered, this, &MainWindow::paste);
@@ -257,6 +258,16 @@ void MainWindow::open()
     {
         if(widget->canOpenFiles())
             widget->open();
+    }
+}
+
+void MainWindow::close()
+{
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        if(widget->canOpenFiles() || widget->canSaveFiles())
+            widget->close();
     }
 }
 

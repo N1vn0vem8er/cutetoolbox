@@ -73,6 +73,7 @@ font-weight: bold;</string>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
+    <addaction name="actionClose"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -331,6 +332,14 @@ font-weight: bold;</string>
    </property>
    <property name="text">
     <string>Side menu</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::ListRemove"/>
+   </property>
+   <property name="text">
+    <string>Close</string>
    </property>
   </action>
  </widget>

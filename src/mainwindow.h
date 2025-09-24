@@ -27,6 +27,7 @@ private slots:
     void save();
     void saveAs();
     void open();
+    void close();
     void copy();
     void cut();
     void paste();

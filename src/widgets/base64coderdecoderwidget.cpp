@@ -187,6 +187,26 @@ void Base64CoderDecoderWidget::open()
     }
 }
 
+void Base64CoderDecoderWidget::close()
+{
+    if(openedTextFile.isEmpty())
+        openedBase64File.clear();
+    else if(openedBase64File.isEmpty())
+        openedTextFile.clear();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::text)
+                openedTextFile.clear();
+            else if(option == TextEdits::base64)
+                openedBase64File.clear();
+        }
+    }
+    emit opened(openedTextFile + " " + openedBase64File);
+}
+
 void Base64CoderDecoderWidget::increaseFontSize()
 {
     if(ui->text->hasFocus())

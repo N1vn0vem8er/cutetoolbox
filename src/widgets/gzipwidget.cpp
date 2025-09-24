@@ -181,6 +181,26 @@ void GZipWidget::open()
     }
 }
 
+void GZipWidget::close()
+{
+    if(openedInputFile.isEmpty())
+        openedOutputFile.clear();
+    else if(openedOutputFile.isEmpty())
+        openedInputFile.clear();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::input)
+                openedInputFile.clear();
+            else if(option == TextEdits::output)
+                openedOutputFile.clear();
+        }
+    }
+    emit opened(openedInputFile + " " + openedOutputFile);
+}
+
 void GZipWidget::increaseFontSize()
 {
     if(ui->input->hasFocus())

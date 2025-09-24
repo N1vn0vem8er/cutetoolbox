@@ -44,6 +44,11 @@ void CustomWidget::open()
 
 }
 
+void CustomWidget::close()
+{
+
+}
+
 void CustomWidget::increaseFontSize()
 {
 

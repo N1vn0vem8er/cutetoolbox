@@ -133,6 +133,12 @@ void HashWidget::open()
     }
 }
 
+void HashWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 QString HashWidget::getOpenedFileName() const
 {
     return openedFile;

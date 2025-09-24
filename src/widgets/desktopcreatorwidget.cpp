@@ -132,6 +132,12 @@ void DesktopCreatorWidget::open()
     }
 }
 
+void DesktopCreatorWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 QString DesktopCreatorWidget::getOpenedFileName() const
 {
     return openedFile;

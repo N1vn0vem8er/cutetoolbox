@@ -42,6 +42,14 @@ void ImageFormatConverterWidget::open()
     }
 }
 
+void ImageFormatConverterWidget::close()
+{
+    openedFile.clear();
+    image.load(openedFile);
+    ui->graphicsView->setImage(image);
+    emit opened(openedFile);
+}
+
 QString ImageFormatConverterWidget::getOpenedFileName() const
 {
     return openedFile;

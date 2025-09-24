@@ -22,6 +22,7 @@ public:
     void save() override;
     void saveAs() override;
     void open() override;
+    void close() override;
     void increaseFontSize() override;
     void decreaseFontSize() override;
     void setFontSize() override;

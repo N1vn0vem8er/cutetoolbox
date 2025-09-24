@@ -24,6 +24,7 @@ public:
     void resetFontSize() override;
     void setFont() override;
     void open() override;
+    void close() override;
     QString getOpenedFileName() const override;
 
 private:

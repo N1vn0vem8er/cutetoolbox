@@ -202,6 +202,26 @@ void HTMLCoderDecoderWidget::open()
     }
 }
 
+void HTMLCoderDecoderWidget::close()
+{
+    if(openedEncodedFile.isEmpty())
+        openedHtmlFile.clear();
+    else if(openedHtmlFile.isEmpty())
+        openedEncodedFile.clear();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::html)
+                openedHtmlFile.clear();
+            else if(option == TextEdits::encoded)
+                openedEncodedFile.clear();
+        }
+    }
+    emit opened(openedHtmlFile + " " + openedEncodedFile);
+}
+
 void HTMLCoderDecoderWidget::increaseFontSize()
 {
     if(ui->html->hasFocus())

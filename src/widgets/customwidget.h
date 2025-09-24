@@ -16,6 +16,7 @@ public:
     virtual void save();
     virtual void saveAs();
     virtual void open();
+    virtual void close();
     virtual void increaseFontSize();
     virtual void decreaseFontSize();
     virtual void setFontSize();

@@ -22,6 +22,7 @@ public:
     void save() override;
     void saveAs() override;
     void open() override;
+    void close() override;
     QString getOpenedFileName() const override;
 
 private:

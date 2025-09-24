@@ -98,6 +98,12 @@ void CSharpFormatterWidget::open()
     }
 }
 
+void CSharpFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
 void CSharpFormatterWidget::increaseFontSize()
 {
     ui->codeEditor->increaseFontSize();

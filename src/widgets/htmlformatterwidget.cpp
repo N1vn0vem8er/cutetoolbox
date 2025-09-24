@@ -148,3 +148,9 @@ void HTMLFormatterWidget::open()
         }
     }
 }
+
+void HTMLFormatterWidget::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
