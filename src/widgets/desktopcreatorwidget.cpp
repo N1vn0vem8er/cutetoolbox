@@ -13,6 +13,9 @@ DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Desktop File Creator"));
+    ui->languagesListWidget->setVisible(false);
+    ui->addLanguageButton->setVisible(false);
+    ui->removeLanguageButton->setVisible(false);
     connect(ui->name, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);
     connect(ui->exec, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);
     connect(ui->tryexec, &QLineEdit::textChanged, this, &DesktopCreatorWidget::generate);
@@ -178,18 +181,30 @@ void DesktopCreatorWidget::generate()
 {
     QString buffer;
     buffer.append("[Desktop Entry]\n");
-    buffer.append(QString("Name=%1\n").arg(ui->name->text()));
-    buffer.append(QString("Exec=%1\n").arg(ui->exec->text()));
-    buffer.append(QString("TryExec=%1\n").arg(ui->tryexec->text()));
-    buffer.append(QString("Icon=%1\n").arg(ui->icon->text()));
-    buffer.append(QString("Type=%1\n").arg(ui->type->text()));
-    buffer.append(QString("Version=%1\n").arg(ui->version->text()));
-    buffer.append(QString("GenericName=%1\n").arg(ui->genericName->text()));
-    buffer.append(QString("Categories=%1\n").arg(ui->categories->text()));
-    buffer.append(QString("Comment=%1\n").arg(ui->comment->text()));
-    buffer.append(QString("MimeType=%1\n").arg(ui->mimeTypes->text()));
-    buffer.append(QString("Keywords=%1\n").arg(ui->keywords->text()));
-    buffer.append(QString("StartupWMClass=%1\n").arg(ui->startupWMClass->text()));
+    if(!ui->name->text().isEmpty())
+        buffer.append(QString("Name=%1\n").arg(ui->name->text()));
+    if(!ui->exec->text().isEmpty())
+        buffer.append(QString("Exec=%1\n").arg(ui->exec->text()));
+    if(!ui->tryexec->text().isEmpty())
+        buffer.append(QString("TryExec=%1\n").arg(ui->tryexec->text()));
+    if(!ui->icon->text().isEmpty())
+        buffer.append(QString("Icon=%1\n").arg(ui->icon->text()));
+    if(!ui->type->text().isEmpty())
+        buffer.append(QString("Type=%1\n").arg(ui->type->text()));
+    if(!ui->version->text().isEmpty())
+        buffer.append(QString("Version=%1\n").arg(ui->version->text()));
+    if(!ui->genericName->text().isEmpty())
+        buffer.append(QString("GenericName=%1\n").arg(ui->genericName->text()));
+    if(!ui->categories->text().isEmpty())
+        buffer.append(QString("Categories=%1\n").arg(ui->categories->text()));
+    if(!ui->comment->text().isEmpty())
+        buffer.append(QString("Comment=%1\n").arg(ui->comment->text()));
+    if(!ui->mimeTypes->text().isEmpty())
+        buffer.append(QString("MimeType=%1\n").arg(ui->mimeTypes->text()));
+    if(!ui->keywords->text().isEmpty())
+        buffer.append(QString("Keywords=%1\n").arg(ui->keywords->text()));
+    if(!ui->startupWMClass->text().isEmpty())
+        buffer.append(QString("StartupWMClass=%1\n").arg(ui->startupWMClass->text()));
     buffer.append(QString("Terminal=%1\n").arg(ui->terminal->isChecked() ? "true" : "false"));
     buffer.append(QString("NoDisplay=%1\n").arg(ui->noDisplay->isChecked() ? "true" : "false"));
     buffer.append(QString("StartupNotify=%1\n").arg(ui->startupNotify->isChecked() ? "true" : "false"));

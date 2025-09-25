@@ -76,6 +76,10 @@ include_directories(
     src/utils
 )
 
+set_target_properties(CuteToolBox PROPERTIES
+    OUTPUT_NAME "cutetoolbox"
+)
+
 target_link_libraries(CuteToolBox
     PRIVATE
         Qt::Core
