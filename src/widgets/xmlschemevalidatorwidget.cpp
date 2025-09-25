@@ -14,7 +14,7 @@ XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
     ui->setupUi(this);
     setName(tr("XML Scheme Validator"));
     connect(ui->openXMLButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.xml");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -28,7 +28,7 @@ XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
         }
     });
     connect(ui->openXSDButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.xsd");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -128,7 +128,7 @@ void XMLSchemeValidatorWidget::saveAs()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), option == TextEdits::xml ? "*.xml" : "*.xsd");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -158,7 +158,7 @@ void XMLSchemeValidatorWidget::open()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), option == TextEdits::xml ? "*.xml" : "*.xsd");
         if(!path.isEmpty())
         {
             QFile file(path);

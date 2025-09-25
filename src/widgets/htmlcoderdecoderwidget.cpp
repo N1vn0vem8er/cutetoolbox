@@ -13,7 +13,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     connect(ui->html, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::encode);
     connect(ui->encoded, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::decode);
     connect(ui->openHtmlButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), "*.html");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -149,7 +149,7 @@ void HTMLCoderDecoderWidget::saveAs()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.html");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -179,7 +179,7 @@ void HTMLCoderDecoderWidget::open()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.html");
         if(!path.isEmpty())
         {
             QFile file(path);
