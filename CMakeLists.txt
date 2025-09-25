@@ -9,6 +9,7 @@ find_package(yaml-cpp REQUIRED)
 qt_standard_project_setup()
 
 set(CMAKE_AUTORCC ON)
+set(REAL_OUTPUT_NAME "cutetoolbox")
 
 qt_add_executable(CuteToolBox
     WIN32 MACOSX_BUNDLE
@@ -77,7 +78,7 @@ include_directories(
 )
 
 set_target_properties(CuteToolBox PROPERTIES
-    OUTPUT_NAME "cutetoolbox"
+    OUTPUT_NAME ${REAL_OUTPUT_NAME}
 )
 
 target_link_libraries(CuteToolBox
@@ -102,6 +103,10 @@ install(TARGETS CuteToolBox
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/icon.png"
+        DESTINATION share/icons/hicolor/64x64/apps
+        RENAME "${REAL_OUTPUT_NAME}.png")
 
 qt_generate_deploy_app_script(
     TARGET CuteToolBox
