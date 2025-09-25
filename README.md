@@ -24,6 +24,10 @@ Cute Toolbox is currently under development and it is not fully released. Some f
 * Marked Copyright (c) 2011-2018, Christopher Jeffrey MIT License
 * markdown.css Copyright 2011 Kevin Burke Apache License, Version 2.0
 
+For full functionality it also requires to have the following programs installed:
+* clang-format
+* ffmpeg
+
 ## License
 
 This software is licensed under GNU GENERAL PUBLIC LICENSE version 3. See [LICENSE](LICENSE) for more information.
