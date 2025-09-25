@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=cutetoolbox
+Name=Cute ToolBox
+GenericName=Developer tools
+Icon=cutetoolbox
+Type=Application
+Comment=Tools for developers
+Keywords=toolbox;programming;programmer;developer;developing;converter;formatter;
+Categories=Utility;Development;
