@@ -105,7 +105,7 @@ install(TARGETS CuteToolBox
 )
 
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/icon.png"
-        DESTINATION share/icons/hicolor/64x64/apps
+        DESTINATION usr/share/icons/hicolor/64x64/apps
         RENAME "${REAL_OUTPUT_NAME}.png")
 
 qt_generate_deploy_app_script(
