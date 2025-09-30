@@ -3,6 +3,7 @@
 
 #include "customwidget.h"
 #include <QMainWindow>
+#include <qcompleter.h>
 #include <qlabel.h>
 
 QT_BEGIN_NAMESPACE
@@ -43,12 +44,18 @@ private slots:
     void setFont();
     void savedFile(const QString& path);
     void openedFile(const QString& path);
+    void find(const QString& text);
 
 private:
     Ui::MainWindow *ui;
     QMap<QString, int> menuIndexMap;
     QMenu* currentMenu {nullptr};
     QLabel* openedFileLabel {nullptr};
+    QCompleter* completer {nullptr};
+    QStringList toolNames;
+
+private:
+    void showByName(const QString& name);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

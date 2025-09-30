@@ -140,6 +140,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->stackedWidget->setCurrentIndex(settings.value("lastTool", 0).toInt());
     ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
+
+    completer = new QCompleter(toolNames, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    completer->setFilterMode(Qt::MatchContains);
+    ui->searchLine->setCompleter(completer);
+    connect(completer, qOverload<const QString&>(&QCompleter::activated), this, &MainWindow::find);
+    connect(ui->searchLine, &QLineEdit::returnPressed, this, [&]{find(ui->searchLine->text());});
 }
 
 MainWindow::~MainWindow()
@@ -152,8 +159,7 @@ void MainWindow::showWidget(const QModelIndex& index)
     const QString text = index.data().toString();
     if(menuIndexMap.contains(text))
     {
-        ui->stackedWidget->setCurrentIndex(menuIndexMap.value(text));
-        ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
+        showByName(text);
     }
 }
 
@@ -207,6 +213,7 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
         });
         connect(widget, &CustomWidget::opened, this, &MainWindow::openedFile);
         connect(widget, &CustomWidget::saved, this, &MainWindow::savedFile);
+        toolNames.append(text);
         if(currentMenu)
             currentMenu->addAction(action);
     }
@@ -588,6 +595,21 @@ void MainWindow::savedFile(const QString &path)
 void MainWindow::openedFile(const QString &path)
 {
     openedFileLabel->setText(path);
+}
+
+void MainWindow::find(const QString &text)
+{
+    if(menuIndexMap.contains(text))
+    {
+        showByName(text);
+        widgetChanged();
+    }
+}
+
+void MainWindow::showByName(const QString &name)
+{
+    ui->stackedWidget->setCurrentIndex(menuIndexMap.value(name));
+    ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
