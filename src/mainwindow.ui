@@ -33,6 +33,9 @@
        </property>
        <item>
         <widget class="QLineEdit" name="searchLine">
+         <property name="placeholderText">
+          <string>Type to search. Press Enter to open.</string>
+         </property>
          <property name="clearButtonEnabled">
           <bool>true</bool>
          </property>
