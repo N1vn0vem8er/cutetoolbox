@@ -84,6 +84,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, &MainWindow::widgetChanged);
     connect(ui->actionExit, &QAction::triggered, qApp, &QApplication::closeAllWindows);
     connect(ui->actionFull_screen, &QAction::triggered, this, [&]{if(isFullScreen()) showNormal(); else showFullScreen();});
+    connect(ui->actionFind, &QAction::triggered, this, [&]{ui->searchWidget->setVisible(!ui->searchWidget->isVisible());});
+
+    ui->searchWidget->setVisible(false);
 
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
