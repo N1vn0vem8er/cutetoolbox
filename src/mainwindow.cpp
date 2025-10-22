@@ -213,7 +213,7 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
         });
         connect(widget, &CustomWidget::opened, this, &MainWindow::openedFile);
         connect(widget, &CustomWidget::saved, this, &MainWindow::savedFile);
-        toolNames.append(text);
+        toolNames.append(QString("%1 (%2)").arg(text, currentMenu->title()));
         if(currentMenu)
             currentMenu->addAction(action);
     }
@@ -597,8 +597,9 @@ void MainWindow::openedFile(const QString &path)
     openedFileLabel->setText(path);
 }
 
-void MainWindow::find(const QString &text)
+void MainWindow::find(QString text)
 {
+    text.remove(QRegularExpression(R"(\s\(.*\))"));
     if(menuIndexMap.contains(text))
     {
         showByName(text);

@@ -44,7 +44,7 @@ private slots:
     void setFont();
     void savedFile(const QString& path);
     void openedFile(const QString& path);
-    void find(const QString& text);
+    void find(QString text);
 
 private:
     Ui::MainWindow *ui;
