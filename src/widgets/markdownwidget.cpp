@@ -166,7 +166,9 @@ void MarkdownWidget::addPrevious(const QString &path)
 
 void MarkdownWidget::addNext(const QString &path)
 {
-
+    if(nextStack.length() > 0 && nextStack.top() == path)
+        return;
+    nextStack.push(path);
 }
 
 void MarkdownWidget::openFileInPreview(const QString &path)
@@ -208,5 +210,18 @@ void MarkdownWidget::previous()
 
 void MarkdownWidget::next()
 {
-
+    if(nextStack.length() > 0)
+    {
+        addPrevious(nextStack.top());
+        if(nextStack.length() > 0)
+        {
+            QFile file(nextStack.top());
+            if(file.open(QIODevice::ReadOnly))
+            {
+                document.setText(file.readAll());
+                page->setAbsolutePath(nextStack.pop());
+                file.close();
+            }
+        }
+    }
 }

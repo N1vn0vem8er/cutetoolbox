@@ -41,6 +41,7 @@ private:
     QString openedFile;
     PreviewPage* page {nullptr};
     QStack<QString> previousStack;
+    QStack<QString> nextStack;
 
 private:
     void addPrevious(const QString& path);
