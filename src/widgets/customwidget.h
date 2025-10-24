@@ -25,6 +25,7 @@ public:
     virtual QString getName() const;
     void setName(const QString& name);
     virtual QString getOpenedFileName() const;
+    virtual QStringList getRecentFiles() const;
 
 private:
     QString name;

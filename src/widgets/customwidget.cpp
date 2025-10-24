@@ -88,3 +88,8 @@ QString CustomWidget::getOpenedFileName() const
 {
     return "";
 }
+
+QStringList CustomWidget::getRecentFiles() const
+{
+    return {};
+}

@@ -186,6 +186,24 @@ void MainWindow::widgetChanged()
         ui->actionSet_font->setEnabled(widget->canChangeFont());
         ui->actionClose->setEnabled(widget->canOpenFiles() || widget->canSaveFiles());
         openedFileLabel->setText(widget->getOpenedFileName());
+        if(widget->canOpenFiles())
+        {
+            const QStringList recent = widget->getRecentFiles();
+            ui->menuRecent->clear();
+            for(const auto& i : recent)
+            {
+                QAction* action = new QAction(ui->menuRecent);
+                action->setText(i);
+                ui->menuRecent->addAction(action);
+            }
+            if(ui->menuRecent->isEmpty())
+            {
+                QAction* action = new QAction(ui->menuRecent);
+                action->setText(tr("no recent"));
+                action->setEnabled(false);
+                ui->menuRecent->addAction(action);
+            }
+        }
     }
 }
 

@@ -29,6 +29,7 @@ public:
     void resetFontSize() override;
     void setFont() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
 
 private:
     enum TextEdits{
@@ -40,6 +41,8 @@ private:
     bool coding {false};
     QString openedTextFile;
     QString openedBase64File;
+    QStringList recentTextFiles;
+    QStringList recentBase64Files;
 
 private:
     TextEdits getSelectedOption();

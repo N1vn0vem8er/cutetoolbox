@@ -57,12 +57,44 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
     ui->text->setReplaceTabWithSpacesEnabled(false);
     ui->base64->setAutoClosingEnabled(false);
     ui->base64->setReplaceTabWithSpacesEnabled(false);
+    int size = settings.beginReadArray("base64CoderDecoder.recentTextFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentTextFiles.append(path);
+    }
+    settings.endArray();
+    size = settings.beginReadArray("base64CoderDecoder.recentBase64Files");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentBase64Files.append(path);
+    }
+    settings.endArray();
 }
 
 Base64CoderDecoderWidget::~Base64CoderDecoderWidget()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("base64CoderDecoder.urlsafe", ui->urlSafeCheckBox->isChecked());
+    settings.beginWriteArray("base64CoderDecoder.recentTextFiles");
+    for(int i = 0; i<recentTextFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentTextFiles.at(i));
+    }
+    settings.endArray();
+    settings.beginWriteArray("base64CoderDecoder.recentBase64Files");
+    for(int i = 0; i<recentBase64Files.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentBase64Files.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -174,11 +206,17 @@ void Base64CoderDecoderWidget::open()
                 {
                     ui->text->setPlainText(file.readAll());
                     openedTextFile = path;
+                    if(recentTextFiles.length() >= 10)
+                        recentTextFiles.removeFirst();
+                    recentTextFiles.append(openedTextFile);
                 }
                 else if(option == TextEdits::base64)
                 {
                     ui->base64->setPlainText(file.readAll());
                     openedBase64File = path;
+                    if(recentBase64Files.length() >= 10)
+                        recentBase64Files.removeFirst();
+                    recentBase64Files.append(openedBase64File);
                 }
                 file.close();
                 emit opened(openedTextFile + " " + openedBase64File);
@@ -290,6 +328,11 @@ void Base64CoderDecoderWidget::setFont()
 QString Base64CoderDecoderWidget::getOpenedFileName() const
 {
     return openedTextFile + " " + openedBase64File;
+}
+
+QStringList Base64CoderDecoderWidget::getRecentFiles() const
+{
+    return recentTextFiles + recentBase64Files;
 }
 
 Base64CoderDecoderWidget::TextEdits Base64CoderDecoderWidget::getSelectedOption()
