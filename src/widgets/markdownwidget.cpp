@@ -20,6 +20,7 @@ MarkdownWidget::MarkdownWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->editor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->editor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->editor, &CodeEditor::clear);
+    connect(ui->openedFileButton, &QPushButton::clicked, this, &MarkdownWidget::showOpenedFile);
     syntaxHighlighter = new MarkdownSyntaxHighlighter(ui->editor->document());
     ui->preview->setContextMenuPolicy(Qt::NoContextMenu);
     page = new PreviewPage(this);
@@ -161,4 +162,10 @@ void MarkdownWidget::openFileInPreview(const QString &path)
         document.setText(file.readAll());
         file.close();
     }
+}
+
+void MarkdownWidget::showOpenedFile()
+{
+    document.setText(ui->editor->toPlainText());
+    page->setAbsolutePath(openedFile);
 }

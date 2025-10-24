@@ -42,6 +42,7 @@ private:
 
 private slots:
     void openFileInPreview(const QString& path);
+    void showOpenedFile();
 };
 
 #endif // MARKDOWNWIDGET_H
