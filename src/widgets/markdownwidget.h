@@ -3,6 +3,7 @@
 
 #include "customwidget.h"
 #include "document.h"
+#include "previewpage.h"
 #include "syntaxhighlighters/markdownsyntaxhighlighter.h"
 #include <QWidget>
 
@@ -37,6 +38,10 @@ private:
     Document document;
     MarkdownSyntaxHighlighter* syntaxHighlighter {nullptr};
     QString openedFile;
+    PreviewPage* page {nullptr};
+
+private slots:
+    void openFileInPreview(const QString& path);
 };
 
 #endif // MARKDOWNWIDGET_H

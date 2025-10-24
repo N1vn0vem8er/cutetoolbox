@@ -22,9 +22,13 @@ MarkdownWidget::MarkdownWidget(QWidget *parent)
     connect(ui->clearButton, &QPushButton::clicked, ui->editor, &CodeEditor::clear);
     syntaxHighlighter = new MarkdownSyntaxHighlighter(ui->editor->document());
     ui->preview->setContextMenuPolicy(Qt::NoContextMenu);
-    PreviewPage* page = new PreviewPage(this);
+    page = new PreviewPage(this);
+    connect(page, &PreviewPage::openedFile, this, &MarkdownWidget::openFileInPreview);
     ui->preview->setPage(page);
-    connect(ui->editor, &CodeEditor::textChanged, this, [this]{document.setText(ui->editor->toPlainText());});
+    connect(ui->editor, &CodeEditor::textChanged, this, [this]{
+        page->setAbsolutePath(openedFile);
+        document.setText(ui->editor->toPlainText());
+    });
     QWebChannel* channel = new QWebChannel(this);
     channel->registerObject(QStringLiteral("content"), &document);
     page->setWebChannel(channel);
@@ -83,6 +87,7 @@ void MarkdownWidget::saveAs()
             file.write(ui->editor->toPlainText().toUtf8());
             file.close();
             openedFile = path;
+            page->setAbsolutePath(openedFile);
             emit saved(tr("Saved: %1").arg(openedFile));
             emit opened(openedFile);
         }
@@ -100,6 +105,7 @@ void MarkdownWidget::open()
             ui->editor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            page->setAbsolutePath(openedFile);
             emit opened(openedFile);
         }
     }
@@ -145,4 +151,14 @@ void MarkdownWidget::setFont()
 QString MarkdownWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+void MarkdownWidget::openFileInPreview(const QString &path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly))
+    {
+        document.setText(file.readAll());
+        file.close();
+    }
 }
