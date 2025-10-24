@@ -5,6 +5,7 @@
 #include "document.h"
 #include "previewpage.h"
 #include "syntaxhighlighters/markdownsyntaxhighlighter.h"
+#include <QStack>
 #include <QWidget>
 
 namespace Ui {
@@ -39,10 +40,17 @@ private:
     MarkdownSyntaxHighlighter* syntaxHighlighter {nullptr};
     QString openedFile;
     PreviewPage* page {nullptr};
+    QStack<QString> previousStack;
+
+private:
+    void addPrevious(const QString& path);
+    void addNext(const QString& path);
 
 private slots:
     void openFileInPreview(const QString& path);
     void showOpenedFile();
+    void previous();
+    void next();
 };
 
 #endif // MARKDOWNWIDGET_H

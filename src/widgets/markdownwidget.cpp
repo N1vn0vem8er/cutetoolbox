@@ -21,6 +21,8 @@ MarkdownWidget::MarkdownWidget(QWidget *parent)
     connect(ui->pasteButton, &QPushButton::clicked, ui->editor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->editor, &CodeEditor::clear);
     connect(ui->openedFileButton, &QPushButton::clicked, this, &MarkdownWidget::showOpenedFile);
+    connect(ui->previousButton, &QPushButton::clicked, this, &MarkdownWidget::previous);
+    connect(ui->nextButton, &QPushButton::clicked, this, &MarkdownWidget::next);
     syntaxHighlighter = new MarkdownSyntaxHighlighter(ui->editor->document());
     ui->preview->setContextMenuPolicy(Qt::NoContextMenu);
     page = new PreviewPage(this);
@@ -107,6 +109,7 @@ void MarkdownWidget::open()
             file.close();
             openedFile = path;
             page->setAbsolutePath(openedFile);
+            addPrevious(openedFile);
             emit opened(openedFile);
         }
     }
@@ -154,12 +157,26 @@ QString MarkdownWidget::getOpenedFileName() const
     return openedFile;
 }
 
+void MarkdownWidget::addPrevious(const QString &path)
+{
+    if(previousStack.length() > 0 && previousStack.top() == path)
+        return;
+    previousStack.push(path);
+}
+
+void MarkdownWidget::addNext(const QString &path)
+{
+
+}
+
 void MarkdownWidget::openFileInPreview(const QString &path)
 {
+    addPrevious(path);
     QFile file(path);
     if(file.open(QIODevice::ReadOnly))
     {
         document.setText(file.readAll());
+        page->setAbsolutePath(path);
         file.close();
     }
 }
@@ -168,4 +185,28 @@ void MarkdownWidget::showOpenedFile()
 {
     document.setText(ui->editor->toPlainText());
     page->setAbsolutePath(openedFile);
+    addPrevious(openedFile);
+}
+
+void MarkdownWidget::previous()
+{
+    if(previousStack.length() > 1)
+    {
+        addNext(previousStack.pop());
+        if(previousStack.length() > 0)
+        {
+            QFile file(previousStack.top());
+            if(file.open(QIODevice::ReadOnly))
+            {
+                document.setText(file.readAll());
+                page->setAbsolutePath(previousStack.top());
+                file.close();
+            }
+        }
+    }
+}
+
+void MarkdownWidget::next()
+{
+
 }
