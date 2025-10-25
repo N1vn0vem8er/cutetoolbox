@@ -187,32 +187,7 @@ void MainWindow::widgetChanged()
         ui->actionClose->setEnabled(widget->canOpenFiles() || widget->canSaveFiles());
         openedFileLabel->setText(widget->getOpenedFileName());
         if(widget->canOpenFiles())
-        {
-            const QStringList recent = widget->getRecentFiles();
-            ui->menuRecent->clear();
-            for(const auto& i : recent)
-            {
-                QAction* action = new QAction(ui->menuRecent);
-                action->setText(i);
-                connect(action, &QAction::triggered, this, [this, i]{openFromRecent(i);});
-                ui->menuRecent->addAction(action);
-            }
-            if(ui->menuRecent->isEmpty())
-            {
-                QAction* action = new QAction(ui->menuRecent);
-                action->setText(tr("no recent"));
-                action->setEnabled(false);
-                ui->menuRecent->addAction(action);
-            }
-            else
-            {
-                ui->menuRecent->addSeparator();
-                QAction* action = new QAction(ui->menuRecent);
-                action->setText(tr("Clear Recent"));
-                connect(action, &QAction::triggered, this, [this]{clearRecent();});
-                ui->menuRecent->addAction(action);
-            }
-        }
+            updateRecent();
     }
 }
 
@@ -241,6 +216,8 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
         });
         connect(widget, &CustomWidget::opened, this, &MainWindow::openedFile);
         connect(widget, &CustomWidget::saved, this, &MainWindow::savedFile);
+        if(widget->canOpenFiles())
+            connect(widget, &CustomWidget::updateRecent, this, &MainWindow::updateRecent);
         toolNames.append(QString("%1 (%2)").arg(text, currentMenu->title()));
         if(currentMenu)
             currentMenu->addAction(action);
@@ -632,6 +609,38 @@ void MainWindow::find(QString text)
     {
         showByName(text);
         widgetChanged();
+    }
+}
+
+void MainWindow::updateRecent()
+{
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+    {
+        const QStringList recent = widget->getRecentFiles();
+        ui->menuRecent->clear();
+        for(const auto& i : recent)
+        {
+            QAction* action = new QAction(ui->menuRecent);
+            action->setText(i);
+            connect(action, &QAction::triggered, this, [this, i]{openFromRecent(i);});
+            ui->menuRecent->addAction(action);
+        }
+        if(ui->menuRecent->isEmpty())
+        {
+            QAction* action = new QAction(ui->menuRecent);
+            action->setText(tr("no recent"));
+            action->setEnabled(false);
+            ui->menuRecent->addAction(action);
+        }
+        else
+        {
+            ui->menuRecent->addSeparator();
+            QAction* action = new QAction(ui->menuRecent);
+            action->setText(tr("Clear Recent"));
+            connect(action, &QAction::triggered, this, [this]{clearRecent();});
+            ui->menuRecent->addAction(action);
+        }
     }
 }
 

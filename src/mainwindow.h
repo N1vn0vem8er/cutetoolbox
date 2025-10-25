@@ -45,6 +45,7 @@ private slots:
     void savedFile(const QString& path);
     void openedFile(const QString& path);
     void find(QString text);
+    void updateRecent();
 
 private:
     Ui::MainWindow *ui;

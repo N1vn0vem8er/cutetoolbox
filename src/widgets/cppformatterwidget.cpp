@@ -20,12 +20,29 @@ CppFormatterWidget::CppFormatterWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
+
+    int size = settings.beginReadArray("cppformatter.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 CppFormatterWidget::~CppFormatterWidget()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("cppformatter.style", ui->styleComboBox->currentIndex());
+    settings.beginWriteArray("cppformatter.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -93,6 +110,11 @@ void CppFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -138,6 +160,31 @@ void CppFormatterWidget::setFont()
 QString CppFormatterWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList CppFormatterWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void CppFormatterWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+        }
+    }
+}
+
+void CppFormatterWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 void CppFormatterWidget::format()

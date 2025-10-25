@@ -222,6 +222,7 @@ void Base64CoderDecoderWidget::open()
                 }
                 file.close();
                 emit opened(openedTextFile + " " + openedBase64File);
+                emit updateRecent();
             }
         }
     }
@@ -365,6 +366,7 @@ void Base64CoderDecoderWidget::clearRecent()
 {
     recentTextFiles.clear();
     recentBase64Files.clear();
+    emit updateRecent();
 }
 
 Base64CoderDecoderWidget::TextEdits Base64CoderDecoderWidget::getSelectedOption()

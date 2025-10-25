@@ -35,6 +35,7 @@ private:
 signals:
     void saved(const QString& path);
     void opened(const QString& path);
+    void updateRecent();
 };
 
 #endif // CUSTOMWIDGET_H
