@@ -33,6 +33,15 @@ HashWidget::HashWidget(QWidget *parent)
     ui->input->setAutoClosingEnabled(false);
     ui->output->setAutoClosingEnabled(false);
     ui->output->setReplaceTabWithSpacesEnabled(false);
+    int size = settings.beginReadArray("hashGenerator.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
     calculateHash();
 }
 
@@ -40,6 +49,13 @@ HashWidget::~HashWidget()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("hashGenerator.hashType", ui->comboBox->currentIndex());
+    settings.beginWriteArray("hashGenerator.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -128,6 +144,11 @@ void HashWidget::open()
             ui->input->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -142,6 +163,32 @@ void HashWidget::close()
 QString HashWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList HashWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void HashWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->input->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void HashWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 HashWidget::TextEdits HashWidget::getSelectedOption()

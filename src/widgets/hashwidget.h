@@ -26,6 +26,9 @@ public:
     void open() override;
     void close() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     enum TextEdits{
@@ -62,6 +65,9 @@ private:
         {BLAKE2s256, "BLAKE2s256"}
         };
     QString openedFile;
+    QStringList recentFiles;
+
+private:
     TextEdits getSelectedOption();
 
 private slots:
