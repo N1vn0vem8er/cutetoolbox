@@ -24,15 +24,20 @@ public:
     void open() override;
     void close() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     Ui::DesktopCreatorWidget *ui;
     QFutureWatcher<QList<QString>> watcher;
     QStringList icons;
     QString openedFile;
+    QStringList recentFiles;
 
 private:
     void startSearchingForIcons();
+    void readFile(const QString& path);
 
 private slots:
     void generate();

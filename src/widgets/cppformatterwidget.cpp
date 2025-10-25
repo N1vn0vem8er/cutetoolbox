@@ -20,7 +20,6 @@ CppFormatterWidget::CppFormatterWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
-
     int size = settings.beginReadArray("cppformatter.recentFiles");
     for(int i = 0; i<size; i++)
     {
@@ -177,6 +176,7 @@ void CppFormatterWidget::openFromRecent(const QString &path)
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            emit opened(openedFile);
         }
     }
 }

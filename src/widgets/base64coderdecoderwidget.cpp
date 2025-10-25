@@ -348,6 +348,7 @@ void Base64CoderDecoderWidget::openFromRecent(const QString &path)
             ui->text->setPlainText(file.readAll());
             file.close();
             openedTextFile = path;
+            emit opened(openedTextFile + " " + openedBase64File);
         }
     }
     else if(recentBase64Files.contains(path))
@@ -358,6 +359,7 @@ void Base64CoderDecoderWidget::openFromRecent(const QString &path)
             ui->base64->setPlainText(file.readAll());
             file.close();
             openedBase64File = path;
+            emit opened(openedTextFile + " " + openedBase64File);
         }
     }
 }

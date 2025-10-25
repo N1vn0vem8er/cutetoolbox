@@ -1,4 +1,5 @@
 #include "desktopcreatorwidget.h"
+#include "config.h"
 #include "src/widgets/ui_desktopcreatorwidget.h"
 #include <QFileDialog>
 #include <QSettings>
@@ -13,6 +14,7 @@ DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Desktop File Creator"));
+    QSettings settings(Config::settingsName);
     ui->languagesListWidget->setVisible(false);
     ui->addLanguageButton->setVisible(false);
     ui->removeLanguageButton->setVisible(false);
@@ -45,11 +47,28 @@ DesktopCreatorWidget::DesktopCreatorWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->output->selectAll(); ui->output->copy();});
     connect(ui->clearButton, &QPushButton::clicked, ui->output, &QPlainTextEdit::clear);
     connect(ui->saveButton, &QPushButton::clicked, this, &DesktopCreatorWidget::saveAs);
+    int size = settings.beginReadArray("desktopCreator.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
     startSearchingForIcons();
 }
 
 DesktopCreatorWidget::~DesktopCreatorWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("desktopCreator.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -111,25 +130,13 @@ void DesktopCreatorWidget::open()
         {
             ui->output->setPlainText(file.readAll());
             file.close();
-            QSettings settings(path, QSettings::IniFormat);
-            settings.beginGroup("Desktop Entry");
-            ui->name->setText(settings.value("Name").toString());
-            ui->exec->setText(settings.value("Exec").toString());
-            ui->tryexec->setText(settings.value("TryExec").toString());
-            ui->icon->setText(settings.value("Icon").toString());
-            ui->type->setText(settings.value("Type").toString());
-            ui->version->setText(settings.value("Version").toString());
-            ui->genericName->setText(settings.value("GenericName").toString());
-            ui->categories->setText(settings.value("Categories").toString());
-            ui->comment->setText(settings.value("Comment").toString());
-            ui->mimeTypes->setText(settings.value("MimeType").toStringList().join(";"));
-            ui->keywords->setText(settings.value("Keywords").toStringList().join(";"));
-            ui->startupWMClass->setText(settings.value("StartupWMClass").toString());
-            ui->terminal->setChecked(settings.value("Terminal", false).toBool());
-            ui->noDisplay->setChecked(settings.value("NoDisplay", false).toBool());
-            ui->startupNotify->setChecked(settings.value("StartupNotify", false).toBool());
-            settings.endGroup();
+            readFile(path);
             openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -144,6 +151,33 @@ void DesktopCreatorWidget::close()
 QString DesktopCreatorWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList DesktopCreatorWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void DesktopCreatorWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->output->setPlainText(file.readAll());
+            file.close();
+            readFile(path);
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void DesktopCreatorWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 void DesktopCreatorWidget::startSearchingForIcons()
@@ -175,6 +209,28 @@ void DesktopCreatorWidget::startSearchingForIcons()
         return result;
     });
     watcher.setFuture(future);
+}
+
+void DesktopCreatorWidget::readFile(const QString &path)
+{
+    QSettings settings(path, QSettings::IniFormat);
+    settings.beginGroup("Desktop Entry");
+    ui->name->setText(settings.value("Name").toString());
+    ui->exec->setText(settings.value("Exec").toString());
+    ui->tryexec->setText(settings.value("TryExec").toString());
+    ui->icon->setText(settings.value("Icon").toString());
+    ui->type->setText(settings.value("Type").toString());
+    ui->version->setText(settings.value("Version").toString());
+    ui->genericName->setText(settings.value("GenericName").toString());
+    ui->categories->setText(settings.value("Categories").toString());
+    ui->comment->setText(settings.value("Comment").toString());
+    ui->mimeTypes->setText(settings.value("MimeType").toStringList().join(";"));
+    ui->keywords->setText(settings.value("Keywords").toStringList().join(";"));
+    ui->startupWMClass->setText(settings.value("StartupWMClass").toString());
+    ui->terminal->setChecked(settings.value("Terminal", false).toBool());
+    ui->noDisplay->setChecked(settings.value("NoDisplay", false).toBool());
+    ui->startupNotify->setChecked(settings.value("StartupNotify", false).toBool());
+    settings.endGroup();
 }
 
 void DesktopCreatorWidget::generate()
