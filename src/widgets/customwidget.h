@@ -26,6 +26,8 @@ public:
     void setName(const QString& name);
     virtual QString getOpenedFileName() const;
     virtual QStringList getRecentFiles() const;
+    virtual void openFromRecent(const QString& path);
+    virtual void clearRecent();
 
 private:
     QString name;

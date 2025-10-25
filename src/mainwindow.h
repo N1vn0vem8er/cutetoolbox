@@ -56,6 +56,8 @@ private:
 
 private:
     void showByName(const QString& name);
+    void openFromRecent(const QString& path);
+    void clearRecent();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

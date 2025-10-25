@@ -194,6 +194,7 @@ void MainWindow::widgetChanged()
             {
                 QAction* action = new QAction(ui->menuRecent);
                 action->setText(i);
+                connect(action, &QAction::triggered, this, [this, i]{openFromRecent(i);});
                 ui->menuRecent->addAction(action);
             }
             if(ui->menuRecent->isEmpty())
@@ -201,6 +202,14 @@ void MainWindow::widgetChanged()
                 QAction* action = new QAction(ui->menuRecent);
                 action->setText(tr("no recent"));
                 action->setEnabled(false);
+                ui->menuRecent->addAction(action);
+            }
+            else
+            {
+                ui->menuRecent->addSeparator();
+                QAction* action = new QAction(ui->menuRecent);
+                action->setText(tr("Clear Recent"));
+                connect(action, &QAction::triggered, this, [this]{clearRecent();});
                 ui->menuRecent->addAction(action);
             }
         }
@@ -624,6 +633,20 @@ void MainWindow::find(QString text)
         showByName(text);
         widgetChanged();
     }
+}
+
+void MainWindow::openFromRecent(const QString &path)
+{
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+        widget->openFromRecent(path);
+}
+
+void MainWindow::clearRecent()
+{
+    CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
+    if(widget)
+        widget->clearRecent();
 }
 
 void MainWindow::showByName(const QString &name)

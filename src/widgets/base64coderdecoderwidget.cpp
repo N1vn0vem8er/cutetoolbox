@@ -208,7 +208,8 @@ void Base64CoderDecoderWidget::open()
                     openedTextFile = path;
                     if(recentTextFiles.length() >= 10)
                         recentTextFiles.removeFirst();
-                    recentTextFiles.append(openedTextFile);
+                    if(!recentTextFiles.contains(openedTextFile))
+                        recentTextFiles.append(openedTextFile);
                 }
                 else if(option == TextEdits::base64)
                 {
@@ -216,7 +217,8 @@ void Base64CoderDecoderWidget::open()
                     openedBase64File = path;
                     if(recentBase64Files.length() >= 10)
                         recentBase64Files.removeFirst();
-                    recentBase64Files.append(openedBase64File);
+                    if(!recentBase64Files.contains(openedBase64File))
+                        recentBase64Files.append(openedBase64File);
                 }
                 file.close();
                 emit opened(openedTextFile + " " + openedBase64File);
@@ -333,6 +335,36 @@ QString Base64CoderDecoderWidget::getOpenedFileName() const
 QStringList Base64CoderDecoderWidget::getRecentFiles() const
 {
     return recentTextFiles + recentBase64Files;
+}
+
+void Base64CoderDecoderWidget::openFromRecent(const QString &path)
+{
+    if(recentTextFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->text->setPlainText(file.readAll());
+            file.close();
+            openedTextFile = path;
+        }
+    }
+    else if(recentBase64Files.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->base64->setPlainText(file.readAll());
+            file.close();
+            openedBase64File = path;
+        }
+    }
+}
+
+void Base64CoderDecoderWidget::clearRecent()
+{
+    recentTextFiles.clear();
+    recentBase64Files.clear();
 }
 
 Base64CoderDecoderWidget::TextEdits Base64CoderDecoderWidget::getSelectedOption()

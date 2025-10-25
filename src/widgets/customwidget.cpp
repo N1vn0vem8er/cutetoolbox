@@ -93,3 +93,13 @@ QStringList CustomWidget::getRecentFiles() const
 {
     return {};
 }
+
+void CustomWidget::openFromRecent(const QString &path)
+{
+
+}
+
+void CustomWidget::clearRecent()
+{
+
+}

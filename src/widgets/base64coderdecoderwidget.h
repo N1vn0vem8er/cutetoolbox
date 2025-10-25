@@ -30,6 +30,8 @@ public:
     void setFont() override;
     QString getOpenedFileName() const override;
     QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     enum TextEdits{
