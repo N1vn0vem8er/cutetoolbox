@@ -186,6 +186,7 @@ void MainWindow::widgetChanged()
         ui->actionSet_font->setEnabled(widget->canChangeFont());
         ui->actionClose->setEnabled(widget->canOpenFiles() || widget->canSaveFiles());
         openedFileLabel->setText(widget->getOpenedFileName());
+        ui->menuRecent->setEnabled(widget->canOpenFiles());
         if(widget->canOpenFiles())
             updateRecent();
     }

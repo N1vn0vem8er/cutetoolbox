@@ -30,6 +30,9 @@ public:
     void resetFontSize() override;
     void setFont() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     enum TextEdits{
@@ -43,6 +46,8 @@ private:
     QString openedOutputFile;
     QFutureWatcher<QByteArray> compressingWatcher;
     QFutureWatcher<QByteArray> decompressingWatcher;
+    QStringList recentInputFiles;
+    QStringList recentOutputFiles;
 
 private:
     GZipWidget::TextEdits getSelectedOption();

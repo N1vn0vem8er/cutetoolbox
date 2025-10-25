@@ -27,7 +27,12 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
                 ui->text->setPlainText(file.readAll());
                 openedTextFile = path;
                 file.close();
+                if(recentTextFiles.length() >= 10)
+                    recentTextFiles.removeFirst();
+                if(!recentTextFiles.contains(openedTextFile))
+                    recentTextFiles.append(openedTextFile);
                 emit opened(openedTextFile + " " + openedBase64File);
+                emit updateRecent();
             }
         }
     });
@@ -42,7 +47,12 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
                 ui->base64->setPlainText(file.readAll());
                 openedBase64File = path;
                 file.close();
+                if(recentBase64Files.length() >= 10)
+                    recentBase64Files.removeFirst();
+                if(!recentBase64Files.contains(openedBase64File))
+                    recentBase64Files.append(openedBase64File);
                 emit opened(openedTextFile + " " + openedBase64File);
+                emit updateRecent();
             }
         }
     });

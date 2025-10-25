@@ -31,7 +31,12 @@ GZipWidget::GZipWidget(QWidget *parent)
                 ui->input->setPlainText(file.readAll());
                 openedInputFile = path;
                 file.close();
+                if(recentInputFiles.length() >= 10)
+                    recentInputFiles.removeFirst();
+                if(!recentInputFiles.contains(openedInputFile))
+                    recentInputFiles.append(openedInputFile);
                 emit opened(openedInputFile + " " + openedOutputFile);
+                emit updateRecent();
             }
         }
     });
@@ -46,7 +51,12 @@ GZipWidget::GZipWidget(QWidget *parent)
                 ui->output->setPlainText(file.readAll().toBase64());
                 openedOutputFile = path;
                 file.close();
+                if(recentOutputFiles.length() >= 10)
+                    recentOutputFiles.removeFirst();
+                if(!recentOutputFiles.contains(openedOutputFile))
+                    recentOutputFiles.append(openedOutputFile);
                 emit opened(openedInputFile + " " + openedOutputFile);
+                emit updateRecent();
             }
         }
     });
@@ -177,14 +187,23 @@ void GZipWidget::open()
                 {
                     ui->input->setPlainText(file.readAll());
                     openedInputFile = path;
+                    if(recentInputFiles.length() >= 10)
+                        recentInputFiles.removeFirst();
+                    if(!recentInputFiles.contains(openedInputFile))
+                        recentInputFiles.append(openedInputFile);
                 }
                 else if(option == TextEdits::output)
                 {
                     ui->output->setPlainText(file.readAll().toBase64());
                     openedOutputFile = path;
+                    if(recentOutputFiles.length() >= 10)
+                        recentOutputFiles.removeFirst();
+                    if(!recentOutputFiles.contains(openedOutputFile))
+                        recentOutputFiles.append(openedOutputFile);
                 }
                 file.close();
                 emit opened(openedInputFile + " " + openedOutputFile);
+                emit updateRecent();
             }
         }
     }
@@ -295,6 +314,44 @@ QString GZipWidget::getOpenedFileName() const
     return openedInputFile + " " + openedOutputFile;
 }
 
+QStringList GZipWidget::getRecentFiles() const
+{
+    return recentInputFiles + recentOutputFiles;
+}
+
+void GZipWidget::openFromRecent(const QString &path)
+{
+    if(recentInputFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->input->setPlainText(file.readAll());
+            file.close();
+            openedInputFile = path;
+            emit opened(openedInputFile + " " + openedOutputFile);
+        }
+    }
+    else if(recentOutputFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->output->setPlainText(file.readAll());
+            file.close();
+            openedOutputFile = path;
+            emit opened(openedInputFile + " " + openedOutputFile);
+        }
+    }
+}
+
+void GZipWidget::clearRecent()
+{
+    recentInputFiles.clear();
+    recentOutputFiles.clear();
+    emit updateRecent();
+}
+
 GZipWidget::TextEdits GZipWidget::getSelectedOption()
 {
     TextEdits option = TextEdits::none;
@@ -317,7 +374,8 @@ GZipWidget::TextEdits GZipWidget::getSelectedOption()
 }
 
 void GZipWidget::compress()
-{    if(!compressing)
+{
+    if(!compressing)
     {
         compressing = true;
         const QByteArray data = ui->input->toPlainText().toUtf8();
