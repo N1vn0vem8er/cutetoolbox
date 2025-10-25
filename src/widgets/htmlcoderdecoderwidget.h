@@ -29,6 +29,9 @@ public:
     void resetFontSize() override;
     void setFont() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     enum TextEdits{
@@ -40,6 +43,8 @@ private:
     bool coding {false};
     QString openedHtmlFile;
     QString openedEncodedFile;
+    QStringList recentHtmlFiles;
+    QStringList recentEncodedFiles;
 
 private:
     TextEdits getSelectedOption();

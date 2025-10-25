@@ -1,8 +1,10 @@
 #include "gzipwidget.h"
+#include "config.h"
 #include "src/widgets/ui_gzipwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <qinputdialog.h>
+#include <qsettings.h>
 #include <qtconcurrentrun.h>
 #include <zlib.h>
 
@@ -12,6 +14,7 @@ GZipWidget::GZipWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("GZip Compresser and Decompresser"));
+    QSettings settings(Config::settingsName);
     connect(ui->input, &QPlainTextEdit::textChanged, this, &GZipWidget::compress);
     connect(ui->output, &QPlainTextEdit::textChanged, this, &GZipWidget::decompress);
     connect(ui->clearTextButton, &QPushButton::clicked, ui->input, &QPlainTextEdit::clear);
@@ -72,10 +75,43 @@ GZipWidget::GZipWidget(QWidget *parent)
     ui->input->setAutoClosingEnabled(false);
     ui->output->setAutoClosingEnabled(false);
     ui->output->setReplaceTabWithSpacesEnabled(false);
+    int size = settings.beginReadArray("gZipWidget.recentInputFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentInputFiles.append(path);
+    }
+    settings.endArray();
+    size = settings.beginReadArray("gZipWidget.recentOutputFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentOutputFiles.append(path);
+    }
+    settings.endArray();
 }
 
 GZipWidget::~GZipWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("gZipWidget.recentInputFiles");
+    for(int i = 0; i<recentInputFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentInputFiles.at(i));
+    }
+    settings.endArray();
+    settings.beginWriteArray("gZipWidget.recentOutputFiles");
+    for(int i = 0; i<recentOutputFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentOutputFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 

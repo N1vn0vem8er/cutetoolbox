@@ -1,8 +1,10 @@
 #include "htmlcoderdecoderwidget.h"
+#include "config.h"
 #include "src/widgets/ui_htmlcoderdecoderwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
+#include <qsettings.h>
 
 HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -10,6 +12,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Html Encoder/Decoder"));
+    QSettings settings(Config::settingsName);
     connect(ui->html, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::encode);
     connect(ui->encoded, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::decode);
     connect(ui->openHtmlButton, &QPushButton::clicked, this, [&]{
@@ -23,6 +26,11 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
                 ui->html->setPlainText(file.readAll());
                 openedHtmlFile = path;
                 file.close();
+                if(recentHtmlFiles.length() >= 10)
+                    recentHtmlFiles.removeFirst();
+                if(!recentHtmlFiles.contains(openedHtmlFile))
+                    recentHtmlFiles.append(openedHtmlFile);
+                emit updateRecent();
                 emit opened(openedHtmlFile + " " + openedEncodedFile);
             }
         }
@@ -38,6 +46,11 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
                 ui->encoded->setPlainText(file.readAll());
                 openedEncodedFile = path;
                 file.close();
+                if(recentEncodedFiles.length() >= 10)
+                    recentEncodedFiles.removeFirst();
+                if(!recentEncodedFiles.contains(openedEncodedFile))
+                    recentEncodedFiles.append(openedEncodedFile);
+                emit updateRecent();
                 emit opened(openedHtmlFile + " " + openedEncodedFile);
             }
         }
@@ -48,10 +61,43 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     connect(ui->pasteHtmlButton, &QPushButton::clicked, ui->html, &QPlainTextEdit::paste);
     connect(ui->clearCodedButton, &QPushButton::clicked, ui->encoded, &QPlainTextEdit::clear);
     connect(ui->clearHtmlButton, &QPushButton::clicked, ui->html, &QPlainTextEdit::clear);
+    int size = settings.beginReadArray("htmlCoderDecoder.recentHtmlFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentHtmlFiles.append(path);
+    }
+    settings.endArray();
+    size = settings.beginReadArray("htmlCoderDecoder.recentEncodedFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentEncodedFiles.append(path);
+    }
+    settings.endArray();
 }
 
 HTMLCoderDecoderWidget::~HTMLCoderDecoderWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("htmlCoderDecoder.recentHtmlFiles");
+    for(int i = 0; i<recentHtmlFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentHtmlFiles.at(i));
+    }
+    settings.endArray();
+    settings.beginWriteArray("htmlCoderDecoder.recentEncodedFiles");
+    for(int i = 0; i<recentEncodedFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentEncodedFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -189,14 +235,23 @@ void HTMLCoderDecoderWidget::open()
                 {
                     ui->html->setPlainText(file.readAll());
                     openedHtmlFile = path;
+                    if(recentHtmlFiles.length() >= 10)
+                        recentHtmlFiles.removeFirst();
+                    if(!recentHtmlFiles.contains(openedHtmlFile))
+                        recentHtmlFiles.append(openedHtmlFile);
                 }
                 else if(option == TextEdits::encoded)
                 {
                     ui->encoded->setPlainText(file.readAll());
                     openedEncodedFile = path;
+                    if(recentEncodedFiles.length() >= 10)
+                        recentEncodedFiles.removeFirst();
+                    if(!recentEncodedFiles.contains(openedEncodedFile))
+                        recentEncodedFiles.append(openedEncodedFile);
                 }
                 file.close();
                 emit opened(openedHtmlFile + " " + openedEncodedFile);
+                emit updateRecent();
             }
         }
     }
@@ -305,6 +360,44 @@ void HTMLCoderDecoderWidget::setFont()
 QString HTMLCoderDecoderWidget::getOpenedFileName() const
 {
     return openedHtmlFile + " " + openedEncodedFile;
+}
+
+QStringList HTMLCoderDecoderWidget::getRecentFiles() const
+{
+    return recentHtmlFiles + recentEncodedFiles;
+}
+
+void HTMLCoderDecoderWidget::openFromRecent(const QString &path)
+{
+    if(recentHtmlFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->html->setPlainText(file.readAll());
+            file.close();
+            openedHtmlFile = path;
+            emit opened(openedHtmlFile + " " + openedEncodedFile);
+        }
+    }
+    else if(recentEncodedFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->encoded->setPlainText(file.readAll());
+            file.close();
+            openedEncodedFile = path;
+            emit opened(openedHtmlFile + " " + openedEncodedFile);
+        }
+    }
+}
+
+void HTMLCoderDecoderWidget::clearRecent()
+{
+    recentHtmlFiles.clear();
+    recentEncodedFiles.clear();
+    emit updateRecent();
 }
 
 HTMLCoderDecoderWidget::TextEdits HTMLCoderDecoderWidget::getSelectedOption()
