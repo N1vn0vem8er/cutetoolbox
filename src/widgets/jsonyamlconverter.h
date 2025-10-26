@@ -30,6 +30,9 @@ public:
     void resetFontSize() override;
     void setFont() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     enum TextEdits{
@@ -50,6 +53,8 @@ private:
     QJsonArray yamlSequenceToJsonArray(const YAML::Node& node);
     QJsonObject yamlMapToJsonObject(const YAML::Node& node);
     TextEdits getSelectedOption();
+    QStringList recentJsonFiles;
+    QStringList recentYamlFiles;
 
 private slots:
     void jsonToYaml();

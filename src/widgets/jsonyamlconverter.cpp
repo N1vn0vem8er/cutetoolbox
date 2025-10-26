@@ -33,6 +33,11 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
                 ui->json->setPlainText(file.readAll());
                 file.close();
                 openedJsonFile = path;
+                if(recentJsonFiles.length() >= 10)
+                    recentJsonFiles.removeFirst();
+                if(!recentJsonFiles.contains(openedJsonFile))
+                    recentJsonFiles.append(openedJsonFile);
+                emit updateRecent();
                 emit opened(openedJsonFile + " " + openedYamlFile);
             }
         }
@@ -47,6 +52,11 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
                 ui->yaml->setPlainText(file.readAll());
                 file.close();
                 openedYamlFile = path;
+                if(recentYamlFiles.length() >= 10)
+                    recentYamlFiles.removeFirst();
+                if(!recentYamlFiles.contains(openedYamlFile))
+                    recentYamlFiles.append(openedYamlFile);
+                emit updateRecent();
                 emit opened(openedJsonFile + " " + openedYamlFile);
             }
         }
@@ -57,12 +67,44 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
     connect(ui->pasteYamlButton, &QPushButton::clicked, ui->yaml, &CodeEditor::paste);
     connect(ui->clearJsonButton, &QPushButton::clicked, ui->json, &CodeEditor::clear);
     connect(ui->clearYamlButton, &QPushButton::clicked, ui->yaml, &CodeEditor::clear);
+    int size = settings.beginReadArray("jsonYamlConverter.recentJsonFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentJsonFiles.append(path);
+    }
+    settings.endArray();
+    size = settings.beginReadArray("jsonYamlConverter.recentYamlFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentYamlFiles.append(path);
+    }
+    settings.endArray();
 }
 
 JsonYamlConverter::~JsonYamlConverter()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("jsonYamlConverter.yamlIndentations", ui->yamlIndentations->value());
+    settings.beginWriteArray("jsonYamlConverter.recentJsonFiles");
+    for(int i = 0; i<recentJsonFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentJsonFiles.at(i));
+    }
+    settings.endArray();
+    settings.beginWriteArray("jsonYamlConverter.recentYamlFiles");
+    for(int i = 0; i<recentYamlFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentYamlFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -174,14 +216,23 @@ void JsonYamlConverter::open()
                 {
                     ui->json->setPlainText(file.readAll());
                     openedJsonFile = path;
+                    if(recentJsonFiles.length() >= 10)
+                        recentJsonFiles.removeFirst();
+                    if(!recentJsonFiles.contains(openedJsonFile))
+                        recentJsonFiles.append(openedJsonFile);
                 }
                 else if(option == TextEdits::yaml)
                 {
                     ui->yaml->setPlainText(file.readAll());
                     openedYamlFile = path;
+                    if(recentYamlFiles.length() >= 10)
+                        recentYamlFiles.removeFirst();
+                    if(!recentYamlFiles.contains(openedYamlFile))
+                        recentYamlFiles.append(openedYamlFile);
                 }
                 file.close();
                 emit opened(openedJsonFile + " " + openedYamlFile);
+                emit updateRecent();
             }
         }
     }
@@ -297,6 +348,44 @@ void JsonYamlConverter::setFont()
 QString JsonYamlConverter::getOpenedFileName() const
 {
     return openedJsonFile + " " + openedYamlFile;
+}
+
+QStringList JsonYamlConverter::getRecentFiles() const
+{
+    return recentJsonFiles + recentYamlFiles;
+}
+
+void JsonYamlConverter::openFromRecent(const QString &path)
+{
+    if(recentJsonFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->json->setPlainText(file.readAll());
+            file.close();
+            openedJsonFile = path;
+            emit opened(openedJsonFile + " " + openedYamlFile);
+        }
+    }
+    else if(recentYamlFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->yaml->setPlainText(file.readAll());
+            file.close();
+            openedYamlFile = path;
+            emit opened(openedJsonFile + " " + openedYamlFile);
+        }
+    }
+}
+
+void JsonYamlConverter::clearRecent()
+{
+    recentJsonFiles.clear();
+    recentYamlFiles.clear();
+    emit updateRecent();
 }
 
 YAML::Node JsonYamlConverter::convertQJsonValueToYaml(const QJsonValue &value)
