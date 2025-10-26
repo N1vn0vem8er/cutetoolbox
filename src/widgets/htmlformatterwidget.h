@@ -30,11 +30,15 @@ public:
     void resetFontSize() override;
     void setFont() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     Ui::HTMLFormatterWidget *ui;
     HTMLSyntaxHighlighter* syntaxHighlighter {nullptr};
     QString openedFile;
+    QStringList recentFiles;
 
 private slots:
     void format();
