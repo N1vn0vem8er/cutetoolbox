@@ -22,12 +22,28 @@ JsonFormatterWidget::JsonFormatterWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->openButton, &QPushButton::clicked, this, &JsonFormatterWidget::open);
+    int size = settings.beginReadArray("jsonFormatterWidget.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 JsonFormatterWidget::~JsonFormatterWidget()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("jsonFormatterWidget.indentations", ui->spinBox->value());
+    settings.beginWriteArray("jsonFormatterWidget.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -122,6 +138,32 @@ QString JsonFormatterWidget::getOpenedFileName() const
     return openedFile;
 }
 
+QStringList JsonFormatterWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void JsonFormatterWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void JsonFormatterWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
+}
+
 void JsonFormatterWidget::format()
 {
     QJsonParseError parseError;
@@ -146,8 +188,13 @@ void JsonFormatterWidget::open()
         if(file.isOpen())
         {
             ui->codeEditor->setPlainText(file.readAll());
-            openedFile = path;
             file.close();
+            openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
