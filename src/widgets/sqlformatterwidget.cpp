@@ -1,9 +1,11 @@
 #include "sqlformatterwidget.h"
+#include "config.h"
 #include "src/widgets/ui_sqlformatterwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
 #include <qregularexpression.h>
+#include <qsettings.h>
 
 SQLFormatterWidget::SQLFormatterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -16,10 +18,28 @@ SQLFormatterWidget::SQLFormatterWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
+    QSettings settings(Config::settingsName);
+    int size = settings.beginReadArray("sqlFormatter.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 SQLFormatterWidget::~SQLFormatterWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("sqlFormatter.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -52,6 +72,11 @@ void SQLFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             openedFile = path;
             file.close();
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -152,4 +177,29 @@ void SQLFormatterWidget::setFont()
 QString SQLFormatterWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList SQLFormatterWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void SQLFormatterWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void SQLFormatterWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
