@@ -20,12 +20,28 @@ TableGenFormatterWidget::TableGenFormatterWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
+    int size = settings.beginReadArray("tabelgenformatter.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 TableGenFormatterWidget::~TableGenFormatterWidget()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("tabelgenformatter.style", ui->styleComboBox->currentIndex());
+    settings.beginWriteArray("tabelgenformatter.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -93,6 +109,11 @@ void TableGenFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -138,6 +159,32 @@ void TableGenFormatterWidget::setFont()
 QString TableGenFormatterWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList TableGenFormatterWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void TableGenFormatterWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void TableGenFormatterWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 void TableGenFormatterWidget::format()
