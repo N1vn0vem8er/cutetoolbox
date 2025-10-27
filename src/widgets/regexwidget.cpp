@@ -1,9 +1,11 @@
 #include "regexwidget.h"
+#include "config.h"
 #include "src/widgets/ui_regexwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
 #include <QRegularExpression>
+#include <qsettings.h>
 
 RegexWidget::RegexWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -21,10 +23,28 @@ RegexWidget::RegexWidget(QWidget *parent)
     connect(ui->clearTextButton, &QPushButton::clicked, ui->plainTextEdit, &CodeEditor::clear);
     ui->plainTextEdit->setReplaceTabWithSpacesEnabled(false);
     ui->plainTextEdit->setAutoClosingEnabled(false);
+    QSettings settings(Config::settingsName);
+    int size = settings.beginReadArray("regexWidget.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 RegexWidget::~RegexWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("regexWidget.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -55,6 +75,11 @@ void RegexWidget::open()
             ui->plainTextEdit->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -102,6 +127,32 @@ void RegexWidget::setFont()
 QString RegexWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList RegexWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void RegexWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->plainTextEdit->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void RegexWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 void RegexWidget::regex()
