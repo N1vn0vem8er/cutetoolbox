@@ -33,6 +33,9 @@ public:
     void resetFontSize() override;
     void setFont() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     Ui::MarkdownWidget *ui;
@@ -42,6 +45,7 @@ private:
     PreviewPage* page {nullptr};
     QStack<QString> previousStack;
     QStack<QString> nextStack;
+    QStringList recentFiles;
 
 private:
     void addPrevious(const QString& path);

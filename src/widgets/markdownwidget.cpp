@@ -1,4 +1,5 @@
 #include "markdownwidget.h"
+#include "config.h"
 #include "previewpage.h"
 #include "src/widgets/ui_markdownwidget.h"
 #include "syntaxhighlighters/markdownsyntaxhighlighter.h"
@@ -9,6 +10,7 @@
 #include <QPrinter>
 #include <QWebChannel>
 #include <qdir.h>
+#include <qsettings.h>
 
 MarkdownWidget::MarkdownWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -36,10 +38,28 @@ MarkdownWidget::MarkdownWidget(QWidget *parent)
     channel->registerObject(QStringLiteral("content"), &document);
     page->setWebChannel(channel);
     ui->preview->setUrl(QUrl("qrc:/index.html"));
+    QSettings settings(Config::settingsName);
+    int size = settings.beginReadArray("markdownWidget.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 MarkdownWidget::~MarkdownWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("markdownWidget.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -110,6 +130,11 @@ void MarkdownWidget::open()
             openedFile = path;
             page->setAbsolutePath(openedFile);
             addPrevious(openedFile);
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -155,6 +180,32 @@ void MarkdownWidget::setFont()
 QString MarkdownWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList MarkdownWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void MarkdownWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->editor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void MarkdownWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 void MarkdownWidget::addPrevious(const QString &path)
