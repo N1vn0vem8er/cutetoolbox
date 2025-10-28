@@ -303,7 +303,8 @@ QStringList TextDiffWidget::getRecentFiles() const
 }
 
 void TextDiffWidget::openFromRecent(const QString &path)
-{    if(recentOldFiles.contains(path))
+{
+    if(recentOldFiles.contains(path))
     {
         QFile file(path);
         if(file.open(QIODevice::ReadOnly))

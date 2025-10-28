@@ -1,8 +1,10 @@
 #include "urlcoderdecoderwidget.h"
+#include "config.h"
 #include "src/widgets/ui_urlcoderdecoderwidget.h"
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
+#include <qsettings.h>
 
 UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -24,7 +26,12 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
                 ui->decoded->setPlainText(file.readAll());
                 openedDecodedFile = path;
                 file.close();
+                if(recentDecodedFiles.length() >= 10)
+                    recentDecodedFiles.removeFirst();
+                if(!recentDecodedFiles.contains(openedDecodedFile))
+                    recentDecodedFiles.append(openedDecodedFile);
                 emit opened(openedDecodedFile + " " + openedEncodedFile);
+                emit updateRecent();
             }
         }
     });
@@ -39,7 +46,12 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
                 ui->encoded->setPlainText(file.readAll());
                 openedEncodedFile = path;
                 file.close();
+                if(recentEncodedFiles.length() >= 10)
+                    recentEncodedFiles.removeFirst();
+                if(!recentEncodedFiles.contains(openedEncodedFile))
+                    recentEncodedFiles.append(openedEncodedFile);
                 emit opened(openedDecodedFile + " " + openedEncodedFile);
+                emit updateRecent();
             }
         }
     });
@@ -57,10 +69,44 @@ UrlCoderDecoderWidget::UrlCoderDecoderWidget(QWidget *parent)
     ui->decoded->setAutoClosingEnabled(false);
     ui->encoded->setAutoClosingEnabled(false);
     ui->encoded->setReplaceTabWithSpacesEnabled(false);
+    QSettings settings(Config::settingsName);
+    int size = settings.beginReadArray("urlCoderDecoder.recentDecodedFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentDecodedFiles.append(path);
+    }
+    settings.endArray();
+    size = settings.beginReadArray("urlCoderDecoder.recentEncodedFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentEncodedFiles.append(path);
+    }
+    settings.endArray();
 }
 
 UrlCoderDecoderWidget::~UrlCoderDecoderWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("urlCoderDecoder.recentDecodedFiles");
+    for(int i = 0; i<recentDecodedFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentDecodedFiles.at(i));
+    }
+    settings.endArray();
+    settings.beginWriteArray("urlCoderDecoder.recentEncodedFiles");
+    for(int i = 0; i<recentEncodedFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentEncodedFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -173,14 +219,23 @@ void UrlCoderDecoderWidget::open()
                 {
                     ui->decoded->setPlainText(file.readAll());
                     openedDecodedFile = path;
+                    if(recentDecodedFiles.length() >= 10)
+                        recentDecodedFiles.removeFirst();
+                    if(!recentDecodedFiles.contains(openedDecodedFile))
+                        recentDecodedFiles.append(openedDecodedFile);
                 }
                 else if(option == TextEdits::encoded)
                 {
                     ui->encoded->setPlainText(file.readAll());
                     openedEncodedFile = path;
+                    if(recentEncodedFiles.length() >= 10)
+                        recentEncodedFiles.removeFirst();
+                    if(!recentEncodedFiles.contains(openedEncodedFile))
+                        recentEncodedFiles.append(openedEncodedFile);
                 }
                 file.close();
                 emit opened(openedDecodedFile + " " + openedEncodedFile);
+                emit updateRecent();
             }
         }
     }
@@ -289,6 +344,44 @@ void UrlCoderDecoderWidget::setFont()
 QString UrlCoderDecoderWidget::getOpenedFileName() const
 {
     return openedDecodedFile + " " + openedEncodedFile;
+}
+
+QStringList UrlCoderDecoderWidget::getRecentFiles() const
+{
+     return recentDecodedFiles + recentEncodedFiles;
+}
+
+void UrlCoderDecoderWidget::openFromRecent(const QString &path)
+{
+    if(recentDecodedFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->decoded->setPlainText(file.readAll());
+            file.close();
+            openedDecodedFile = path;
+            emit opened(openedDecodedFile + " " + openedEncodedFile);
+        }
+    }
+    else if(recentEncodedFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->encoded->setPlainText(file.readAll());
+            file.close();
+            openedEncodedFile = path;
+            emit opened(openedDecodedFile + " " + openedEncodedFile);
+        }
+    }
+}
+
+void UrlCoderDecoderWidget::clearRecent()
+{
+    recentDecodedFiles.clear();
+    recentEncodedFiles.clear();
+    emit updateRecent();
 }
 
 UrlCoderDecoderWidget::TextEdits UrlCoderDecoderWidget::getSelectedOption()
