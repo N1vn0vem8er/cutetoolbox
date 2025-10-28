@@ -20,12 +20,28 @@ TextProtoFormatterWidget::TextProtoFormatterWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
+    int size = settings.beginReadArray("textprotoformatter.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 TextProtoFormatterWidget::~TextProtoFormatterWidget()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("textprotoformatter.style", ui->styleComboBox->currentIndex());
+    settings.beginWriteArray("textprotoformatter.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -93,6 +109,11 @@ void TextProtoFormatterWidget::open()
             ui->codeEditor->setPlainText(file.readAll());
             file.close();
             openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             emit opened(openedFile);
         }
     }
@@ -138,6 +159,31 @@ void TextProtoFormatterWidget::setFont()
 QString TextProtoFormatterWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList TextProtoFormatterWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void TextProtoFormatterWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void TextProtoFormatterWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 void TextProtoFormatterWidget::format()
