@@ -1,10 +1,12 @@
 #include "textdiffwidget.h"
 #include "src/widgets/ui_textdiffwidget.h"
+#include "config.h"
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QTextStream>
 #include <qfontdialog.h>
 #include <qtextobject.h>
+#include <qsettings.h>
 
 TextDiffWidget::TextDiffWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -30,6 +32,12 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
             {
                 ui->oldText->setPlainText(file.readAll());
                 file.close();
+                openedOldFile = path;
+                if(recentOldFiles.length() >= 10)
+                    recentOldFiles.removeFirst();
+                if(!recentOldFiles.contains(openedOldFile))
+                    recentOldFiles.append(openedOldFile);
+                emit updateRecent();
                 emit opened(openedOldFile + " " + openedNewFile);
             }
         }
@@ -44,6 +52,12 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
             {
                 ui->newText->setPlainText(file.readAll());
                 file.close();
+                openedNewFile = path;
+                if(recentNewFiles.length() >= 10)
+                    recentNewFiles.removeFirst();
+                if(!recentNewFiles.contains(openedNewFile))
+                    recentNewFiles.append(openedNewFile);
+                emit updateRecent();
                 emit opened(openedOldFile + " " + openedNewFile);
             }
         }
@@ -55,10 +69,44 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
     ui->newText->setReplaceTabWithSpacesEnabled(false);
     ui->diff->setReplaceTabWithSpacesEnabled(false);
     ui->diff->setAutoClosingEnabled(false);
+    QSettings settings(Config::settingsName);
+    int size = settings.beginReadArray("textDiff.recentOldFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentOldFiles.append(path);
+    }
+    settings.endArray();
+    size = settings.beginReadArray("textDiff.recentNewFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentNewFiles.append(path);
+    }
+    settings.endArray();
 }
 
 TextDiffWidget::~TextDiffWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("textDiff.recentOldFiles");
+    for(int i = 0; i<recentOldFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentOldFiles.at(i));
+    }
+    settings.endArray();
+    settings.beginWriteArray("textDiff.recentNewFiles");
+    for(int i = 0; i<recentNewFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentNewFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -106,14 +154,23 @@ void TextDiffWidget::open()
                     {
                         ui->newText->setPlainText(file.readAll());
                         openedNewFile = path;
+                        if(recentNewFiles.length() >= 10)
+                            recentNewFiles.removeFirst();
+                        if(!recentNewFiles.contains(openedNewFile))
+                            recentNewFiles.append(openedNewFile);
                     }
                     else if(option == oldText)
                     {
                         ui->oldText->setPlainText(file.readAll());
                         openedOldFile = path;
+                        if(recentOldFiles.length() >= 10)
+                            recentOldFiles.removeFirst();
+                        if(!recentOldFiles.contains(openedOldFile))
+                            recentOldFiles.append(openedOldFile);
                     }
                     file.close();
                     emit opened(openedOldFile + " " + openedNewFile);
+                    emit updateRecent();
                 }
             }
         }
@@ -238,6 +295,44 @@ void TextDiffWidget::setFont()
 QString TextDiffWidget::getOpenedFileName() const
 {
     return openedOldFile + " " + openedNewFile;
+}
+
+QStringList TextDiffWidget::getRecentFiles() const
+{
+    return recentOldFiles + recentNewFiles;
+}
+
+void TextDiffWidget::openFromRecent(const QString &path)
+{    if(recentOldFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->oldText->setPlainText(file.readAll());
+            file.close();
+            openedOldFile = path;
+            emit opened(openedNewFile + " " + openedOldFile);
+        }
+    }
+    else if(recentNewFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->newText->setPlainText(file.readAll());
+            file.close();
+            openedNewFile = path;
+            emit opened(openedNewFile + " " + openedOldFile);
+        }
+    }
+
+}
+
+void TextDiffWidget::clearRecent()
+{
+    recentOldFiles.clear();
+    recentNewFiles.clear();
+    emit updateRecent();
 }
 
 TextDiffWidget::TextEdits TextDiffWidget::getSelectedOption()
