@@ -20,12 +20,28 @@ XMLFormatterWidget::XMLFormatterWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->openButton, &QPushButton::clicked, this, &XMLFormatterWidget::open);
+    int size = settings.beginReadArray("xmlFormatterWidget.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 XMLFormatterWidget::~XMLFormatterWidget()
 {
     QSettings settings(Config::settingsName);
     settings.setValue("xmlFormatterWidget.indentations", ui->spinBox->value());
+    settings.beginWriteArray("xmlFormatterWidget.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -40,6 +56,11 @@ void XMLFormatterWidget::open()
         {
             ui->codeEditor->setPlainText(file.readAll());
             openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
             file.close();
             emit opened(openedFile);
         }
@@ -141,6 +162,31 @@ void XMLFormatterWidget::setFont()
 QString XMLFormatterWidget::getOpenedFileName() const
 {
     return openedFile;
+}
+
+QStringList XMLFormatterWidget::getRecentFiles() const
+{
+    return recentFiles;
+}
+
+void XMLFormatterWidget::openFromRecent(const QString &path)
+{
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
+}
+
+void XMLFormatterWidget::clearRecent()
+{
+    recentFiles.clear();
+    emit updateRecent();
 }
 
 void XMLFormatterWidget::format()

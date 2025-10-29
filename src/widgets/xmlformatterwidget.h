@@ -29,6 +29,9 @@ public:
     void resetFontSize() override;
     void setFont() override;
     QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private slots:
     void format();
@@ -36,6 +39,7 @@ private slots:
 private:
     Ui::XMLFormatterWidget *ui;
     QString openedFile;
+    QStringList recentFiles;
 };
 
 #endif // XMLFORMATTERWIDGET_H
