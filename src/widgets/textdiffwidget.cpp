@@ -326,7 +326,6 @@ void TextDiffWidget::openFromRecent(const QString &path)
             emit opened(openedNewFile + " " + openedOldFile);
         }
     }
-
 }
 
 void TextDiffWidget::clearRecent()

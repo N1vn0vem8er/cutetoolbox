@@ -1,4 +1,5 @@
 #include "xmlschemevalidatorwidget.h"
+#include "config.h"
 #include "src/widgets/ui_xmlschemevalidatorwidget.h"
 #include <libxml/xmlschemas.h>
 #include <QFileDialog>
@@ -6,6 +7,7 @@
 #include <qdialog.h>
 #include <qdir.h>
 #include <QFontDialog>
+#include <qsettings.h>
 
 XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -23,6 +25,11 @@ XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
                 ui->xml->setPlainText(file.readAll());
                 file.close();
                 openedXmlFile = path;
+                if(recentXmlFiles.length() >= 10)
+                    recentXmlFiles.removeFirst();
+                if(!recentXmlFiles.contains(openedXmlFile))
+                    recentXmlFiles.append(openedXmlFile);
+                emit updateRecent();
                 emit opened(openedXmlFile + " " + openedXsdFile);
             }
         }
@@ -37,6 +44,11 @@ XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
                 ui->schema->setPlainText(file.readAll());
                 file.close();
                 openedXsdFile = path;
+                if(recentXsdFiles.length() >= 10)
+                    recentXsdFiles.removeFirst();
+                if(!recentXsdFiles.contains(openedXsdFile))
+                    recentXsdFiles.append(openedXsdFile);
+                emit updateRecent();
                 emit opened(openedXmlFile + " " + openedXsdFile);
             }
         }
@@ -53,10 +65,44 @@ XMLSchemeValidatorWidget::XMLSchemeValidatorWidget(QWidget *parent)
     ui->infoLabelContainer->setLayout(layout);
     connect(ui->xml, &CodeEditor::textChanged, this, &XMLSchemeValidatorWidget::validate);
     ui->scrollArea->setVisible(false);
+    QSettings settings(Config::settingsName);
+    int size = settings.beginReadArray("xmlSchemeValidator.recentXmlFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentXmlFiles.append(path);
+    }
+    settings.endArray();
+    size = settings.beginReadArray("xmlSchemeValidator.recentXsdFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentXsdFiles.append(path);
+    }
+    settings.endArray();
 }
 
 XMLSchemeValidatorWidget::~XMLSchemeValidatorWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("xmlSchemeValidator.recentXmlFiles");
+    for(int i = 0; i<recentXmlFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentXmlFiles.at(i));
+    }
+    settings.endArray();
+    settings.beginWriteArray("xmlSchemeValidator.recentXsdFiles");
+    for(int i = 0; i<recentXsdFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentXsdFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
@@ -168,13 +214,22 @@ void XMLSchemeValidatorWidget::open()
                 {
                     ui->xml->setPlainText(file.readAll());
                     openedXmlFile = path;
+                    if(recentXmlFiles.length() >= 10)
+                        recentXmlFiles.removeFirst();
+                    if(!recentXmlFiles.contains(openedXmlFile))
+                        recentXmlFiles.append(openedXmlFile);
                 }
                 else if(option == TextEdits::xsd)
                 {
                     ui->schema->setPlainText(file.readAll());
                     openedXsdFile = path;
+                    if(recentXsdFiles.length() >= 10)
+                        recentXsdFiles.removeFirst();
+                    if(!recentXsdFiles.contains(openedXsdFile))
+                        recentXsdFiles.append(openedXsdFile);
                 }
                 emit opened(openedXmlFile + " " + openedXsdFile);
+                emit updateRecent();
             }
         }
     }
@@ -294,6 +349,44 @@ void XMLSchemeValidatorWidget::setFont()
 QString XMLSchemeValidatorWidget::getOpenedFileName() const
 {
     return openedXmlFile + " " + openedXsdFile;
+}
+
+QStringList XMLSchemeValidatorWidget::getRecentFiles() const
+{
+    return recentXmlFiles + recentXsdFiles;
+}
+
+void XMLSchemeValidatorWidget::openFromRecent(const QString &path)
+{
+    if(recentXmlFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->xml->setPlainText(file.readAll());
+            file.close();
+            openedXmlFile = path;
+            emit opened(openedXmlFile + " " + openedXsdFile);
+        }
+    }
+    else if(recentXsdFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->schema->setPlainText(file.readAll());
+            file.close();
+            openedXsdFile = path;
+            emit opened(openedXmlFile + " " + openedXsdFile);
+        }
+    }
+}
+
+void XMLSchemeValidatorWidget::clearRecent()
+{
+    recentXmlFiles.clear();
+    recentXsdFiles.clear();
+    emit updateRecent();
 }
 
 void XMLSchemeValidatorWidget::handleErrorMsg(void *userData, xmlErrorPtr error)
