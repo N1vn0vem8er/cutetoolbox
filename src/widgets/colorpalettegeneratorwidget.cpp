@@ -34,6 +34,7 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
     ui->contrastSpinBox->setVisible(false);
     ui->attemptsLabel->setVisible(false);
     ui->attemptsSpinBox->setVisible(false);
+    connect(&initColorsWatcher, &QFutureWatcher<QList<QPair<QColor, bool>>>::started, this, [&]{setUiEnabled(false);});
     connect(&initColorsWatcher, &QFutureWatcher<QList<QPair<QColor, bool>>>::finished, this, [this]{
         const QList<QPair<QColor, bool>> results = initColorsWatcher.result();
         for(const auto& color : results)
@@ -45,6 +46,7 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
             colorWidgets.append(widget);
             ui->horizontalWidget->layout()->addWidget(widget);
         }
+        setUiEnabled(true);
     });
     int attemptsSpinBox = ui->attemptsSpinBox->value();
     bool checkContrast = ui->checkContrastCheckBox->isChecked();
