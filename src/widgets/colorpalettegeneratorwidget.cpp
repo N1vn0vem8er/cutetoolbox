@@ -34,10 +34,61 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
     ui->contrastSpinBox->setVisible(false);
     ui->attemptsLabel->setVisible(false);
     ui->attemptsSpinBox->setVisible(false);
-    for(int i=0; i<colorCount; i++)
-    {
-        addColor();
-    }
+    connect(&initColorsWatcher, &QFutureWatcher<QList<QPair<QColor, bool>>>::finished, this, [this]{
+        const QList<QPair<QColor, bool>> results = initColorsWatcher.result();
+        for(const auto& color : results)
+        {
+            ColorCardWidget* widget = new ColorCardWidget(ui->horizontalWidget);
+            connect(widget, &ColorCardWidget::removeColor, this, &ColorPaletteGeneratorWidget::colorRemoved);
+            widget->setColor(color.first);
+            widget->setBadContrast(color.second);
+            colorWidgets.append(widget);
+            ui->horizontalWidget->layout()->addWidget(widget);
+        }
+    });
+    int attemptsSpinBox = ui->attemptsSpinBox->value();
+    bool checkContrast = ui->checkContrastCheckBox->isChecked();
+    int contrast= ui->contrastSpinBox->value();
+    QFuture<QList<QPair<QColor, bool>>> future = QtConcurrent::run([this, attemptsSpinBox, checkContrast, contrast, colorCount]{
+        QList<QPair<QColor, bool>> colors;
+        for(int i=0; i<colorCount; i++)
+        {
+            QPair<QColor, bool> color;
+            if(checkContrast)
+            {
+                bool suitableColorFound = false;
+                int attempts = 0;
+                while(!suitableColorFound && attempts < attemptsSpinBox)
+                {
+                    QColor newColor = generateRandomColor();
+                    bool hasSufficientContrast = true;
+                    for(int j = 0; j < colors.length(); ++j)
+                    {
+                        if(calculateContrastRatio(newColor, colors[j].first) < contrast)
+                        {
+                            hasSufficientContrast = false;
+                            break;
+                        }
+                    }
+                    if(hasSufficientContrast)
+                    {
+                        color.first = newColor;
+                        suitableColorFound = true;
+                    }
+                    attempts++;
+                }
+                if(!suitableColorFound)
+                    color.second = true;
+                else
+                    color.second = false;
+            }
+            else
+                color.first = generateRandomColor();
+            colors.append(color);
+        }
+        return colors;
+    });
+    initColorsWatcher.setFuture(future);
 }
 
 ColorPaletteGeneratorWidget::~ColorPaletteGeneratorWidget()

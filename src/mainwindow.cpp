@@ -168,6 +168,11 @@ void MainWindow::widgetChanged()
     CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
     if(widget)
     {
+        auto items = ui->listWidget->findItems(widget->getName(), Qt::MatchExactly);
+        if(items.length() > 0)
+        {
+            ui->listWidget->setCurrentItem(items.at(0));
+        }
         ui->actionSave->setEnabled(widget->canSaveFiles());
         ui->actionSave_As->setEnabled(widget->canSaveFiles());
         ui->actionCopy->setEnabled(widget->canBasicEdit());

@@ -22,6 +22,7 @@ private:
     Ui::ColorPaletteGeneratorWidget *ui;
     QList<ColorCardWidget*> colorWidgets;
     QFutureWatcher<QList<QPair<bool, QColor>>> watcher;
+    QFutureWatcher<QList<QPair<QColor, bool>>> initColorsWatcher;
 
 private:
     QColor generateRandomColor() const;
