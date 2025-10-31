@@ -34,6 +34,17 @@ ColorPaletteGeneratorWidget::ColorPaletteGeneratorWidget(QWidget *parent)
     ui->contrastSpinBox->setVisible(false);
     ui->attemptsLabel->setVisible(false);
     ui->attemptsSpinBox->setVisible(false);
+    connect(&addColorWatcher, &QFutureWatcher<QPair<QColor, bool>>::started, this, [&]{setUiEnabled(false);});
+    connect(&addColorWatcher, &QFutureWatcher<QPair<QColor, bool>>::finished, this, [this]{
+        QPair<QColor, bool> color = addColorWatcher.result();
+        ColorCardWidget* widget = new ColorCardWidget(ui->horizontalWidget);
+        connect(widget, &ColorCardWidget::removeColor, this, &ColorPaletteGeneratorWidget::colorRemoved);
+        widget->setColor(color.first);
+        widget->setBadContrast(color.second);
+        colorWidgets.append(widget);
+        ui->horizontalWidget->layout()->addWidget(widget);
+        setUiEnabled(true);
+    });
     connect(&initColorsWatcher, &QFutureWatcher<QList<QPair<QColor, bool>>>::started, this, [&]{setUiEnabled(false);});
     connect(&initColorsWatcher, &QFutureWatcher<QList<QPair<QColor, bool>>>::finished, this, [this]{
         const QList<QPair<QColor, bool>> results = initColorsWatcher.result();
@@ -218,40 +229,49 @@ void ColorPaletteGeneratorWidget::colorRemoved(ColorCardWidget *widget)
 
 void ColorPaletteGeneratorWidget::addColor()
 {
-    ColorCardWidget* widget = new ColorCardWidget(ui->horizontalWidget);
-    connect(widget, &ColorCardWidget::removeColor, this, &ColorPaletteGeneratorWidget::colorRemoved);
     if(ui->checkContrastCheckBox->isChecked())
     {
-        bool suitableColorFound = false;
-        int attempts = 0;
-        while(!suitableColorFound && attempts < ui->attemptsSpinBox->value())
+        const auto colorWidgets = this->colorWidgets;
+        QFuture<QPair<QColor, bool>> future = QtConcurrent::run([this, colorWidgets]
         {
-            QColor newColor = generateRandomColor();
-            bool hasSufficientContrast = true;
-            for(int j = 0; j < colorWidgets.length(); ++j)
+            QPair<QColor, bool> color;
+            bool suitableColorFound = false;
+            int attempts = 0;
+            while(!suitableColorFound && attempts < ui->attemptsSpinBox->value())
             {
-                if(calculateContrastRatio(newColor, colorWidgets[j]->getColor()) < ui->contrastSpinBox->value())
+                QColor newColor = generateRandomColor();
+                bool hasSufficientContrast = true;
+                for(int j = 0; j < colorWidgets.length(); ++j)
                 {
-                    hasSufficientContrast = false;
-                    break;
+                    if(calculateContrastRatio(newColor, colorWidgets[j]->getColor()) < ui->contrastSpinBox->value())
+                    {
+                        hasSufficientContrast = false;
+                        break;
+                    }
                 }
+                if(hasSufficientContrast)
+                {
+                    color.first = newColor;
+                    suitableColorFound = true;
+                }
+                attempts++;
             }
-            if(hasSufficientContrast)
-            {
-                widget->setColor(newColor);
-                suitableColorFound = true;
-            }
-            attempts++;
-        }
-        if(!suitableColorFound)
-            widget->setBadContrast(true);
-        else
-            widget->setBadContrast(false);
+            if(!suitableColorFound)
+                color.second = true;
+            else
+                color.second = false;
+            return color;
+        });
+        addColorWatcher.setFuture(future);
     }
     else
+    {
+        ColorCardWidget* widget = new ColorCardWidget(ui->horizontalWidget);
+        connect(widget, &ColorCardWidget::removeColor, this, &ColorPaletteGeneratorWidget::colorRemoved);
         widget->setColor(generateRandomColor());
-    colorWidgets.append(widget);
-    ui->horizontalWidget->layout()->addWidget(widget);
+        colorWidgets.append(widget);
+        ui->horizontalWidget->layout()->addWidget(widget);
+    }
 }
 
 void ColorPaletteGeneratorWidget::onContrastCheckPressed()

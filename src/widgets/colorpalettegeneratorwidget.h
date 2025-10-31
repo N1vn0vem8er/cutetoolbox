@@ -23,6 +23,7 @@ private:
     QList<ColorCardWidget*> colorWidgets;
     QFutureWatcher<QList<QPair<bool, QColor>>> watcher;
     QFutureWatcher<QList<QPair<QColor, bool>>> initColorsWatcher;
+    QFutureWatcher<QPair<QColor, bool>> addColorWatcher;
 
 private:
     QColor generateRandomColor() const;
