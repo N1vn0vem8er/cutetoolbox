@@ -45,7 +45,7 @@
 #include "xmlformatterwidget.h"
 #include "xmlschemevalidatorwidget.h"
 
-#define VERSION "0.1.0"
+#define VERSION "0.2.0"
 #define LICENSELINK "https://www.gnu.org/licenses/gpl-3.0.html"
 
 MainWindow::MainWindow(QWidget *parent)

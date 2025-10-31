@@ -10,6 +10,7 @@ Cute Toolbox is currently under development and it is not fully released. Some f
 * Lorem ipsum generator
 * Chmod calculator
 * Qr code generator
+* Color palette generator
 * Regex tester
 * Markdown preview
 * Numeric systems converter
