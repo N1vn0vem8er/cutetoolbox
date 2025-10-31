@@ -50,7 +50,7 @@ private:
     QStringList recentXsdFiles;
 
 private:
-    static void handleErrorMsg(void* userData, xmlErrorPtr error);
+    static void handleErrorMsg(void* userData, const xmlError* error);
     TextEdits getSelectedOption();
 
 private slots:

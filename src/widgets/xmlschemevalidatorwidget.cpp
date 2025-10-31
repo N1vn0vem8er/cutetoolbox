@@ -389,7 +389,7 @@ void XMLSchemeValidatorWidget::clearRecent()
     emit updateRecent();
 }
 
-void XMLSchemeValidatorWidget::handleErrorMsg(void *userData, xmlErrorPtr error)
+void XMLSchemeValidatorWidget::handleErrorMsg(void *userData, const xmlError* error)
 {
     if(userData && error)
     {

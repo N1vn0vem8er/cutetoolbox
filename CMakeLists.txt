@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(CuteToolBox LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport)
+find_package(Qt6 6.9 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport)
 find_package(LibXml2 REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(yaml-cpp REQUIRED)
