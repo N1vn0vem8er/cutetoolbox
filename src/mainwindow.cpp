@@ -7,6 +7,7 @@
 #include "contrastcheckerwidget.h"
 #include "cppformatterwidget.h"
 #include "csharpformatterwidget.h"
+#include "csvdatatableinfo.h"
 #include "desktopcreatorwidget.h"
 #include "editor/codeeditor.h"
 #include "gzipwidget.h"
@@ -135,6 +136,8 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Video Format Converter"), QIcon(), new VideoConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
     addMenuItem(tr("Color Palette"), QIcon(), new ColorPaletteGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Other"), QIcon());
+    addMenuItem(tr("Data Table Info"), QIcon(), new CSVDataTableInfo(ui->stackedWidget));
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 
