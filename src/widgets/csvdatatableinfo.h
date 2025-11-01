@@ -15,9 +15,26 @@ class CSVDataTableInfo : public CustomWidget
 public:
     explicit CSVDataTableInfo(QWidget *parent = nullptr);
     ~CSVDataTableInfo();
+    bool canOpenFiles() const override;
+    bool canSaveFiles() const override;
+    bool canBasicEdit() const override;
+    void save() override;
+    void saveAs() override;
+    void open() override;
+    void close() override;
+    QString getOpenedFileName() const override;
+    QStringList getRecentFiles() const override;
+    void openFromRecent(const QString &path) override;
+    void clearRecent() override;
 
 private:
     Ui::CSVDataTableInfo *ui;
+    QString openedFile;
+    QStringList recentFiles;
+
+private:
+    void parseCsv(const QString& csv);
+    QString toCsv() const;
 };
 
 #endif // CSVDATATABLEINFO_H
