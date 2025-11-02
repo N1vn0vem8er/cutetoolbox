@@ -149,30 +149,41 @@ void CSVDataTableInfo::clearRecent()
 void CSVDataTableInfo::parseCsv(const QString &csv)
 {
     const QChar separator = ui->separatorLineEdit->text().isEmpty() ? ';' : ui->separatorLineEdit->text().at(0);
-    const QStringList lines = csv.split('\n');
+    const QStringList lines = csv.split('\n', Qt::KeepEmptyParts);
     if(lines.length() > 2)
     {
         QStandardItemModel* model = new QStandardItemModel(ui->table);
+        QMap<int, int> emptyRows;
+        int missingValues = 0;
         if(ui->headerCheckBox->isChecked())
         {
-            const QStringList header = lines.at(0).split(separator);
+            const QStringList header = lines.at(0).split(separator, Qt::KeepEmptyParts);
             for(int i = 0; i< header.length(); i++)
             {
                 model->setHorizontalHeaderItem(i, new QStandardItem(header.at(i)));
+                emptyRows[i] = 0;
             }
+            ui->columnsLabel->setText(tr("Columns: %1").arg(header.length()));
         }
         int maxSize = lines.length() > 1000 ? 1000 : lines.length();
         for(int i = lines.length() > 2 ? 1 : 0; i < maxSize; i++)
         {
-            const QStringList row = lines.at(i).split(separator);
+            const QStringList row = lines.at(i).split(separator, Qt::KeepEmptyParts);
             QList<QStandardItem*> items;
-            for(const auto& item : row)
+            for(int item = 0; item < row.length(); item++)
             {
-                items.append(new QStandardItem(item));
+                if(row.at(item).isEmpty())
+                {
+                    emptyRows[item]++;
+                    missingValues++;
+                }
+                items.append(new QStandardItem(row.at(item)));
             }
             model->appendRow(items);
         }
         ui->table->setModel(model);
+        ui->missingValuesLabel->setText(tr("Missing Values: %1").arg(missingValues));
+        ui->rowsLabel->setText(tr("Rows: %1").arg(ui->headerCheckBox->isChecked() ? lines.length() - 1 : lines.length()));
     }
 }
 
