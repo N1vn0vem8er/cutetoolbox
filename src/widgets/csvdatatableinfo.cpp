@@ -3,6 +3,7 @@
 #include "src/widgets/ui_csvdatatableinfo.h"
 #include <QFileDialog>
 #include <QSettings>
+#include <QStandardItemModel>
 
 CSVDataTableInfo::CSVDataTableInfo(QWidget *parent)
     : CustomWidget(parent)
@@ -147,7 +148,32 @@ void CSVDataTableInfo::clearRecent()
 
 void CSVDataTableInfo::parseCsv(const QString &csv)
 {
-
+    const QChar separator = ui->separatorLineEdit->text().isEmpty() ? ';' : ui->separatorLineEdit->text().at(0);
+    const QStringList lines = csv.split('\n');
+    if(lines.length() > 2)
+    {
+        QStandardItemModel* model = new QStandardItemModel(ui->table);
+        if(ui->headerCheckBox->isChecked())
+        {
+            const QStringList header = lines.at(0).split(separator);
+            for(int i = 0; i< header.length(); i++)
+            {
+                model->setHorizontalHeaderItem(i, new QStandardItem(header.at(i)));
+            }
+        }
+        int maxSize = lines.length() > 1000 ? 1000 : lines.length();
+        for(int i = lines.length() > 2 ? 1 : 0; i < maxSize; i++)
+        {
+            const QStringList row = lines.at(i).split(separator);
+            QList<QStandardItem*> items;
+            for(const auto& item : row)
+            {
+                items.append(new QStandardItem(item));
+            }
+            model->appendRow(items);
+        }
+        ui->table->setModel(model);
+    }
 }
 
 QString CSVDataTableInfo::toCsv() const
