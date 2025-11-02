@@ -150,7 +150,7 @@ void CSVDataTableInfo::parseCsv(const QString &csv)
 {
     const QChar separator = ui->separatorLineEdit->text().isEmpty() ? ';' : ui->separatorLineEdit->text().at(0);
     const QStringList lines = csv.split('\n', Qt::KeepEmptyParts);
-    if(lines.length() > 2)
+    if(lines.length() > 1)
     {
         QStandardItemModel* model = new QStandardItemModel(ui->table);
         QMap<int, int> emptyRows;
@@ -166,7 +166,7 @@ void CSVDataTableInfo::parseCsv(const QString &csv)
             ui->columnsLabel->setText(tr("Columns: %1").arg(header.length()));
         }
         int maxSize = lines.length() > 1000 ? 1000 : lines.length();
-        for(int i = lines.length() > 2 ? 1 : 0; i < maxSize; i++)
+        for(int i = ui->headerCheckBox->isChecked() ? 1 : 0; i < maxSize; i++)
         {
             const QStringList row = lines.at(i).split(separator, Qt::KeepEmptyParts);
             QList<QStandardItem*> items;
