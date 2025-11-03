@@ -42,49 +42,6 @@ bool CSVDataTableInfo::canOpenFiles() const
     return true;
 }
 
-bool CSVDataTableInfo::canSaveFiles() const
-{
-    return true;
-}
-
-bool CSVDataTableInfo::canBasicEdit() const
-{
-    return true;
-}
-
-void CSVDataTableInfo::save()
-{
-    if(!openedFile.isEmpty())
-    {
-        QFile file(openedFile);
-        if(file.open(QIODevice::WriteOnly))
-        {
-            file.write(toCsv().toUtf8());
-            file.close();
-            emit saved(tr("Saved: %1").arg(openedFile));
-        }
-    }
-    else
-        saveAs();
-}
-
-void CSVDataTableInfo::saveAs()
-{
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.csv");
-    if(!path.isEmpty())
-    {
-        QFile file(path);
-        if(file.open(QIODevice::WriteOnly))
-        {
-            file.write(toCsv().toUtf8());
-            file.close();
-            openedFile = path;
-            emit saved(tr("Saved: %1").arg(openedFile));
-            emit opened(openedFile);
-        }
-    }
-}
-
 void CSVDataTableInfo::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), "*.csv");

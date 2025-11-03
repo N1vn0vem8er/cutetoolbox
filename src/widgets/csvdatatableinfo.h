@@ -16,10 +16,6 @@ public:
     explicit CSVDataTableInfo(QWidget *parent = nullptr);
     ~CSVDataTableInfo();
     bool canOpenFiles() const override;
-    bool canSaveFiles() const override;
-    bool canBasicEdit() const override;
-    void save() override;
-    void saveAs() override;
     void open() override;
     void close() override;
     QString getOpenedFileName() const override;
