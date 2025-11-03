@@ -115,9 +115,9 @@ void CSVDataTableInfo::parseCsv(const QString &csv)
         infoModel->setHorizontalHeaderItem(1, new QStandardItem(tr("Missing Values")));
         QMap<int, int> emptyRows;
         int missingValues = 0;
+        const QStringList header = lines.at(0).split(separator, Qt::KeepEmptyParts);
         if(ui->headerCheckBox->isChecked())
         {
-            const QStringList header = lines.at(0).split(separator, Qt::KeepEmptyParts);
             for(int i = 0; i< header.length(); i++)
             {
                 model->setHorizontalHeaderItem(i, new QStandardItem(header.at(i)));
@@ -148,6 +148,15 @@ void CSVDataTableInfo::parseCsv(const QString &csv)
                 }
             }
         }
+        if(ui->headerCheckBox->isChecked())
+            for(int i=0;i<header.size(); i++)
+            {
+                QList<QStandardItem*> items;
+                items.append(new QStandardItem(header.at(i)));
+                items.append(new QStandardItem(QString::number(emptyRows.value(i))));
+                infoModel->appendRow(items);
+            }
+        ui->columnsInfoTable->setModel(infoModel);
         ui->table->setModel(model);
         ui->missingValuesLabel->setText(tr("Missing Values: %1").arg(missingValues));
         ui->rowsLabel->setText(tr("Rows: %1").arg(ui->headerCheckBox->isChecked() ? lines.length() - 1 : lines.length()));
