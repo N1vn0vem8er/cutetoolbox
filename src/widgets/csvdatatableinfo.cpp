@@ -13,6 +13,8 @@ CSVDataTableInfo::CSVDataTableInfo(QWidget *parent)
     setName(tr("Data Table Info"));
     connect(ui->openButton, &QPushButton::clicked, this, &CSVDataTableInfo::open);
     QSettings settings(Config::settingsName);
+    ui->headerCheckBox->setChecked(settings.value("dataTableInfo.header", true).toBool());
+    ui->separatorLineEdit->setText(settings.value("dataTableInfo.separator", ";").toString());
     int size = settings.beginReadArray("dataTableInfo.recentFiles");
     for(int i = 0; i<size; i++)
     {
@@ -27,6 +29,8 @@ CSVDataTableInfo::CSVDataTableInfo(QWidget *parent)
 CSVDataTableInfo::~CSVDataTableInfo()
 {
     QSettings settings(Config::settingsName);
+    settings.setValue("dataTableInfo.header", ui->headerCheckBox->isChecked());
+    settings.setValue("dataTableInfo.separator", ui->separatorLineEdit->text());
     settings.beginWriteArray("dataTableInfo.recentFiles");
     for(int i = 0; i<recentFiles.size(); i++)
     {
