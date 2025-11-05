@@ -143,14 +143,16 @@ void CSVDataTableInfo::parseCsv(const QString &csv)
         for(int i = ui->headerCheckBox->isChecked() ? 1 : 0; i < lines.length(); i++)
         {
             const QStringList row = lines.at(i).split(separator, Qt::KeepEmptyParts);
-            for(int item = 0; item < row.length(); item++)
-            {
-                if(row.at(item).isEmpty())
+            if(!row.isEmpty() && row.length() == header.length())
+                for(int item = 0; item < row.length(); item++)
                 {
-                    emptyRows[item]++;
-                    missingValues++;
+                    if(row.at(item).isEmpty())
+                    {
+                        qDebug() << row.at(item);
+                        emptyRows[item]++;
+                        missingValues++;
+                    }
                 }
-            }
         }
         if(ui->headerCheckBox->isChecked())
             for(int i=0;i<header.size(); i++)
