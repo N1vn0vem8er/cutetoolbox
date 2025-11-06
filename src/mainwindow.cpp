@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "apitester.h"
 #include "base64coderdecoderwidget.h"
 #include "chmodcalculatorwidget.h"
 #include "colorpalettegeneratorwidget.h"
@@ -145,6 +146,8 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Video Format Converter"), QIcon(), new VideoConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
     addMenuItem(tr("Color Palette"), QIcon(), new ColorPaletteGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Network"), QIcon());
+    addMenuItem(tr("Api Tester"), QIcon(), new ApiTester(ui->stackedWidget));
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), QIcon(), new CSVDataTableInfo(ui->stackedWidget));
     if(currentMenu)

@@ -71,6 +71,7 @@ qt_add_executable(CuteToolBox
     src/widgets/videoconverterwidget.h src/widgets/videoconverterwidget.cpp src/widgets/videoconverterwidget.ui
     src/widgets/csvdatatableinfo.h src/widgets/csvdatatableinfo.cpp src/widgets/csvdatatableinfo.ui
     src/settingsdialog.h src/settingsdialog.cpp src/settingsdialog.ui
+    src/widgets/apitester.h src/widgets/apitester.cpp src/widgets/apitester.ui
 )
 
 include_directories(
