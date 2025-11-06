@@ -118,6 +118,8 @@ font-weight: bold;</string>
     <addaction name="actionDelete"/>
     <addaction name="actionDelete_All"/>
     <addaction name="actionSelect_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -393,6 +395,11 @@ font-weight: bold;</string>
    </property>
    <property name="text">
     <string>no recent</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

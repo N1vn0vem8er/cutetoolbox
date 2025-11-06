@@ -3,7 +3,6 @@
 #include "chmodcalculatorwidget.h"
 #include "colorpalettegeneratorwidget.h"
 #include "colorpicker.h"
-#include "config.h"
 #include "contrastcheckerwidget.h"
 #include "cppformatterwidget.h"
 #include "csharpformatterwidget.h"
@@ -38,6 +37,7 @@
 #include <qplaintextedit.h>
 #include <qsettings.h>
 #include "htmlcoderdecoderwidget.h"
+#include "settingsdialog.h"
 #include "urlcoderdecoderwidget.h"
 #include "usergeneratorwidget.h"
 #include "uuidgeneratorwidget.h"
@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     openedFileLabel = new QLabel(ui->statusbar);
     ui->statusbar->addPermanentWidget(openedFileLabel);
-    QSettings settings(Config::settingsName);
+    settings.setValue("search.focusOnOpen", true);
     restoreGeometry(settings.value("Geometry").toByteArray());
     restoreState(settings.value("State").toByteArray());
     ui->actionSide_menu->setChecked(settings.value("sideMenu", true).toBool());
@@ -85,7 +85,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->stackedWidget, &QStackedWidget::currentChanged, this, &MainWindow::widgetChanged);
     connect(ui->actionExit, &QAction::triggered, qApp, &QApplication::closeAllWindows);
     connect(ui->actionFull_screen, &QAction::triggered, this, [&]{if(isFullScreen()) showNormal(); else showFullScreen();});
-    connect(ui->actionFind, &QAction::triggered, this, [&]{ui->searchWidget->setVisible(!ui->searchWidget->isVisible()); if(ui->searchWidget->isVisible()) ui->searchLine->setFocus();});
+    connect(ui->actionFind, &QAction::triggered, this, [&]{
+        ui->searchWidget->setVisible(!ui->searchWidget->isVisible());
+        if(settings.value("search.focusOnOpen").toBool() && ui->searchWidget->isVisible())
+            ui->searchLine->setFocus();
+        if(settings.value("search.clearOnClose").toBool() && !ui->searchWidget->isVisible())
+            ui->searchLine->clear();
+    });
+    connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::showSettings);
 
     ui->searchWidget->setVisible(false);
 
@@ -653,6 +660,12 @@ void MainWindow::updateRecent()
     }
 }
 
+void MainWindow::showSettings()
+{
+    SettingsDialog dialog(this);
+    dialog.exec();
+}
+
 void MainWindow::openFromRecent(const QString &path)
 {
     CustomWidget* widget = qobject_cast<CustomWidget*>(ui->stackedWidget->currentWidget());
@@ -675,7 +688,6 @@ void MainWindow::showByName(const QString &name)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QSettings settings(Config::settingsName);
     settings.setValue("State", saveState());
     settings.setValue("Geometry", saveGeometry());
     settings.setValue("sideMenu", ui->actionSide_menu->isChecked());

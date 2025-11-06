@@ -1,10 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "config.h"
 #include "customwidget.h"
 #include <QMainWindow>
 #include <qcompleter.h>
 #include <qlabel.h>
+#include <qsettings.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -46,6 +48,7 @@ private slots:
     void openedFile(const QString& path);
     void find(QString text);
     void updateRecent();
+    void showSettings();
 
 private:
     Ui::MainWindow *ui;
@@ -54,6 +57,7 @@ private:
     QLabel* openedFileLabel {nullptr};
     QCompleter* completer {nullptr};
     QStringList toolNames;
+    QSettings settings{Config::settingsName};
 
 private:
     void showByName(const QString& name);

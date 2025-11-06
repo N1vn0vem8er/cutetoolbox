@@ -70,6 +70,7 @@ qt_add_executable(CuteToolBox
     src/config.h
     src/widgets/videoconverterwidget.h src/widgets/videoconverterwidget.cpp src/widgets/videoconverterwidget.ui
     src/widgets/csvdatatableinfo.h src/widgets/csvdatatableinfo.cpp src/widgets/csvdatatableinfo.ui
+    src/settingsdialog.h src/settingsdialog.cpp src/settingsdialog.ui
 )
 
 include_directories(
