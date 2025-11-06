@@ -665,6 +665,7 @@ void MainWindow::updateRecent()
 void MainWindow::showSettings()
 {
     SettingsDialog dialog(this);
+    dialog.setWindowTitle(tr("Settings"));
     dialog.exec();
 }
 
