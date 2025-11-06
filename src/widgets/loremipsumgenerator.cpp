@@ -16,6 +16,7 @@ LoremIpsumGenerator::LoremIpsumGenerator(QWidget *parent)
     QSettings settings(Config::settingsName);
     ui->spinBox->setValue(settings.value("loremIpsumGenerator.count", 5).toInt());
     ui->comboBox->setCurrentIndex(settings.value("loremIpsumGenerator.type", 0).toInt());
+    ui->beginWithLICheckBox->setChecked(settings.value("loremIpsumGenerator.beginWithLI", false).toBool());
     connect(ui->spinBox, &QSpinBox::valueChanged, this, &LoremIpsumGenerator::generate);
     connect(ui->comboBox, &QComboBox::currentIndexChanged, this, &LoremIpsumGenerator::generate);
     connect(ui->beginWithLICheckBox, &QCheckBox::clicked, this, &LoremIpsumGenerator::generate);
@@ -29,6 +30,7 @@ LoremIpsumGenerator::~LoremIpsumGenerator()
     QSettings settings(Config::settingsName);
     settings.setValue("loremIpsumGenerator.count", ui->spinBox->value());
     settings.setValue("loremIpsumGenerator.type", ui->comboBox->currentIndex());
+    settings.setValue("loremIpsumGenerator.beginWithLI", ui->beginWithLICheckBox->isChecked());
     delete ui;
 }
 
