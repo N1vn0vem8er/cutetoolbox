@@ -63,6 +63,7 @@ private:
     void showByName(const QString& name);
     void openFromRecent(const QString& path);
     void clearRecent();
+    void loadDefaultSettings();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

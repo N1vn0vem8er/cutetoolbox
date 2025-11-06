@@ -54,11 +54,13 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    loadDefaultSettings();
     openedFileLabel = new QLabel(ui->statusbar);
     ui->statusbar->addPermanentWidget(openedFileLabel);
-    settings.setValue("search.focusOnOpen", true);
-    restoreGeometry(settings.value("Geometry").toByteArray());
-    restoreState(settings.value("State").toByteArray());
+    if(settings.value("save.geometry", true).toBool())
+        restoreGeometry(settings.value("Geometry").toByteArray());
+    if(settings.value("save.state", true).toBool())
+        restoreState(settings.value("State").toByteArray());
     ui->actionSide_menu->setChecked(settings.value("sideMenu", true).toBool());
     ui->listWidget->setVisible(ui->actionSide_menu->isChecked());
     connect(ui->listWidget, &QListWidget::clicked, this, &MainWindow::showWidget);
@@ -680,6 +682,16 @@ void MainWindow::clearRecent()
         widget->clearRecent();
 }
 
+void MainWindow::loadDefaultSettings()
+{
+    if(!settings.contains("search.focusOnOpen"))
+        settings.setValue("search.focusOnOpen", true);
+    if(!settings.contains("save.state"))
+        settings.setValue("save.state", true);
+    if(!settings.contains("save.geometry"))
+        settings.setValue("save.geometry", true);
+}
+
 void MainWindow::showByName(const QString &name)
 {
     ui->stackedWidget->setCurrentIndex(menuIndexMap.value(name));
@@ -688,8 +700,10 @@ void MainWindow::showByName(const QString &name)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    settings.setValue("State", saveState());
-    settings.setValue("Geometry", saveGeometry());
+    if(settings.value("save.state", true).toBool())
+        settings.setValue("State", saveState());
+    if(settings.value("save.geometry", true).toBool())
+        settings.setValue("Geometry", saveGeometry());
     settings.setValue("sideMenu", ui->actionSide_menu->isChecked());
     settings.setValue("lastTool", ui->stackedWidget->currentIndex());
     QMainWindow::closeEvent(event);
