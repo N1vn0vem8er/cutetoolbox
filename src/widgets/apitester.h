@@ -40,7 +40,7 @@ private:
     QString openedResponseFile;
     QStringList recentRequestFiles;
     QStringList recentResponseFiles;
-    QNetworkAccessManager* networkManager {nullptr};
+    QNetworkAccessManager networkManager;
 
 private slots:
     void sendGetRequest();

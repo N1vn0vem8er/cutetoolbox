@@ -1,14 +1,16 @@
 #include "apitester.h"
 #include "src/widgets/ui_apitester.h"
 
+#include <QNetworkReply>
+
 ApiTester::ApiTester(QWidget *parent)
     : CustomWidget(parent)
     , ui(new Ui::ApiTester)
 {
     ui->setupUi(this);
     setName(tr("Api Tester"));
-    networkManager = new QNetworkAccessManager(this);
-    connect(networkManager, &QNetworkAccessManager::finished, this, &ApiTester::onRequestFinished);
+    connect(&networkManager, &QNetworkAccessManager::finished, this, &ApiTester::onRequestFinished);
+    connect(ui->sendGetButton, &QPushButton::clicked, this, &ApiTester::sendGetRequest);
 }
 
 ApiTester::~ApiTester()
@@ -103,7 +105,11 @@ void ApiTester::clearRecent()
 
 void ApiTester::sendGetRequest()
 {
-
+    const QUrl url(ui->urlLineEdit->text());
+    if(url.isValid())
+    {
+        networkManager.get(QNetworkRequest(url));
+    }
 }
 
 void ApiTester::sendPostRequest()
@@ -118,5 +124,5 @@ void ApiTester::sendPutRequest()
 
 void ApiTester::onRequestFinished(QNetworkReply *reply)
 {
-
+    qDebug() << reply->readAll();
 }
