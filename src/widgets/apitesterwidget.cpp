@@ -108,18 +108,53 @@ void ApiTesterWidget::sendGetRequest()
     const QUrl url(ui->urlLineEdit->text());
     if(url.isValid())
     {
-        networkManager.get(QNetworkRequest(url));
+        QNetworkRequest request(url);
+        QHttpHeaders headers;
+        QAbstractItemModel* model = ui->requestTableView->model();
+        if(model)
+            for(int i = 0;i < model->rowCount(); i++)
+            {
+                headers.append(model->data(model->index(i, 0)).toString(), model->data(model->index(i, 1)).toString());
+            }
+        request.setHeaders(headers);
+        networkManager.get(request);
     }
 }
 
 void ApiTesterWidget::sendPostRequest()
 {
-
+    const QUrl url(ui->urlLineEdit->text());
+    if(url.isValid())
+    {
+        QNetworkRequest request(url);
+        QHttpHeaders headers;
+        QAbstractItemModel* model = ui->requestTableView->model();
+        if(model)
+            for(int i = 0;i < model->rowCount(); i++)
+            {
+                headers.append(model->data(model->index(i, 0)).toString(), model->data(model->index(i, 1)).toString());
+            }
+        request.setHeaders(headers);
+        networkManager.post(request, ui->requestBody->toPlainText().toUtf8());
+    }
 }
 
 void ApiTesterWidget::sendPutRequest()
 {
-
+    const QUrl url(ui->urlLineEdit->text());
+    if(url.isValid())
+    {
+        QNetworkRequest request(url);
+        QHttpHeaders headers;
+        QAbstractItemModel* model = ui->requestTableView->model();
+        if(model)
+            for(int i = 0;i < model->rowCount(); i++)
+            {
+                headers.append(model->data(model->index(i, 0)).toString(), model->data(model->index(i, 1)).toString());
+            }
+        request.setHeaders(headers);
+        networkManager.put(request, ui->requestBody->toPlainText().toUtf8());
+    }
 }
 
 void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
