@@ -1,21 +1,21 @@
-#ifndef APITESTER_H
-#define APITESTER_H
+#ifndef APITESTERWIDGET_H
+#define APITESTERWIDGET_H
 
 #include "customwidget.h"
 #include <QWidget>
 #include <QNetworkAccessManager>
 
 namespace Ui {
-class ApiTester;
+class ApiTesterWidget;
 }
 
-class ApiTester : public CustomWidget
+class ApiTesterWidget : public CustomWidget
 {
     Q_OBJECT
 
 public:
-    explicit ApiTester(QWidget *parent = nullptr);
-    ~ApiTester();
+    explicit ApiTesterWidget(QWidget *parent = nullptr);
+    ~ApiTesterWidget();
     bool canOpenFiles() const override;
     bool canSaveFiles() const override;
     bool canBasicEdit() const override;
@@ -35,7 +35,7 @@ public:
     void clearRecent() override;
 
 private:
-    Ui::ApiTester *ui;
+    Ui::ApiTesterWidget *ui;
     QString openedRequestFile;
     QString openedResponseFile;
     QStringList recentRequestFiles;
@@ -49,4 +49,4 @@ private slots:
     void onRequestFinished(QNetworkReply* reply);
 };
 
-#endif // APITESTER_H
+#endif // APITESTERWIDGET_H

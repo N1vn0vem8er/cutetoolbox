@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "apitester.h"
+#include "apitesterwidget.h"
 #include "base64coderdecoderwidget.h"
 #include "chmodcalculatorwidget.h"
 #include "colorpalettegeneratorwidget.h"
@@ -29,11 +29,11 @@
 #include "randomtextgeneratorwidget.h"
 #include "regexwidget.h"
 #include "sqlformatterwidget.h"
+#include "src/ui_mainwindow.h"
 #include "tablegenformatterwidget.h"
 #include "textdiffwidget.h"
 #include "textprotoformatterwidget.h"
 #include "timestampwidget.h"
-#include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <qplaintextedit.h>
 #include <qsettings.h>
@@ -147,7 +147,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
     addMenuItem(tr("Color Palette"), QIcon(), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Network"), QIcon());
-    addMenuItem(tr("Api Tester"), QIcon(), new ApiTester(ui->stackedWidget));
+    addMenuItem(tr("Api Tester"), QIcon(), new ApiTesterWidget(ui->stackedWidget));
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), QIcon(), new CSVDataTableInfo(ui->stackedWidget));
     if(currentMenu)
