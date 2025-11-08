@@ -1,6 +1,6 @@
 #include "apitesterwidget.h"
 #include "src/widgets/ui_apitesterwidget.h"
-
+#include <QStandardItemModel>
 #include <QNetworkReply>
 
 ApiTesterWidget::ApiTesterWidget(QWidget *parent)
@@ -124,5 +124,15 @@ void ApiTesterWidget::sendPutRequest()
 
 void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
 {
-    qDebug() << reply->readAll();
+    if(ui->responseTableView->model())
+        ui->responseTableView->model()->deleteLater();
+    QStandardItemModel* model = new QStandardItemModel(ui->responseTableView);
+    model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
+    model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
+    for(const auto& i : reply->headers().toListOfPairs())
+    {
+        model->appendRow({new QStandardItem(i.first), new QStandardItem(i.second)});
+    }
+    ui->responseTableView->setModel(model);
+    ui->responseBody->setPlainText(reply->readAll());
 }
