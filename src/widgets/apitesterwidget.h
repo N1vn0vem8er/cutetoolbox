@@ -47,6 +47,8 @@ private slots:
     void sendPostRequest();
     void sendPutRequest();
     void onRequestFinished(QNetworkReply* reply);
+    void addHeader();
+    void removeHeader();
 };
 
 #endif // APITESTERWIDGET_H

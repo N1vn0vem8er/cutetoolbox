@@ -2,6 +2,7 @@
 #include "src/widgets/ui_apitesterwidget.h"
 #include <QStandardItemModel>
 #include <QNetworkReply>
+#include <qdialog.h>
 
 ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -11,6 +12,12 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     setName(tr("Api Tester"));
     connect(&networkManager, &QNetworkAccessManager::finished, this, &ApiTesterWidget::onRequestFinished);
     connect(ui->sendGetButton, &QPushButton::clicked, this, &ApiTesterWidget::sendGetRequest);
+    connect(ui->addHeaderBotton, &QPushButton::clicked, this, &ApiTesterWidget::addHeader);
+    connect(ui->removeHeaderButton, &QPushButton::clicked, this, &ApiTesterWidget::removeHeader);
+    QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
+    model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
+    model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
+    ui->requestTableView->setModel(model);
 }
 
 ApiTesterWidget::~ApiTesterWidget()
@@ -170,4 +177,37 @@ void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
     }
     ui->responseTableView->setModel(model);
     ui->responseBody->setPlainText(reply->readAll());
+}
+
+void ApiTesterWidget::addHeader()
+{
+    if(ui->requestTableView->model())
+    {
+        QDialog dialog(this);
+        dialog.setWindowTitle(tr("Add Header"));
+        QVBoxLayout layout;
+        QLineEdit name;
+        name.setPlaceholderText(tr("Header name"));
+        QLineEdit value;
+        value.setPlaceholderText(tr("Header value"));
+        layout.addWidget(&name);
+        layout.addWidget(&value);
+        QPushButton okButton(tr("Add"));
+        QPushButton cancelButton(tr("Cancel"));
+        connect(&okButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+        connect(&cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
+        layout.addWidget(&okButton);
+        layout.addWidget(&cancelButton);
+        dialog.setLayout(&layout);
+        if(dialog.exec() == QDialog::Accepted)
+        {
+            QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->requestTableView->model());
+            model->appendRow({new QStandardItem(name.text()), new QStandardItem(value.text())});
+        }
+    }
+}
+
+void ApiTesterWidget::removeHeader()
+{
+
 }
