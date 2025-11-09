@@ -4,6 +4,7 @@
 #include <QNetworkReply>
 #include <qdialog.h>
 #include <qmessagebox.h>
+#include <qfiledialog.h>
 
 ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -58,7 +59,24 @@ void ApiTesterWidget::saveAs()
 
 void ApiTesterWidget::open()
 {
-
+    const QString path = QFileDialog::getOpenFileName(this, tr("Select Body"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            orginalFile = file.readAll();
+            file.close();
+            ui->requestBody->setPlainText(orginalFile);
+            openedRequestFile = path;
+            if(recentRequestFiles.length() >= 10)
+                recentRequestFiles.removeFirst();
+            if(!recentRequestFiles.contains(openedRequestFile))
+                recentRequestFiles.append(openedRequestFile);
+            emit updateRecent();
+            emit opened(openedRequestFile);
+        }
+    }
 }
 
 void ApiTesterWidget::close()
@@ -108,7 +126,8 @@ void ApiTesterWidget::openFromRecent(const QString &path)
 
 void ApiTesterWidget::clearRecent()
 {
-
+    recentRequestFiles.clear();
+    emit updateRecent();
 }
 
 void ApiTesterWidget::sendGetRequest()

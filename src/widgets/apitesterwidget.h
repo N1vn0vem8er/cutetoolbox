@@ -41,6 +41,7 @@ private:
     QStringList recentRequestFiles;
     QStringList recentResponseFiles;
     QNetworkAccessManager networkManager;
+    QByteArray orginalFile;
 
 private slots:
     void sendGetRequest();
