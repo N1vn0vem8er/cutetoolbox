@@ -3,6 +3,7 @@
 #include <QStandardItemModel>
 #include <QNetworkReply>
 #include <qdialog.h>
+#include <qmessagebox.h>
 
 ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -209,5 +210,12 @@ void ApiTesterWidget::addHeader()
 
 void ApiTesterWidget::removeHeader()
 {
-
+    if(ui->requestTableView->selectionModel()->hasSelection())
+    {
+        QModelIndex index = ui->requestTableView->selectionModel()->selectedIndexes()[0];
+        if(QMessageBox::question(this, tr("Remove"), tr("Remove header?")) == QMessageBox::Yes)
+        {
+            ui->requestTableView->model()->removeRow(index.row());
+        }
+    }
 }
