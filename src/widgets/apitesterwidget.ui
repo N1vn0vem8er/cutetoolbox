@@ -181,7 +181,14 @@
             </layout>
            </item>
            <item>
-            <widget class="QTableView" name="requestTableView"/>
+            <widget class="QTableView" name="requestTableView">
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QPlainTextEdit" name="requestBody"/>
