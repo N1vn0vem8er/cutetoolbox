@@ -178,6 +178,71 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="openRequestHeadersButton">
+               <property name="toolTip">
+                <string>Open</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="saveRequestHeaderButton">
+               <property name="toolTip">
+                <string>Save As</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="QIcon::ThemeIcon::DocumentSaveAs"/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="copyRequestHeadersButton">
+               <property name="toolTip">
+                <string>Copy</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pasteRequestHeadersButton">
+               <property name="toolTip">
+                <string>Paste</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="clearRequestHeadersButton">
+               <property name="toolTip">
+                <string>Clear</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="QIcon::ThemeIcon::EditClear"/>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -220,9 +285,28 @@
               </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="saveResponesHeadersButton">
+               <property name="toolTip">
+                <string>Save As</string>
+               </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="QIcon::ThemeIcon::DocumentSaveAs"/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="copyResponseHeadersButton">
+               <property name="toolTip">
+                <string>Copy</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset theme="QIcon::ThemeIcon::EditCopy"/>
                </property>
               </widget>
              </item>
