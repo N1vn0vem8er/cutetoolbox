@@ -191,7 +191,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="requestBody"/>
+            <widget class="CodeEditor" name="requestBody"/>
            </item>
           </layout>
          </widget>
@@ -232,7 +232,7 @@
             <widget class="QTableView" name="responseTableView"/>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="responseBody"/>
+            <widget class="CodeEditor" name="responseBody"/>
            </item>
           </layout>
          </widget>
@@ -244,6 +244,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CodeEditor</class>
+   <extends>QPlainTextEdit</extends>
+   <header>editor/codeeditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

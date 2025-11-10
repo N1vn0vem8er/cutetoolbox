@@ -5,6 +5,8 @@
 #include <qdialog.h>
 #include <qmessagebox.h>
 #include <qfiledialog.h>
+#include <QInputDialog>
+#include <QFontDialog>
 
 ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -144,32 +146,102 @@ void ApiTesterWidget::open()
 
 void ApiTesterWidget::close()
 {
-
+    if(openedRequestFile.isEmpty())
+        openedRequestFile.clear();
+    else if(openedResponseFile.isEmpty())
+        openedResponseFile.clear();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::request)
+                openedRequestFile.clear();
+            else if(option == TextEdits::response)
+                openedResponseFile.clear();
+        }
+    }
+    emit opened(openedRequestFile + " " + openedResponseFile);
 }
 
 void ApiTesterWidget::increaseFontSize()
 {
-
+    if(ui->requestBody->hasFocus())
+        ui->requestBody->increaseFontSize();
+    else if(ui->responseBody->hasFocus())
+        ui->responseBody->increaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::request)
+                ui->requestBody->increaseFontSize();
+            else if(option == TextEdits::response)
+                ui->responseBody->increaseFontSize();
+        }
+    }
 }
 
 void ApiTesterWidget::decreaseFontSize()
 {
-
+    if(ui->requestBody->hasFocus())
+        ui->requestBody->decreaseFontSize();
+    else if(ui->responseBody->hasFocus())
+        ui->responseBody->decreaseFontSize();
+    else
+    {
+        TextEdits option = getSelectedOption();
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::request)
+                ui->requestBody->decreaseFontSize();
+            else if(option == TextEdits::response)
+                ui->responseBody->decreaseFontSize();
+        }
+    }
 }
 
 void ApiTesterWidget::setFontSize()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200);
+        if(option == TextEdits::request)
+            ui->requestBody->setFontSize(size);
+        else if(option == TextEdits::response)
+            ui->responseBody->setFontSize(size);
+    }
 }
 
 void ApiTesterWidget::resetFontSize()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        if(option == TextEdits::request)
+            ui->requestBody->setFontSize(10);
+        else if(option == TextEdits::response)
+            ui->responseBody->setFontSize(10);
+    }
 }
 
 void ApiTesterWidget::setFont()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        bool ok;
+        const QFont font = QFontDialog::getFont(&ok, this);
+        if(ok)
+        {
+            if(option == TextEdits::request)
+                ui->requestBody->setFont(font);
+            else if(option == TextEdits::response)
+                ui->responseBody->setFont(font);
+        }
+    }
 }
 
 QString ApiTesterWidget::getOpenedFileName() const
