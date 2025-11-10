@@ -42,6 +42,14 @@ private:
     QStringList recentResponseFiles;
     QNetworkAccessManager networkManager;
     QByteArray orginalFile;
+    enum TextEdits{
+        request,
+        response,
+        none
+    };
+
+private:
+    TextEdits getSelectedOption();
 
 private slots:
     void sendGetRequest();

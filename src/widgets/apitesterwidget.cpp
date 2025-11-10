@@ -49,12 +49,75 @@ bool ApiTesterWidget::canChangeFont() const
 
 void ApiTesterWidget::save()
 {
-
+    if(!openedRequestFile.isEmpty() || !openedResponseFile.isEmpty())
+    {
+        TextEdits option = TextEdits::none;
+        if(ui->requestBody->hasFocus() && !openedRequestFile.isEmpty())
+            option = TextEdits::request;
+        else if(ui->responseBody->hasFocus() && !openedResponseFile.isEmpty())
+            option = TextEdits::response;
+        else if(!openedRequestFile.isEmpty() && !openedResponseFile.isEmpty())
+            option = getSelectedOption();
+        else if(!openedRequestFile.isEmpty())
+            option = TextEdits::request;
+        else if(openedResponseFile.isEmpty())
+            option = TextEdits::response;
+        if(option != TextEdits::none)
+        {
+            if(option == TextEdits::request)
+            {
+                QFile file(openedRequestFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->requestBody->toPlainText().toUtf8());
+                    file.close();
+                    emit saved(tr("Saved: %1").arg(openedRequestFile));
+                }
+            }
+            else if(option == TextEdits::response)
+            {
+                QFile file(openedResponseFile);
+                if(file.open(QIODevice::WriteOnly))
+                {
+                    file.write(ui->responseBody->toPlainText().toUtf8());
+                    file.close();
+                    emit saved(tr("Saved: %1").arg(openedResponseFile));
+                }
+            }
+        }
+    }
+    else
+        saveAs();
 }
 
 void ApiTesterWidget::saveAs()
 {
-
+    TextEdits option = getSelectedOption();
+    if(option != TextEdits::none)
+    {
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::WriteOnly))
+            {
+                if(option == TextEdits::request)
+                {
+                    file.write(ui->requestBody->toPlainText().toUtf8());
+                    openedRequestFile = path;
+                    emit saved(tr("Saved: %1").arg(openedRequestFile));
+                }
+                else if(option == TextEdits::response)
+                {
+                    file.write(ui->responseBody->toPlainText().toUtf8());
+                    openedResponseFile = path;
+                    emit saved(tr("Saved: %1").arg(openedResponseFile));
+                }
+                file.close();
+                emit opened(openedRequestFile + " " + openedResponseFile);
+            }
+        }
+    }
 }
 
 void ApiTesterWidget::open()
@@ -128,6 +191,27 @@ void ApiTesterWidget::clearRecent()
 {
     recentRequestFiles.clear();
     emit updateRecent();
+}
+
+ApiTesterWidget::TextEdits ApiTesterWidget::getSelectedOption()
+{
+    TextEdits option = TextEdits::none;
+    QDialog dialog(this);
+    QHBoxLayout layout(&dialog);
+    QPushButton textButton(tr("Request"), &dialog);
+    QPushButton base64Button(tr("Response"), &dialog);
+    connect(&textButton, &QPushButton::clicked, &dialog, [&]{option = TextEdits::request;});
+    connect(&base64Button, &QPushButton::clicked, &dialog, [&]{option = TextEdits::response;});
+    connect(&textButton, &QPushButton::clicked, &dialog, &QDialog::accept);
+    connect(&base64Button, &QPushButton::clicked, &dialog, &QDialog::accept);
+    layout.addWidget(&textButton);
+    layout.addWidget(&base64Button);
+    dialog.setLayout(&layout);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        return option;
+    }
+    return option;
 }
 
 void ApiTesterWidget::sendGetRequest()
