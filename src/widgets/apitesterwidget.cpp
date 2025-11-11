@@ -256,7 +256,30 @@ QStringList ApiTesterWidget::getRecentFiles() const
 
 void ApiTesterWidget::openFromRecent(const QString &path)
 {
-
+    if(recentRequestFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            orginalFile = file.readAll();
+            file.close();
+            ui->requestBody->setPlainText(orginalFile);
+            openedRequestFile = path;
+            emit opened(openedRequestFile + " " + openedResponseFile);
+        }
+    }
+    else if(recentResponseFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            orginalFile = file.readAll();
+            file.close();
+            ui->responseBody->setPlainText(orginalFile);
+            openedResponseFile = path;
+            emit opened(openedRequestFile + " " + openedResponseFile);
+        }
+    }
 }
 
 void ApiTesterWidget::clearRecent()
