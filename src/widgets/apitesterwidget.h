@@ -50,6 +50,7 @@ private:
 
 private:
     TextEdits getSelectedOption();
+    QJsonObject headersToJson() const;
 
 private slots:
     void sendGetRequest();

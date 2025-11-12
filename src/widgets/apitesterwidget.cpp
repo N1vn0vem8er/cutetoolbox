@@ -22,6 +22,18 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     connect(ui->addHeaderBotton, &QPushButton::clicked, this, &ApiTesterWidget::addHeader);
     connect(ui->removeHeaderButton, &QPushButton::clicked, this, &ApiTesterWidget::removeHeader);
     connect(ui->openRequestHeadersButton, &QPushButton::clicked, this, &ApiTesterWidget::openRequestHeaders);
+    connect(ui->saveRequestHeaderButton, &QPushButton::clicked, this, [&]{
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.json");
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::WriteOnly))
+            {
+                file.write(QJsonDocument(headersToJson()).toJson());
+                file.close();
+            }
+        }
+    });
     QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
@@ -290,6 +302,17 @@ void ApiTesterWidget::clearRecent()
 {
     recentRequestFiles.clear();
     emit updateRecent();
+}
+
+QJsonObject ApiTesterWidget::headersToJson() const
+{
+    QJsonObject headers;
+    QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->requestTableView->model());
+    for(int i = 0;i < model->rowCount(); i++)
+    {
+        headers[model->data(model->index(i, 0)).toString()] = model->data(model->index(i, 1)).toString();
+    }
+    return headers;
 }
 
 ApiTesterWidget::TextEdits ApiTesterWidget::getSelectedOption()
