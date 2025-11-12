@@ -3,10 +3,13 @@
 #include <QStandardItemModel>
 #include <QNetworkReply>
 #include <qdialog.h>
+#include <qjsonarray.h>
 #include <qmessagebox.h>
 #include <qfiledialog.h>
 #include <QInputDialog>
 #include <QFontDialog>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -18,6 +21,7 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     connect(ui->sendGetButton, &QPushButton::clicked, this, &ApiTesterWidget::sendGetRequest);
     connect(ui->addHeaderBotton, &QPushButton::clicked, this, &ApiTesterWidget::addHeader);
     connect(ui->removeHeaderButton, &QPushButton::clicked, this, &ApiTesterWidget::removeHeader);
+    connect(ui->openRequestHeadersButton, &QPushButton::clicked, this, &ApiTesterWidget::openRequestHeaders);
     QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
@@ -414,6 +418,35 @@ void ApiTesterWidget::removeHeader()
         if(QMessageBox::question(this, tr("Remove"), tr("Remove header?")) == QMessageBox::Yes)
         {
             ui->requestTableView->model()->removeRow(index.row());
+        }
+    }
+}
+
+void ApiTesterWidget::openRequestHeaders()
+{
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.json");
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            QJsonParseError parseError;
+            QJsonDocument document = QJsonDocument::fromJson(file.readAll(), &parseError);
+            file.close();
+            if(parseError.error == QJsonParseError::NoError)
+            {
+                QJsonObject obj = document.object();
+                for(const auto& header : obj.keys())
+                {
+                    QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->requestTableView->model());
+                    model->appendRow({new QStandardItem(header), new QStandardItem(obj.value(header).toString())});
+                }
+                ui->infoLabel->clear();
+            }
+            else
+            {
+                ui->infoLabel->setText(parseError.errorString());
+            }
         }
     }
 }
