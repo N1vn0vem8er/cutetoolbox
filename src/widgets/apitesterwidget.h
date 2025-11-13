@@ -60,6 +60,7 @@ private slots:
     void addHeader();
     void removeHeader();
     void openRequestHeaders();
+    void pasteRequestHeaders();
 };
 
 #endif // APITESTERWIDGET_H

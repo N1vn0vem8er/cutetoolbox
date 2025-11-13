@@ -46,6 +46,7 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     connect(ui->copyRequestHeadersButton, &QPushButton::clicked, this, [&]{
         QGuiApplication::clipboard()->setText(QJsonDocument(headersToJson()).toJson());
     });
+    connect(ui->pasteRequestHeadersButton, &QPushButton::clicked, this, &ApiTesterWidget::pasteRequestHeaders);
     QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
@@ -483,5 +484,25 @@ void ApiTesterWidget::openRequestHeaders()
                 ui->infoLabel->setText(parseError.errorString());
             }
         }
+    }
+}
+
+void ApiTesterWidget::pasteRequestHeaders()
+{
+    QJsonParseError parseError;
+    QJsonDocument document = QJsonDocument::fromJson(QGuiApplication::clipboard()->text().toUtf8(), &parseError);
+    if(parseError.error == QJsonParseError::NoError)
+    {
+        QJsonObject obj = document.object();
+        for(const auto& header : obj.keys())
+        {
+            QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->requestTableView->model());
+            model->appendRow({new QStandardItem(header), new QStandardItem(obj.value(header).toString())});
+        }
+        ui->infoLabel->clear();
+    }
+    else
+    {
+        ui->infoLabel->setText(parseError.errorString());
     }
 }
