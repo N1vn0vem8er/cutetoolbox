@@ -59,7 +59,6 @@ private slots:
     void sendPostRequest();
     void sendPutRequest();
     void onRequestFinished(QNetworkReply* reply);
-    void onRequestError(QNetworkReply::NetworkError error);
     void addHeader();
     void removeHeader();
     void openRequestHeaders();

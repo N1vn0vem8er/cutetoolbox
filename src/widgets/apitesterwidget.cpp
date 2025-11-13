@@ -426,27 +426,11 @@ void ApiTesterWidget::sendPutRequest()
 
 void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
 {
-    if(reply->error() == QNetworkReply::NoError)
-        ui->infoLabel->setVisible(false);
-    if(ui->responseTableView->model())
-        ui->responseTableView->model()->deleteLater();
-    QStandardItemModel* model = new QStandardItemModel(ui->responseTableView);
-    model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
-    model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
-    for(const auto& i : reply->headers().toListOfPairs())
-    {
-        model->appendRow({new QStandardItem(i.first), new QStandardItem(i.second)});
-    }
-    ui->responseTableView->setModel(model);
-    ui->responseBody->setPlainText(reply->readAll());
-}
-
-void ApiTesterWidget::onRequestError(QNetworkReply::NetworkError error)
-{
     ui->infoLabel->setVisible(true);
-    switch(error)
+    switch(reply->error())
     {
     case QNetworkReply::NoError:
+        ui->infoLabel->setVisible(false);
         break;
     case QNetworkReply::ConnectionRefusedError:
         ui->infoLabel->setText(tr("Connection Refused"));
@@ -548,6 +532,17 @@ void ApiTesterWidget::onRequestError(QNetworkReply::NetworkError error)
         ui->infoLabel->setText(tr("Unknown Server"));
         break;
     }
+    if(ui->responseTableView->model())
+        ui->responseTableView->model()->deleteLater();
+    QStandardItemModel* model = new QStandardItemModel(ui->responseTableView);
+    model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
+    model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
+    for(const auto& i : reply->headers().toListOfPairs())
+    {
+        model->appendRow({new QStandardItem(i.first), new QStandardItem(i.second)});
+    }
+    ui->responseTableView->setModel(model);
+    ui->responseBody->setPlainText(reply->readAll());
 }
 
 void ApiTesterWidget::addHeader()
