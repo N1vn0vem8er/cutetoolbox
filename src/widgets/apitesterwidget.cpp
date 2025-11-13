@@ -51,6 +51,8 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
         QGuiApplication::clipboard()->setText(QJsonDocument(headersToJson(static_cast<QStandardItemModel*>(ui->responseTableView->model()))).toJson());
     });
     connect(ui->pasteRequestHeadersButton, &QPushButton::clicked, this, &ApiTesterWidget::pasteRequestHeaders);
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{ui->urlLineEdit->selectAll(); ui->urlLineEdit->copy();});
+    connect(ui->pasteButton, &QPushButton::clicked, ui->urlLineEdit, &QLineEdit::paste);
     QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
