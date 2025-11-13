@@ -36,6 +36,18 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
             }
         }
     });
+    connect(ui->saveResponesHeadersButton, &QPushButton::clicked, this, [&]{
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.json");
+        if(!path.isEmpty())
+        {
+            QFile file(path);
+            if(file.open(QIODevice::WriteOnly))
+            {
+                file.write(QJsonDocument(headersToJson(static_cast<QStandardItemModel*>(ui->responseTableView->model()))).toJson());
+                file.close();
+            }
+        }
+    });
     connect(ui->clearRequestHeadersButton, &QPushButton::clicked, this, [&]{
         if(ui->requestTableView->model())
             ui->requestTableView->model()->deleteLater();
