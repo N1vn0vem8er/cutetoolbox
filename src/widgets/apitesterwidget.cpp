@@ -43,7 +43,7 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
         model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
         ui->requestTableView->setModel(model);
     });
-    connect(ui->copyRequestHeadersButton, &QPushButton::clicked, [&]{
+    connect(ui->copyRequestHeadersButton, &QPushButton::clicked, this, [&]{
         QGuiApplication::clipboard()->setText(QJsonDocument(headersToJson()).toJson());
     });
     QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
