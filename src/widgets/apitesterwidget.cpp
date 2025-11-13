@@ -18,6 +18,7 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Api Tester"));
+    ui->infoLabel->setVisible(false);
     connect(&networkManager, &QNetworkAccessManager::finished, this, &ApiTesterWidget::onRequestFinished);
     connect(ui->sendGetButton, &QPushButton::clicked, this, &ApiTesterWidget::sendGetRequest);
     connect(ui->addHeaderBotton, &QPushButton::clicked, this, &ApiTesterWidget::addHeader);
@@ -478,10 +479,12 @@ void ApiTesterWidget::openRequestHeaders()
                     model->appendRow({new QStandardItem(header), new QStandardItem(obj.value(header).toString())});
                 }
                 ui->infoLabel->clear();
+                ui->infoLabel->setVisible(false);
             }
             else
             {
                 ui->infoLabel->setText(parseError.errorString());
+                ui->infoLabel->setVisible(true);
             }
         }
     }
@@ -500,9 +503,11 @@ void ApiTesterWidget::pasteRequestHeaders()
             model->appendRow({new QStandardItem(header), new QStandardItem(obj.value(header).toString())});
         }
         ui->infoLabel->clear();
+        ui->infoLabel->setVisible(false);
     }
     else
     {
         ui->infoLabel->setText(parseError.errorString());
+        ui->infoLabel->setVisible(true);
     }
 }
