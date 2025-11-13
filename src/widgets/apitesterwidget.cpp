@@ -2,6 +2,7 @@
 #include "src/widgets/ui_apitesterwidget.h"
 #include <QStandardItemModel>
 #include <QNetworkReply>
+#include <qclipboard.h>
 #include <qdialog.h>
 #include <qjsonarray.h>
 #include <qmessagebox.h>
@@ -33,6 +34,17 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
                 file.close();
             }
         }
+    });
+    connect(ui->clearRequestHeadersButton, &QPushButton::clicked, this, [&]{
+        if(ui->requestTableView->model())
+            ui->requestTableView->model()->deleteLater();
+        QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
+        model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
+        model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
+        ui->requestTableView->setModel(model);
+    });
+    connect(ui->copyRequestHeadersButton, &QPushButton::clicked, [&]{
+        QGuiApplication::clipboard()->setText(QJsonDocument(headersToJson()).toJson());
     });
     QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
