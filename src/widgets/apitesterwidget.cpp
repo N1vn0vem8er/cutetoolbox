@@ -31,7 +31,7 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
             QFile file(path);
             if(file.open(QIODevice::WriteOnly))
             {
-                file.write(QJsonDocument(headersToJson()).toJson());
+                file.write(QJsonDocument(headersToJson(static_cast<QStandardItemModel*>(ui->requestTableView->model()))).toJson());
                 file.close();
             }
         }
@@ -45,13 +45,20 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
         ui->requestTableView->setModel(model);
     });
     connect(ui->copyRequestHeadersButton, &QPushButton::clicked, this, [&]{
-        QGuiApplication::clipboard()->setText(QJsonDocument(headersToJson()).toJson());
+        QGuiApplication::clipboard()->setText(QJsonDocument(headersToJson(static_cast<QStandardItemModel*>(ui->requestTableView->model()))).toJson());
+    });
+    connect(ui->copyResponseHeadersButton, &QPushButton::clicked, this, [&]{
+        QGuiApplication::clipboard()->setText(QJsonDocument(headersToJson(static_cast<QStandardItemModel*>(ui->responseTableView->model()))).toJson());
     });
     connect(ui->pasteRequestHeadersButton, &QPushButton::clicked, this, &ApiTesterWidget::pasteRequestHeaders);
     QStandardItemModel* model = new QStandardItemModel(ui->requestTableView);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
     ui->requestTableView->setModel(model);
+    QStandardItemModel* responseModel = new QStandardItemModel(ui->responseTableView);
+    responseModel->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
+    responseModel->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
+    ui->responseTableView->setModel(responseModel);
 }
 
 ApiTesterWidget::~ApiTesterWidget()
@@ -318,10 +325,9 @@ void ApiTesterWidget::clearRecent()
     emit updateRecent();
 }
 
-QJsonObject ApiTesterWidget::headersToJson() const
+QJsonObject ApiTesterWidget::headersToJson(QStandardItemModel *model) const
 {
     QJsonObject headers;
-    QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->requestTableView->model());
     for(int i = 0;i < model->rowCount(); i++)
     {
         headers[model->data(model->index(i, 0)).toString()] = model->data(model->index(i, 1)).toString();

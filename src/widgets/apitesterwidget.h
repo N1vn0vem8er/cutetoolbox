@@ -4,6 +4,7 @@
 #include "customwidget.h"
 #include <QWidget>
 #include <QNetworkAccessManager>
+#include <qstandarditemmodel.h>
 
 namespace Ui {
 class ApiTesterWidget;
@@ -50,7 +51,7 @@ private:
 
 private:
     TextEdits getSelectedOption();
-    QJsonObject headersToJson() const;
+    QJsonObject headersToJson(QStandardItemModel *model) const;
 
 private slots:
     void sendGetRequest();

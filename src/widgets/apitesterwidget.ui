@@ -243,6 +243,9 @@
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
              </property>
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
             </widget>
            </item>
            <item>
@@ -303,7 +306,14 @@
             </layout>
            </item>
            <item>
-            <widget class="QTableView" name="responseTableView"/>
+            <widget class="QTableView" name="responseTableView">
+             <attribute name="horizontalHeaderCascadingSectionResizes">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderStretchLastSection">
+              <bool>true</bool>
+             </attribute>
+            </widget>
            </item>
            <item>
             <widget class="CodeEditor" name="responseBody"/>
