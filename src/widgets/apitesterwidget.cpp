@@ -426,6 +426,8 @@ void ApiTesterWidget::sendPutRequest()
 
 void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
 {
+    if(reply->error() == QNetworkReply::NoError)
+        ui->infoLabel->setVisible(false);
     if(ui->responseTableView->model())
         ui->responseTableView->model()->deleteLater();
     QStandardItemModel* model = new QStandardItemModel(ui->responseTableView);
@@ -437,6 +439,115 @@ void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
     }
     ui->responseTableView->setModel(model);
     ui->responseBody->setPlainText(reply->readAll());
+}
+
+void ApiTesterWidget::onRequestError(QNetworkReply::NetworkError error)
+{
+    ui->infoLabel->setVisible(true);
+    switch(error)
+    {
+    case QNetworkReply::NoError:
+        break;
+    case QNetworkReply::ConnectionRefusedError:
+        ui->infoLabel->setText(tr("Connection Refused"));
+        break;
+    case QNetworkReply::RemoteHostClosedError:
+        ui->infoLabel->setText(tr("Remote Host Closed"));
+        break;
+    case QNetworkReply::HostNotFoundError:
+        ui->infoLabel->setText(tr("Host Not Found"));
+        break;
+    case QNetworkReply::TimeoutError:
+        ui->infoLabel->setText(tr("Timeout"));
+        break;
+    case QNetworkReply::OperationCanceledError:
+        ui->infoLabel->setText(tr("Operation Canceled"));
+        break;
+    case QNetworkReply::SslHandshakeFailedError:
+        ui->infoLabel->setText(tr("Ssl Handshake Failed"));
+        break;
+    case QNetworkReply::TemporaryNetworkFailureError:
+        ui->infoLabel->setText(tr("Temporary Network Failure"));
+        break;
+    case QNetworkReply::NetworkSessionFailedError:
+        ui->infoLabel->setText(tr("Network Session Failed"));
+        break;
+    case QNetworkReply::BackgroundRequestNotAllowedError:
+        ui->infoLabel->setText(tr("Background Request Not Allowed"));
+        break;
+    case QNetworkReply::TooManyRedirectsError:
+        ui->infoLabel->setText(tr("Too Many Redirects"));
+        break;
+    case QNetworkReply::InsecureRedirectError:
+        ui->infoLabel->setText(tr("Insecure Redirect"));
+        break;
+    case QNetworkReply::UnknownNetworkError:
+        ui->infoLabel->setText(tr("Unknown Netword"));
+        break;
+    case QNetworkReply::ProxyConnectionRefusedError:
+        ui->infoLabel->setText(tr("Proxy Connection Refused"));
+        break;
+    case QNetworkReply::ProxyConnectionClosedError:
+        ui->infoLabel->setText(tr("Proxy Connection Closed"));
+        break;
+    case QNetworkReply::ProxyNotFoundError:
+        ui->infoLabel->setText(tr("Proxy Not Found"));
+        break;
+    case QNetworkReply::ProxyTimeoutError:
+        ui->infoLabel->setText(tr("Proxy Timeout"));
+        break;
+    case QNetworkReply::ProxyAuthenticationRequiredError:
+        ui->infoLabel->setText(tr("Proxy Authentication Required"));
+        break;
+    case QNetworkReply::UnknownProxyError:
+        ui->infoLabel->setText(tr("Unknown Proxy"));
+        break;
+    case QNetworkReply::ContentAccessDenied:
+        ui->infoLabel->setText(tr("Content Access Denied"));
+        break;
+    case QNetworkReply::ContentOperationNotPermittedError:
+        ui->infoLabel->setText(tr("Content Operation Not Permitted"));
+        break;
+    case QNetworkReply::ContentNotFoundError:
+        ui->infoLabel->setText(tr("Content Not Found"));
+        break;
+    case QNetworkReply::AuthenticationRequiredError:
+        ui->infoLabel->setText(tr("Authentication Required"));
+        break;
+    case QNetworkReply::ContentReSendError:
+        ui->infoLabel->setText(tr("Content Re Send"));
+        break;
+    case QNetworkReply::ContentConflictError:
+        ui->infoLabel->setText(tr("Content Conflict"));
+        break;
+    case QNetworkReply::ContentGoneError:
+        ui->infoLabel->setText(tr("Content Gone"));
+        break;
+    case QNetworkReply::UnknownContentError:
+        ui->infoLabel->setText(tr("Unknown Content"));
+        break;
+    case QNetworkReply::ProtocolUnknownError:
+        ui->infoLabel->setText(tr("Protocol Unknown"));
+        break;
+    case QNetworkReply::ProtocolInvalidOperationError:
+        ui->infoLabel->setText(tr("Protocol Invalid Operation"));
+        break;
+    case QNetworkReply::ProtocolFailure:
+        ui->infoLabel->setText(tr("Protocol Failure"));
+        break;
+    case QNetworkReply::InternalServerError:
+        ui->infoLabel->setText(tr("Interna Server Error"));
+        break;
+    case QNetworkReply::OperationNotImplementedError:
+        ui->infoLabel->setText(tr("Operation Not Implemented"));
+        break;
+    case QNetworkReply::ServiceUnavailableError:
+        ui->infoLabel->setText(tr("Service Unavailable"));
+        break;
+    case QNetworkReply::UnknownServerError:
+        ui->infoLabel->setText(tr("Unknown Server"));
+        break;
+    }
 }
 
 void ApiTesterWidget::addHeader()
