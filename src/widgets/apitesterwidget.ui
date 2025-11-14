@@ -17,14 +17,10 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
+      <widget class="QLineEdit" name="urlLineEdit">
+       <property name="placeholderText">
         <string>Url</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="urlLineEdit">
        <property name="clearButtonEnabled">
         <bool>true</bool>
        </property>
