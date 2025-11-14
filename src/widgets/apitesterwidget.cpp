@@ -537,7 +537,8 @@ void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
     QStandardItemModel* model = new QStandardItemModel(ui->responseTableView);
     model->setHorizontalHeaderItem(0, new QStandardItem(tr("Header")));
     model->setHorizontalHeaderItem(1, new QStandardItem(tr("Value")));
-    for(const auto& i : reply->headers().toListOfPairs())
+    const auto pairs = reply->headers().toListOfPairs();
+    for(const auto& i : pairs)
     {
         model->appendRow({new QStandardItem(i.first), new QStandardItem(i.second)});
     }
@@ -599,7 +600,8 @@ void ApiTesterWidget::openRequestHeaders()
             if(parseError.error == QJsonParseError::NoError)
             {
                 QJsonObject obj = document.object();
-                for(const auto& header : obj.keys())
+                const auto objs = obj.keys();
+                for(const auto& header : objs)
                 {
                     QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->requestTableView->model());
                     model->appendRow({new QStandardItem(header), new QStandardItem(obj.value(header).toString())});
@@ -623,7 +625,8 @@ void ApiTesterWidget::pasteRequestHeaders()
     if(parseError.error == QJsonParseError::NoError)
     {
         QJsonObject obj = document.object();
-        for(const auto& header : obj.keys())
+        const auto objs = obj.keys();
+        for(const auto& header : objs)
         {
             QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->requestTableView->model());
             model->appendRow({new QStandardItem(header), new QStandardItem(obj.value(header).toString())});
@@ -633,7 +636,7 @@ void ApiTesterWidget::pasteRequestHeaders()
     }
     else
     {
-        ui->infoLabel->setText(parseError.errorString());
+        ui->infoLabel->setText(tr("Parsing error &1").arg(parseError.errorString()));
         ui->infoLabel->setVisible(true);
     }
 }
