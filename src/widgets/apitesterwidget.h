@@ -54,6 +54,7 @@ private:
     TextEdits getSelectedOption();
     QJsonObject headersToJson(QStandardItemModel *model) const;
     void setSendButtonsEnabled(bool val);
+    void setEditHeadersButtonsEnabled(bool val);
 
 private slots:
     void sendGetRequest();

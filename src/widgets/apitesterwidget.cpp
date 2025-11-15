@@ -356,6 +356,15 @@ void ApiTesterWidget::setSendButtonsEnabled(bool val)
     ui->sendPutButton->setEnabled(val);
 }
 
+void ApiTesterWidget::setEditHeadersButtonsEnabled(bool val)
+{
+    ui->addHeaderBotton->setEnabled(val);
+    ui->removeHeaderButton->setEnabled(val);
+    ui->pasteRequestHeadersButton->setEnabled(val);
+    ui->clearRequestHeadersButton->setEnabled(val);
+    ui->openRequestHeadersButton->setEnabled(val);
+}
+
 ApiTesterWidget::TextEdits ApiTesterWidget::getSelectedOption()
 {
     TextEdits option = TextEdits::none;
@@ -393,6 +402,7 @@ void ApiTesterWidget::sendGetRequest()
         request.setHeaders(headers);
         networkManager.get(request);
         setSendButtonsEnabled(false);
+        setEditHeadersButtonsEnabled(false);
     }
 }
 
@@ -412,6 +422,7 @@ void ApiTesterWidget::sendPostRequest()
         request.setHeaders(headers);
         networkManager.post(request, ui->requestBody->toPlainText().toUtf8());
         setSendButtonsEnabled(false);
+        setEditHeadersButtonsEnabled(false);
     }
 }
 
@@ -431,6 +442,7 @@ void ApiTesterWidget::sendPutRequest()
         request.setHeaders(headers);
         networkManager.put(request, ui->requestBody->toPlainText().toUtf8());
         setSendButtonsEnabled(false);
+        setEditHeadersButtonsEnabled(false);
     }
 }
 
@@ -555,6 +567,7 @@ void ApiTesterWidget::onRequestFinished(QNetworkReply *reply)
     ui->responseTableView->setModel(model);
     ui->responseBody->setPlainText(reply->readAll());
     setSendButtonsEnabled(true);
+    setEditHeadersButtonsEnabled(true);
 }
 
 void ApiTesterWidget::addHeader()
