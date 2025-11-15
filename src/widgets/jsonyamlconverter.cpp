@@ -430,7 +430,8 @@ YAML::Node JsonYamlConverter::convertQJsonArrayToYaml(const QJsonArray &array)
 YAML::Node JsonYamlConverter::convertQJsonObjectToYaml(const QJsonObject &object)
 {
     YAML::Node node;
-    for(const QString& key : object.keys())
+    const auto keys = object.keys();
+    for(const QString& key : keys)
     {
         node[key.toStdString()] = convertQJsonValueToYaml(object.value(key));
     }

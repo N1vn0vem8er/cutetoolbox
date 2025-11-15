@@ -11,7 +11,8 @@ ImageFormatConverterWidget::ImageFormatConverterWidget(QWidget *parent)
     setName(tr("Image Format Converter"));
     connect(ui->openButton, &QPushButton::clicked, this, &ImageFormatConverterWidget::open);
     connect(ui->convertButton, &QPushButton::clicked, this, &ImageFormatConverterWidget::convert);
-    for(const QString& i : QImageWriter::supportedImageFormats())
+    const auto supportedFormats = QImageWriter::supportedImageFormats();
+    for(const QString& i : supportedFormats)
     {
         ui->comboBox->addItem(i);
     }
