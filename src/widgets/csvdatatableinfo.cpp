@@ -24,6 +24,9 @@ CSVDataTableInfo::CSVDataTableInfo(QWidget *parent)
             recentFiles.append(path);
     }
     settings.endArray();
+    ui->missingValuesLabel->setVisible(false);
+    ui->columnsLabel->setVisible(false);
+    ui->rowsLabel->setVisible(false);
 }
 
 CSVDataTableInfo::~CSVDataTableInfo()
@@ -72,6 +75,13 @@ void CSVDataTableInfo::open()
 void CSVDataTableInfo::close()
 {
     openedFile.clear();
+    ui->missingValuesLabel->setVisible(false);
+    ui->columnsLabel->setVisible(false);
+    ui->rowsLabel->setVisible(false);
+    if(ui->table->model())
+        ui->table->model()->deleteLater();
+    if(ui->columnsInfoTable->model())
+        ui->columnsInfoTable->model()->deleteLater();
     emit opened(openedFile);
 }
 
@@ -166,6 +176,9 @@ void CSVDataTableInfo::parseCsv(const QString &csv)
         ui->table->setModel(model);
         ui->missingValuesLabel->setText(tr("Missing Values: %1").arg(missingValues));
         ui->rowsLabel->setText(tr("Rows: %1").arg(ui->headerCheckBox->isChecked() ? lines.length() - 1 : lines.length()));
+        ui->missingValuesLabel->setVisible(true);
+        ui->columnsLabel->setVisible(true);
+        ui->rowsLabel->setVisible(true);
     }
 }
 

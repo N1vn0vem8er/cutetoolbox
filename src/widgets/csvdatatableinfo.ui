@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
@@ -99,6 +99,13 @@
     <widget class="QTableView" name="columnsInfoTable">
      <property name="editTriggers">
       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Preview</string>
      </property>
     </widget>
    </item>
