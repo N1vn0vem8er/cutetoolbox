@@ -4,6 +4,8 @@
 #include <QFileDialog>
 #include <QStandardItemModel>
 #include <qdialog.h>
+#include <qfuture.h>
+#include <qtconcurrentrun.h>
 #include <random>
 #include <QClipboard>
 #include <QSettings>
@@ -145,6 +147,70 @@ QString UserGeneratorWidget::toCsv() const
 
 void UserGeneratorWidget::generate()
 {
+    int quantity = ui->quantitySpinBox->value();
+    bool firstName = ui->firstNameCheckBox->isChecked();
+    bool lastName = ui->lastNameCheckBox->isChecked();
+    bool username = ui->usernameCheckBox->isChecked();
+    bool email = ui->emailCheckBox->isChecked();
+    bool phone = ui->phoneNumberCheckBox->isChecked();
+    QFuture<QList<QStringList>> future = QtConcurrent::run([this, quantity, firstName, lastName, username, email, phone]{
+        QList<QStringList> ret;
+        std::random_device rg;
+        std::mt19937_64 generator(rg());
+        std::uniform_int_distribution<int> random(0, 9);
+        for(int i=0;i<quantity;i++)
+        {
+            QStringList row;
+            if(firstName)
+                row.append(getRandomQString(firstNames));
+            if(lastName)
+                row.append(getRandomQString(lastNames));
+            if(username)
+            {
+                QString number;
+                for(int i=0; i<5; i++)
+                {
+                    number += QString::number(random(generator));
+                }
+                row.append(getRandomQString(firstNames) + number);
+            }
+            if(email)
+            {
+                QString email;
+                if(firstName)
+                {
+                    email += row[0];
+                    if(lastName)
+                        email += row[1];
+                    else
+                        email += getRandomQString(lastNames);
+                }
+                else if(firstName)
+                {
+                    email += getRandomQString(firstNames);
+                    email += row[0];
+                }
+                else
+                {
+                    email += getRandomQString(firstNames) + getRandomQString(lastNames);
+                }
+                for(int i=0; i < 5; i++)
+                    email += QString::number(random(generator));
+                email += "@example.com";
+                row.append(email.toLower());
+            }
+            if(phone)
+            {
+                QString number;
+                for(int i=0; i<ui->phoneLength->value(); i++)
+                {
+                    number += QString::number(random(generator));
+                }
+                row.append(number);
+            }
+        }
+        return ret;
+    });
     if(ui->tableView->model())
         ui->tableView->model()->deleteLater();
     QStandardItemModel* model = new QStandardItemModel(ui->tableView);
