@@ -4,6 +4,7 @@
 #include "customwidget.h"
 #include <QWidget>
 #include <qboxlayout.h>
+#include <qfuturewatcher.h>
 #include <qspinbox.h>
 
 namespace Ui {
@@ -27,6 +28,7 @@ public:
 private:
     Ui::UserGeneratorWidget *ui;
     QString openedFile;
+    QFutureWatcher<QList<QStringList>> watcher;
 
 private:
     QString getRandomQString(const QStringList& list) const;
