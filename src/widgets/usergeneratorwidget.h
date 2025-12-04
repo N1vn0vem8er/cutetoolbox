@@ -36,6 +36,7 @@ private:
 
 private slots:
     void generate();
+    void setUiElementsEnabled(bool val);
 
 private:
     const QStringList firstNames {

@@ -36,7 +36,7 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
         QGuiApplication::clipboard()->setText(toCsv());
     });
     connect(ui->saveAsButton, &QPushButton::clicked, this, &UserGeneratorWidget::saveAs);
-    connect(&watcher, &QFutureWatcher<QList<QStringList>>::started, this, [&]{});
+    connect(&watcher, &QFutureWatcher<QList<QStringList>>::started, this, [&]{setUiElementsEnabled(false);});
     connect(&watcher, &QFutureWatcher<QList<QStringList>>::finished, this, [&]{
         const QList<QStringList> results = watcher.result();
         if(ui->tableView->model())
@@ -73,6 +73,7 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
             model->appendRow(items);
         }
         ui->tableView->setModel(model);
+        setUiElementsEnabled(true);
     });
     generate();
 }
@@ -251,4 +252,19 @@ void UserGeneratorWidget::generate()
         return ret;
     });
     watcher.setFuture(future);
+}
+
+void UserGeneratorWidget::setUiElementsEnabled(bool val)
+{
+    ui->usernameCheckBox->setEnabled(val);
+    ui->firstNameCheckBox->setEnabled(val);
+    ui->lastNameCheckBox->setEnabled(val);
+    ui->generateButton->setEnabled(val);
+    ui->emailCheckBox->setEnabled(val);
+    ui->quantitySpinBox->setEnabled(val);
+    ui->phoneNumberCheckBox->setEnabled(val);
+    ui->phoneLength->setEnabled(val);
+    ui->generateButton->setEnabled(val);
+    ui->copyButton->setEnabled(val);
+    ui->saveAsButton->setEnabled(val);
 }
