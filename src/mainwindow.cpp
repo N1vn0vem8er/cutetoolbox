@@ -625,11 +625,12 @@ void MainWindow::openedFile(const QString &path)
 
 void MainWindow::find(QString text)
 {
-    text.remove(QRegularExpression(R"(\s\(.*\))"));
+    const static QRegularExpression regex = QRegularExpression(R"(\s\(.*\))");
+    text.remove(regex);
     if(menuIndexMap.contains(text))
         showByName(text);
     else
-        showByName(completer->currentCompletion().remove(QRegularExpression(R"(\s\(.*\))")));
+        showByName(completer->currentCompletion().remove(regex));
     widgetChanged();
 }
 
