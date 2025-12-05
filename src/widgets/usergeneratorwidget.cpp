@@ -24,6 +24,13 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     ui->emailCheckBox->setChecked(settings.value("userGenerator.email", true).toBool());
     ui->usernameCheckBox->setChecked(settings.value("userGenerator.username", true).toBool());
     ui->phoneNumberCheckBox->setChecked(settings.value("userGenerator.phoneNumber", true).toBool());
+    ui->birthDateCheckBox->setChecked(settings.value("userGenerator.birthDate", true).toBool());
+    ui->dateFromEdit->setVisible(ui->birthDateCheckBox->isChecked());
+    ui->dateToEdit->setVisible(ui->birthDateCheckBox->isChecked());
+    ui->dateFromLabel->setVisible(ui->birthDateCheckBox->isChecked());
+    ui->dateToLabel->setVisible(ui->birthDateCheckBox->isChecked());
+    ui->phoneLength->setVisible(ui->phoneNumberCheckBox->isChecked());
+    ui->phoneLengthLabel->setVisible(ui->phoneNumberCheckBox->isChecked());
     connect(ui->generateButton, &QPushButton::clicked, this, &UserGeneratorWidget::generate);
     connect(ui->quantitySpinBox, &QSpinBox::valueChanged, this, &UserGeneratorWidget::generate);
     connect(ui->phoneLength, &QSpinBox::valueChanged, this, &UserGeneratorWidget::generate);
@@ -31,7 +38,18 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     connect(ui->lastNameCheckBox, &QCheckBox::clicked, this, &UserGeneratorWidget::generate);
     connect(ui->emailCheckBox, &QCheckBox::clicked, this, &UserGeneratorWidget::generate);
     connect(ui->usernameCheckBox, &QCheckBox::clicked, this, &UserGeneratorWidget::generate);
-    connect(ui->phoneNumberCheckBox, &QCheckBox::clicked, this, &UserGeneratorWidget::generate);
+    connect(ui->phoneNumberCheckBox, &QCheckBox::clicked, this, [&](bool val){
+        generate();
+        ui->phoneLength->setVisible(val);
+        ui->phoneLengthLabel->setVisible(val);
+    });
+    connect(ui->birthDateCheckBox, &QCheckBox::clicked, this, [&](bool val){
+        generate();
+        ui->dateFromEdit->setVisible(val);
+        ui->dateToEdit->setVisible(val);
+        ui->dateFromLabel->setVisible(val);
+        ui->dateToLabel->setVisible(val);
+    });
     connect(ui->copyButton, &QPushButton::clicked, this, [&]{
         QGuiApplication::clipboard()->setText(toCsv());
     });
@@ -62,6 +80,10 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
         if(ui->phoneNumberCheckBox->isChecked())
         {
             model->setHorizontalHeaderItem(index++, new QStandardItem("Phone Number"));
+        }
+        if(ui->birthDateCheckBox->isChecked())
+        {
+            model->setHorizontalHeaderItem(index++, new QStandardItem("Birth Date"));
         }
         for(const auto& row : results)
         {
@@ -192,7 +214,10 @@ void UserGeneratorWidget::generate()
     bool username = ui->usernameCheckBox->isChecked();
     bool email = ui->emailCheckBox->isChecked();
     bool phone = ui->phoneNumberCheckBox->isChecked();
-    QFuture<QList<QStringList>> future = QtConcurrent::run([this, quantity, firstName, lastName, username, email, phone]{
+    bool birthDate = ui->birthDateCheckBox->isChecked();
+    qint64 startDate = ui->dateFromEdit->dateTime().toMSecsSinceEpoch();
+    qint64 endDate = ui->dateToEdit->dateTime().toMSecsSinceEpoch();
+    QFuture<QList<QStringList>> future = QtConcurrent::run([this, quantity, firstName, lastName, username, email, phone, birthDate, startDate, endDate]{
         QList<QStringList> ret;
         std::random_device rg;
         std::mt19937_64 generator(rg());
@@ -247,6 +272,11 @@ void UserGeneratorWidget::generate()
                 }
                 row.append(number);
             }
+            if(birthDate)
+            {
+                std::uniform_int_distribution<qint64> random(startDate, endDate);
+                row.append(QDateTime::fromMSecsSinceEpoch(random(generator)).toString("yyyy-MM-dd"));
+            }
             ret.append(row);
         }
         return ret;
@@ -267,4 +297,8 @@ void UserGeneratorWidget::setUiElementsEnabled(bool val)
     ui->generateButton->setEnabled(val);
     ui->copyButton->setEnabled(val);
     ui->saveAsButton->setEnabled(val);
+    ui->dateFromEdit->setEnabled(val);
+    ui->dateToEdit->setEnabled(val);
+    ui->dateFromLabel->setEnabled(val);
+    ui->dateToLabel->setEnabled(val);
 }
