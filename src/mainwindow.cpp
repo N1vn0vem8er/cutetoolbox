@@ -627,10 +627,10 @@ void MainWindow::find(QString text)
 {
     text.remove(QRegularExpression(R"(\s\(.*\))"));
     if(menuIndexMap.contains(text))
-    {
         showByName(text);
-        widgetChanged();
-    }
+    else
+        showByName(completer->currentCompletion().remove(QRegularExpression(R"(\s\(.*\))")));
+    widgetChanged();
 }
 
 void MainWindow::updateRecent()
