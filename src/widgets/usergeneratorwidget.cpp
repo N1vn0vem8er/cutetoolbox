@@ -306,4 +306,5 @@ void UserGeneratorWidget::setUiElementsEnabled(bool val)
     ui->dateToEdit->setEnabled(val);
     ui->dateFromLabel->setEnabled(val);
     ui->dateToLabel->setEnabled(val);
+    ui->birthDateCheckBox->setEnabled(val);
 }
