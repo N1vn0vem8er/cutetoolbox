@@ -25,6 +25,8 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     ui->usernameCheckBox->setChecked(settings.value("userGenerator.username", true).toBool());
     ui->phoneNumberCheckBox->setChecked(settings.value("userGenerator.phoneNumber", true).toBool());
     ui->birthDateCheckBox->setChecked(settings.value("userGenerator.birthDate", true).toBool());
+    ui->dateFromEdit->setDateTime(QDateTime::fromMSecsSinceEpoch(settings.value("userGenerator.birthDate.startDate", QDateTime::currentMSecsSinceEpoch()).toLongLong()));
+    ui->dateToEdit->setDateTime(QDateTime::fromMSecsSinceEpoch(settings.value("userGenerator.birthDate.endDate", QDateTime::currentMSecsSinceEpoch()).toLongLong()));
     ui->dateFromEdit->setVisible(ui->birthDateCheckBox->isChecked());
     ui->dateToEdit->setVisible(ui->birthDateCheckBox->isChecked());
     ui->dateFromLabel->setVisible(ui->birthDateCheckBox->isChecked());
@@ -110,6 +112,9 @@ UserGeneratorWidget::~UserGeneratorWidget()
     settings.setValue("userGenerator.email", ui->emailCheckBox->isChecked());
     settings.setValue("userGenerator.username", ui->usernameCheckBox->isChecked());
     settings.setValue("userGenerator.phoneNumber", ui->phoneNumberCheckBox->isChecked());
+    settings.setValue("userGenerator.birthDate", ui->birthDateCheckBox->isChecked());
+    settings.setValue("userGenerator.birthDate.startDate", ui->dateFromEdit->dateTime().toMSecsSinceEpoch());
+    settings.setValue("userGenerator.birthDate.endDate", ui->dateToEdit->dateTime().toMSecsSinceEpoch());
     delete ui;
 }
 
