@@ -17,13 +17,15 @@ VideoConverterWidget::VideoConverterWidget(QWidget *parent)
     connect(process, &QProcess::finished, process, &QProcess::deleteLater);
     connect(process, &QProcess::readyReadStandardOutput, this, [this, process]{
         const QString output = process->readAllStandardOutput();
-        QRegularExpressionMatchIterator iterator = QRegularExpression(R"(DE?\s+([a-z0-9_,]+))").globalMatch(output);
+        const static QRegularExpression regex1 = QRegularExpression(R"(DE?\s+([a-z0-9_,]+))");
+        QRegularExpressionMatchIterator iterator = regex1.globalMatch(output);
         while(iterator.hasNext())
         {
             QRegularExpressionMatch match = iterator.next();
             decodingFormats.append(match.captured(1));
         }
-        QRegularExpressionMatchIterator iterator2 = QRegularExpression(R"(D?E\s+([a-z0-9_,]+))").globalMatch(output);
+        const static QRegularExpression regex2 = QRegularExpression(R"(D?E\s+([a-z0-9_,]+))");
+        QRegularExpressionMatchIterator iterator2 = regex2.globalMatch(output);
         while(iterator2.hasNext())
         {
             QRegularExpressionMatch match = iterator2.next();

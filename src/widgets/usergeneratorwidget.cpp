@@ -58,46 +58,7 @@ UserGeneratorWidget::UserGeneratorWidget(QWidget *parent)
     connect(ui->saveAsButton, &QPushButton::clicked, this, &UserGeneratorWidget::saveAs);
     connect(&watcher, &QFutureWatcher<QList<QStringList>>::started, this, [&]{setUiElementsEnabled(false);});
     connect(&watcher, &QFutureWatcher<QList<QStringList>>::finished, this, [&]{
-        const QList<QStringList> results = watcher.result();
-        if(ui->tableView->model())
-            ui->tableView->model()->deleteLater();
-        int index = 0;
-        QStandardItemModel* model = new QStandardItemModel(ui->tableView);
-        if(ui->firstNameCheckBox->isChecked())
-        {
-            model->setHorizontalHeaderItem(index++, new QStandardItem("First Name"));
-        }
-        if(ui->lastNameCheckBox->isChecked())
-        {
-            model->setHorizontalHeaderItem(index++, new QStandardItem("Last Name"));
-        }
-        if(ui->usernameCheckBox->isChecked())
-        {
-            model->setHorizontalHeaderItem(index++, new QStandardItem("Username"));
-        }
-        if(ui->emailCheckBox->isChecked())
-        {
-            model->setHorizontalHeaderItem(index++, new QStandardItem("Email"));
-        }
-        if(ui->phoneNumberCheckBox->isChecked())
-        {
-            model->setHorizontalHeaderItem(index++, new QStandardItem("Phone Number"));
-        }
-        if(ui->birthDateCheckBox->isChecked())
-        {
-            model->setHorizontalHeaderItem(index++, new QStandardItem("Birth Date"));
-        }
-        for(const auto& row : results)
-        {
-            QList<QStandardItem*> items;
-            for(const auto& item : row)
-            {
-                items.append(new QStandardItem(item));
-            }
-            model->appendRow(items);
-        }
-        ui->tableView->setModel(model);
-        setUiElementsEnabled(true);
+        generateTableModel(watcher.result());
     });
     generate();
 }
@@ -211,6 +172,49 @@ QString UserGeneratorWidget::toCsv() const
     return out;
 }
 
+void UserGeneratorWidget::generateTableModel(const QList<QStringList> &results)
+{
+    if(ui->tableView->model())
+        ui->tableView->model()->deleteLater();
+    int index = 0;
+    QStandardItemModel* model = new QStandardItemModel(ui->tableView);
+    if(ui->firstNameCheckBox->isChecked())
+    {
+        model->setHorizontalHeaderItem(index++, new QStandardItem("First Name"));
+    }
+    if(ui->lastNameCheckBox->isChecked())
+    {
+        model->setHorizontalHeaderItem(index++, new QStandardItem("Last Name"));
+    }
+    if(ui->usernameCheckBox->isChecked())
+    {
+        model->setHorizontalHeaderItem(index++, new QStandardItem("Username"));
+    }
+    if(ui->emailCheckBox->isChecked())
+    {
+        model->setHorizontalHeaderItem(index++, new QStandardItem("Email"));
+    }
+    if(ui->phoneNumberCheckBox->isChecked())
+    {
+        model->setHorizontalHeaderItem(index++, new QStandardItem("Phone Number"));
+    }
+    if(ui->birthDateCheckBox->isChecked())
+    {
+        model->setHorizontalHeaderItem(index++, new QStandardItem("Birth Date"));
+    }
+    for(const auto& row : results)
+    {
+        QList<QStandardItem*> items;
+        for(const auto& item : row)
+        {
+            items.append(new QStandardItem(item));
+        }
+        model->appendRow(items);
+    }
+    ui->tableView->setModel(model);
+    setUiElementsEnabled(true);
+}
+
 void UserGeneratorWidget::generate()
 {
     int quantity = ui->quantitySpinBox->value();
@@ -222,7 +226,7 @@ void UserGeneratorWidget::generate()
     bool birthDate = ui->birthDateCheckBox->isChecked();
     qint64 startDate = ui->dateFromEdit->dateTime().toMSecsSinceEpoch();
     qint64 endDate = ui->dateToEdit->dateTime().toMSecsSinceEpoch();
-    QFuture<QList<QStringList>> future = QtConcurrent::run([this, quantity, firstName, lastName, username, email, phone, birthDate, startDate, endDate]{
+    auto func = [this, quantity, firstName, lastName, username, email, phone, birthDate, startDate, endDate]{
         QList<QStringList> ret;
         std::random_device rg;
         std::mt19937_64 generator(rg());
@@ -285,8 +289,14 @@ void UserGeneratorWidget::generate()
             ret.append(row);
         }
         return ret;
-    });
-    watcher.setFuture(future);
+    };
+    if(quantity > 1000)
+    {
+        QFuture<QList<QStringList>> future = QtConcurrent::run(func);
+        watcher.setFuture(future);
+    }
+    else
+        generateTableModel(func());
 }
 
 void UserGeneratorWidget::setUiElementsEnabled(bool val)

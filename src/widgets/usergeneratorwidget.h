@@ -33,6 +33,7 @@ private:
 private:
     QString getRandomQString(const QStringList& list) const;
     QString toCsv() const;
+    void generateTableModel(const QList<QStringList>& results);
 
 private slots:
     void generate();
