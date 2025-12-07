@@ -72,6 +72,7 @@ qt_add_executable(CuteToolBox
     src/widgets/csvdatatableinfo.h src/widgets/csvdatatableinfo.cpp src/widgets/csvdatatableinfo.ui
     src/settingsdialog.h src/settingsdialog.cpp src/settingsdialog.ui
     src/widgets/apitesterwidget.h src/widgets/apitesterwidget.cpp src/widgets/apitesterwidget.ui
+    src/widgets/ipsubnetcalculator.h src/widgets/ipsubnetcalculator.cpp src/widgets/ipsubnetcalculator.ui
 )
 
 include_directories(

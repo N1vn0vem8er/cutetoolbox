@@ -14,6 +14,7 @@
 #include "hashwidget.h"
 #include "htmlformatterwidget.h"
 #include "imageformatconverterwidget.h"
+#include "ipsubnetcalculator.h"
 #include "javaformatterwidget.h"
 #include "javascriptformatterwidget.h"
 #include "jsonformatterwidget.h"
@@ -148,6 +149,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Color Palette"), QIcon(), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Web"), QIcon());
     addMenuItem(tr("Api Tester"), QIcon(), new ApiTesterWidget(ui->stackedWidget));
+    addMenuItem(tr("IP Subnet Calculator"), QIcon(), new IpSubnetCalculator(ui->stackedWidget));
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), QIcon(), new CSVDataTableInfo(ui->stackedWidget));
     if(currentMenu)
