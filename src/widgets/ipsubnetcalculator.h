@@ -18,6 +18,10 @@ public:
 
 private:
     Ui::IpSubnetCalculator *ui;
+
+private slots:
+    void calculateIpv4();
+    void calculateIpv6();
 };
 
 #endif // IPSUBNETCALCULATOR_H
