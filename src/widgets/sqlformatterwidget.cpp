@@ -15,7 +15,7 @@ SQLFormatterWidget::SQLFormatterWidget(QWidget *parent)
     setName(tr("SQL Formatter"));
     connect(ui->formatButton, &QPushButton::clicked, this, &SQLFormatterWidget::format);
     connect(ui->openButton, &QPushButton::clicked, this, &SQLFormatterWidget::open);
-    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);
+    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
     QSettings settings(Config::settingsName);

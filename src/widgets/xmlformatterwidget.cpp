@@ -17,7 +17,7 @@ XMLFormatterWidget::XMLFormatterWidget(QWidget *parent)
     ui->spinBox->setValue(settings.value("xmlFormatterWidget.indentations", 4).toInt());
     connect(ui->formatButton, &QPushButton::clicked, this, &XMLFormatterWidget::format);
     connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
-    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copy);
+    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->openButton, &QPushButton::clicked, this, &XMLFormatterWidget::open);
     int size = settings.beginReadArray("xmlFormatterWidget.recentFiles");
