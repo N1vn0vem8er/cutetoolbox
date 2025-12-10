@@ -45,7 +45,6 @@
 #include "verilogformatterwidget.h"
 #include "videoconverterwidget.h"
 #include "xmlformatterwidget.h"
-#include "xmlschemevalidatorwidget.h"
 
 #define VERSION "0.3.0"
 #define LICENSELINK "https://www.gnu.org/licenses/gpl-3.0.html"
@@ -134,7 +133,6 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Regex"), QIcon(), new RegexWidget(ui->stackedWidget));
     addMenuItem(tr("Text diff"), QIcon(), new TextDiffWidget(ui->stackedWidget));
     addMenuItem(tr("Markdown"), QIcon(), new MarkdownWidget(ui->stackedWidget));
-    addMenuItem(tr("XML Scheme Validator"), QIcon(), new XMLSchemeValidatorWidget(ui->stackedWidget));
     addMenuItem(tr("Converters"), QIcon());
     addMenuItem(tr("JSON - YAML"), QIcon(), new JsonYamlConverter(ui->stackedWidget));
     addMenuItem(tr("Timestamp"), QIcon(), new TimestampWidget(ui->stackedWidget));

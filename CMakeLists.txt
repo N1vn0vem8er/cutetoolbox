@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.19)
 project(CuteToolBox LANGUAGES CXX)
 
 find_package(Qt6 6.9 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport Network)
-find_package(LibXml2 REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(yaml-cpp REQUIRED)
 
@@ -30,7 +29,6 @@ qt_add_executable(CuteToolBox
     src/widgets/regexwidget.h src/widgets/regexwidget.cpp src/widgets/regexwidget.ui
     src/widgets/textdiffwidget.h src/widgets/textdiffwidget.cpp src/widgets/textdiffwidget.ui
     src/widgets/markdownwidget.h src/widgets/markdownwidget.cpp src/widgets/markdownwidget.ui
-    src/widgets/xmlschemevalidatorwidget.h src/widgets/xmlschemevalidatorwidget.cpp src/widgets/xmlschemevalidatorwidget.ui
     src/widgets/jsonschemavalidatorwidget.h src/widgets/jsonschemavalidatorwidget.cpp src/widgets/jsonschemavalidatorwidget.ui
     src/widgets/htmlcoderdecoderwidget.h src/widgets/htmlcoderdecoderwidget.cpp src/widgets/htmlcoderdecoderwidget.ui
     src/widgets/base64coderdecoderwidget.h src/widgets/base64coderdecoderwidget.cpp src/widgets/base64coderdecoderwidget.ui
@@ -94,7 +92,6 @@ target_link_libraries(CuteToolBox
         Qt::WebEngineWidgets
         Qt::PrintSupport
         Qt6::Network
-        LibXml2::LibXml2
         ZLIB::ZLIB
         qrcodegencpp
         yaml-cpp::yaml-cpp
