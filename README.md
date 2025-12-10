@@ -18,7 +18,6 @@ Cute Toolbox is currently under development and it is not fully released. Some f
 
 ## Used libraries and technologies
 * Qt version: 6
-* LibXml2 Copyright (C) 1998-2012 Daniel Veillard.  All Rights Reserved. Copyright (C) The Libxml2 Contributors. MIT License
 * Zlib copyright © 1995-2025 Jean-loup Gailly and Mark Adler.
 * yaml-cpp Copyright (c) 2008-2015 Jesse Beder. MIT License
 * Qr Code Genenerator Copyright © 2025 Project Nayuki. MIT License

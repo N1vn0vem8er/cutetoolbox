@@ -254,7 +254,6 @@ void MainWindow::showAbout()
             <p>Version: %1</p>
             <p>License: <a href="%2">GPL 3</a>
             <h4>External libraries other then Qt used in this project:</h4>
-            <p>LibXml2 Copyright (C) 1998-2012 Daniel Veillard.  All Rights Reserved. Copyright (C) The Libxml2 Contributors. MIT License</p>
             <p>Zlib copyright © 1995-2025 Jean-loup Gailly and Mark Adler.</p>
             <p>yaml-cpp Copyright (c) 2008-2015 Jesse Beder. MIT License</p>
             <p>Qr Code Genenerator Copyright © 2025 Project Nayuki. MIT License</p>
