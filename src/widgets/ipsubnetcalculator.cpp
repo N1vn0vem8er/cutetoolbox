@@ -55,7 +55,7 @@ void IpSubnetCalculator::calculateIpv4()
             }
             temp >>= 1;
         }
-        if(cidrPrefix == 0 || (netmaskValue & (~(0xFFFFFFFF >> (32 - cidrPrefix)))) != netmaskValue)
+        if(cidrPrefix == 0 || (0xFFFFFFFF << (32 - cidrPrefix)) != netmaskValue)
         {
             return;
         }
@@ -65,7 +65,7 @@ void IpSubnetCalculator::calculateIpv4()
         netmaskValue = 0xFFFFFFFF << (32 - cidrPrefix);
     }
     quint32 networkAddressValue = ipaddress.toIPv4Address() & netmaskValue;
-    model->appendRow({new QStandardItem(tr("Ip address")), new QStandardItem(ipaddress.toIPv4Address())});
+    model->appendRow({new QStandardItem(tr("Ip address")), new QStandardItem(ui->ipv4LineEdit->text())});
     model->appendRow({new QStandardItem(tr("Cidi prefix")), new QStandardItem(QString::number(cidrPrefix))});
     quint32 wildcardMask = ~netmaskValue;
     model->appendRow({new QStandardItem(tr("Wildcard mask")), new QStandardItem(QString::number(wildcardMask))});
