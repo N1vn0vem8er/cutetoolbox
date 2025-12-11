@@ -65,12 +65,15 @@ void IpSubnetCalculator::calculateIpv4()
         netmaskValue = 0xFFFFFFFF << (32 - cidrPrefix);
     }
     quint32 networkAddressValue = ipaddress.toIPv4Address() & netmaskValue;
+    quint32 wildcardMask = ~netmaskValue;
+    quint32 broadcastAddressValue = networkAddressValue | wildcardMask;
     model->appendRow({new QStandardItem(tr("Ip address")), new QStandardItem(ui->ipv4LineEdit->text())});
     model->appendRow({new QStandardItem(tr("Cidi prefix")), new QStandardItem(QString::number(cidrPrefix))});
-    quint32 wildcardMask = ~netmaskValue;
     model->appendRow({new QStandardItem(tr("Wildcard mask")), new QStandardItem(QString::number(wildcardMask))});
     model->appendRow({new QStandardItem(tr("Network address")), new QStandardItem(QHostAddress(networkAddressValue).toString())});
-    model->appendRow({new QStandardItem(tr("Broadcast address")), new QStandardItem(QHostAddress(networkAddressValue | wildcardMask).toString())});
+    model->appendRow({new QStandardItem(tr("First address")), new QStandardItem(QHostAddress(networkAddressValue + 1).toString())});
+    model->appendRow({new QStandardItem(tr("Last address")), new QStandardItem(QHostAddress(broadcastAddressValue - 1).toString())});
+    model->appendRow({new QStandardItem(tr("Broadcast address")), new QStandardItem(QHostAddress(broadcastAddressValue).toString())});
 }
 
 void IpSubnetCalculator::calculateIpv6()
