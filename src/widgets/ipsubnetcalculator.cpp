@@ -64,16 +64,32 @@ void IpSubnetCalculator::calculateIpv4()
     {
         netmaskValue = 0xFFFFFFFF << (32 - cidrPrefix);
     }
+    int hostBits = 32 - cidrPrefix;
     quint32 networkAddressValue = ipaddress.toIPv4Address() & netmaskValue;
     quint32 wildcardMask = ~netmaskValue;
     quint32 broadcastAddressValue = networkAddressValue | wildcardMask;
+    qint64 totalHosts = qint64(1) << hostBits;
+    qint64 usableHosts = 0;
+    if(hostBits >= 2)
+    {
+        usableHosts = totalHosts - 2;
+    }
+    else if(hostBits == 1)
+    {
+        usableHosts = 0;
+    }
+    else
+    {
+        usableHosts = 0;
+    }
     model->appendRow({new QStandardItem(tr("Ip address")), new QStandardItem(ui->ipv4LineEdit->text())});
     model->appendRow({new QStandardItem(tr("Cidi prefix")), new QStandardItem(QString::number(cidrPrefix))});
     model->appendRow({new QStandardItem(tr("Wildcard mask")), new QStandardItem(QString::number(wildcardMask))});
     model->appendRow({new QStandardItem(tr("Network address")), new QStandardItem(QHostAddress(networkAddressValue).toString())});
     model->appendRow({new QStandardItem(tr("First address")), new QStandardItem(QHostAddress(networkAddressValue + 1).toString())});
     model->appendRow({new QStandardItem(tr("Last address")), new QStandardItem(QHostAddress(broadcastAddressValue - 1).toString())});
-    model->appendRow({new QStandardItem(tr("Broadcast address")), new QStandardItem(QHostAddress(broadcastAddressValue).toString())});
+    model->appendRow({new QStandardItem(tr("Total hosts")), new QStandardItem(QString::number(totalHosts))});
+    model->appendRow({new QStandardItem(tr("Usable hosts")), new QStandardItem(QString::number(usableHosts))});
 }
 
 void IpSubnetCalculator::calculateIpv6()
