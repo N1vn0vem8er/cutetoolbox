@@ -64,12 +64,36 @@ void IpSubnetCalculator::calculateIpv4()
     {
         netmaskValue = 0xFFFFFFFF << (32 - cidrPrefix);
     }
-    int hostBits = 32 - cidrPrefix;
-    quint32 networkAddressValue = ipaddress.toIPv4Address() & netmaskValue;
-    quint32 wildcardMask = ~netmaskValue;
-    quint32 broadcastAddressValue = networkAddressValue | wildcardMask;
-    qint64 totalHosts = qint64(1) << hostBits;
+    const quint32 ipValue = ipaddress.toIPv4Address();
+    const int hostBits = 32 - cidrPrefix;
+    const quint32 networkAddressValue = ipValue & netmaskValue;
+    const quint32 wildcardMask = ~netmaskValue;
+    const quint32 broadcastAddressValue = networkAddressValue | wildcardMask;
+    const qint64 totalHosts = qint64(1) << hostBits;
     qint64 usableHosts = 0;
+    QChar ipClass = 'E';
+    const quint8 firstOctet = (ipValue >> 24) & 0xFF;
+    if(firstOctet >= 1 && firstOctet <= 126)
+        ipClass = 'A';
+    else if(firstOctet >= 128 && firstOctet <= 191)
+        ipClass = 'B';
+    else if(firstOctet >= 192 && firstOctet <= 223)
+        ipClass = 'C';
+    else if(firstOctet >= 224 && firstOctet <= 239)
+        ipClass = 'D';
+    const QString binarySubnetMask = QString("%1").arg(netmaskValue, 32, 2, QChar('0')).insert(8, '.').insert(17, '.').insert(26, '.');
+    QString ipType;
+    if(ipValue == networkAddressValue)
+        ipType = tr("Network Address");
+    else if(ipValue == broadcastAddressValue)
+        ipType = tr("Broadcast Address");
+    else if((firstOctet == 10) || (firstOctet == 172 && ((ipValue >> 16) & 0xFF) >= 16 && ((ipValue >> 16) & 0xFF) <= 31) || (firstOctet == 192 && ((ipValue >> 16) & 0xFF) == 168))
+        ipType = tr("Private");
+    else
+        ipType = tr("Public");
+    const QString binaryID = QString("%1").arg(ipValue, 32, 2, QChar('0')).insert(8, '.').insert(17, '.').insert(26, '.');
+    const QString hexID = QString("0x%1").arg(ipValue, 8, 16, QChar('0')).toUpper();
+
     if(hostBits >= 2)
     {
         usableHosts = totalHosts - 2;
@@ -84,12 +108,18 @@ void IpSubnetCalculator::calculateIpv4()
     }
     model->appendRow({new QStandardItem(tr("Ip address")), new QStandardItem(ui->ipv4LineEdit->text())});
     model->appendRow({new QStandardItem(tr("Cidi prefix")), new QStandardItem(QString::number(cidrPrefix))});
-    model->appendRow({new QStandardItem(tr("Wildcard mask")), new QStandardItem(QString::number(wildcardMask))});
+    model->appendRow({new QStandardItem(tr("Wildcard mask")), new QStandardItem(QHostAddress(wildcardMask).toString())});
     model->appendRow({new QStandardItem(tr("Network address")), new QStandardItem(QHostAddress(networkAddressValue).toString())});
     model->appendRow({new QStandardItem(tr("First address")), new QStandardItem(QHostAddress(networkAddressValue + 1).toString())});
     model->appendRow({new QStandardItem(tr("Last address")), new QStandardItem(QHostAddress(broadcastAddressValue - 1).toString())});
     model->appendRow({new QStandardItem(tr("Total hosts")), new QStandardItem(QString::number(totalHosts))});
     model->appendRow({new QStandardItem(tr("Usable hosts")), new QStandardItem(QString::number(usableHosts))});
+    model->appendRow({new QStandardItem(tr("IP Class")), new QStandardItem(QString(ipClass))});
+    model->appendRow({new QStandardItem(tr("Binary Subnet Mask")), new QStandardItem(binarySubnetMask)});
+    model->appendRow({new QStandardItem(tr("IP Type")), new QStandardItem(ipType)});
+    model->appendRow({new QStandardItem(tr("Binary ID")), new QStandardItem(binaryID)});
+    model->appendRow({new QStandardItem(tr("Integer ID")), new QStandardItem(QString::number(ipValue))});
+    model->appendRow({new QStandardItem(tr("Hex ID")), new QStandardItem(hexID)});
 }
 
 void IpSubnetCalculator::calculateIpv6()
