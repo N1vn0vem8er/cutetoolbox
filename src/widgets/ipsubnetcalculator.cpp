@@ -140,4 +140,32 @@ void IpSubnetCalculator::calculateIpv6()
                                                                                                                              ? tr("Unique Local (Deprecated)") : ipaddress.isUniqueLocalUnicast()
                                                                                                                              ? tr("Unique Local Unicast (ULA)") : ipaddress.isMulticast()
                                                                                                                              ? tr("Multicast") : tr("Other/Unknown"))});
+    const int hostBits = 128 - cidrPrefix;
+    QHostAddress networkAddress;
+    Q_IPV6ADDR ipv6Addr = ipaddress.toIPv6Address();
+    Q_IPV6ADDR netAddr = ipv6Addr;
+    for(int i = 0; i < 16; ++i)
+    {
+        int bitsInByte = qMin(8, qMax(0, cidrPrefix - i * 8));
+        quint8 maskByte = 0;
+        for(int j = 0; j < bitsInByte; ++j)
+        {
+            maskByte |= (1 << (7 - j));
+        }
+        netAddr.c[i] &= maskByte;
+        if (i * 8 + 8 > cidrPrefix)
+        {
+            netAddr.c[i] &= (0xFF << (8 - bitsInByte));
+            for (int k = i + 1; k < 16; ++k)
+            {
+                netAddr.c[k] = 0;
+            }
+            break;
+        }
+    }
+
+    networkAddress.setAddress(netAddr);
+    model->appendRow({new QStandardItem(tr("Network Address")), new QStandardItem(networkAddress.toString())});
+    model->appendRow({new QStandardItem(tr("Host Bits")), new QStandardItem(QString::number(hostBits))});
+    model->appendRow({new QStandardItem(tr("Total Addresses")), new QStandardItem(QString("2^%1").arg(hostBits))});
 }
