@@ -127,6 +127,17 @@ void IpSubnetCalculator::calculateIpv6()
     if(ui->resultsTableView->model())
         ui->resultsTableView->model()->deleteLater();
     QStandardItemModel* model = new QStandardItemModel(ui->resultsTableView);
-
     ui->resultsTableView->setModel(model);
+    QHostAddress ipaddress(ui->ipv6LineEdit->text());
+    bool ok;
+    int cidrPrefix = ui->ipv6PrefixLineEdit->text().toInt(&ok);
+    if(!ok || cidrPrefix < 0 || cidrPrefix > 128)
+        return;
+    model->appendRow({new QStandardItem(tr("Ip address")), new QStandardItem(ui->ipv6LineEdit->text())});
+    model->appendRow({new QStandardItem(tr("Cidi prefix")), new QStandardItem(QString::number(cidrPrefix))});
+    model->appendRow({new QStandardItem(tr("Address Type")), new QStandardItem(ipaddress.isGlobal() ? tr("Global Unicast") : ipaddress.isLinkLocal()
+                                                                                                                             ? tr("Link-Local") : ipaddress.isSiteLocal()
+                                                                                                                             ? tr("Unique Local (Deprecated)") : ipaddress.isUniqueLocalUnicast()
+                                                                                                                             ? tr("Unique Local Unicast (ULA)") : ipaddress.isMulticast()
+                                                                                                                             ? tr("Multicast") : tr("Other/Unknown"))});
 }
