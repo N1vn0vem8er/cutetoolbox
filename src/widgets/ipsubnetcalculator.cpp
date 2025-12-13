@@ -168,4 +168,25 @@ void IpSubnetCalculator::calculateIpv6()
     model->appendRow({new QStandardItem(tr("Network Address")), new QStandardItem(networkAddress.toString())});
     model->appendRow({new QStandardItem(tr("Host Bits")), new QStandardItem(QString::number(hostBits))});
     model->appendRow({new QStandardItem(tr("Total Addresses")), new QStandardItem(QString("2^%1").arg(hostBits))});
+    Q_IPV6ADDR lastAddr = ipv6Addr;
+    for(int i = 0; i < 16; ++i)
+    {
+        int bitsInByte = qMin(8, qMax(0, cidrPrefix - i * 8));
+        quint8 hostMaskByte = ~0;
+        for(int j = 0; j < bitsInByte; ++j)
+        {
+            hostMaskByte &= ~(1 << (7 - j));
+        }
+        lastAddr.c[i] = netAddr.c[i] | hostMaskByte;
+        if(i * 8 + 8 > cidrPrefix)
+        {
+            lastAddr.c[i] |= (~(0xFF << (8 - bitsInByte)));
+            for(int k = i + 1; k < 16; ++k)
+            {
+                lastAddr.c[k] = 0xFF;
+            }
+            break;
+        }
+    }
+    model->appendRow({new QStandardItem(tr("Last Address")), new QStandardItem(QHostAddress(lastAddr).toString())});
 }
