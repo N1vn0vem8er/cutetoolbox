@@ -120,6 +120,7 @@ void IpSubnetCalculator::calculateIpv4()
     model->appendRow({new QStandardItem(tr("Binary ID")), new QStandardItem(binaryID)});
     model->appendRow({new QStandardItem(tr("Integer ID")), new QStandardItem(QString::number(ipValue))});
     model->appendRow({new QStandardItem(tr("Hex ID")), new QStandardItem(hexID)});
+    ui->resultsTableView->resizeColumnsToContents();
 }
 
 void IpSubnetCalculator::calculateIpv6()
@@ -189,4 +190,5 @@ void IpSubnetCalculator::calculateIpv6()
         }
     }
     model->appendRow({new QStandardItem(tr("Last Address")), new QStandardItem(QHostAddress(lastAddr).toString())});
+    ui->resultsTableView->resizeColumnsToContents();
 }
