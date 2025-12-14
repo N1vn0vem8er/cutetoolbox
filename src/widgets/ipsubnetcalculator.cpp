@@ -1,6 +1,7 @@
 #include "ipsubnetcalculator.h"
 #include "src/widgets/ui_ipsubnetcalculator.h"
 
+#include <QFileDialog>
 #include <QStandardItemModel>
 #include <qhostaddress.h>
 
@@ -12,11 +13,85 @@ IpSubnetCalculator::IpSubnetCalculator(QWidget *parent)
     setName("IP Subnet Calculator");
     connect(ui->calculateIPv4Button, &QPushButton::clicked, this, &IpSubnetCalculator::calculateIpv4);
     connect(ui->calculateIPv6Button, &QPushButton::clicked, this, &IpSubnetCalculator::calculateIpv6);
+    connect(ui->saveButton, &QPushButton::clicked, this, &IpSubnetCalculator::saveAs);
 }
 
 IpSubnetCalculator::~IpSubnetCalculator()
 {
     delete ui;
+}
+
+bool IpSubnetCalculator::canSaveFiles() const
+{
+    return true;
+}
+
+void IpSubnetCalculator::save()
+{
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(toCsv().toUtf8());
+            file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
+        }
+    }
+    else
+        saveAs();
+}
+
+void IpSubnetCalculator::saveAs()
+{
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cpp *.h *.hpp");
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(toCsv().toUtf8());
+            file.close();
+            openedFile = path;
+            emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
+        }
+    }
+}
+
+QString IpSubnetCalculator::getOpenedFileName() const
+{
+    return openedFile;
+}
+
+void IpSubnetCalculator::close()
+{
+    openedFile.clear();
+    emit opened(openedFile);
+}
+
+QString IpSubnetCalculator::toCsv() const
+{
+    if(!ui->resultsTableView->model()) return "";
+    QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->resultsTableView->model());
+    QString out;
+    for(int row = 0; row < model->rowCount(); row++)
+    {
+        for(int col = 0; col < model->columnCount(); col++)
+        {
+            QStandardItem* item = model->item(row, col);
+            if(item)
+            {
+                QString text = item->text();
+                text.replace("\"", "\"\"");
+                out+="\"" + text + "\"" + ",";
+            }
+            else
+                out+="";
+        }
+        out += "\n";
+    }
+    return out;
 }
 
 void IpSubnetCalculator::calculateIpv4()

@@ -15,9 +15,18 @@ class IpSubnetCalculator : public CustomWidget
 public:
     explicit IpSubnetCalculator(QWidget *parent = nullptr);
     ~IpSubnetCalculator();
+    bool canSaveFiles() const override;
+    void save() override;
+    void saveAs() override;
+    QString getOpenedFileName() const override;
+    void close() override;
 
 private:
     Ui::IpSubnetCalculator *ui;
+    QString openedFile;
+
+private:
+    QString toCsv() const;
 
 private slots:
     void calculateIpv4();
