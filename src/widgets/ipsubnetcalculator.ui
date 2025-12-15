@@ -140,7 +140,23 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="copyButton">
+       <property name="toolTip">
+        <string>Copy</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="saveButton">
+       <property name="toolTip">
+        <string>Save As</string>
+       </property>
        <property name="text">
         <string/>
        </property>

@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QStandardItemModel>
+#include <qclipboard.h>
 #include <qhostaddress.h>
 
 IpSubnetCalculator::IpSubnetCalculator(QWidget *parent)
@@ -14,6 +15,7 @@ IpSubnetCalculator::IpSubnetCalculator(QWidget *parent)
     connect(ui->calculateIPv4Button, &QPushButton::clicked, this, &IpSubnetCalculator::calculateIpv4);
     connect(ui->calculateIPv6Button, &QPushButton::clicked, this, &IpSubnetCalculator::calculateIpv6);
     connect(ui->saveButton, &QPushButton::clicked, this, &IpSubnetCalculator::saveAs);
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(toCsv());});
 }
 
 IpSubnetCalculator::~IpSubnetCalculator()
