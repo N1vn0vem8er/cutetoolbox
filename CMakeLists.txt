@@ -71,6 +71,7 @@ qt_add_executable(CuteToolBox
     src/settingsdialog.h src/settingsdialog.cpp src/settingsdialog.ui
     src/widgets/apitesterwidget.h src/widgets/apitesterwidget.cpp src/widgets/apitesterwidget.ui
     src/widgets/ipsubnetcalculator.h src/widgets/ipsubnetcalculator.cpp src/widgets/ipsubnetcalculator.ui
+    src/widgets/removecommentswidget.h src/widgets/removecommentswidget.cpp src/widgets/removecommentswidget.ui
 )
 
 include_directories(

@@ -29,6 +29,7 @@
 #include "randomnumbergeneratorwidget.h"
 #include "randomtextgeneratorwidget.h"
 #include "regexwidget.h"
+#include "removecommentswidget.h"
 #include "sqlformatterwidget.h"
 #include "src/ui_mainwindow.h"
 #include "tablegenformatterwidget.h"
@@ -107,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Url"), QIcon(), new UrlCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("GZip"), QIcon(), new GZipWidget(ui->stackedWidget));
     addMenuItem(tr("Formatters"), QIcon());
+    addMenuItem(tr("Remove Comments"), QIcon(), new RemoveCommentsWidget(ui->stackedWidget));
     addMenuItem(tr("JSON"), QIcon(), new JsonFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("SQL"), QIcon(), new SQLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("XML"), QIcon(), new XMLFormatterWidget(ui->stackedWidget));
