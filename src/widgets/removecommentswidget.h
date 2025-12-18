@@ -35,6 +35,8 @@ public:
 
 private:
     Ui::RemoveCommentsWidget *ui;
+    QString openedFile;
+    QStringList recentFiles;
 };
 
 #endif // REMOVECOMMENTSWIDGET_H

@@ -1,6 +1,8 @@
 #include "removecommentswidget.h"
 #include "src/widgets/ui_removecommentswidget.h"
 
+#include <QFile>
+#include <QFileDialog>
 #include <QFontDialog>
 #include <qinputdialog.h>
 
@@ -38,22 +40,62 @@ bool RemoveCommentsWidget::canChangeFont() const
 
 void RemoveCommentsWidget::save()
 {
-
+    if(!openedFile.isEmpty())
+    {
+        QFile file(openedFile);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+            emit saved(tr("Saved: %1").arg(openedFile));
+        }
+    }
+    else
+        saveAs();
 }
 
 void RemoveCommentsWidget::saveAs()
 {
-
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::WriteOnly))
+        {
+            file.write(ui->codeEditor->toPlainText().toUtf8());
+            file.close();
+            openedFile = path;
+            emit saved(tr("Saved: %1").arg(openedFile));
+            emit opened(openedFile);
+        }
+    }
 }
 
 void RemoveCommentsWidget::open()
 {
-
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+    if(!path.isEmpty())
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            if(recentFiles.length() >= 10)
+                recentFiles.removeFirst();
+            if(!recentFiles.contains(openedFile))
+                recentFiles.append(openedFile);
+            emit updateRecent();
+            emit opened(openedFile);
+        }
+    }
 }
 
 void RemoveCommentsWidget::close()
 {
-
+    openedFile.clear();
+    emit opened(openedFile);
 }
 
 void RemoveCommentsWidget::increaseFontSize()
@@ -91,20 +133,31 @@ void RemoveCommentsWidget::setFont()
 
 QString RemoveCommentsWidget::getOpenedFileName() const
 {
-
+    return openedFile;
 }
 
 QStringList RemoveCommentsWidget::getRecentFiles() const
 {
-
+    return recentFiles;
 }
 
 void RemoveCommentsWidget::openFromRecent(const QString &path)
 {
-
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
 }
 
 void RemoveCommentsWidget::clearRecent()
 {
-
+    recentFiles.clear();
+    emit updateRecent();
 }
