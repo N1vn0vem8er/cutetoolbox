@@ -37,6 +37,15 @@ private:
     Ui::RemoveCommentsWidget *ui;
     QString openedFile;
     QStringList recentFiles;
+    enum class Languages{
+        None = -1,
+        Cpp,
+        C,
+        ObjectiveC
+    };
+
+private slots:
+    void removeComments();
 };
 
 #endif // REMOVECOMMENTSWIDGET_H

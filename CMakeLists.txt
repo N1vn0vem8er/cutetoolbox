@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.19)
-project(CuteToolBox LANGUAGES CXX)
+project(CuteToolBox LANGUAGES CXX C)
 
 find_package(Qt6 6.9 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport Network)
 find_package(ZLIB REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(LLVM REQUIRED CONFIG)
+find_package(Clang REQUIRED CONFIG)
 
 qt_standard_project_setup()
 
@@ -84,6 +86,10 @@ set_target_properties(CuteToolBox PROPERTIES
     OUTPUT_NAME ${REAL_OUTPUT_NAME}
 )
 
+include_directories(${LLVM_INCLUDE_DIRS} ${CLANG_INCLUDE_DIRS})
+link_directories(${LLVM_LIBRARY_DIRS})
+add_definitions(${LLVM_DEFINITIONS})
+
 target_link_libraries(CuteToolBox
     PRIVATE
         Qt::Core
@@ -97,6 +103,9 @@ target_link_libraries(CuteToolBox
         ZLIB::ZLIB
         qrcodegencpp
         yaml-cpp::yaml-cpp
+        clang
+        libclang
+        LLVM
 )
 
 include(GNUInstallDirs)
