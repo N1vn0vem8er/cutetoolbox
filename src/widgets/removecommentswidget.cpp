@@ -65,7 +65,22 @@ void RemoveCommentsWidget::save()
 
 void RemoveCommentsWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    QString suffix;
+    switch(static_cast<Languages>(ui->languageComboBox->currentIndex()))
+    {
+    case Languages::None:
+        break;
+    case Languages::Cpp:
+        suffix = "*.cpp *.h *.hpp";
+        break;
+    case Languages::C:
+        suffix = "*.c *.h";
+        break;
+    case Languages::ObjectiveC:
+        suffix = "*.m *.mm";
+        break;
+    }
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), suffix);
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -82,7 +97,22 @@ void RemoveCommentsWidget::saveAs()
 
 void RemoveCommentsWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+    QString suffix;
+    switch(static_cast<Languages>(ui->languageComboBox->currentIndex()))
+    {
+    case Languages::None:
+        break;
+    case Languages::Cpp:
+        suffix = "*.cpp *.h *.hpp";
+        break;
+    case Languages::C:
+        suffix = "*.c *.h";
+        break;
+    case Languages::ObjectiveC:
+        suffix = "*.m *.mm";
+        break;
+    }
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), suffix);
     if(!path.isEmpty())
     {
         QFile file(path);
