@@ -12,6 +12,11 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->removeButton, &QPushButton::clicked, this, &RemoveCommentsWidget::removeComments);
+    connect(ui->openButton, &QPushButton::clicked, this, &RemoveCommentsWidget::open);
+    connect(ui->saveAsButton, &QPushButton::clicked, this, &RemoveCommentsWidget::saveAs);
+    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
+    connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
+    connect(ui->claerButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
     ui->languageComboBox->insertItem(static_cast<int>(Languages::Cpp), tr("C++"));
     ui->languageComboBox->insertItem(static_cast<int>(Languages::C), tr("C"));
     ui->languageComboBox->insertItem(static_cast<int>(Languages::ObjectiveC), tr("Objective C"));
@@ -221,10 +226,10 @@ void RemoveCommentsWidget::removeComments()
             continue;
         CXSourceRange r = clang_getTokenExtent(tu, tokens[i]);
         CXSourceLocation start = clang_getRangeStart(r);
-        CXSourceLocation end   = clang_getRangeEnd(r);
+        CXSourceLocation end = clang_getRangeEnd(r);
         unsigned startOffset = 0, endOffset = 0;
         clang_getFileLocation(start, nullptr, nullptr, nullptr, &startOffset);
-        clang_getFileLocation(end,   nullptr, nullptr, nullptr, &endOffset);
+        clang_getFileLocation(end, nullptr, nullptr, nullptr, &endOffset);
         commentRanges.push_back({ startOffset, endOffset });
     }
     clang_disposeTokens(tu, tokens, tokenCount);
