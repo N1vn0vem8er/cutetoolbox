@@ -14,16 +14,17 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Remove Comments"));
+    ui->languageComboBox->insertItem(static_cast<int>(Languages::Cpp), tr("C++"));
+    ui->languageComboBox->insertItem(static_cast<int>(Languages::C), tr("C"));
+    ui->languageComboBox->insertItem(static_cast<int>(Languages::ObjectiveC), tr("Objective C"));
     QSettings settings(Config::settingsName);
+    ui->languageComboBox->setCurrentIndex(settings.value("removecomments.selectedLanguage", 0).toInt());
     connect(ui->removeButton, &QPushButton::clicked, this, &RemoveCommentsWidget::removeComments);
     connect(ui->openButton, &QPushButton::clicked, this, &RemoveCommentsWidget::open);
     connect(ui->saveAsButton, &QPushButton::clicked, this, &RemoveCommentsWidget::saveAs);
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->claerButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
-    ui->languageComboBox->insertItem(static_cast<int>(Languages::Cpp), tr("C++"));
-    ui->languageComboBox->insertItem(static_cast<int>(Languages::C), tr("C"));
-    ui->languageComboBox->insertItem(static_cast<int>(Languages::ObjectiveC), tr("Objective C"));
     int size = settings.beginReadArray("removecomments.recentFiles");
     for(int i = 0; i<size; i++)
     {
@@ -38,6 +39,7 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
 RemoveCommentsWidget::~RemoveCommentsWidget()
 {
     QSettings settings(Config::settingsName);
+    settings.setValue("removecomments.selectedLanguage", ui->languageComboBox->currentIndex());
     settings.beginWriteArray("removecomments.recentFiles");
     for(int i = 0; i<recentFiles.size(); i++)
     {
