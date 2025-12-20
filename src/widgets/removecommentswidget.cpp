@@ -1,10 +1,12 @@
 #include "removecommentswidget.h"
+#include "config.h"
 #include "src/widgets/ui_removecommentswidget.h"
 #include <QFile>
 #include <QFileDialog>
 #include <QFontDialog>
 #include <qinputdialog.h>
 #include <clang-c/Index.h>
+#include <qsettings.h>
 
 RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -12,6 +14,7 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Remove Comments"));
+    QSettings settings(Config::settingsName);
     connect(ui->removeButton, &QPushButton::clicked, this, &RemoveCommentsWidget::removeComments);
     connect(ui->openButton, &QPushButton::clicked, this, &RemoveCommentsWidget::open);
     connect(ui->saveAsButton, &QPushButton::clicked, this, &RemoveCommentsWidget::saveAs);
@@ -21,10 +24,27 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
     ui->languageComboBox->insertItem(static_cast<int>(Languages::Cpp), tr("C++"));
     ui->languageComboBox->insertItem(static_cast<int>(Languages::C), tr("C"));
     ui->languageComboBox->insertItem(static_cast<int>(Languages::ObjectiveC), tr("Objective C"));
+    int size = settings.beginReadArray("removecomments.recentFiles");
+    for(int i = 0; i<size; i++)
+    {
+        settings.setArrayIndex(i);
+        const QString path = settings.value("path").toString();
+        if(!path.isEmpty())
+            recentFiles.append(path);
+    }
+    settings.endArray();
 }
 
 RemoveCommentsWidget::~RemoveCommentsWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.beginWriteArray("removecomments.recentFiles");
+    for(int i = 0; i<recentFiles.size(); i++)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFiles.at(i));
+    }
+    settings.endArray();
     delete ui;
 }
 
