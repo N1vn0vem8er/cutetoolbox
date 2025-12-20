@@ -11,6 +11,7 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
     , ui(new Ui::RemoveCommentsWidget)
 {
     ui->setupUi(this);
+    setName(tr("Remove Comments"));
     connect(ui->removeButton, &QPushButton::clicked, this, &RemoveCommentsWidget::removeComments);
     connect(ui->openButton, &QPushButton::clicked, this, &RemoveCommentsWidget::open);
     connect(ui->saveAsButton, &QPushButton::clicked, this, &RemoveCommentsWidget::saveAs);
