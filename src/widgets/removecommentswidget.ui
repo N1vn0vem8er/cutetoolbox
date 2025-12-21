@@ -41,6 +41,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="removeButton">
+       <property name="toolTip">
+        <string>Remove comments from code</string>
+       </property>
        <property name="text">
         <string>Remove</string>
        </property>
@@ -114,7 +117,11 @@
     </layout>
    </item>
    <item>
-    <widget class="CodeEditor" name="codeEditor"/>
+    <widget class="CodeEditor" name="codeEditor">
+     <property name="placeholderText">
+      <string>Put code here</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
