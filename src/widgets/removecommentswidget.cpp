@@ -6,6 +6,7 @@
 #include <QFontDialog>
 #include <qinputdialog.h>
 #include <clang-c/Index.h>
+#include <QProcess>
 #include <qsettings.h>
 
 RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
@@ -17,6 +18,10 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
     ui->languageComboBox->insertItem(static_cast<int>(Languages::Cpp), tr("C++"));
     ui->languageComboBox->insertItem(static_cast<int>(Languages::C), tr("C"));
     ui->languageComboBox->insertItem(static_cast<int>(Languages::ObjectiveC), tr("Objective C"));
+    if(std::system("python3 --version > /dev/null 2>&1") == 0)
+    {
+        ui->languageComboBox->insertItem(static_cast<int>(Languages::Python), tr("Python"));
+    }
     QSettings settings(Config::settingsName);
     ui->languageComboBox->setCurrentIndex(settings.value("removecomments.selectedLanguage", 0).toInt());
     connect(ui->removeButton, &QPushButton::clicked, this, &RemoveCommentsWidget::removeComments);
@@ -102,6 +107,9 @@ void RemoveCommentsWidget::saveAs()
     case Languages::ObjectiveC:
         suffix = "*.m *.mm";
         break;
+    case Languages::Python:
+        suffix = "*.py";
+        break;
     }
     const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), suffix);
     if(!path.isEmpty())
@@ -133,6 +141,9 @@ void RemoveCommentsWidget::open()
         break;
     case Languages::ObjectiveC:
         suffix = "*.m *.mm";
+        break;
+    case Languages::Python:
+        suffix = "*.py";
         break;
     }
     const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), suffix);
@@ -224,37 +235,17 @@ void RemoveCommentsWidget::clearRecent()
     emit updateRecent();
 }
 
-void RemoveCommentsWidget::removeComments()
+void RemoveCommentsWidget::removeCommentsClang(const QString &fileName, const QList<const char *> &args)
 {
     const QByteArray utf8 = ui->codeEditor->toPlainText().toUtf8();
     const char* buffer = utf8.constData();
     const size_t bufferSize = static_cast<size_t>(utf8.size());
     CXIndex index = clang_createIndex(0, 0);
     CXUnsavedFile unsaved {
-        .Filename = "input.cpp",
+        .Filename = fileName.toUtf8(),
         .Contents = buffer,
         .Length = static_cast<unsigned long>(bufferSize)
     };
-    QList<const char*> args;
-    switch(static_cast<Languages>(ui->languageComboBox->currentIndex()))
-    {
-    case Languages::Cpp:
-        unsaved.Filename = "input.cpp";
-        args = {"-std=c++20", "-x", "c++"};
-        break;
-    case Languages::C:
-        unsaved.Filename = "input.c";
-        args = {"-std=c17", "-x", "c"};
-        break;
-    case Languages::ObjectiveC:
-        unsaved.Filename = "input.m";
-        args = {"-x", "objective-c"};
-        break;
-    case Languages::None:
-        return;
-        break;
-    }
-
     CXTranslationUnit tu{};
     if(clang_parseTranslationUnit2(index, unsaved.Filename, args.data(), 1, &unsaved, 1, CXTranslationUnit_None, &tu) != CXError_Success)
     {
@@ -307,4 +298,74 @@ void RemoveCommentsWidget::removeComments()
         result += QString::fromUtf8(buffer + cursorPos,static_cast<int>(bufferSize - cursorPos));
     }
     ui->codeEditor->setPlainText(result);
+}
+
+void RemoveCommentsWidget::removeCommentsPython()
+{
+    const QString command = QString(R"(
+import sys
+import tokenize
+import io
+
+def strip_comments_preserve(source):
+    lines = source.splitlines(keepends=True)
+    source_bytes = source.encode('utf-8')
+    bytes_io = io.BytesIO(source_bytes)
+    tokens = tokenize.tokenize(bytes_io.readline)
+    for tok in tokens:
+        if tok.type == tokenize.COMMENT:
+            start_line, start_col = tok.start
+            end_line, end_col = tok.end
+            idx = start_line - 1
+            line = lines[idx]
+            lines[idx] = line[:start_col] + line[end_col:]
+    return "".join(lines)
+source_code = sys.stdin.read()
+print(strip_comments_preserve(source_code), end='')
+    )");
+    QProcess* process = new QProcess(this);
+    connect(process, &QProcess::finished, this, [process, this](int exitCode, QProcess::ExitStatus status){
+        if(status == QProcess::NormalExit && exitCode == 0)
+        {
+            QString output = QString::fromUtf8(process->readAllStandardOutput());
+            ui->codeEditor->setPlainText(output);
+        }
+        else
+        {
+            QByteArray error = process->readAllStandardError();
+            qDebug() << error;
+        }
+        process->deleteLater();
+    });
+    process->start("python3", {"-c", command});
+    if(process->waitForStarted())
+    {
+        QByteArray codeToClean = ui->codeEditor->toPlainText().toUtf8();
+        process->write(codeToClean);
+        process->closeWriteChannel();
+    }
+}
+
+void RemoveCommentsWidget::removeComments()
+{
+    switch(static_cast<Languages>(ui->languageComboBox->currentIndex()))
+    {
+    case Languages::Cpp:
+        removeCommentsClang("input.cpp", {"-std=c++20", "-x", "c++"});
+        break;
+    case Languages::C:
+        removeCommentsClang("input.c", {"-std=c17", "-x", "c"});
+        break;
+    case Languages::ObjectiveC:
+        removeCommentsClang("input.m", {"-x", "objective-c"});
+        break;
+    case Languages::Python:
+        removeCommentsPython();
+        break;
+    case Languages::None:
+        return;
+        break;
+    }
+
+
 }

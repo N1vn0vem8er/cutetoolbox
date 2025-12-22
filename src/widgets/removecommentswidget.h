@@ -41,8 +41,13 @@ private:
         None = -1,
         Cpp,
         C,
-        ObjectiveC
+        ObjectiveC,
+        Python
     };
+
+private:
+    void removeCommentsClang(const QString& fileName, const QList<const char*>& args);
+    void removeCommentsPython();
 
 private slots:
     void removeComments();

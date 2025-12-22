@@ -103,7 +103,6 @@ target_link_libraries(CuteToolBox
         ZLIB::ZLIB
         qrcodegencpp
         yaml-cpp::yaml-cpp
-        clang
         libclang
         LLVM
 )
