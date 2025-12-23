@@ -45,7 +45,14 @@
         <string>Remove comments from code</string>
        </property>
        <property name="text">
-        <string>Remove</string>
+        <string>Remove Comments</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="removeEmptyButton">
+       <property name="text">
+        <string>Remove Empty Lines</string>
        </property>
       </widget>
      </item>

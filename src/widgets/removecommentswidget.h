@@ -51,6 +51,7 @@ private:
 
 private slots:
     void removeComments();
+    void removeNewLines();
 };
 
 #endif // REMOVECOMMENTSWIDGET_H

@@ -30,6 +30,7 @@ RemoveCommentsWidget::RemoveCommentsWidget(QWidget *parent)
     connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
     connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
     connect(ui->claerButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
+    connect(ui->removeEmptyButton, &QPushButton::clicked, this, &RemoveCommentsWidget::removeNewLines);
     int size = settings.beginReadArray("removecomments.recentFiles");
     for(int i = 0; i<size; i++)
     {
@@ -366,6 +367,10 @@ void RemoveCommentsWidget::removeComments()
         return;
         break;
     }
+}
 
-
+void RemoveCommentsWidget::removeNewLines()
+{
+    const static QRegularExpression regex("(\\r?\\n){2,}");
+    ui->codeEditor->setPlainText(ui->codeEditor->toPlainText().replace(regex, "\n"));
 }
