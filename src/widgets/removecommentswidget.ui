@@ -51,6 +51,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="removeEmptyButton">
+       <property name="toolTip">
+        <string>Remove empty lines from code</string>
+       </property>
        <property name="text">
         <string>Remove Empty Lines</string>
        </property>
