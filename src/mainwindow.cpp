@@ -23,6 +23,7 @@
 #include "markdownwidget.h"
 #include "numberbaseswidget.h"
 #include "objectivecformatterwidget.h"
+#include "passwordverifierwidget.h"
 #include "protoformatterwidget.h"
 #include "qdatetimeconverterwidget.h"
 #include "qrcodegenerator.h"
@@ -152,6 +153,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("IP Subnet Calculator"), QIcon(), new IpSubnetCalculator(ui->stackedWidget));
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), QIcon(), new CSVDataTableInfo(ui->stackedWidget));
+    addMenuItem(tr("Password Verifier"), QIcon(), new PasswordVerifierWidget(ui->stackedWidget));
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 

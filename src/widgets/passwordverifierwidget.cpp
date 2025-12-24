@@ -12,3 +12,13 @@ PasswordVerifierWidget::~PasswordVerifierWidget()
 {
     delete ui;
 }
+
+bool PasswordVerifierWidget::canBasicEdit() const
+{
+    return true;
+}
+
+void PasswordVerifierWidget::checkPassword()
+{
+
+}

@@ -15,9 +15,13 @@ class PasswordVerifierWidget : public CustomWidget
 public:
     explicit PasswordVerifierWidget(QWidget *parent = nullptr);
     ~PasswordVerifierWidget();
+    bool canBasicEdit() const override;
 
 private:
     Ui::PasswordVerifierWidget *ui;
+
+private slots:
+    void checkPassword();
 };
 
 #endif // PASSWORDVERIFIERWIDGET_H
