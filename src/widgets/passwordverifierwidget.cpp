@@ -9,6 +9,7 @@ PasswordVerifierWidget::PasswordVerifierWidget(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->passwordLineEdit, &QLineEdit::textChanged, this, &PasswordVerifierWidget::checkPassword);
+    connect(ui->numbersCheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
     ui->listView->setStyleSheet("background-color: transparent; border: none;");
 }
 
@@ -24,7 +25,8 @@ bool PasswordVerifierWidget::canBasicEdit() const
 
 void PasswordVerifierWidget::checkPassword()
 {
-    const int length = ui->passwordLineEdit->text().length();
+    const QString password = ui->passwordLineEdit->text();
+    const int length = password.length();
     ui->lengthLabel->setText(QString::number(length));
     if(length == 0)
     {
@@ -32,6 +34,11 @@ void PasswordVerifierWidget::checkPassword()
         return;
     }
     QStringList errors;
+    const static QRegularExpression numberRegex(R"(\d+)");
+    if(ui->numbersCheckBox->isChecked() && !numberRegex.match(password).hasMatch())
+    {
+        errors.append(tr("Password doesn't have numbers"));
+    }
     if(length < ui->minLengthSpinBox->value())
     {
         errors.append(tr("Password is too short"));
