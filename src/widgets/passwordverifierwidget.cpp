@@ -11,6 +11,7 @@ PasswordVerifierWidget::PasswordVerifierWidget(QWidget *parent)
     connect(ui->passwordLineEdit, &QLineEdit::textChanged, this, &PasswordVerifierWidget::checkPassword);
     connect(ui->numbersCheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
     connect(ui->specialCharscheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
+    connect(ui->lettersSizeCheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
     ui->listView->setStyleSheet("background-color: transparent; border: none;");
 }
 
@@ -44,6 +45,11 @@ void PasswordVerifierWidget::checkPassword()
     if(ui->specialCharscheckBox->isChecked() && !specialCharacterRegex.match(password).hasMatch())
     {
         errors.append(tr("Password doesn't have special characters"));
+    }
+    const static QRegularExpression lettersSizeRegex(R"((?=.*[a-z])(?=.*[A-Z]).+)");
+    if(ui->lettersSizeCheckBox->isChecked() && !lettersSizeRegex.match(password).hasMatch())
+    {
+        errors.append(tr("Password doesn't have different size letters"));
     }
     if(length < ui->minLengthSpinBox->value())
     {
