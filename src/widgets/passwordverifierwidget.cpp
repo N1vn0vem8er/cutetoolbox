@@ -8,6 +8,7 @@ PasswordVerifierWidget::PasswordVerifierWidget(QWidget *parent)
     , ui(new Ui::PasswordVerifierWidget)
 {
     ui->setupUi(this);
+    setName(tr("Password Verifier"));
     connect(ui->passwordLineEdit, &QLineEdit::textChanged, this, &PasswordVerifierWidget::checkPassword);
     connect(ui->numbersCheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
     connect(ui->specialCharscheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
