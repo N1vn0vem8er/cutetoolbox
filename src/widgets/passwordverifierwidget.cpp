@@ -10,6 +10,7 @@ PasswordVerifierWidget::PasswordVerifierWidget(QWidget *parent)
     ui->setupUi(this);
     connect(ui->passwordLineEdit, &QLineEdit::textChanged, this, &PasswordVerifierWidget::checkPassword);
     connect(ui->numbersCheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
+    connect(ui->specialCharscheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
     ui->listView->setStyleSheet("background-color: transparent; border: none;");
 }
 
@@ -38,6 +39,11 @@ void PasswordVerifierWidget::checkPassword()
     if(ui->numbersCheckBox->isChecked() && !numberRegex.match(password).hasMatch())
     {
         errors.append(tr("Password doesn't have numbers"));
+    }
+    const static QRegularExpression specialCharacterRegex(R"([!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~])");
+    if(ui->specialCharscheckBox->isChecked() && !specialCharacterRegex.match(password).hasMatch())
+    {
+        errors.append(tr("Password doesn't have special characters"));
     }
     if(length < ui->minLengthSpinBox->value())
     {
