@@ -1,7 +1,8 @@
 #include "passwordverifierwidget.h"
+#include "config.h"
 #include "src/widgets/ui_passwordverifierwidget.h"
-
 #include <QStringListModel>
+#include <qsettings.h>
 
 PasswordVerifierWidget::PasswordVerifierWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -9,6 +10,12 @@ PasswordVerifierWidget::PasswordVerifierWidget(QWidget *parent)
 {
     ui->setupUi(this);
     setName(tr("Password Verifier"));
+    QSettings settings(Config::settingsName);
+    ui->minLengthSpinBox->setValue(settings.value("passwordVerifier.minLength", 0).toInt());
+    ui->maxLengthSpinBox->setValue(settings.value("passwordVerifier.maxLength", 10).toInt());
+    ui->lettersSizeCheckBox->setChecked(settings.value("passwordVerifier.lettersSize", false).toBool());
+    ui->numbersCheckBox->setChecked(settings.value("passwordVerifier.numbers", false).toBool());
+    ui->specialCharscheckBox->setChecked(settings.value("passwordVerifier.specialCharacters", false).toBool());
     connect(ui->passwordLineEdit, &QLineEdit::textChanged, this, &PasswordVerifierWidget::checkPassword);
     connect(ui->numbersCheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
     connect(ui->specialCharscheckBox, &QCheckBox::clicked, this, &PasswordVerifierWidget::checkPassword);
