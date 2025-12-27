@@ -25,6 +25,12 @@ PasswordVerifierWidget::PasswordVerifierWidget(QWidget *parent)
 
 PasswordVerifierWidget::~PasswordVerifierWidget()
 {
+    QSettings settings(Config::settingsName);
+    settings.setValue("passwordVerifier.minLength", ui->minLengthSpinBox->value());
+    settings.setValue("passwordVerifier.maxLength", ui->maxLengthSpinBox->value());
+    settings.setValue("passwordVerifier.lettersSize", ui->lettersSizeCheckBox->isChecked());
+    settings.setValue("passwordVerifier.numbers", ui->numbersCheckBox->isChecked());
+    settings.setValue("passwordVerifier.specialCharacters", ui->specialCharscheckBox->isChecked());
     delete ui;
 }
 
