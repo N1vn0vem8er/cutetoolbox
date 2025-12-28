@@ -75,6 +75,7 @@ qt_add_executable(CuteToolBox
     src/widgets/ipsubnetcalculator.h src/widgets/ipsubnetcalculator.cpp src/widgets/ipsubnetcalculator.ui
     src/widgets/removecommentswidget.h src/widgets/removecommentswidget.cpp src/widgets/removecommentswidget.ui
     src/widgets/passwordverifierwidget.h src/widgets/passwordverifierwidget.cpp src/widgets/passwordverifierwidget.ui
+    src/widgets/domtreewidget.h src/widgets/domtreewidget.cpp src/widgets/domtreewidget.ui
 )
 
 include_directories(
