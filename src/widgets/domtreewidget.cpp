@@ -2,6 +2,8 @@
 #include "src/widgets/ui_domtreewidget.h"
 
 #include <QFileDialog>
+#include <QFontDialog>
+#include <QInputDialog>
 
 DomTreeWidget::DomTreeWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -98,27 +100,33 @@ void DomTreeWidget::close()
 
 void DomTreeWidget::increaseFontSize()
 {
-
+    ui->codeEditor->increaseFontSize();
 }
 
 void DomTreeWidget::decreaseFontSize()
 {
-
+    ui->codeEditor->decreaseFontSize();
 }
 
 void DomTreeWidget::setFontSize()
 {
-
+    bool ok;
+    const int size = QInputDialog::getInt(this, tr("Set font size"), tr("Font size"), 1, 1, 200, 1, &ok);
+    if(ok)
+        ui->codeEditor->setFontSize(size);
 }
 
 void DomTreeWidget::resetFontSize()
 {
-
+    ui->codeEditor->setFontSize(10);
 }
 
 void DomTreeWidget::setFont()
 {
-
+    bool ok;
+    const QFont font = QFontDialog::getFont(&ok, this);
+    if(ok)
+        ui->codeEditor->setFont(font);
 }
 
 QString DomTreeWidget::getOpenedFileName() const
@@ -133,10 +141,21 @@ QStringList DomTreeWidget::getRecentFiles() const
 
 void DomTreeWidget::openFromRecent(const QString &path)
 {
-
+    if(recentFiles.contains(path))
+    {
+        QFile file(path);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ui->codeEditor->setPlainText(file.readAll());
+            file.close();
+            openedFile = path;
+            emit opened(openedFile);
+        }
+    }
 }
 
 void DomTreeWidget::clearRecent()
 {
-
+    recentFiles.clear();
+    emit updateRecent();
 }
