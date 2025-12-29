@@ -1,9 +1,10 @@
 #include "domtreewidget.h"
 #include "src/widgets/ui_domtreewidget.h"
-
+#include <QDomDocument>
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QInputDialog>
+#include <qstandarditemmodel.h>
 
 DomTreeWidget::DomTreeWidget(QWidget *parent)
     : CustomWidget(parent)
@@ -11,6 +12,7 @@ DomTreeWidget::DomTreeWidget(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->saveAsButton, &QPushButton::clicked, this, &DomTreeWidget::saveAs);
+    connect(ui->codeEditor, &CodeEditor::textChanged, this, &DomTreeWidget::generate);
 }
 
 DomTreeWidget::~DomTreeWidget()
@@ -158,4 +160,39 @@ void DomTreeWidget::clearRecent()
 {
     recentFiles.clear();
     emit updateRecent();
+}
+
+void DomTreeWidget::toStandardItem(const QDomNode &xmlNode, QStandardItem *parentItem)
+{
+    QDomNode node = xmlNode.firstChild();
+    while(!node.isNull())
+    {
+        if(node.isElement())
+        {
+            QDomElement element = node.toElement();
+            QStandardItem* item = new QStandardItem(element.tagName());
+            if(!element.text().isEmpty() && element.firstChild().isText())
+            {
+                item->appendRow(new QStandardItem(element.text()));
+            }
+            parentItem->appendRow(item);
+            toStandardItem(node, item);
+        }
+        node = node.nextSibling();
+    }
+}
+
+void DomTreeWidget::generate()
+{
+    if(ui->treeView->model())
+        ui->treeView->model()->deleteLater();
+    QDomDocument doc;
+    doc.setContent(ui->codeEditor->toPlainText());
+    QDomElement root = doc.documentElement();
+    QStandardItemModel* model = new QStandardItemModel();
+    QStandardItem* rootItem = new QStandardItem(root.tagName());
+    model->appendRow(rootItem);
+    toStandardItem(root, rootItem);
+    ui->treeView->setModel(model);
+    ui->treeView->expandAll();
 }

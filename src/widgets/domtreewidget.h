@@ -3,6 +3,8 @@
 
 #include "customwidget.h"
 #include <QWidget>
+#include <qdom.h>
+#include <qstandarditemmodel.h>
 
 namespace Ui {
 class DomTreeWidget;
@@ -37,6 +39,12 @@ private:
     Ui::DomTreeWidget *ui;
     QString openedFile;
     QStringList recentFiles;
+
+private:
+    void toStandardItem(const QDomNode &xmlNode, QStandardItem *parentItem);
+
+private slots:
+    void generate();
 };
 
 #endif // DOMTREEWIDGET_H
