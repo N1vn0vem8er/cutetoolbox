@@ -9,6 +9,7 @@
 #include "csharpformatterwidget.h"
 #include "csvdatatableinfo.h"
 #include "desktopcreatorwidget.h"
+#include "domtreewidget.h"
 #include "editor/codeeditor.h"
 #include "gzipwidget.h"
 #include "hashwidget.h"
@@ -154,6 +155,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), QIcon(), new CSVDataTableInfo(ui->stackedWidget));
     addMenuItem(tr("Password Verifier"), QIcon(), new PasswordVerifierWidget(ui->stackedWidget));
+    addMenuItem(tr("Dom Tree"), QIcon(), new DomTreeWidget(ui->stackedWidget));
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 
