@@ -11,8 +11,13 @@ DomTreeWidget::DomTreeWidget(QWidget *parent)
     , ui(new Ui::DomTreeWidget)
 {
     ui->setupUi(this);
+    setName(tr("Dom Tree"));
     connect(ui->saveAsButton, &QPushButton::clicked, this, &DomTreeWidget::saveAs);
     connect(ui->codeEditor, &CodeEditor::textChanged, this, &DomTreeWidget::generate);
+    connect(ui->copyButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::copyAll);
+    connect(ui->pasteButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::paste);
+    connect(ui->clearButton, &QPushButton::clicked, ui->codeEditor, &CodeEditor::clear);
+    connect(ui->openButton, &QPushButton::clicked, this, &DomTreeWidget::open);
 }
 
 DomTreeWidget::~DomTreeWidget()
