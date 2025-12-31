@@ -148,7 +148,7 @@ void ApiTesterWidget::saveAs()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedRequestFile.isEmpty() && option == TextEdits::request ? QFileInfo(openedRequestFile).dir().absolutePath() : !openedResponseFile.isEmpty() && option == TextEdits::response ? QFileInfo(openedResponseFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -175,7 +175,7 @@ void ApiTesterWidget::saveAs()
 
 void ApiTesterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Select Body"), QDir::homePath());
+    const QString path = QFileDialog::getOpenFileName(this, tr("Select Body"), !openedRequestFile.isEmpty() ? QFileInfo(openedRequestFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
         QFile file(path);
