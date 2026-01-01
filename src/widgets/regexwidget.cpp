@@ -65,7 +65,7 @@ bool RegexWidget::canChangeFont() const
 
 void RegexWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
         QFile file(path);

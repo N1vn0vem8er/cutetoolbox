@@ -83,7 +83,7 @@ void CSharpFormatterWidget::save()
 
 void CSharpFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.cs");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -100,7 +100,7 @@ void CSharpFormatterWidget::saveAs()
 
 void CSharpFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cs");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.cs");
     if(!path.isEmpty())
     {
         QFile file(path);

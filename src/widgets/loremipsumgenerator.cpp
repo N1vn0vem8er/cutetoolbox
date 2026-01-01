@@ -67,7 +67,7 @@ void LoremIpsumGenerator::save()
 
 void LoremIpsumGenerator::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
         QFile file(path);

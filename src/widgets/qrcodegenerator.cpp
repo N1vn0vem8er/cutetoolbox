@@ -98,7 +98,7 @@ void QrCodeGenerator::save()
 
 void QrCodeGenerator::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save Qr code"), QDir::homePath());
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save Qr code"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
         QImage image(400, 400, QImage::Format_RGB32);

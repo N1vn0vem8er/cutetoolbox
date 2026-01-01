@@ -101,7 +101,7 @@ void MarkdownWidget::save()
 
 void MarkdownWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.md");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.md");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -119,7 +119,7 @@ void MarkdownWidget::saveAs()
 
 void MarkdownWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.md");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.md");
     if(!path.isEmpty())
     {
         QFile file(path);

@@ -83,7 +83,7 @@ void ObjectiveCFormatterWidget::save()
 
 void ObjectiveCFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.m *.mm");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.m *.mm");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -100,7 +100,7 @@ void ObjectiveCFormatterWidget::saveAs()
 
 void ObjectiveCFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.m *.mm");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.m *.mm");
     if(!path.isEmpty())
     {
         QFile file(path);

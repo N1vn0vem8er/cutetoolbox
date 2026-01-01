@@ -83,7 +83,7 @@ void JavaScriptFormatterWidget::save()
 
 void JavaScriptFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.js *.mjs *.cjs *.ts");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.js *.mjs *.cjs *.ts");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -100,7 +100,7 @@ void JavaScriptFormatterWidget::saveAs()
 
 void JavaScriptFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.js *.mjs *.cjs *.ts");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.js *.mjs *.cjs *.ts");
     if(!path.isEmpty())
     {
         QFile file(path);

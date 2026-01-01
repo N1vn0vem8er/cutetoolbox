@@ -67,7 +67,7 @@ bool VideoConverterWidget::canOpenFiles() const
 
 void VideoConverterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Select File"), QDir::homePath(), [this]{
+    const QString path = QFileDialog::getOpenFileName(this, tr("Select File"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), [this]{
         QString out = "All Files (*.*);;";
         for(const QString& i : std::as_const(decodingFormats))
             out.append(QString("*.%1;;").arg(i));
@@ -94,7 +94,7 @@ void VideoConverterWidget::convert()
 {
     if(!openedFile.isEmpty())
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Convert"), QDir::homePath());
+        const QString path = QFileDialog::getSaveFileName(this, tr("Convert"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QProcess* process = new QProcess(this);

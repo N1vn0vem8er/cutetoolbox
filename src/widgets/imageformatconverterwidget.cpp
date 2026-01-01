@@ -30,7 +30,7 @@ bool ImageFormatConverterWidget::canOpenFiles() const
 
 void ImageFormatConverterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
         image.load(path);
@@ -58,7 +58,7 @@ QString ImageFormatConverterWidget::getOpenedFileName() const
 
 void ImageFormatConverterWidget::convert()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), QString("*.%1").arg(ui->comboBox->currentText()));
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), QString("*.%1").arg(ui->comboBox->currentText()));
     if(!path.isEmpty())
     {
         image.save(path, ui->comboBox->currentText().toUtf8());

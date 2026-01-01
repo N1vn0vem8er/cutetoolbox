@@ -83,7 +83,7 @@ void TableGenFormatterWidget::save()
 
 void TableGenFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.td");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.td");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -100,7 +100,7 @@ void TableGenFormatterWidget::saveAs()
 
 void TableGenFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.td");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.td");
     if(!path.isEmpty())
     {
         QFile file(path);

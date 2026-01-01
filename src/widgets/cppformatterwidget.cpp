@@ -83,7 +83,7 @@ void CppFormatterWidget::save()
 
 void CppFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cpp *.h *.hpp");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.cpp *.h *.hpp");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -100,7 +100,7 @@ void CppFormatterWidget::saveAs()
 
 void CppFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.cpp *.h *.hpp");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.cpp *.h *.hpp");
     if(!path.isEmpty())
     {
         QFile file(path);

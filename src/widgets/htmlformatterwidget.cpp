@@ -84,7 +84,7 @@ void HTMLFormatterWidget::save()
 
 void HTMLFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.html");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.html");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -176,7 +176,7 @@ void HTMLFormatterWidget::format()
 
 void HTMLFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), "*.html");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.html");
     if(!path.isEmpty())
     {
         QFile file(path);

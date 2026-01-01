@@ -85,7 +85,7 @@ void JsonFormatterWidget::save()
 
 void JsonFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.json");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.json");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -180,7 +180,7 @@ void JsonFormatterWidget::format()
 
 void JsonFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), "*.json");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.json");
     if(!path.isEmpty())
     {
         QFile file(path);

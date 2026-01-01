@@ -17,7 +17,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
     connect(ui->text, &QPlainTextEdit::textChanged, this, &Base64CoderDecoderWidget::encode);
     connect(ui->base64, &QPlainTextEdit::textChanged, this, &Base64CoderDecoderWidget::decode);
     connect(ui->openInputButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedTextFile.isEmpty() ? QFileInfo(openedTextFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -37,7 +37,7 @@ Base64CoderDecoderWidget::Base64CoderDecoderWidget(QWidget *parent)
         }
     });
     connect(ui->openCodedButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedBase64File.isEmpty() ? QFileInfo(openedBase64File).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -176,7 +176,7 @@ void Base64CoderDecoderWidget::saveAs()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedTextFile.isEmpty() && option == TextEdits::text ? QFileInfo(openedTextFile).dir().absolutePath() : !openedBase64File.isEmpty() && option == TextEdits::base64 ? QFileInfo(openedBase64File).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -206,7 +206,7 @@ void Base64CoderDecoderWidget::open()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedTextFile.isEmpty() && option == TextEdits::text ? QFileInfo(openedTextFile).dir().absolutePath() : !openedBase64File.isEmpty() && option == TextEdits::base64 ? QFileInfo(openedBase64File).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);

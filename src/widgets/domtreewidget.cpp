@@ -63,7 +63,7 @@ void DomTreeWidget::save()
 
 void DomTreeWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -80,7 +80,7 @@ void DomTreeWidget::saveAs()
 
 void DomTreeWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
         QFile file(path);

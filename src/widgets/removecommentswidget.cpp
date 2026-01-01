@@ -112,7 +112,7 @@ void RemoveCommentsWidget::saveAs()
         suffix = "*.py";
         break;
     }
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), suffix);
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), suffix);
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -147,7 +147,7 @@ void RemoveCommentsWidget::open()
         suffix = "*.py";
         break;
     }
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), suffix);
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), suffix);
     if(!path.isEmpty())
     {
         QFile file(path);

@@ -47,7 +47,7 @@ XMLFormatterWidget::~XMLFormatterWidget()
 
 void XMLFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), "*.xml");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.xml");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -111,7 +111,7 @@ void XMLFormatterWidget::save()
 
 void XMLFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.xml");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.xml");
     if(!path.isEmpty())
     {
         QFile file(path);

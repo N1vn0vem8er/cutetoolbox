@@ -51,7 +51,7 @@ bool CSVDataTableInfo::canOpenFiles() const
 
 void CSVDataTableInfo::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), "*.csv");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.csv");
     if(!path.isEmpty())
     {
         QFile file(path);

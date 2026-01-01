@@ -105,7 +105,7 @@ void DesktopCreatorWidget::save()
 
 void DesktopCreatorWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save"), QDir::homePath(), "*.desktop");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.desktop");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -122,7 +122,7 @@ void DesktopCreatorWidget::saveAs()
 
 void DesktopCreatorWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.desktop");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.desktop");
     if(!path.isEmpty())
     {
         QFile file(path);

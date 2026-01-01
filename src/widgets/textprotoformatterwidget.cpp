@@ -83,7 +83,7 @@ void TextProtoFormatterWidget::save()
 
 void TextProtoFormatterWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.textpb *.txtpb *.pb.txt *.textproto *.asciipb");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.textpb *.txtpb *.pb.txt *.textproto *.asciipb");
     if(!path.isEmpty())
     {
         QFile file(path);
@@ -100,7 +100,7 @@ void TextProtoFormatterWidget::saveAs()
 
 void TextProtoFormatterWidget::open()
 {
-    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.textpb *.txtpb *.pb.txt *.textproto *.asciipb");
+    const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.textpb *.txtpb *.pb.txt *.textproto *.asciipb");
     if(!path.isEmpty())
     {
         QFile file(path);
