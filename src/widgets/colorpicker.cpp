@@ -124,7 +124,8 @@ void ColorPicker::updateColor()
 void ColorPicker::pasteQColor()
 {
     QString text = QGuiApplication::clipboard()->text();
-    QRegularExpressionMatch match = QRegularExpression(R"(#[\da-f-A-F]{6,8})").match(text);
+    const static QRegularExpression hexRegex(R"(#[\da-f-A-F]{6,8})");
+    QRegularExpressionMatch match = hexRegex.match(text);
     if(match.hasMatch())
     {
         const QString captured = match.captured(0);
@@ -137,7 +138,8 @@ void ColorPicker::pasteQColor()
             ui->hexARGBLineEdit->setText(captured);
         }
     }
-    match = QRegularExpression(R"(QColor::fromRgbF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorRgbFRegex(R"(QColor::fromRgbF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorRgbFRegex.match(text);
     if(match.hasMatch())
     {
         ui->redf->setValue(match.captured(1).toFloat());
@@ -147,7 +149,8 @@ void ColorPicker::pasteQColor()
             ui->alphaf->setValue(match.captured(4).toFloat());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromRgb64\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorRgb64Regex(R"(QColor::fromRgb64\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorRgb64Regex.match(text);
     if(match.hasMatch())
     {
         ui->red64->setValue(match.captured(1).toInt());
@@ -157,7 +160,8 @@ void ColorPicker::pasteQColor()
             ui->alpha64->setValue(match.captured(5).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromRgb\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorRgbRegex(R"(QColor::fromRgb\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorRgbRegex.match(text);
     if(match.hasMatch())
     {
         ui->red255->setValue(match.captured(1).toInt());
@@ -167,7 +171,8 @@ void ColorPicker::pasteQColor()
             ui->alpha255->setValue(match.captured(5).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromCmyk\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorCmykRegex(R"(QColor::fromCmyk\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorCmykRegex.match(text);
     if(match.hasMatch())
     {
         ui->cmykC->setValue(match.captured(1).toInt());
@@ -178,7 +183,8 @@ void ColorPicker::pasteQColor()
             ui->cmykA->setValue(match.captured(6).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromCmykF\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorCmykFRegex(R"(QColor::fromCmykF\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorCmykFRegex.match(text);
     if(match.hasMatch())
     {
         ui->cmykfC->setValue(match.captured(1).toFloat());
@@ -189,7 +195,8 @@ void ColorPicker::pasteQColor()
             ui->cmykfA->setValue(match.captured(6).toFloat());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromHsv\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorHsvRegex(R"(QColor::fromHsv\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorHsvRegex.match(text);
     if(match.hasMatch())
     {
         ui->hsvH->setValue(match.captured(1).toInt());
@@ -199,7 +206,8 @@ void ColorPicker::pasteQColor()
             ui->hsvA->setValue(match.captured(5).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromHsvF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorHsvFRegex(R"(QColor::fromHsvF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorHsvFRegex.match(text);
     if(match.hasMatch())
     {
         ui->hsvfH->setValue(match.captured(1).toFloat());
@@ -209,7 +217,8 @@ void ColorPicker::pasteQColor()
             ui->hsvfA->setValue(match.captured(5).toFloat());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromHsl\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorHslRegex(R"(QColor::fromHsl\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorHslRegex.match(text);
     if(match.hasMatch())
     {
         ui->hslH->setValue(match.captured(1).toInt());
@@ -219,7 +228,8 @@ void ColorPicker::pasteQColor()
             ui->hslA->setValue(match.captured(5).toInt());
         return;
     }
-    match = QRegularExpression(R"(QColor::fromHslF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))").match(text);
+    const static QRegularExpression colorHslFRegex(R"(QColor::fromHslF\((\d{1,3}), (\d{1,3}), (\d{1,3})(, (\d{1,3}))?\))");
+    match = colorHslFRegex.match(text);
     if(match.hasMatch())
     {
         ui->hslfH->setValue(match.captured(1).toFloat());
@@ -229,7 +239,8 @@ void ColorPicker::pasteQColor()
             ui->hslfA->setValue(match.captured(5).toFloat());
         return;
     }
-    match = QRegularExpression(R"(rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    const static QRegularExpression colorRgbCssRegex(R"(rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\))");
+    match = colorRgbCssRegex.match(text);
     if(match.hasMatch())
     {
         ui->red255->setValue(match.captured(1).toInt());
@@ -237,7 +248,8 @@ void ColorPicker::pasteQColor()
         ui->blue255->setValue(match.captured(3).toInt());
         return;
     }
-    match = QRegularExpression(R"(rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})\))").match(text);
+    const static QRegularExpression colorRgbaCssRegex(R"(rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1,3})\))");
+    match = colorRgbaCssRegex.match(text);
     if(match.hasMatch())
     {
         ui->red255->setValue(match.captured(1).toInt());
@@ -246,7 +258,8 @@ void ColorPicker::pasteQColor()
         ui->alpha255->setValue(match.captured(4).toInt());
         return;
     }
-    match = QRegularExpression(R"(rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1}\.\d{1})\))").match(text);
+    const static QRegularExpression colorRgbaCss2Regex(R"(rgba\((\d{1,3}), (\d{1,3}), (\d{1,3}), (\d{1}\.\d{1})\))");
+    match = colorRgbaCss2Regex.match(text);
     if(match.hasMatch())
     {
         ui->red255->setValue(match.captured(1).toInt());
