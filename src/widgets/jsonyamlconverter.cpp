@@ -24,7 +24,7 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
     connect(ui->yaml, &QPlainTextEdit::textChanged, this, &JsonYamlConverter::yamlToJson);
     connect(ui->yamlIndentations, &QSpinBox::valueChanged, this, &JsonYamlConverter::jsonToYaml);
     connect(ui->openJsonButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.json");
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedJsonFile.isEmpty() ? QFileInfo(openedJsonFile).dir().absolutePath() : QDir::homePath(), "*.json");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -43,7 +43,7 @@ JsonYamlConverter::JsonYamlConverter(QWidget *parent)
         }
     });
     connect(ui->openYamlButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.yaml");
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedYamlFile.isEmpty() ? QFileInfo(openedYamlFile).dir().absolutePath() : QDir::homePath(), "*.yaml");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -176,7 +176,7 @@ void JsonYamlConverter::saveAs()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), option == TextEdits::json ? "*.json" : "*.yaml");
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedJsonFile.isEmpty() && option == TextEdits::json ? QFileInfo(openedJsonFile).dir().absolutePath() : !openedYamlFile.isEmpty() && option == TextEdits::yaml ? QFileInfo(openedYamlFile).dir().absolutePath() : QDir::homePath(), option == TextEdits::json ? "*.json" : "*.yaml");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -206,7 +206,7 @@ void JsonYamlConverter::open()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), option == TextEdits::json ? "*.json" : "*.yaml");
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedJsonFile.isEmpty() && option == TextEdits::json ? QFileInfo(openedJsonFile).dir().absolutePath() : !openedYamlFile.isEmpty() && option == TextEdits::yaml ? QFileInfo(openedYamlFile).dir().absolutePath() : QDir::homePath(), option == TextEdits::json ? "*.json" : "*.yaml");
         if(!path.isEmpty())
         {
             QFile file(path);

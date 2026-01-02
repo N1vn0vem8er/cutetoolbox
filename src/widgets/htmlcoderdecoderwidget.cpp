@@ -16,7 +16,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
     connect(ui->html, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::encode);
     connect(ui->encoded, &QPlainTextEdit::textChanged, this, &HTMLCoderDecoderWidget::decode);
     connect(ui->openHtmlButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath(), "*.html");
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedHtmlFile.isEmpty() ? QFileInfo(openedHtmlFile).dir().absolutePath() : QDir::homePath(), "*.html");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -36,7 +36,7 @@ HTMLCoderDecoderWidget::HTMLCoderDecoderWidget(QWidget *parent)
         }
     });
     connect(ui->openCodedButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedEncodedFile.isEmpty() ? QFileInfo(openedEncodedFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -195,7 +195,7 @@ void HTMLCoderDecoderWidget::saveAs()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.html");
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedHtmlFile.isEmpty() && option == TextEdits::html ? QFileInfo(openedHtmlFile).dir().absolutePath() : !openedEncodedFile.isEmpty() && option == TextEdits::encoded ? QFileInfo(openedEncodedFile).dir().absolutePath() : QDir::homePath(), "*.html");
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -225,7 +225,7 @@ void HTMLCoderDecoderWidget::open()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath(), "*.html");
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedHtmlFile.isEmpty() && option == TextEdits::html ? QFileInfo(openedHtmlFile).dir().absolutePath() : !openedEncodedFile.isEmpty() && option == TextEdits::encoded ? QFileInfo(openedEncodedFile).dir().absolutePath() : QDir::homePath(), "*.html");
         if(!path.isEmpty())
         {
             QFile file(path);

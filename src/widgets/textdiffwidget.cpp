@@ -23,7 +23,7 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
     connect(ui->clearOldButton, &QPushButton::clicked, ui->oldText, &CodeEditor::clear);
     connect(ui->newClearButton, &QPushButton::clicked, ui->newText, &CodeEditor::clear);
     connect(ui->openOldButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedOldFile.isEmpty() ? QFileInfo(openedOldFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -43,7 +43,7 @@ TextDiffWidget::TextDiffWidget(QWidget *parent)
         }
     });
     connect(ui->newOpenButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedNewFile.isEmpty() ? QFileInfo(openedNewFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -143,7 +143,7 @@ void TextDiffWidget::open()
     {
         if(option != TextEdits::none)
         {
-            const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+            const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedOldFile.isEmpty() && option == TextEdits::oldText ? QFileInfo(openedOldFile).dir().absolutePath() : !openedNewFile.isEmpty() && option == TextEdits::newText ? QFileInfo(openedNewFile).dir().absolutePath() : QDir::homePath());
             if(!path.isEmpty())
             {
                 QFile file(path);

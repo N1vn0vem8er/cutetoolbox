@@ -24,7 +24,7 @@ GZipWidget::GZipWidget(QWidget *parent)
     connect(ui->copyOutputButton, &QPushButton::clicked, ui->output, [&]{ui->output->selectAll(); ui->output->copy();});
     connect(ui->copyTextButton, &QPushButton::clicked, ui->input, [&]{ui->input->selectAll(); ui->input->copy();});
     connect(ui->openTextButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedInputFile.isEmpty() ? QFileInfo(openedInputFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -44,7 +44,7 @@ GZipWidget::GZipWidget(QWidget *parent)
         }
     });
     connect(ui->openGZipButton, &QPushButton::clicked, this, [&]{
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedOutputFile.isEmpty() ? QFileInfo(openedOutputFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -183,7 +183,7 @@ void GZipWidget::saveAs()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath());
+        const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedInputFile.isEmpty() && option == TextEdits::input ? QFileInfo(openedInputFile).dir().absolutePath() : !openedOutputFile.isEmpty() && option == TextEdits::output ? QFileInfo(openedOutputFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
@@ -213,7 +213,7 @@ void GZipWidget::open()
     TextEdits option = getSelectedOption();
     if(option != TextEdits::none)
     {
-        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), QDir::homePath());
+        const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedInputFile.isEmpty() && option == TextEdits::input ? QFileInfo(openedInputFile).dir().absolutePath() : !openedOutputFile.isEmpty() && option == TextEdits::output ? QFileInfo(openedOutputFile).dir().absolutePath() : QDir::homePath());
         if(!path.isEmpty())
         {
             QFile file(path);
