@@ -64,6 +64,7 @@ private:
     void openFromRecent(const QString& path);
     void clearRecent();
     void loadDefaultSettings();
+    bool isDarkTheme(const QPalette& pal);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

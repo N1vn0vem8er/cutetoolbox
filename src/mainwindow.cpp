@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->splitter->setStretchFactor(1, 1);
     ui->listWidget->setFrameShape(QFrame::NoFrame);
+
     addMenuItem(tr("Coders and decoders"), QIcon());
     addMenuItem(tr("HTML Encoder"), QIcon(), new HTMLCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("Base64"), QIcon(), new Base64CoderDecoderWidget(ui->stackedWidget));
@@ -139,7 +140,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Text diff"), QIcon(), new TextDiffWidget(ui->stackedWidget));
     addMenuItem(tr("Markdown"), QIcon(), new MarkdownWidget(ui->stackedWidget));
     addMenuItem(tr("Converters"), QIcon());
-    addMenuItem(tr("JSON - YAML"), QIcon(), new JsonYamlConverter(ui->stackedWidget));
+    addMenuItem(tr("JSON - YAML"), isDarkTheme(palette()) ? QIcon(":/icons/jsonyamlconverter_dark.svg") : QIcon(":/icons/jsonyamlconverter_light.svg"), new JsonYamlConverter(ui->stackedWidget));
     addMenuItem(tr("Timestamp"), QIcon(), new TimestampWidget(ui->stackedWidget));
     addMenuItem(tr("Number Bases"), QIcon(), new NumberBasesWidget(ui->stackedWidget));
     addMenuItem(tr("QDateTime"), QIcon(), new QDateTimeConverterWidget(ui->stackedWidget));
@@ -173,6 +174,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+bool MainWindow::isDarkTheme(const QPalette& pal)
+{
+    const QColor c = pal.color(QPalette::Window);
+    return 0.2126 * c.redF() + 0.7152 * c.greenF() + 0.0722 * c.blueF() < 0.5;
 }
 
 void MainWindow::showWidget(const QModelIndex& index)

@@ -4,5 +4,7 @@
         <file>3rdparty/markdown.css</file>
         <file>3rdparty/marked.js</file>
         <file>icons/icon.png</file>
+        <file>icons/jsonyamlconverter_light.svg</file>
+        <file>icons/jsonyamlconverter_dark.svg</file>
     </qresource>
 </RCC>

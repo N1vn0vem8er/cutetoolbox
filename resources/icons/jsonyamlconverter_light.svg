@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="31.999998"
+   height="31.999998"
+   viewBox="0 0 8.466666 8.4666661"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:3.52777px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:#000000;stroke-width:0"
+       x="0.27516967"
+       y="2.5188236"
+       id="text1"><tspan
+         id="tspan1"
+         style="stroke-width:0"
+         x="0.27516967"
+         y="2.5188236">Json</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52777px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:#000000;stroke-width:0"
+       x="0.75848424"
+       y="8.4313946"
+       id="text2"><tspan
+         id="tspan2"
+         style="stroke-width:0"
+         x="0.75848424"
+         y="8.4313946">Yaml</tspan></text>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       id="rect2"
+       width="0.96922964"
+       height="1.7413279"
+       x="3.9179876"
+       y="3.5647941"
+       ry="0.053263057" />
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       d="M 5.3882595,4.7147274 H 4.4026025 V 5.8975162"
+       id="path2" />
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:0"
+       d="m 3.4333728,4.7147274 h 0.985657 v 1.1827888"
+       id="path3" />
+  </g>
+</svg>
