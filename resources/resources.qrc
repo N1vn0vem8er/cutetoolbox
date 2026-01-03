@@ -11,5 +11,7 @@
         <file>icons/base64encoder_light.svg</file>
         <file>icons/jsonformatter_dark.svg</file>
         <file>icons/jsonformatter_light.svg</file>
+        <file>icons/htmlformatter_dark.svg</file>
+        <file>icons/htmlformatter_light.svg</file>
     </qresource>
 </RCC>

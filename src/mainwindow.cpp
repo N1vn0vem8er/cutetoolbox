@@ -114,8 +114,8 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Remove Comments"), QIcon(), new RemoveCommentsWidget(ui->stackedWidget));
     addMenuItem(tr("JSON"), isDarkTheme(palette()) ? QIcon(":/icons/jsonformatter_dark.svg") : QIcon(":/icons/jsonformatter_light.svg"), new JsonFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("SQL"), QIcon(), new SQLFormatterWidget(ui->stackedWidget));
-    addMenuItem(tr("XML"), QIcon(), new XMLFormatterWidget(ui->stackedWidget));
-    addMenuItem(tr("HTML"), QIcon(), new HTMLFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("XML"), isDarkTheme(palette()) ? QIcon(":/icons/htmlformatter_dark.svg") : QIcon(":/icons/htmlformatter_light.svg"), new XMLFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("HTML"), isDarkTheme(palette()) ? QIcon(":/icons/htmlformatter_dark.svg") : QIcon(":/icons/htmlformatter_light.svg"), new HTMLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("C++"), QIcon(), new CppFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("CSharp"), QIcon(), new CSharpFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Java"), QIcon(), new JavaFormatterWidget(ui->stackedWidget));
