@@ -9,5 +9,7 @@
         <file>icons/qrcodegenerator.svg</file>
         <file>icons/base64encoder_dark.svg</file>
         <file>icons/base64encoder_light.svg</file>
+        <file>icons/jsonformatter_dark.svg</file>
+        <file>icons/jsonformatter_light.svg</file>
     </qresource>
 </RCC>
