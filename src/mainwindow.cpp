@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     addMenuItem(tr("Coders and decoders"), QIcon());
     addMenuItem(tr("HTML Encoder"), QIcon(), new HTMLCoderDecoderWidget(ui->stackedWidget));
-    addMenuItem(tr("Base64"), QIcon(), new Base64CoderDecoderWidget(ui->stackedWidget));
+    addMenuItem(tr("Base64"), isDarkTheme(palette()) ? QIcon(":/icons/base64encoder_dark.svg") : QIcon(":/icons/base64encoder_light.svg"), new Base64CoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("Url"), QIcon(), new UrlCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("GZip"), QIcon(), new GZipWidget(ui->stackedWidget));
     addMenuItem(tr("Formatters"), QIcon());
