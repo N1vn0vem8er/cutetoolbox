@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(CuteToolBox LANGUAGES CXX C)
 
-find_package(Qt6 6.9 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport Network)
+find_package(Qt6 6.9 REQUIRED COMPONENTS Core Widgets Xml Concurrent WebEngineCore WebEngineWidgets PrintSupport Network Svg)
 find_package(ZLIB REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(LLVM REQUIRED CONFIG)
@@ -102,6 +102,7 @@ target_link_libraries(CuteToolBox
         Qt::WebEngineWidgets
         Qt::PrintSupport
         Qt6::Network
+        Qt6::Svg
         ZLIB::ZLIB
         qrcodegencpp
         yaml-cpp::yaml-cpp

@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QGraphicsRectItem>
 #include <qsettings.h>
+#include <QSvgGenerator>
 
 QrCodeGenerator::QrCodeGenerator(QWidget *parent)
     : CustomWidget(parent)
@@ -101,10 +102,25 @@ void QrCodeGenerator::saveAs()
     const QString path = QFileDialog::getSaveFileName(this, tr("Save Qr code"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
     if(!path.isEmpty())
     {
-        QImage image(400, 400, QImage::Format_RGB32);
-        QPainter painter(&image);
-        scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
-        image.save(path);
+        if(QFileInfo(path).suffix().toLower() == "svg")
+        {
+            QSvgGenerator generator;
+            generator.setFileName(path);
+            generator.setSize(QSize(400, 400));
+            generator.setViewBox(QRect(0, 0, 400, 400));
+            generator.setTitle("Qrcode");
+            generator.setDescription("");
+            QPainter painter(&generator);
+            scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
+            painter.end();
+        }
+        else
+        {
+            QImage image(400, 400, QImage::Format_RGB32);
+            QPainter painter(&image);
+            scene->render(&painter, QRectF(0, 0, 400, 400), scene->sceneRect());
+            image.save(path);
+        }
         openedFile = path;
         emit saved(tr("Saved: %1").arg(openedFile));
         emit opened(openedFile);

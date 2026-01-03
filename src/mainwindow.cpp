@@ -132,7 +132,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Random Text"), QIcon(), new RandomTextGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Number"), QIcon(), new RandomNumberGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Chmod Calculator"), QIcon(), new ChmodCalculatorWidget(ui->stackedWidget));
-    addMenuItem(tr("Qr code"), QIcon(), new QrCodeGenerator(ui->stackedWidget));
+    addMenuItem(tr("Qr code"), QIcon(":/icons/qrcodegenerator.svg"), new QrCodeGenerator(ui->stackedWidget));
     addMenuItem(tr("Desktop Creator"), QIcon(), new DesktopCreatorWidget(ui->stackedWidget));
     addMenuItem(tr("Users"), QIcon(), new UserGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Text"), QIcon());
