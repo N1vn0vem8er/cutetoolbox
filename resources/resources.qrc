@@ -17,5 +17,6 @@
         <file>icons/csharpformatter_light.svg</file>
         <file>icons/cppformatter_dark.svg</file>
         <file>icons/cppformatter_light.svg</file>
+        <file>icons/javaformatter.svg</file>
     </qresource>
 </RCC>
