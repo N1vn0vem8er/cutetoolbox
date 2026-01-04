@@ -13,5 +13,9 @@
         <file>icons/jsonformatter_light.svg</file>
         <file>icons/htmlformatter_dark.svg</file>
         <file>icons/htmlformatter_light.svg</file>
+        <file>icons/csharpformatter_dark.svg</file>
+        <file>icons/csharpformatter_light.svg</file>
+        <file>icons/cppformatter_dark.svg</file>
+        <file>icons/cppformatter_light.svg</file>
     </qresource>
 </RCC>
