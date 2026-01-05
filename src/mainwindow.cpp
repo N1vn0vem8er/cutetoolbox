@@ -113,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Formatters"), QIcon());
     addMenuItem(tr("Remove Comments"), QIcon(), new RemoveCommentsWidget(ui->stackedWidget));
     addMenuItem(tr("JSON"), isDarkTheme(palette()) ? QIcon(":/icons/jsonformatter_dark.svg") : QIcon(":/icons/jsonformatter_light.svg"), new JsonFormatterWidget(ui->stackedWidget));
-    addMenuItem(tr("SQL"), QIcon(), new SQLFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("SQL"), isDarkTheme(palette()) ? QIcon(":/icons/sqlformatter_dark.svg") : QIcon(":/icons/sqlformatter_light.svg"), new SQLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("XML"), isDarkTheme(palette()) ? QIcon(":/icons/htmlformatter_dark.svg") : QIcon(":/icons/htmlformatter_light.svg"), new XMLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("HTML"), isDarkTheme(palette()) ? QIcon(":/icons/htmlformatter_dark.svg") : QIcon(":/icons/htmlformatter_light.svg"), new HTMLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("C++"), isDarkTheme(palette()) ? QIcon(":/icons/cppformatter_dark.svg") : QIcon(":/icons/cppformatter_light.svg"), new CppFormatterWidget(ui->stackedWidget));
