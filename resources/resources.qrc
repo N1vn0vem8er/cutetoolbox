@@ -26,5 +26,7 @@
         <file>icons/markdowneditor_light.svg</file>
         <file>icons/regex_dark.svg</file>
         <file>icons/regex_light.svg</file>
+        <file>icons/hash_light.svg</file>
+        <file>icons/hash_dark.svg</file>
     </qresource>
 </RCC>

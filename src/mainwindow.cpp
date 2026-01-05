@@ -126,7 +126,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("TextProto"), QIcon(), new TextProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Verilog"), QIcon(), new VerilogFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
-    addMenuItem(tr("Hash"), QIcon(), new HashWidget(ui->stackedWidget));
+    addMenuItem(tr("Hash"), isDarkTheme(palette()) ? QIcon(":/icons/hash_dark.svg") : QIcon(":/icons/hash_light.svg"), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));
     addMenuItem(tr("UUID"), QIcon(), new UUIDGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Text"), QIcon(), new RandomTextGeneratorWidget(ui->stackedWidget));
