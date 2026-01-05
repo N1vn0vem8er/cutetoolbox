@@ -136,7 +136,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Desktop Creator"), QIcon(), new DesktopCreatorWidget(ui->stackedWidget));
     addMenuItem(tr("Users"), QIcon(), new UserGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Text"), QIcon());
-    addMenuItem(tr("Regex"), QIcon(), new RegexWidget(ui->stackedWidget));
+    addMenuItem(tr("Regex"), isDarkTheme(palette()) ? QIcon(":/icons/regex_dark.svg") : QIcon(":/icons/regex_light.svg"), new RegexWidget(ui->stackedWidget));
     addMenuItem(tr("Text diff"), QIcon(), new TextDiffWidget(ui->stackedWidget));
     addMenuItem(tr("Markdown"), isDarkTheme(palette()) ? QIcon(":/icons/markdowneditor_dark.svg") : QIcon(":/icons/markdowneditor_light.svg"), new MarkdownWidget(ui->stackedWidget));
     addMenuItem(tr("Converters"), QIcon());

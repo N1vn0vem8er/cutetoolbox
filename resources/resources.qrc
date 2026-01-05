@@ -24,5 +24,7 @@
         <file>icons/jsformatter_light.svg</file>
         <file>icons/markdowneditor_dark.svg</file>
         <file>icons/markdowneditor_light.svg</file>
+        <file>icons/regex_dark.svg</file>
+        <file>icons/regex_light.svg</file>
     </qresource>
 </RCC>
