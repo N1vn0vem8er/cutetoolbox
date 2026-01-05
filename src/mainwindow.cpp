@@ -119,7 +119,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("C++"), isDarkTheme(palette()) ? QIcon(":/icons/cppformatter_dark.svg") : QIcon(":/icons/cppformatter_light.svg"), new CppFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("CSharp"), isDarkTheme(palette()) ? QIcon(":/icons/csharpformatter_dark.svg") : QIcon(":/icons/csharpformatter_light.svg"), new CSharpFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Java"), QIcon(":/icons/javaformatter.svg"), new JavaFormatterWidget(ui->stackedWidget));
-    addMenuItem(tr("JavaScript"), QIcon(), new JavaScriptFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("JavaScript"), isDarkTheme(palette()) ? QIcon(":/icons/jsformatter_dark.svg") : QIcon(":/icons/jsformatter_light.svg"), new JavaScriptFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Objective C"), QIcon(), new ObjectiveCFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Proto"), QIcon(), new ProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TableGen"), QIcon(), new TableGenFormatterWidget(ui->stackedWidget));
@@ -138,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Text"), QIcon());
     addMenuItem(tr("Regex"), QIcon(), new RegexWidget(ui->stackedWidget));
     addMenuItem(tr("Text diff"), QIcon(), new TextDiffWidget(ui->stackedWidget));
-    addMenuItem(tr("Markdown"), QIcon(), new MarkdownWidget(ui->stackedWidget));
+    addMenuItem(tr("Markdown"), isDarkTheme(palette()) ? QIcon(":/icons/markdowneditor_dark.svg") : QIcon(":/icons/markdowneditor_light.svg"), new MarkdownWidget(ui->stackedWidget));
     addMenuItem(tr("Converters"), QIcon());
     addMenuItem(tr("JSON - YAML"), isDarkTheme(palette()) ? QIcon(":/icons/jsonyamlconverter_dark.svg") : QIcon(":/icons/jsonyamlconverter_light.svg"), new JsonYamlConverter(ui->stackedWidget));
     addMenuItem(tr("Timestamp"), QIcon(), new TimestampWidget(ui->stackedWidget));

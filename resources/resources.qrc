@@ -20,5 +20,9 @@
         <file>icons/javaformatter.svg</file>
         <file>icons/sqlformatter_dark.svg</file>
         <file>icons/sqlformatter_light.svg</file>
+        <file>icons/jsformatter_dark.svg</file>
+        <file>icons/jsformatter_light.svg</file>
+        <file>icons/markdowneditor_dark.svg</file>
+        <file>icons/markdowneditor_light.svg</file>
     </qresource>
 </RCC>
