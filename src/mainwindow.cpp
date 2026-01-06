@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
     const bool dark = isDarkTheme(palette());
 
     addMenuItem(tr("Coders and decoders"), QIcon());
-    addMenuItem(tr("HTML Encoder"), QIcon(), new HTMLCoderDecoderWidget(ui->stackedWidget));
+    addMenuItem(tr("HTML Encoder"), dark ? QIcon(":/icons/htmlformatter_dark.svg") : QIcon(":/icons/htmlformatter_light.svg"), new HTMLCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("Base64"), dark ? QIcon(":/icons/base64encoder_dark.svg") : QIcon(":/icons/base64encoder_light.svg"), new Base64CoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("Url"), QIcon(), new UrlCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("GZip"), dark ? QIcon(":/icons/gzip_dark.svg") : QIcon(":/icons/gzip_light.svg"), new GZipWidget(ui->stackedWidget));
@@ -128,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Verilog"), QIcon(), new VerilogFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), dark ? QIcon(":/icons/hash_dark.svg") : QIcon(":/icons/hash_light.svg"), new HashWidget(ui->stackedWidget));
-    addMenuItem(tr("Lorem ipsum"), QIcon(), new LoremIpsumGenerator(ui->stackedWidget));
+    addMenuItem(tr("Lorem ipsum"), dark ? QIcon(":/icons/loremipsum_dark.svg") : QIcon(":/icons/loremipsum_light.svg"), new LoremIpsumGenerator(ui->stackedWidget));
     addMenuItem(tr("UUID"), QIcon(), new UUIDGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Text"), QIcon(), new RandomTextGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Number"), QIcon(), new RandomNumberGeneratorWidget(ui->stackedWidget));
