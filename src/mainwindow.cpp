@@ -109,7 +109,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Coders and decoders"), QIcon());
     addMenuItem(tr("HTML Encoder"), dark ? QIcon(":/icons/htmlformatter_dark.svg") : QIcon(":/icons/htmlformatter_light.svg"), new HTMLCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("Base64"), dark ? QIcon(":/icons/base64encoder_dark.svg") : QIcon(":/icons/base64encoder_light.svg"), new Base64CoderDecoderWidget(ui->stackedWidget));
-    addMenuItem(tr("Url"), QIcon(), new UrlCoderDecoderWidget(ui->stackedWidget));
+    addMenuItem(tr("Url"), dark ? QIcon(":/icons/url_dark.svg") : QIcon(":/icons/url_light.svg"), new UrlCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("GZip"), dark ? QIcon(":/icons/gzip_dark.svg") : QIcon(":/icons/gzip_light.svg"), new GZipWidget(ui->stackedWidget));
     addMenuItem(tr("Formatters"), QIcon());
     addMenuItem(tr("Remove Comments"), QIcon(), new RemoveCommentsWidget(ui->stackedWidget));
