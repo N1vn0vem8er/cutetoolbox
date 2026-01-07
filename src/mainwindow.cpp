@@ -150,7 +150,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Image Format Converter"), QIcon(), new ImageFormatConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Video Format Converter"), QIcon(), new VideoConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
-    addMenuItem(tr("Color Palette"), QIcon(), new ColorPaletteGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Color Palette"), dark ? QIcon(":/icons/palette_dark.svg") : QIcon(":/icons/palette_light.svg"), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Web"), QIcon());
     addMenuItem(tr("Api Tester"), QIcon(), new ApiTesterWidget(ui->stackedWidget));
     addMenuItem(tr("IP Subnet Calculator"), QIcon(), new IpSubnetCalculator(ui->stackedWidget));
