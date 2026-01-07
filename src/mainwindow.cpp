@@ -146,7 +146,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Number Bases"), QIcon(), new NumberBasesWidget(ui->stackedWidget));
     addMenuItem(tr("QDateTime"), QIcon(), new QDateTimeConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Graphics"), QIcon());
-    addMenuItem(tr("Color Picker"), QIcon(), new ColorPicker(ui->stackedWidget));
+    addMenuItem(tr("Color Picker"), dark ? QIcon(":/icons/colorpicker_dark.svg") : QIcon(":/icons/colorpicker_light.svg"), new ColorPicker(ui->stackedWidget));
     addMenuItem(tr("Image Format Converter"), QIcon(), new ImageFormatConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Video Format Converter"), QIcon(), new VideoConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));

@@ -34,5 +34,7 @@
         <file>icons/loremipsum_light.svg</file>
         <file>icons/url_dark.svg</file>
         <file>icons/url_light.svg</file>
+        <file>icons/colorpicker_dark.svg</file>
+        <file>icons/colorpicker_light.svg</file>
     </qresource>
 </RCC>
