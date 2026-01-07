@@ -38,5 +38,7 @@
         <file>icons/colorpicker_light.svg</file>
         <file>icons/palette_dark.svg</file>
         <file>icons/palette_light.svg</file>
+        <file>icons/imageconverter_dark.svg</file>
+        <file>icons/imageconverter_light.svg</file>
     </qresource>
 </RCC>
