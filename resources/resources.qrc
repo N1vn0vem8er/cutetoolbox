@@ -40,5 +40,7 @@
         <file>icons/palette_light.svg</file>
         <file>icons/imageconverter_dark.svg</file>
         <file>icons/imageconverter_light.svg</file>
+        <file>icons/datatable_dark.svg</file>
+        <file>icons/datatable_light.svg</file>
     </qresource>
 </RCC>
