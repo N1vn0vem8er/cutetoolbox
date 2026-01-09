@@ -148,7 +148,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Graphics"), QIcon());
     addMenuItem(tr("Color Picker"), dark ? QIcon(":/icons/colorpicker_dark.svg") : QIcon(":/icons/colorpicker_light.svg"), new ColorPicker(ui->stackedWidget));
     addMenuItem(tr("Image Format Converter"), dark ? QIcon(":/icons/imageconverter_dark.svg") : QIcon(":/icons/imageconverter_light.svg"), new ImageFormatConverterWidget(ui->stackedWidget));
-    addMenuItem(tr("Video Format Converter"), QIcon(), new VideoConverterWidget(ui->stackedWidget));
+    addMenuItem(tr("Video Format Converter"), dark ? QIcon(":/icons/videoconverter_dark.svg") : QIcon(":/icons/videoconverter_light.svg"), new VideoConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
     addMenuItem(tr("Color Palette"), dark ? QIcon(":/icons/palette_dark.svg") : QIcon(":/icons/palette_light.svg"), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Web"), QIcon());
