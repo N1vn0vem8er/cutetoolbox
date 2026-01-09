@@ -156,7 +156,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("IP Subnet Calculator"), dark ? QIcon(":/icons/calculator_dark.svg") : QIcon(":/icons/calculator_light.svg"), new IpSubnetCalculator(ui->stackedWidget));
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), dark ? QIcon(":/icons/datatable_dark.svg") : QIcon(":/icons/datatable_light.svg"), new CSVDataTableInfo(ui->stackedWidget));
-    addMenuItem(tr("Password Verifier"), QIcon(), new PasswordVerifierWidget(ui->stackedWidget));
+    addMenuItem(tr("Password Verifier"), dark ? QIcon(":/icons/password_dark.svg") : QIcon(":/icons/password_light.svg"), new PasswordVerifierWidget(ui->stackedWidget));
     addMenuItem(tr("Dom Tree"), QIcon(), new DomTreeWidget(ui->stackedWidget));
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);

@@ -54,5 +54,7 @@
         <file>icons/numberbases_light.svg</file>
         <file>icons/calculator_dark.svg</file>
         <file>icons/calculator_light.svg</file>
+        <file>icons/password_dark.svg</file>
+        <file>icons/password_light.svg</file>
     </qresource>
 </RCC>
