@@ -143,8 +143,8 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Converters"), QIcon());
     addMenuItem(tr("JSON - YAML"), dark ? QIcon(":/icons/jsonyamlconverter_dark.svg") : QIcon(":/icons/jsonyamlconverter_light.svg"), new JsonYamlConverter(ui->stackedWidget));
     addMenuItem(tr("Timestamp"), dark ? QIcon(":/icons/clock_dark.svg") : QIcon(":/icons/clock_light.svg"), new TimestampWidget(ui->stackedWidget));
-    addMenuItem(tr("Number Bases"), QIcon(), new NumberBasesWidget(ui->stackedWidget));
-    addMenuItem(tr("QDateTime"), QIcon(), new QDateTimeConverterWidget(ui->stackedWidget));
+    addMenuItem(tr("Number Bases"), dark ? QIcon(":/icons/numberbases_dark.svg") : QIcon(":/icons/numberbases_light.svg"), new NumberBasesWidget(ui->stackedWidget));
+    addMenuItem(tr("QDateTime"), dark ? QIcon(":/icons/datetime_dark.svg") : QIcon(":/icons/datetime_light.svg"), new QDateTimeConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Graphics"), QIcon());
     addMenuItem(tr("Color Picker"), dark ? QIcon(":/icons/colorpicker_dark.svg") : QIcon(":/icons/colorpicker_light.svg"), new ColorPicker(ui->stackedWidget));
     addMenuItem(tr("Image Format Converter"), dark ? QIcon(":/icons/imageconverter_dark.svg") : QIcon(":/icons/imageconverter_light.svg"), new ImageFormatConverterWidget(ui->stackedWidget));

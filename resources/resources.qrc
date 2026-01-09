@@ -48,5 +48,9 @@
         <file>icons/contrastchecker_light.svg</file>
         <file>icons/clock_dark.svg</file>
         <file>icons/clock_light.svg</file>
+        <file>icons/datetime_dark.svg</file>
+        <file>icons/datetime_light.svg</file>
+        <file>icons/numberbases_dark.svg</file>
+        <file>icons/numberbases_light.svg</file>
     </qresource>
 </RCC>
