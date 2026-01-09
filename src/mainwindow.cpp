@@ -142,14 +142,14 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Markdown"), dark ? QIcon(":/icons/markdowneditor_dark.svg") : QIcon(":/icons/markdowneditor_light.svg"), new MarkdownWidget(ui->stackedWidget));
     addMenuItem(tr("Converters"), QIcon());
     addMenuItem(tr("JSON - YAML"), dark ? QIcon(":/icons/jsonyamlconverter_dark.svg") : QIcon(":/icons/jsonyamlconverter_light.svg"), new JsonYamlConverter(ui->stackedWidget));
-    addMenuItem(tr("Timestamp"), QIcon(), new TimestampWidget(ui->stackedWidget));
+    addMenuItem(tr("Timestamp"), dark ? QIcon(":/icons/clock_dark.svg") : QIcon(":/icons/clock_light.svg"), new TimestampWidget(ui->stackedWidget));
     addMenuItem(tr("Number Bases"), QIcon(), new NumberBasesWidget(ui->stackedWidget));
     addMenuItem(tr("QDateTime"), QIcon(), new QDateTimeConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Graphics"), QIcon());
     addMenuItem(tr("Color Picker"), dark ? QIcon(":/icons/colorpicker_dark.svg") : QIcon(":/icons/colorpicker_light.svg"), new ColorPicker(ui->stackedWidget));
     addMenuItem(tr("Image Format Converter"), dark ? QIcon(":/icons/imageconverter_dark.svg") : QIcon(":/icons/imageconverter_light.svg"), new ImageFormatConverterWidget(ui->stackedWidget));
     addMenuItem(tr("Video Format Converter"), dark ? QIcon(":/icons/videoconverter_dark.svg") : QIcon(":/icons/videoconverter_light.svg"), new VideoConverterWidget(ui->stackedWidget));
-    addMenuItem(tr("Contrast Checker"), QIcon(), new ContrastCheckerWidget(ui->stackedWidget));
+    addMenuItem(tr("Contrast Checker"), dark ? QIcon(":/icons/contrastchecker_dark.svg") : QIcon(":/icons/contrastchecker_light.svg"), new ContrastCheckerWidget(ui->stackedWidget));
     addMenuItem(tr("Color Palette"), dark ? QIcon(":/icons/palette_dark.svg") : QIcon(":/icons/palette_light.svg"), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Web"), QIcon());
     addMenuItem(tr("Api Tester"), QIcon(), new ApiTesterWidget(ui->stackedWidget));
