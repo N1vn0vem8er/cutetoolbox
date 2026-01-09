@@ -52,5 +52,7 @@
         <file>icons/datetime_light.svg</file>
         <file>icons/numberbases_dark.svg</file>
         <file>icons/numberbases_light.svg</file>
+        <file>icons/calculator_dark.svg</file>
+        <file>icons/calculator_light.svg</file>
     </qresource>
 </RCC>

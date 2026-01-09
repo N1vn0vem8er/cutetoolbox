@@ -132,7 +132,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("UUID"), QIcon(), new UUIDGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Text"), QIcon(), new RandomTextGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Number"), QIcon(), new RandomNumberGeneratorWidget(ui->stackedWidget));
-    addMenuItem(tr("Chmod Calculator"), QIcon(), new ChmodCalculatorWidget(ui->stackedWidget));
+    addMenuItem(tr("Chmod Calculator"), dark ? QIcon(":/icons/calculator_dark.svg") : QIcon(":/icons/calculator_light.svg"), new ChmodCalculatorWidget(ui->stackedWidget));
     addMenuItem(tr("Qr code"), QIcon(":/icons/qrcodegenerator.svg"), new QrCodeGenerator(ui->stackedWidget));
     addMenuItem(tr("Desktop Creator"), QIcon(), new DesktopCreatorWidget(ui->stackedWidget));
     addMenuItem(tr("Users"), QIcon(), new UserGeneratorWidget(ui->stackedWidget));
@@ -153,7 +153,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Color Palette"), dark ? QIcon(":/icons/palette_dark.svg") : QIcon(":/icons/palette_light.svg"), new ColorPaletteGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Web"), QIcon());
     addMenuItem(tr("Api Tester"), QIcon(), new ApiTesterWidget(ui->stackedWidget));
-    addMenuItem(tr("IP Subnet Calculator"), QIcon(), new IpSubnetCalculator(ui->stackedWidget));
+    addMenuItem(tr("IP Subnet Calculator"), dark ? QIcon(":/icons/calculator_dark.svg") : QIcon(":/icons/calculator_light.svg"), new IpSubnetCalculator(ui->stackedWidget));
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), dark ? QIcon(":/icons/datatable_dark.svg") : QIcon(":/icons/datatable_light.svg"), new CSVDataTableInfo(ui->stackedWidget));
     addMenuItem(tr("Password Verifier"), QIcon(), new PasswordVerifierWidget(ui->stackedWidget));
