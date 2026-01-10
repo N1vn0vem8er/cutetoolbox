@@ -56,5 +56,7 @@
         <file>icons/calculator_light.svg</file>
         <file>icons/password_dark.svg</file>
         <file>icons/password_light.svg</file>
+        <file>icons/proto_dark.svg</file>
+        <file>icons/proto_light.svg</file>
     </qresource>
 </RCC>

@@ -122,7 +122,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Java"), QIcon(":/icons/javaformatter.svg"), new JavaFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("JavaScript"), dark ? QIcon(":/icons/jsformatter_dark.svg") : QIcon(":/icons/jsformatter_light.svg"), new JavaScriptFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Objective C"), QIcon(), new ObjectiveCFormatterWidget(ui->stackedWidget));
-    addMenuItem(tr("Proto"), QIcon(), new ProtoFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("Proto"), dark ? QIcon(":/icons/proto_dark.svg") : QIcon(":/icons/proto_light.svg"), new ProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TableGen"), QIcon(), new TableGenFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TextProto"), QIcon(), new TextProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Verilog"), QIcon(), new VerilogFormatterWidget(ui->stackedWidget));
