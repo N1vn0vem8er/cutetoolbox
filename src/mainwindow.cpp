@@ -157,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Other"), QIcon());
     addMenuItem(tr("Data Table Info"), dark ? QIcon(":/icons/datatable_dark.svg") : QIcon(":/icons/datatable_light.svg"), new CSVDataTableInfo(ui->stackedWidget));
     addMenuItem(tr("Password Verifier"), dark ? QIcon(":/icons/password_dark.svg") : QIcon(":/icons/password_light.svg"), new PasswordVerifierWidget(ui->stackedWidget));
-    addMenuItem(tr("Dom Tree"), QIcon(), new DomTreeWidget(ui->stackedWidget));
+    addMenuItem(tr("Dom Tree"), dark ? QIcon(":/icons/tree_dark.svg") : QIcon(":/icons/tree_light.svg"), new DomTreeWidget(ui->stackedWidget));
     if(currentMenu)
         ui->menuTools->addMenu(currentMenu);
 
