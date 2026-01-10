@@ -138,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Users"), dark ? QIcon(":/icons/users_dark.svg") : QIcon(":/icons/users_light.svg"), new UserGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Text"), QIcon());
     addMenuItem(tr("Regex"), dark ? QIcon(":/icons/regex_dark.svg") : QIcon(":/icons/regex_light.svg"), new RegexWidget(ui->stackedWidget));
-    addMenuItem(tr("Text diff"), QIcon(), new TextDiffWidget(ui->stackedWidget));
+    addMenuItem(tr("Text diff"), dark ? QIcon(":/icons/textdiff_dark.svg") : QIcon(":/icons/textdiff_light.svg"), new TextDiffWidget(ui->stackedWidget));
     addMenuItem(tr("Markdown"), dark ? QIcon(":/icons/markdowneditor_dark.svg") : QIcon(":/icons/markdowneditor_light.svg"), new MarkdownWidget(ui->stackedWidget));
     addMenuItem(tr("Converters"), QIcon());
     addMenuItem(tr("JSON - YAML"), dark ? QIcon(":/icons/jsonyamlconverter_dark.svg") : QIcon(":/icons/jsonyamlconverter_light.svg"), new JsonYamlConverter(ui->stackedWidget));
