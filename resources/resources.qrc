@@ -60,5 +60,9 @@
         <file>icons/proto_light.svg</file>
         <file>icons/objectivec_dark.svg</file>
         <file>icons/objectivec_light.svg</file>
+        <file>icons/verilog_dark.svg</file>
+        <file>icons/verilog_light.svg</file>
+        <file>icons/tablegen_light.svg</file>
+        <file>icons/tablegen_dark.svg</file>
     </qresource>
 </RCC>
