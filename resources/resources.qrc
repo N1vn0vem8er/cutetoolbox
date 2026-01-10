@@ -58,5 +58,7 @@
         <file>icons/password_light.svg</file>
         <file>icons/proto_dark.svg</file>
         <file>icons/proto_light.svg</file>
+        <file>icons/objectivec_dark.svg</file>
+        <file>icons/objectivec_light.svg</file>
     </qresource>
 </RCC>

@@ -121,7 +121,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("CSharp"), dark ? QIcon(":/icons/csharpformatter_dark.svg") : QIcon(":/icons/csharpformatter_light.svg"), new CSharpFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Java"), QIcon(":/icons/javaformatter.svg"), new JavaFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("JavaScript"), dark ? QIcon(":/icons/jsformatter_dark.svg") : QIcon(":/icons/jsformatter_light.svg"), new JavaScriptFormatterWidget(ui->stackedWidget));
-    addMenuItem(tr("Objective C"), QIcon(), new ObjectiveCFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("Objective C"), dark ? QIcon(":/icons/objectivec_dark.svg") : QIcon(":/icons/objectivec_light.svg"), new ObjectiveCFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Proto"), dark ? QIcon(":/icons/proto_dark.svg") : QIcon(":/icons/proto_light.svg"), new ProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TableGen"), QIcon(), new TableGenFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TextProto"), QIcon(), new TextProtoFormatterWidget(ui->stackedWidget));
