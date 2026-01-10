@@ -64,5 +64,7 @@
         <file>icons/verilog_light.svg</file>
         <file>icons/tablegen_light.svg</file>
         <file>icons/tablegen_dark.svg</file>
+        <file>icons/users_dark.svg</file>
+        <file>icons/users_light.svg</file>
     </qresource>
 </RCC>

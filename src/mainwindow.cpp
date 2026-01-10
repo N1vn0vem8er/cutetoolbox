@@ -135,7 +135,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Chmod Calculator"), dark ? QIcon(":/icons/calculator_dark.svg") : QIcon(":/icons/calculator_light.svg"), new ChmodCalculatorWidget(ui->stackedWidget));
     addMenuItem(tr("Qr code"), QIcon(":/icons/qrcodegenerator.svg"), new QrCodeGenerator(ui->stackedWidget));
     addMenuItem(tr("Desktop Creator"), QIcon(), new DesktopCreatorWidget(ui->stackedWidget));
-    addMenuItem(tr("Users"), QIcon(), new UserGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Users"), dark ? QIcon(":/icons/users_dark.svg") : QIcon(":/icons/users_light.svg"), new UserGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Text"), QIcon());
     addMenuItem(tr("Regex"), dark ? QIcon(":/icons/regex_dark.svg") : QIcon(":/icons/regex_light.svg"), new RegexWidget(ui->stackedWidget));
     addMenuItem(tr("Text diff"), QIcon(), new TextDiffWidget(ui->stackedWidget));
