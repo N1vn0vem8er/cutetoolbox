@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Url"), dark ? QIcon(":/icons/url_dark.svg") : QIcon(":/icons/url_light.svg"), new UrlCoderDecoderWidget(ui->stackedWidget));
     addMenuItem(tr("GZip"), dark ? QIcon(":/icons/gzip_dark.svg") : QIcon(":/icons/gzip_light.svg"), new GZipWidget(ui->stackedWidget));
     addMenuItem(tr("Formatters"), QIcon());
-    addMenuItem(tr("Remove Comments"), QIcon(), new RemoveCommentsWidget(ui->stackedWidget));
+    addMenuItem(tr("Remove Comments"), dark ? QIcon(":/icons/comment_dark.svg") : QIcon(":/icons/comment_light.svg"), new RemoveCommentsWidget(ui->stackedWidget));
     addMenuItem(tr("JSON"), dark ? QIcon(":/icons/jsonformatter_dark.svg") : QIcon(":/icons/jsonformatter_light.svg"), new JsonFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("SQL"), dark ? QIcon(":/icons/sqlformatter_dark.svg") : QIcon(":/icons/sqlformatter_light.svg"), new SQLFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("XML"), dark ? QIcon(":/icons/htmlformatter_dark.svg") : QIcon(":/icons/htmlformatter_light.svg"), new XMLFormatterWidget(ui->stackedWidget));

@@ -66,5 +66,7 @@
         <file>icons/tablegen_dark.svg</file>
         <file>icons/users_dark.svg</file>
         <file>icons/users_light.svg</file>
+        <file>icons/comment_dark.svg</file>
+        <file>icons/comment_light.svg</file>
     </qresource>
 </RCC>
