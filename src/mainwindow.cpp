@@ -131,7 +131,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Lorem ipsum"), dark ? QIcon(":/icons/loremipsum_dark.svg") : QIcon(":/icons/loremipsum_light.svg"), new LoremIpsumGenerator(ui->stackedWidget));
     addMenuItem(tr("UUID"), QIcon(), new UUIDGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Text"), QIcon(), new RandomTextGeneratorWidget(ui->stackedWidget));
-    addMenuItem(tr("Random Number"), QIcon(), new RandomNumberGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("Random Number"), dark ? QIcon(":/icons/dice_dark.svg") : QIcon(":/icons/dice_light.svg"), new RandomNumberGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Chmod Calculator"), dark ? QIcon(":/icons/calculator_dark.svg") : QIcon(":/icons/calculator_light.svg"), new ChmodCalculatorWidget(ui->stackedWidget));
     addMenuItem(tr("Qr code"), QIcon(":/icons/qrcodegenerator.svg"), new QrCodeGenerator(ui->stackedWidget));
     addMenuItem(tr("Desktop Creator"), QIcon(), new DesktopCreatorWidget(ui->stackedWidget));
