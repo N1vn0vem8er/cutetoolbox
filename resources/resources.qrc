@@ -76,5 +76,7 @@
         <file>icons/textdiff_dark.svg</file>
         <file>icons/dice_dark.svg</file>
         <file>icons/dice_light.svg</file>
+        <file>icons/arrowsrotate_dark.svg</file>
+        <file>icons/arrowsrotate_light.svg</file>
     </qresource>
 </RCC>
