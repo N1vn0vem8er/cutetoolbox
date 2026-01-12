@@ -129,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), dark ? QIcon(":/icons/hash_dark.svg") : QIcon(":/icons/hash_light.svg"), new HashWidget(ui->stackedWidget));
     addMenuItem(tr("Lorem ipsum"), dark ? QIcon(":/icons/loremipsum_dark.svg") : QIcon(":/icons/loremipsum_light.svg"), new LoremIpsumGenerator(ui->stackedWidget));
-    addMenuItem(tr("UUID"), QIcon(), new UUIDGeneratorWidget(ui->stackedWidget));
+    addMenuItem(tr("UUID"), dark ? QIcon(":/icons/uuid_dark.svg") : QIcon(":/icons/uuid_light.svg"), new UUIDGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Text"), dark ? QIcon(":/icons/arrowsrotate_dark.svg") : QIcon(":/icons/arrowsrotate_light.svg"), new RandomTextGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Random Number"), dark ? QIcon(":/icons/dice_dark.svg") : QIcon(":/icons/dice_light.svg"), new RandomNumberGeneratorWidget(ui->stackedWidget));
     addMenuItem(tr("Chmod Calculator"), dark ? QIcon(":/icons/calculator_dark.svg") : QIcon(":/icons/calculator_light.svg"), new ChmodCalculatorWidget(ui->stackedWidget));
