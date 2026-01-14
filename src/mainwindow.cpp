@@ -124,7 +124,7 @@ MainWindow::MainWindow(QWidget *parent)
     addMenuItem(tr("Objective C"), dark ? QIcon(":/icons/objectivec_dark.svg") : QIcon(":/icons/objectivec_light.svg"), new ObjectiveCFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Proto"), dark ? QIcon(":/icons/proto_dark.svg") : QIcon(":/icons/proto_light.svg"), new ProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("TableGen"), dark ? QIcon(":/icons/tablegen_dark.svg") : QIcon(":/icons/tablegen_light.svg"), new TableGenFormatterWidget(ui->stackedWidget));
-    addMenuItem(tr("TextProto"), QIcon(), new TextProtoFormatterWidget(ui->stackedWidget));
+    addMenuItem(tr("TextProto"), dark ? QIcon(":/icons/proto_dark.svg") : QIcon(":/icons/proto_light.svg"), new TextProtoFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Verilog"), dark ? QIcon(":/icons/verilog_dark.svg") : QIcon(":/icons/verilog_light.svg"), new VerilogFormatterWidget(ui->stackedWidget));
     addMenuItem(tr("Generators"), QIcon());
     addMenuItem(tr("Hash"), dark ? QIcon(":/icons/hash_dark.svg") : QIcon(":/icons/hash_light.svg"), new HashWidget(ui->stackedWidget));
