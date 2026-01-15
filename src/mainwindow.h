@@ -7,6 +7,7 @@
 #include <qcompleter.h>
 #include <qlabel.h>
 #include <qsettings.h>
+#include <typeindex>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -58,6 +59,7 @@ private:
     QCompleter* completer {nullptr};
     QStringList toolNames;
     QSettings settings{Config::settingsName};
+    QMap<std::type_index, CustomWidget*> toolsWidgets;
 
 private:
     void showByName(const QString& name);

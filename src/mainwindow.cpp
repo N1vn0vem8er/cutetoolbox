@@ -180,15 +180,19 @@ MainWindow::MainWindow(QWidget *parent)
         const QFileInfo file(arg);
         if(file.isFile())
         {
+            const QString suffix = file.suffix().toLower();
+            if(suffix == "cpp" || suffix == "hpp")
+            {
+                CppFormatterWidget* widget = static_cast<CppFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CppFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                continue;
+            }
             const QMimeType type = db.mimeTypeForFile(file.absoluteFilePath());
             if(type.name().toLower() == "text/markdown")
             {
-                for(int i = 0; i<ui->stackedWidget->count(); i++)
-                {
-                    MarkdownWidget* widget = qobject_cast<MarkdownWidget*>(ui->stackedWidget->widget(i));
-                    if(widget)
-                        widget->openFile(file.absoluteFilePath());
-                }
+                MarkdownWidget* widget = static_cast<MarkdownWidget*>(toolsWidgets.value(std::type_index(typeid(MarkdownWidget))));
+                widget->openFile(file.absoluteFilePath());
+                continue;
             }
         }
     }
@@ -265,6 +269,7 @@ void MainWindow::addMenuItem(const QString &text, const QIcon &icon, CustomWidge
     else
     {
         ui->stackedWidget->addWidget(widget);
+        toolsWidgets[std::type_index(typeid(*widget))] = widget;
         int currentIndex = index;
         menuIndexMap[text] = index++;
         connect(action, &QAction::triggered, this, [this, currentIndex, text]{
