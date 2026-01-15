@@ -121,6 +121,13 @@ void MarkdownWidget::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.md");
     if(!path.isEmpty())
+        openFile(path);
+}
+
+void MarkdownWidget::openFile(const QString &path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly))
     {
         QFile file(path);
         if(file.open(QIODevice::ReadOnly))

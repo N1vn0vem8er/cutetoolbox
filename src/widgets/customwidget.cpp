@@ -44,6 +44,11 @@ void CustomWidget::open()
 
 }
 
+void CustomWidget::openFile(const QString &path)
+{
+
+}
+
 void CustomWidget::close()
 {
 

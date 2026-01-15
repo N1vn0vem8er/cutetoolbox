@@ -39,6 +39,8 @@
 #include "textprotoformatterwidget.h"
 #include "timestampwidget.h"
 #include <QMessageBox>
+#include <QMimeDatabase>
+#include <qfileinfo.h>
 #include <qplaintextedit.h>
 #include <qsettings.h>
 #include "htmlcoderdecoderwidget.h"
@@ -170,6 +172,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->searchLine->setCompleter(completer);
     connect(completer, qOverload<const QString&>(&QCompleter::activated), this, &MainWindow::find);
     connect(ui->searchLine, &QLineEdit::returnPressed, this, [&]{find(ui->searchLine->text());});
+
+    const QStringList args = qApp->arguments();
+    const QMimeDatabase db;
+    for(const QString& arg : args)
+    {
+        const QFileInfo file(arg);
+        if(file.isFile())
+        {
+            const QMimeType type = db.mimeTypeForFile(file.absoluteFilePath());
+            if(type.name().toLower() == "text/markdown")
+            {
+                for(int i = 0; i<ui->stackedWidget->count(); i++)
+                {
+                    MarkdownWidget* widget = qobject_cast<MarkdownWidget*>(ui->stackedWidget->widget(i));
+                    if(widget)
+                        widget->openFile(file.absoluteFilePath());
+                }
+            }
+        }
+    }
 }
 
 MainWindow::~MainWindow()
