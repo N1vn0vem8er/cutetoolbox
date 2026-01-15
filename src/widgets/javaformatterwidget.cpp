@@ -102,9 +102,7 @@ void JavaFormatterWidget::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.java");
     if(!path.isEmpty())
-    {
         openFile(path);
-    }
 }
 
 void JavaFormatterWidget::openFile(const QString &path)

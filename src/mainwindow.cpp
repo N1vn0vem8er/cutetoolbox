@@ -195,6 +195,13 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(suffix == "cs")
+            {
+                CSharpFormatterWidget* widget = static_cast<CSharpFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CSharpFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
             const QMimeType type = db.mimeTypeForFile(file.absoluteFilePath());
             if(type.name().toLower() == "text/markdown")
             {
