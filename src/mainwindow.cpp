@@ -185,6 +185,14 @@ MainWindow::MainWindow(QWidget *parent)
             {
                 CppFormatterWidget* widget = static_cast<CppFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CppFormatterWidget))));
                 widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(suffix == "java")
+            {
+                JavaFormatterWidget* widget = static_cast<JavaFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JavaFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
             const QMimeType type = db.mimeTypeForFile(file.absoluteFilePath());
@@ -192,6 +200,7 @@ MainWindow::MainWindow(QWidget *parent)
             {
                 MarkdownWidget* widget = static_cast<MarkdownWidget*>(toolsWidgets.value(std::type_index(typeid(MarkdownWidget))));
                 widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
         }

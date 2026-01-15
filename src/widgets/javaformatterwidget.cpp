@@ -103,19 +103,24 @@ void JavaFormatterWidget::open()
     const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.java");
     if(!path.isEmpty())
     {
-        QFile file(path);
-        if(file.open(QIODevice::ReadOnly))
-        {
-            ui->codeEditor->setPlainText(file.readAll());
-            file.close();
-            openedFile = path;
-            if(recentFiles.length() >= 10)
-                recentFiles.removeFirst();
-            if(!recentFiles.contains(openedFile))
-                recentFiles.append(openedFile);
-            emit updateRecent();
-            emit opened(openedFile);
-        }
+        openFile(path);
+    }
+}
+
+void JavaFormatterWidget::openFile(const QString &path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly))
+    {
+        ui->codeEditor->setPlainText(file.readAll());
+        file.close();
+        openedFile = path;
+        if(recentFiles.length() >= 10)
+            recentFiles.removeFirst();
+        if(!recentFiles.contains(openedFile))
+            recentFiles.append(openedFile);
+        emit updateRecent();
+        emit opened(openedFile);
     }
 }
 
