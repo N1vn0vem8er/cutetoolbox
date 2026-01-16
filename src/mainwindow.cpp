@@ -216,10 +216,18 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
-            const QMimeType type = db.mimeTypeForFile(file.absoluteFilePath());
-            if(type.name().toLower() == "text/markdown")
+            const QMimeType mimeType = db.mimeTypeForFile(file.absoluteFilePath());
+            const QString type = mimeType.name().toLower();
+            if(type == "text/markdown")
             {
                 MarkdownWidget* widget = static_cast<MarkdownWidget*>(toolsWidgets.value(std::type_index(typeid(MarkdownWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/html")
+            {
+                HTMLFormatterWidget* widget = static_cast<HTMLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(HTMLFormatterWidget))));
                 widget->openFile(file.absoluteFilePath());
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
