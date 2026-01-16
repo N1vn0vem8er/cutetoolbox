@@ -202,6 +202,20 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(suffix == "js")
+            {
+                JavaScriptFormatterWidget* widget = static_cast<JavaScriptFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JavaScriptFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(suffix == "json")
+            {
+                JsonFormatterWidget* widget = static_cast<JsonFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JsonFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
             const QMimeType type = db.mimeTypeForFile(file.absoluteFilePath());
             if(type.name().toLower() == "text/markdown")
             {

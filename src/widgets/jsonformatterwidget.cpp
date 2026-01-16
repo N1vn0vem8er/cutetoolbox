@@ -182,21 +182,24 @@ void JsonFormatterWidget::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.json");
     if(!path.isEmpty())
+        openFile(path);
+}
+
+void JsonFormatterWidget::openFile(const QString &path)
+{
+    QFile file(path);
+    file.open(QIODevice::ReadOnly);
+    if(file.isOpen())
     {
-        QFile file(path);
-        file.open(QIODevice::ReadOnly);
-        if(file.isOpen())
-        {
-            ui->codeEditor->setPlainText(file.readAll());
-            file.close();
-            openedFile = path;
-            if(recentFiles.length() >= 10)
-                recentFiles.removeFirst();
-            if(!recentFiles.contains(openedFile))
-                recentFiles.append(openedFile);
-            emit updateRecent();
-            emit opened(openedFile);
-        }
+        ui->codeEditor->setPlainText(file.readAll());
+        file.close();
+        openedFile = path;
+        if(recentFiles.length() >= 10)
+            recentFiles.removeFirst();
+        if(!recentFiles.contains(openedFile))
+            recentFiles.append(openedFile);
+        emit updateRecent();
+        emit opened(openedFile);
     }
 }
 
