@@ -64,21 +64,23 @@ void SQLFormatterWidget::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open file"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.sql");
     if(!path.isEmpty())
+        openFile(path);
+}
+
+void SQLFormatterWidget::openFile(const QString &path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly))
     {
-        QFile file(path);
-        file.open(QIODevice::ReadOnly);
-        if(file.isOpen())
-        {
-            ui->codeEditor->setPlainText(file.readAll());
-            openedFile = path;
-            file.close();
-            if(recentFiles.length() >= 10)
-                recentFiles.removeFirst();
-            if(!recentFiles.contains(openedFile))
-                recentFiles.append(openedFile);
-            emit updateRecent();
-            emit opened(openedFile);
-        }
+        ui->codeEditor->setPlainText(file.readAll());
+        openedFile = path;
+        file.close();
+        if(recentFiles.length() >= 10)
+            recentFiles.removeFirst();
+        if(!recentFiles.contains(openedFile))
+            recentFiles.append(openedFile);
+        emit updateRecent();
+        emit opened(openedFile);
     }
 }
 

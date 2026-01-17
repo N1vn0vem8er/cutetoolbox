@@ -216,6 +216,13 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(suffix == "sql")
+            {
+                SQLFormatterWidget* widget = static_cast<SQLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(SQLFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
             const QMimeType mimeType = db.mimeTypeForFile(file.absoluteFilePath());
             const QString type = mimeType.name().toLower();
             if(type == "text/markdown")

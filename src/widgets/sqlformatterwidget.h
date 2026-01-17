@@ -16,6 +16,7 @@ public:
     explicit SQLFormatterWidget(QWidget *parent = nullptr);
     ~SQLFormatterWidget();
     void open() override;
+    void openFile(const QString& path) override;
     bool canOpenFiles() const override;
     bool canSaveFiles() const override;
     bool canBasicEdit() const override;
