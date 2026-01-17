@@ -246,6 +246,13 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(type == "text/xml")
+            {
+                XMLFormatterWidget* widget = static_cast<XMLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(XMLFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
         }
     }
 }
