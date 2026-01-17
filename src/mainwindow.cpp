@@ -223,6 +223,13 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(suffix == "m" || suffix == "mm")
+            {
+                ObjectiveCFormatterWidget* widget = static_cast<ObjectiveCFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(ObjectiveCFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
             const QMimeType mimeType = db.mimeTypeForFile(file.absoluteFilePath());
             const QString type = mimeType.name().toLower();
             if(type == "text/markdown")
