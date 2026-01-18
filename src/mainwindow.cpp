@@ -209,13 +209,6 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
-            if(suffix == "json")
-            {
-                JsonFormatterWidget* widget = static_cast<JsonFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JsonFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
             if(suffix == "sql")
             {
                 SQLFormatterWidget* widget = static_cast<SQLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(SQLFormatterWidget))));
@@ -249,6 +242,13 @@ MainWindow::MainWindow(QWidget *parent)
             if(type == "text/xml")
             {
                 XMLFormatterWidget* widget = static_cast<XMLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(XMLFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "application/json" || suffix == "json")
+            {
+                JsonFormatterWidget* widget = static_cast<JsonFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JsonFormatterWidget))));
                 widget->openFile(file.absoluteFilePath());
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
