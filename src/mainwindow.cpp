@@ -237,6 +237,13 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(suffix == "sv" || suffix == "svh" || suffix == "v" || suffix == "vh")
+            {
+                VerilogFormatterWidget* widget = static_cast<VerilogFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(VerilogFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
             const QMimeType mimeType = db.mimeTypeForFile(file.absoluteFilePath());
             const QString type = mimeType.name().toLower();
             if(type == "text/markdown")
