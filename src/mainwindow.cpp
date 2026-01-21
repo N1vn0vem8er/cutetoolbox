@@ -244,6 +244,13 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(suffix == "txtpb" || suffix == "textpb" || suffix == "textproto" || suffix == "asciipb")
+            {
+                TextProtoFormatterWidget* widget = static_cast<TextProtoFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(TextProtoFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
             const QMimeType mimeType = db.mimeTypeForFile(file.absoluteFilePath());
             const QString type = mimeType.name().toLower();
             if(type == "text/markdown")

@@ -102,20 +102,23 @@ void TextProtoFormatterWidget::open()
 {
     const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.textpb *.txtpb *.pb.txt *.textproto *.asciipb");
     if(!path.isEmpty())
+        openFile(path);
+}
+
+void TextProtoFormatterWidget::openFile(const QString &path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly))
     {
-        QFile file(path);
-        if(file.open(QIODevice::ReadOnly))
-        {
-            ui->codeEditor->setPlainText(file.readAll());
-            file.close();
-            openedFile = path;
-            if(recentFiles.length() >= 10)
-                recentFiles.removeFirst();
-            if(!recentFiles.contains(openedFile))
-                recentFiles.append(openedFile);
-            emit updateRecent();
-            emit opened(openedFile);
-        }
+        ui->codeEditor->setPlainText(file.readAll());
+        file.close();
+        openedFile = path;
+        if(recentFiles.length() >= 10)
+            recentFiles.removeFirst();
+        if(!recentFiles.contains(openedFile))
+            recentFiles.append(openedFile);
+        emit updateRecent();
+        emit opened(openedFile);
     }
 }
 
