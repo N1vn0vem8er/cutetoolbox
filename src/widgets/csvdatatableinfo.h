@@ -17,6 +17,7 @@ public:
     ~CSVDataTableInfo();
     bool canOpenFiles() const override;
     void open() override;
+    void openFile(const QString& path) override;
     void close() override;
     QString getOpenedFileName() const override;
     QStringList getRecentFiles() const override;

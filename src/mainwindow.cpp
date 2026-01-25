@@ -280,6 +280,13 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(type == "text/csv" || suffix == "csv")
+            {
+                CSVDataTableInfo* widget = static_cast<CSVDataTableInfo*>(toolsWidgets.value(std::type_index(typeid(CSVDataTableInfo))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
         }
     }
     ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
