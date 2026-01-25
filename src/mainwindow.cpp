@@ -164,7 +164,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->menuTools->addMenu(currentMenu);
 
     ui->stackedWidget->setCurrentIndex(settings.value("lastTool", 0).toInt());
-    ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
 
     completer = new QCompleter(toolNames, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -181,76 +180,6 @@ MainWindow::MainWindow(QWidget *parent)
         if(file.isFile())
         {
             const QString suffix = file.suffix().toLower();
-            if(suffix == "cpp" || suffix == "hpp")
-            {
-                CppFormatterWidget* widget = static_cast<CppFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CppFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "java")
-            {
-                JavaFormatterWidget* widget = static_cast<JavaFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JavaFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "cs")
-            {
-                CSharpFormatterWidget* widget = static_cast<CSharpFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CSharpFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "js")
-            {
-                JavaScriptFormatterWidget* widget = static_cast<JavaScriptFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JavaScriptFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "sql")
-            {
-                SQLFormatterWidget* widget = static_cast<SQLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(SQLFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "m" || suffix == "mm")
-            {
-                ObjectiveCFormatterWidget* widget = static_cast<ObjectiveCFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(ObjectiveCFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "proto" || suffix == "protodevel")
-            {
-                ProtoFormatterWidget* widget = static_cast<ProtoFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(ProtoFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "td")
-            {
-                TableGenFormatterWidget* widget = static_cast<TableGenFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(TableGenFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "sv" || suffix == "svh" || suffix == "v" || suffix == "vh")
-            {
-                VerilogFormatterWidget* widget = static_cast<VerilogFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(VerilogFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
-            if(suffix == "txtpb" || suffix == "textpb" || suffix == "textproto" || suffix == "asciipb")
-            {
-                TextProtoFormatterWidget* widget = static_cast<TextProtoFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(TextProtoFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
-                continue;
-            }
             const QMimeType mimeType = db.mimeTypeForFile(file.absoluteFilePath());
             const QString type = mimeType.name().toLower();
             if(type == "text/markdown")
@@ -267,7 +196,7 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
-            if(type == "text/xml")
+            if(type == "application/xml")
             {
                 XMLFormatterWidget* widget = static_cast<XMLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(XMLFormatterWidget))));
                 widget->openFile(file.absoluteFilePath());
@@ -281,8 +210,79 @@ MainWindow::MainWindow(QWidget *parent)
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
+            if(type == "text/x-c++src" || suffix == "cpp" || suffix == "hpp")
+            {
+                CppFormatterWidget* widget = static_cast<CppFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CppFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/x-java" || suffix == "java")
+            {
+                JavaFormatterWidget* widget = static_cast<JavaFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JavaFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/x-csharp" || suffix == "cs")
+            {
+                CSharpFormatterWidget* widget = static_cast<CSharpFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CSharpFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "application/javascript" || suffix == "js")
+            {
+                JavaScriptFormatterWidget* widget = static_cast<JavaScriptFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JavaScriptFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "application/sql" || suffix == "sql")
+            {
+                SQLFormatterWidget* widget = static_cast<SQLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(SQLFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/x-objcsrc" || suffix == "m" || suffix == "mm")
+            {
+                ObjectiveCFormatterWidget* widget = static_cast<ObjectiveCFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(ObjectiveCFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/x-protobuf" || suffix == "proto" || suffix == "protodevel")
+            {
+                ProtoFormatterWidget* widget = static_cast<ProtoFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(ProtoFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/x-tablegen" || suffix == "td")
+            {
+                TableGenFormatterWidget* widget = static_cast<TableGenFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(TableGenFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/x-verilog" || type == "text/x-systemverilog" || suffix == "sv" || suffix == "svh" || suffix == "v" || suffix == "vh")
+            {
+                VerilogFormatterWidget* widget = static_cast<VerilogFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(VerilogFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
+            if(type == "text/x-textproto" || suffix == "txtpb" || suffix == "textpb" || suffix == "textproto" || suffix == "asciipb")
+            {
+                TextProtoFormatterWidget* widget = static_cast<TextProtoFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(TextProtoFormatterWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
+            }
         }
     }
+    ui->toolNameLabel->setText(static_cast<CustomWidget*>(ui->stackedWidget->currentWidget())->getName());
 }
 
 MainWindow::~MainWindow()
