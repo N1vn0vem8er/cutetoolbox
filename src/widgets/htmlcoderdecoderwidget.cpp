@@ -257,6 +257,20 @@ void HTMLCoderDecoderWidget::open()
     }
 }
 
+void HTMLCoderDecoderWidget::openFile(const QString &path)
+{
+    QFile file(path);
+    ui->html->setPlainText(file.readAll());
+    openedHtmlFile = path;
+    if(recentHtmlFiles.length() >= 10)
+        recentHtmlFiles.removeFirst();
+    if(!recentHtmlFiles.contains(openedHtmlFile))
+        recentHtmlFiles.append(openedHtmlFile);
+    file.close();
+    emit opened(openedHtmlFile + " " + openedEncodedFile);
+    emit updateRecent();
+}
+
 void HTMLCoderDecoderWidget::close()
 {
     if(openedEncodedFile.isEmpty())

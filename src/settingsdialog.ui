@@ -44,6 +44,48 @@
        </property>
       </widget>
      </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Open html files in</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="openHtmlComboBox">
+       <item>
+        <property name="text">
+         <string>Formatter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Encoder</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Open C++ files in</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="openCppComboBox">
+       <item>
+        <property name="text">
+         <string>Formatter</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Remove comments</string>
+        </property>
+       </item>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

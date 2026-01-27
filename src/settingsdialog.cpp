@@ -27,4 +27,6 @@ void SettingsDialog::apply()
     settings.setValue("search.clearOnClose", ui->clearSearchCheckBox->isChecked());
     settings.setValue("save.state", ui->saveStateCheckBox->isChecked());
     settings.setValue("save.geometry", ui->saveGeometryCheckBox->isChecked());
+    settings.setValue("open.html", ui->openHtmlComboBox->currentIndex() == 0 ? "formatter" : "encoder");
+    settings.setValue("open.cpp", ui->openCppComboBox->currentIndex() == 0 ? "formatter" : "removecomments");
 }

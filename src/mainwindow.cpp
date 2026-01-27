@@ -191,9 +191,18 @@ MainWindow::MainWindow(QWidget *parent)
             }
             if(type == "text/html")
             {
-                HTMLFormatterWidget* widget = static_cast<HTMLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(HTMLFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
+                if(settings.value("open.html").toString() == "encoder")
+                {
+                    HTMLCoderDecoderWidget* widget = static_cast<HTMLCoderDecoderWidget*>(toolsWidgets.value(std::type_index(typeid(HTMLCoderDecoderWidget))));
+                    widget->openFile(file.absoluteFilePath());
+                    ui->stackedWidget->setCurrentWidget(widget);
+                }
+                else
+                {
+                    HTMLFormatterWidget* widget = static_cast<HTMLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(HTMLFormatterWidget))));
+                    widget->openFile(file.absoluteFilePath());
+                    ui->stackedWidget->setCurrentWidget(widget);
+                }
                 continue;
             }
             if(type == "application/xml")
@@ -286,6 +295,10 @@ MainWindow::MainWindow(QWidget *parent)
                 widget->openFile(file.absoluteFilePath());
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
+            }
+            if(type == "application/x-yaml" || type == "text/yaml" || suffix == "yaml")
+            {
+                JsonYamlConverter* widget = static_cast<JsonYamlConverter*>(toolsWidgets.value(std::type_index(typeid(JsonYamlConverter))));
             }
         }
     }
