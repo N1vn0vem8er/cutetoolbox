@@ -149,20 +149,23 @@ void RemoveCommentsWidget::open()
     }
     const QString path = QFileDialog::getOpenFileName(this, tr("Open"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), suffix);
     if(!path.isEmpty())
+        openFile(path);
+}
+
+void RemoveCommentsWidget::openFile(const QString &path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly))
     {
-        QFile file(path);
-        if(file.open(QIODevice::ReadOnly))
-        {
-            ui->codeEditor->setPlainText(file.readAll());
-            file.close();
-            openedFile = path;
-            if(recentFiles.length() >= 10)
-                recentFiles.removeFirst();
-            if(!recentFiles.contains(openedFile))
-                recentFiles.append(openedFile);
-            emit updateRecent();
-            emit opened(openedFile);
-        }
+        ui->codeEditor->setPlainText(file.readAll());
+        file.close();
+        openedFile = path;
+        if(recentFiles.length() >= 10)
+            recentFiles.removeFirst();
+        if(!recentFiles.contains(openedFile))
+            recentFiles.append(openedFile);
+        emit updateRecent();
+        emit opened(openedFile);
     }
 }
 
@@ -234,6 +237,11 @@ void RemoveCommentsWidget::clearRecent()
 {
     recentFiles.clear();
     emit updateRecent();
+}
+
+void RemoveCommentsWidget::selectLanguage(Languages language)
+{
+    ui->languageComboBox->setCurrentIndex(static_cast<int>(language));
 }
 
 void RemoveCommentsWidget::removeCommentsClang(const QString &fileName, const QList<const char *> &args)

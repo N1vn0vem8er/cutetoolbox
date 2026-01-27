@@ -221,9 +221,19 @@ MainWindow::MainWindow(QWidget *parent)
             }
             if(type == "text/x-c++src" || suffix == "cpp" || suffix == "hpp")
             {
-                CppFormatterWidget* widget = static_cast<CppFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CppFormatterWidget))));
-                widget->openFile(file.absoluteFilePath());
-                ui->stackedWidget->setCurrentWidget(widget);
+                if(settings.value("open.cpp").toString() == "removecomments")
+                {
+                    RemoveCommentsWidget* widget = static_cast<RemoveCommentsWidget*>(toolsWidgets.value(std::type_index(typeid(RemoveCommentsWidget))));
+                    widget->openFile(file.absoluteFilePath());
+                    ui->stackedWidget->setCurrentWidget(widget);
+                    widget->selectLanguage(RemoveCommentsWidget::Languages::Cpp);
+                }
+                else
+                {
+                    CppFormatterWidget* widget = static_cast<CppFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(CppFormatterWidget))));
+                    widget->openFile(file.absoluteFilePath());
+                    ui->stackedWidget->setCurrentWidget(widget);
+                }
                 continue;
             }
             if(type == "text/x-java" || suffix == "java")

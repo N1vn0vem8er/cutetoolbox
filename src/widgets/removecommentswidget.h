@@ -22,6 +22,7 @@ public:
     void save() override;
     void saveAs() override;
     void open() override;
+    void openFile(const QString& path) override;
     void close() override;
     void increaseFontSize() override;
     void decreaseFontSize() override;
@@ -32,11 +33,6 @@ public:
     QStringList getRecentFiles() const override;
     void openFromRecent(const QString &path) override;
     void clearRecent() override;
-
-private:
-    Ui::RemoveCommentsWidget *ui;
-    QString openedFile;
-    QStringList recentFiles;
     enum class Languages{
         None = -1,
         Cpp,
@@ -44,6 +40,12 @@ private:
         ObjectiveC,
         Python
     };
+    void selectLanguage(Languages language);
+
+private:
+    Ui::RemoveCommentsWidget *ui;
+    QString openedFile;
+    QStringList recentFiles;
 
 private:
     void removeCommentsClang(const QString& fileName, const QList<const char*>& args);
