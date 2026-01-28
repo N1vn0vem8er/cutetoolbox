@@ -236,6 +236,13 @@ MainWindow::MainWindow(QWidget *parent)
                 }
                 continue;
             }
+            if(type == "text/x-python" || suffix == "py")
+            {
+                RemoveCommentsWidget* widget = static_cast<RemoveCommentsWidget*>(toolsWidgets.value(std::type_index(typeid(RemoveCommentsWidget))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                widget->selectLanguage(RemoveCommentsWidget::Languages::Python);
+            }
             if(type == "text/x-java" || suffix == "java")
             {
                 JavaFormatterWidget* widget = static_cast<JavaFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(JavaFormatterWidget))));
