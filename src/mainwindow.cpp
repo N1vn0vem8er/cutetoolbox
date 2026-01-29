@@ -182,14 +182,14 @@ MainWindow::MainWindow(QWidget *parent)
             const QString suffix = file.suffix().toLower();
             const QMimeType mimeType = db.mimeTypeForFile(file.absoluteFilePath());
             const QString type = mimeType.name().toLower();
-            if(type == "text/markdown")
+            if(type == "text/markdown" || suffix == "md")
             {
                 MarkdownWidget* widget = static_cast<MarkdownWidget*>(toolsWidgets.value(std::type_index(typeid(MarkdownWidget))));
                 widget->openFile(file.absoluteFilePath());
                 ui->stackedWidget->setCurrentWidget(widget);
                 continue;
             }
-            if(type == "text/html")
+            if(type == "text/html" || suffix == "xml")
             {
                 if(settings.value("open.html").toString() == "encoder")
                 {
@@ -205,7 +205,7 @@ MainWindow::MainWindow(QWidget *parent)
                 }
                 continue;
             }
-            if(type == "application/xml")
+            if(type == "application/xml" || suffix == "xml")
             {
                 XMLFormatterWidget* widget = static_cast<XMLFormatterWidget*>(toolsWidgets.value(std::type_index(typeid(XMLFormatterWidget))));
                 widget->openFile(file.absoluteFilePath());
