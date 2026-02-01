@@ -238,6 +238,20 @@ void JsonYamlConverter::open()
     }
 }
 
+void JsonYamlConverter::openFile(const QString &path)
+{
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly))
+    {
+        ui->yaml->setPlainText(file.readAll());
+        openedYamlFile = path;
+        if(recentYamlFiles.length() >= 10)
+            recentYamlFiles.removeFirst();
+        if(!recentYamlFiles.contains(openedYamlFile))
+            recentYamlFiles.append(openedYamlFile);
+    }
+}
+
 void JsonYamlConverter::close()
 {
     if(openedJsonFile.isEmpty())

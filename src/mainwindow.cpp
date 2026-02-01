@@ -316,6 +316,9 @@ MainWindow::MainWindow(QWidget *parent)
             if(type == "application/x-yaml" || type == "text/yaml" || suffix == "yaml")
             {
                 JsonYamlConverter* widget = static_cast<JsonYamlConverter*>(toolsWidgets.value(std::type_index(typeid(JsonYamlConverter))));
+                widget->openFile(file.absoluteFilePath());
+                ui->stackedWidget->setCurrentWidget(widget);
+                continue;
             }
         }
     }
