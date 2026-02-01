@@ -827,6 +827,7 @@ void MainWindow::updateRecent()
             ui->menuRecent->addSeparator();
             QAction* action = new QAction(ui->menuRecent);
             action->setText(tr("Clear Recent"));
+            action->setIcon(QIcon::fromTheme("user-trash"));
             connect(action, &QAction::triggered, this, [this]{clearRecent();});
             ui->menuRecent->addAction(action);
         }

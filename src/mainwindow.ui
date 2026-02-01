@@ -96,6 +96,9 @@ font-weight: bold;</string>
      <property name="title">
       <string>Recent</string>
      </property>
+     <property name="icon">
+      <iconset theme="QIcon::ThemeIcon::DocumentOpenRecent"/>
+     </property>
      <addaction name="actionno_recent"/>
     </widget>
     <addaction name="actionOpen"/>
