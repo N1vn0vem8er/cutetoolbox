@@ -12,6 +12,8 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     ui->clearSearchCheckBox->setChecked(settings.value("search.clearOnClose", false).toBool());
     ui->saveGeometryCheckBox->setChecked(settings.value("save.geometry", true).toBool());
     ui->saveStateCheckBox->setChecked(settings.value("save.state", true).toBool());
+    ui->openHtmlComboBox->setCurrentIndex(settings.value("open.html") == "formatter" ? 0 : 1);
+    ui->openCppComboBox->setCurrentIndex(settings.value("open.cpp") == "formatter" ? 0 : 1);
     connect(ui->applyButton, &QPushButton::clicked, this, &SettingsDialog::apply);
 }
 
