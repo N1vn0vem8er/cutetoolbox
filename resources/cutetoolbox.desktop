@@ -4,6 +4,7 @@ Name=Cute ToolBox
 GenericName=Developer tools
 Icon=cutetoolbox
 Type=Application
+MimeType=text/markdown;application/json;text/x-java;application/javascript;text/x-c++src;text/x-c;text/x-csharp;application/xml;text/html;application/sql;text/x-objcsrc;text/x-protobuf;text/x-textproto;text/x-tablegen;text/x-verilog;text/x-systemverilog;text/csv;application/x-yaml;text/yaml;
 Comment=Tools for developers
 Keywords=toolbox;programming;programmer;developer;developing;converter;formatter;
 Categories=Utility;Development;
