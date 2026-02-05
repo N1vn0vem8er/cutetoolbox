@@ -23,6 +23,7 @@ Cute Toolbox is currently under development and it is not fully released. Some f
 * Qr Code Genenerator Copyright © 2025 Project Nayuki. MIT License
 * Marked Copyright (c) 2011-2018, Christopher Jeffrey MIT License
 * markdown.css Copyright 2011 Kevin Burke Apache License, Version 2.0
+* Font Awesome icons
 
 For full functionality it also requires to have the following programs installed:
 * clang-format
@@ -33,3 +34,4 @@ For full functionality it also requires to have the following programs installed
 This software is licensed under GNU GENERAL PUBLIC LICENSE version 3. See [LICENSE](LICENSE) for more information.
 Repository contains library Marked licensed under MIT License (see [MARKED_LICENSE.txt](resources/3rdparty/MARKED_LICENSE.txt)) and
 markdown.css licensed under Apache License, Version 2.0 (see [MARKDOWN-LICENSE.txt](resources/3rdparty/MARKDOWN-LICENSE.txt)).
+Font Awesome and other icons are used in this software (see [icons](resources/icons)).
