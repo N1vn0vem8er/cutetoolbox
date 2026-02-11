@@ -401,6 +401,9 @@ font-weight: bold;</string>
    </property>
   </action>
   <action name="actionSettings">
+   <property name="icon">
+    <iconset theme="applications-system"/>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>
