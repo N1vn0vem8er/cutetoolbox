@@ -24,6 +24,8 @@ ApiTesterWidget::ApiTesterWidget(QWidget *parent)
     connect(ui->addHeaderBotton, &QPushButton::clicked, this, &ApiTesterWidget::addHeader);
     connect(ui->removeHeaderButton, &QPushButton::clicked, this, &ApiTesterWidget::removeHeader);
     connect(ui->openRequestHeadersButton, &QPushButton::clicked, this, &ApiTesterWidget::openRequestHeaders);
+    connect(ui->sendPostButton, &QPushButton::clicked, this, &ApiTesterWidget::sendPostRequest);
+    connect(ui->sendPutButton, &QPushButton::clicked, this, &ApiTesterWidget::sendPutRequest);
     connect(ui->saveRequestHeaderButton, &QPushButton::clicked, this, [&]{
         const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.json");
         if(!path.isEmpty())
@@ -660,7 +662,7 @@ void ApiTesterWidget::pasteRequestHeaders()
     }
     else
     {
-        ui->infoLabel->setText(tr("Parsing error &1").arg(parseError.errorString()));
+        ui->infoLabel->setText(tr("Parsing error %1").arg(parseError.errorString()));
         ui->infoLabel->setVisible(true);
     }
 }
