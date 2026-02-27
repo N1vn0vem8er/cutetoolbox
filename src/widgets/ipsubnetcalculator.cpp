@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <qclipboard.h>
 #include <qhostaddress.h>
+#include <qjsonobject.h>
 
 IpSubnetCalculator::IpSubnetCalculator(QWidget *parent)
     : CustomWidget(parent)
@@ -15,7 +16,7 @@ IpSubnetCalculator::IpSubnetCalculator(QWidget *parent)
     connect(ui->calculateIPv4Button, &QPushButton::clicked, this, &IpSubnetCalculator::calculateIpv4);
     connect(ui->calculateIPv6Button, &QPushButton::clicked, this, &IpSubnetCalculator::calculateIpv6);
     connect(ui->saveButton, &QPushButton::clicked, this, &IpSubnetCalculator::saveAs);
-    connect(ui->copyButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(toCsv());});
+    connect(ui->copyButton, &QPushButton::clicked, this, [&]{QGuiApplication::clipboard()->setText(toJson());});
 }
 
 IpSubnetCalculator::~IpSubnetCalculator()
@@ -35,7 +36,7 @@ void IpSubnetCalculator::save()
         QFile file(openedFile);
         if(file.open(QIODevice::WriteOnly))
         {
-            file.write(toCsv().toUtf8());
+            file.write(toJson().toUtf8());
             file.close();
             emit saved(tr("Saved: %1").arg(openedFile));
         }
@@ -46,13 +47,13 @@ void IpSubnetCalculator::save()
 
 void IpSubnetCalculator::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.cpp *.h *.hpp");
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), QDir::homePath(), "*.json");
     if(!path.isEmpty())
     {
         QFile file(path);
         if(file.open(QIODevice::WriteOnly))
         {
-            file.write(toCsv().toUtf8());
+            file.write(toJson().toUtf8());
             file.close();
             openedFile = path;
             emit saved(tr("Saved: %1").arg(openedFile));
@@ -72,28 +73,16 @@ void IpSubnetCalculator::close()
     emit opened(openedFile);
 }
 
-QString IpSubnetCalculator::toCsv() const
+QString IpSubnetCalculator::toJson() const
 {
-    if(!ui->resultsTableView->model()) return "";
+    if(!ui->resultsTableView->model()) return QStringLiteral("{}");
     QStandardItemModel* model = static_cast<QStandardItemModel*>(ui->resultsTableView->model());
-    QString out;
-    for(int row = 0; row < model->rowCount(); row++)
+    QJsonObject rootObject;
+    for(int i = 0; i < model->rowCount(); i++)
     {
-        for(int col = 0; col < model->columnCount(); col++)
-        {
-            QStandardItem* item = model->item(row, col);
-            if(item)
-            {
-                QString text = item->text();
-                text.replace("\"", "\"\"");
-                out+="\"" + text + "\"" + ",";
-            }
-            else
-                out+="";
-        }
-        out += "\n";
+        rootObject.insert(model->item(i, 0)->text(), model->item(i, 1)->text());
     }
-    return out;
+    return QJsonDocument(rootObject).toJson(QJsonDocument::Indented);
 }
 
 void IpSubnetCalculator::calculateIpv4()

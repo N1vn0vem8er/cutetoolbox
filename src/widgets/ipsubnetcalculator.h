@@ -26,7 +26,7 @@ private:
     QString openedFile;
 
 private:
-    QString toCsv() const;
+    QString toJson() const;
 
 private slots:
     void calculateIpv4();
