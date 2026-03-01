@@ -76,7 +76,7 @@ void RandomTextGeneratorWidget::save()
 
 void RandomTextGeneratorWidget::saveAs()
 {
-    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath());
+    const QString path = QFileDialog::getSaveFileName(this, tr("Save As"), !openedFile.isEmpty() ? QFileInfo(openedFile).dir().absolutePath() : QDir::homePath(), "*.txt");
     if(!path.isEmpty())
     {
         QFile file(path);
