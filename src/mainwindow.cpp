@@ -52,7 +52,7 @@
 #include "videoconverterwidget.h"
 #include "xmlformatterwidget.h"
 
-#define VERSION "0.3.0"
+#define VERSION "0.4.1"
 #define LICENSELINK "https://www.gnu.org/licenses/gpl-3.0.html"
 
 MainWindow::MainWindow(QWidget *parent)
