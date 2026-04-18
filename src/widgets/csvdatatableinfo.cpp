@@ -27,6 +27,7 @@ CSVDataTableInfo::CSVDataTableInfo(QWidget *parent)
     ui->missingValuesLabel->setVisible(false);
     ui->columnsLabel->setVisible(false);
     ui->rowsLabel->setVisible(false);
+    ui->table->setSortingEnabled(true);
 }
 
 CSVDataTableInfo::~CSVDataTableInfo()
@@ -149,7 +150,16 @@ void CSVDataTableInfo::parseCsv(const QString &csv)
             QList<QStandardItem*> items;
             for(int item = 0; item < row.length(); item++)
             {
-                items.append(new QStandardItem(row.at(item)));
+                QString cellValue = row.at(item);
+                QStandardItem* cellItem = new QStandardItem();
+                bool isNumer;
+                double number = cellValue.toDouble(&isNumer);
+                if(isNumer)
+                    cellItem->setData(number, Qt::EditRole);
+                else
+                    cellItem->setData(cellValue, Qt::EditRole);
+
+                items.append(cellItem);
             }
             model->appendRow(items);
         }
